@@ -1,32 +1,26 @@
 {
-  "name": "shell",
+  "name": "account",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "workout-tracker",
-  "sourceRoot": "apps/shell/src",
+  "sourceRoot": "apps/account/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shell",
-        "index": "apps/shell/src/index.html",
-        "main": "apps/shell/src/main.ts",
+        "outputPath": "dist/apps/account",
+        "index": "apps/account/src/index.html",
+        "main": "apps/account/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/shell/tsconfig.app.json",
+        "tsConfig": "apps/account/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-        "styles": ["apps/shell/src/styles.scss"],
-        "stylePreprocessorOptions": {
-          "includePaths": [
-            "apps/shell/src/assets",
-            "node_modules"
-          ]
-        },
+        "assets": ["apps/account/src/favicon.ico", "apps/account/src/assets"],
+        "styles": ["apps/account/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/shell/webpack.config.ts"
+          "path": "apps/account/webpack.config.ts"
         }
       },
       "configurations": {
@@ -45,7 +39,7 @@
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/shell/webpack.prod.config.ts"
+            "path": "apps/account/webpack.prod.config.ts"
           }
         },
         "development": {
@@ -60,17 +54,17 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/angular:module-federation-dev-server",
+      "executor": "@nx/angular:dev-server",
       "options": {
-        "port": 4200,
-        "publicHost": "http://localhost:4200"
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
       },
       "configurations": {
         "production": {
-          "buildTarget": "shell:build:production"
+          "buildTarget": "account:build:production"
         },
         "development": {
-          "buildTarget": "shell:build:development"
+          "buildTarget": "account:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -78,7 +72,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "shell:build"
+        "buildTarget": "account:build"
       }
     },
     "lint": {
@@ -88,7 +82,24 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/shell/jest.config.ts"
+        "jestConfig": "apps/account/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "account:build",
+        "port": 4201,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "account:build:development"
+        },
+        "production": {
+          "buildTarget": "account:build:production"
+        }
       }
     }
   }
