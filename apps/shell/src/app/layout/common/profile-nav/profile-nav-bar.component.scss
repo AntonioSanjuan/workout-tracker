@@ -1,0 +1,51 @@
+@use "./../../../../sizes.scss" as sizes;
+
+:host {
+    width: 100%;
+}
+
+.ProfileNavBar_MainContainer {
+    top:100px;
+    position: absolute;
+    left: 0;
+
+    .ProfileNavBar_ContentContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        padding-left: 10px;
+    
+        height: 100px;
+        width: 50px;
+
+        position: fixed;
+
+        z-index: 3;
+
+
+        mat-select {
+            background-color: transparent !important;
+           
+            .mat-mdc-select-trigger {
+                .mat-mdc-select-arrow-wrapper {
+                    display: none !important;
+                }
+            }
+            mat-select-trigger {
+                img {
+                    border: 1px solid black;
+                    border-radius: 50%;
+                }
+
+                .mat-mdc-select-arrow-wrapper {
+                    display: none;
+                }
+            }
+            mat-option {
+                border-radius: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "shell": {
+        "layout": {
+            "menuTop": {
+                "content": "El menu top funciona"
+            },
+            "menuBottom": {
+                "content": "El menu bottom funciona"
+            },
+            "profileNav": {
+                "language": {
+                    "placeholder": "Idioma"
+                }
+            },
+            "menuNav": {
+                "home": "Inicio",
+                "pokedex": "Pokedex",
+                "news": "Novedades"
+            }
+        },
+        "home": {
+            "content": "Funciona!"
+        },
+        "loadingSpinner": {
+            "title": "Cargando..."
+        }
+    },
+    "libs": {
+        
+    }
+}

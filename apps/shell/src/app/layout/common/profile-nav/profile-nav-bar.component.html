@@ -1,0 +1,35 @@
+<div class="ProfileNavBar_MainContainer" *ngrxLet="isUserLogged$; let isUserLogged">
+    <div class="ProfileNavBar_ContentContainer">
+        <button mat-mini-fab color="warn" aria-label="Logout" (click)="logOut()">
+            <mat-icon>logout</mat-icon>
+        </button>
+
+        <mat-select 
+            [value]="translateService.currentLang" 
+            class="lang" 
+            (selectionChange)="changeLanguage($event.value)"
+            [panelClass]="'language-select'"
+            [panelWidth]="100"
+            placeholder="{{ 'shell.layout.profileNav.language.placeholder' | translate }}">
+            <mat-select-trigger>
+                <img 
+                mat-card-image 
+                [src]="'../../../../assets/images/flags/' + translateService.currentLang + '.png'" 
+                height="40px"
+                [ngStyle]="{backgroundColor: 'transparent'}"
+                width="40px"
+                alt="{{translateService.currentLang}} flag">
+            </mat-select-trigger>
+            <mat-option 
+                *ngFor="let lang of translateService.getLangs()" 
+                [value]="lang">
+                <img 
+                    mat-card-image 
+                    [src]="'../../../../assets/images/flags/' + lang + '.png'" 
+                    height="32px"
+                    width="32px"
+                    alt="{{lang}} flag">
+            </mat-option>
+        </mat-select>
+    </div>
+</div>

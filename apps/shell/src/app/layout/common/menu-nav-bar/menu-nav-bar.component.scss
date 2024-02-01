@@ -1,0 +1,52 @@
+@use "./../../../../sizes.scss" as sizes;
+
+.MenuNavBar_MainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #ffff;
+
+    .MenuNavBar_ContentContainer {
+        display: flex;
+        flex-direction: row;
+
+        position: sticky;
+        top: 0;
+
+        min-height: sizes.$headerHeigt;
+        height: sizes.$headerHeigt;
+        width: sizes.$ContentWidth;
+        max-width: 1024px;
+
+        z-index: 3;
+    
+        .MenuNavBar_CenterContainer {
+            display: flex;
+            flex-direction: row;
+    
+            justify-content: center;
+            width: 100%;
+            button {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-radius: 0;
+                height: 100%;
+                flex: 1;
+
+                &:after {
+                    content: ' ';
+                    height: 6px;
+                    left: 0;
+                    position: absolute;
+                    bottom: -6px;
+                    width: 100%;
+                    background-color: #313131;
+                    z-index: 1;
+                }
+            }
+        }
+    }
+}

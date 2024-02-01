@@ -1,0 +1,13 @@
+@use "./../../../../sizes.scss" as sizes;
+
+.MenuBottom_MainContainer {
+    display: flex;
+    flex-direction: column;
+
+    min-height: sizes.$footerHeigt;
+    height: sizes.$footerHeigt;
+
+    p {
+        margin: 0;
+    }
+}

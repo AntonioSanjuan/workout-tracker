@@ -1,0 +1,52 @@
+@use "./../../../sizes.scss" as sizes;
+
+.BaseLayout_MainContainer {
+    display: flex;
+    flex-direction: column;
+
+    background: #424242 url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
+    align-items: center;
+    min-height: 100vh;
+    height: auto;
+
+
+    .BaseLayout_HeaderContainer,
+    .BaseLayout_NavBarContainer {
+        width: 100%;
+    }
+
+    .BaseLayout_NavBarContainer {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
+    .BaseLayout_BodyContainer {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        flex: 1;
+        margin: 0 auto;
+        max-width: 1280px;
+        width: 100%;
+        background: #fff url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
+
+        .BaseLayout_ContentContainer {
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 100%;
+            max-width: 1024px;
+            width: sizes.$ContentWidth;
+
+        }
+    }
+
+    .BaseLayout_FooterContainer {
+        width: 100%;
+    }
+}
+
+@media (max-width: 960px) {
+}

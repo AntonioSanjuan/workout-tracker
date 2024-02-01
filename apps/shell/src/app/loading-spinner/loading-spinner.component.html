@@ -1,0 +1,8 @@
+<section *ngrxLet="{ isBlockByRequest: isBlockByRequest$, isUILoadedApp: isUILoadedApp$ } as ctx ">
+    <div class="LoadingSpinner_MainContainer" *ngIf="ctx.isBlockByRequest || !ctx.isUILoadedApp">
+        <div class="LoadingSpinner_ContentContainer">
+            <mat-spinner></mat-spinner>
+            <h1>{{ 'shell.loadingSpinner.title' | translate }}</h1>
+        </div>
+    </div>
+</section>

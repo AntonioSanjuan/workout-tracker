@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'gt-motive-app-home',
+  selector: 'workout-tracker-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   imports:[
