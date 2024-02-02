@@ -1,11 +1,12 @@
 @use "./../../../../sizes.scss" as sizes;
+@use "./../../../../colors.scss" as colors;
 
 .MenuNavBar_MainContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-color: #ffff;
+    background-color: colors.$navBackgroundColor;
 
     .MenuNavBar_ContentContainer {
         display: flex;
@@ -14,8 +15,8 @@
         position: sticky;
         top: 0;
 
-        min-height: sizes.$headerHeigt;
-        height: sizes.$headerHeigt;
+        min-height: sizes.$navHeaderHeight;
+        height: sizes.$navHeaderHeight;
         width: sizes.$ContentWidth;
         max-width: 1024px;
 
@@ -38,12 +39,12 @@
 
                 &:after {
                     content: ' ';
-                    height: 6px;
+                    height: 3px;
                     left: 0;
                     position: absolute;
-                    bottom: -6px;
+                    bottom: -3px;
                     width: 100%;
-                    background-color: #313131;
+                    background-color: colors.$navBorderColor;
                     z-index: 1;
                 }
             }

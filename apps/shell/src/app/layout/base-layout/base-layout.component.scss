@@ -1,10 +1,11 @@
 @use "./../../../sizes.scss" as sizes;
+@use "./../../../colors.scss" as colors;
 
 .BaseLayout_MainContainer {
     display: flex;
     flex-direction: column;
 
-    background: #424242 url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
+    background: colors.$backdropBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
     align-items: center;
     min-height: 100vh;
     height: auto;
@@ -30,10 +31,10 @@
         margin: 0 auto;
         max-width: 1280px;
         width: 100%;
-        background: #fff url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
+        background: colors.$bodyBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
 
         .BaseLayout_ContentContainer {
-            background-color: #fff;
+            background-color: colors.$bodyBackgroundColor;
             display: flex;
             flex-direction: column;
             flex: 1 1 100%;

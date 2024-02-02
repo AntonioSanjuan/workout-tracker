@@ -1,7 +1,9 @@
+@use "./../../../colors.scss" as colors;
+
 .menu {
     display: flex;
     flex-direction: column;
     justify-content: center;
     
-    background-color: grey;
+    background-color: colors.$navBackgroundColor;
 }
