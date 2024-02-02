@@ -17,7 +17,7 @@ export class CultureService {
         this.setCulture(cultureLang);
     }
 
-    public setLanguage(): void {
+    public initialize(): void {
         this.translateService.setDefaultLang(this.defaultLangCode);
         this.translateService.addLangs(this.acceptedLanguages)
         const browserLang: string | undefined = this.translateService.getBrowserCultureLang();

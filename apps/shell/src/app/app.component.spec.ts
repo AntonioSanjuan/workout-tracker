@@ -23,13 +23,13 @@ describe('AppComponent', () => {
   })
 
   describe('Integration tests', () => {
-    it('should request cultureService setLanguage into onInit', () => {
-      const setLanguageSpy = jest.spyOn(cultureService, 'setLanguage')
+    it('should request cultureService initialize into onInit', () => {
+      const initializeSpy = jest.spyOn(cultureService, 'initialize')
       const fixture = TestBed.createComponent(AppComponent);
       const app = fixture.componentInstance;
       app.ngOnInit();
       
-      expect(setLanguageSpy).toHaveBeenCalled()
+      expect(initializeSpy).toHaveBeenCalled()
     });
   })
 });

@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
   private cultureService: CultureService = inject(CultureService)
 
   ngOnInit(): void {
-      this.cultureService.setLanguage()
+      this.cultureService.initialize()
   }
 }
