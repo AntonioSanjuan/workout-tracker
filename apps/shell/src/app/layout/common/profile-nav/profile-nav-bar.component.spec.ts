@@ -1,13 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProfileNavBarComponent } from './profile-nav-bar.component';
-import { AuthService } from '@workout-tracker/libs/services/auth';
 import { provideMockStore } from '@ngrx/store/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
+import { CultureService } from '@workout-tracker/services/culture';
+import { AuthService } from '@workout-tracker/services/auth';
 import { userStateMock } from '@workout-tracker/test';
-import { CultureService } from '@workout-tracker/libs/services/culture';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+
 
 describe('ProfileNavBarComponent', () => {
   let component: ProfileNavBarComponent;
@@ -17,6 +20,7 @@ describe('ProfileNavBarComponent', () => {
   let translateService: TranslateService;
   let cultureService: CultureService;
   let actions: Observable<Action>;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,7 +28,9 @@ describe('ProfileNavBarComponent', () => {
         ProfileNavBarComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
-        })
+        }),
+        RouterTestingModule.withRoutes([])
+
       ],
       providers: [
         AuthService,
@@ -39,9 +45,11 @@ describe('ProfileNavBarComponent', () => {
     fixture = TestBed.createComponent(ProfileNavBarComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(Store)
-    authService = TestBed.inject(AuthService)
-    cultureService = TestBed.inject(CultureService)
-    translateService = TestBed.inject(TranslateService)
+    router = TestBed.inject(Router);
+
+    authService = TestBed.inject(AuthService);
+    cultureService = TestBed.inject(CultureService);
+    translateService = TestBed.inject(TranslateService);
     fixture.detectChanges();
   });
 

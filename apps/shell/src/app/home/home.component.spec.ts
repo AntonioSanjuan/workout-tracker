@@ -16,4 +16,12 @@ describe('HomeComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  describe('Unit tests', () => {
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+  })
+
 });

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BaseLayoutComponent } from './base-layout.component';
 import { RouterOutlet } from '@angular/router';
-import { AuthService } from '@workout-tracker/libs/services/auth';
 import { userStateMock } from '@workout-tracker/test';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CultureService } from '@workout-tracker/libs/services/culture';
+import { AuthService } from '@workout-tracker/services/auth';
+import { CultureService } from '@workout-tracker/services/culture';
 
 describe('BaseLayoutComponent', () => {
   let component: BaseLayoutComponent;
