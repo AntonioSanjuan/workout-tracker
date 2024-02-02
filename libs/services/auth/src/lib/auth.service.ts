@@ -1,54 +1,56 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, delay, map, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Router } from "@angular/router";
 import { AppRoutes } from '@workout-tracker/models';
 import { AppInit, clearUser, loadedApp, setUser, unloadedApp } from '@workout-tracker/shared-store';
+import { Auth, signInWithEmailAndPassword, User, onAuthStateChanged, signOut } from '@angular/fire/auth';
 
-@Injectable()
+@Injectable({ providedIn: 'root'})
 export class AuthService {
-  private authStorageKey = 'authenticatedStatus'
   private store: Store = inject(Store)
   private router: Router = inject(Router)
+  private auth: Auth = inject(Auth)
+
+  constructor() {
+    // onAuthStateChanged(this.auth, 
+    //   (user: User | null) => {
+    //     if(user) {
+    //       this.setUser(user)
+    //     } else {
+    //       this.clearUser()
+    //     }
+    //   })
+    this.authStateListener()
+  }
   
   public logIn(userName: string, password: string): Observable<any> {
-    const request: any = {
-      userName,
-      password
-    };
-
-    //mock
-    const resp = { status: (request.userName === 'demo' && request.password === 'demo')} as any;
-
-    return of(resp).pipe(
-      delay(3000),
-      map((resp) => {
-        this.authenticateUser(resp)
-        this.router.navigate([AppRoutes.Home])
-
-        return resp
-      }),
-    )
+    return from(signInWithEmailAndPassword(this.auth, userName, password))
   }
 
-  private authenticateUser(resp: any) {
-    this.store.dispatch(setUser({ user: resp}))
+  public logOut() {
+    return from(signOut(this.auth))
+  }
+
+  private authStateListener() {
+    onAuthStateChanged(this.auth, 
+      (user: User | null) => {
+        if(user) {
+          this.setUser(user)
+        } else {
+          this.clearUser()
+        }
+      }
+    )  
+  }
+
+  private setUser(user: User): void {
+    this.store.dispatch(setUser({ user: user }))
     this.store.dispatch(loadedApp({initialized: AppInit.ACCOUNT}))
-    localStorage.setItem(this.authStorageKey, 'true')
   }
 
-  public checkAuthPersistance(): void {
-    const authenticatedStatus = localStorage.getItem(this.authStorageKey)
-    if(authenticatedStatus && authenticatedStatus === 'true') {
-      this.authenticateUser({ status: true} as any)
-    }
-  }
-
-  public logOut(): void {
+  private clearUser(): void {
     this.store.dispatch(clearUser())
     this.store.dispatch(unloadedApp({uninitialized: AppInit.ACCOUNT}))
-    localStorage.removeItem(this.authStorageKey)
-    this.router.navigate([AppRoutes.Login])
-
   }
 }

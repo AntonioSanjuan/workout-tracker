@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@env": ["apps/shell/src/environments/environment"],
-      "@workout-tracker/firebase": ["libs/services/firebase/src/index.ts"],
       "@workout-tracker/models": ["libs/models/src/index.ts"],
       "@workout-tracker/services/api": ["libs/services/api/src/index.ts"],
       "@workout-tracker/services/auth": ["libs/services/auth/src/index.ts"],

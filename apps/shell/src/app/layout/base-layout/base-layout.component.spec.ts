@@ -6,7 +6,6 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '@workout-tracker/services/auth';
 import { CultureService } from '@workout-tracker/services/culture';
 
 describe('BaseLayoutComponent', () => {
@@ -17,7 +16,6 @@ describe('BaseLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        AuthService,
         CultureService,
         provideMockStore({
           initialState: userStateMock

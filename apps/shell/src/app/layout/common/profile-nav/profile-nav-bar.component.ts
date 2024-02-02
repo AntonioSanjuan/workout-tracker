@@ -33,7 +33,6 @@ export class ProfileNavBarComponent {
   public isUserLogged$ = this.store.select(getIsUserLogged)
 
   public logOut() {
-    this.authService.logOut();
   }
 
   public changeLanguage(lang: string) {

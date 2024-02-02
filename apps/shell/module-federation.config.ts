@@ -1,5 +1,4 @@
-import { ModuleFederationConfig } from '@nx/webpack';
-
+import { ModuleFederationConfig, applySharedFunction } from '@nx/webpack';
 const config: ModuleFederationConfig = {
   name: 'shell',
   /**

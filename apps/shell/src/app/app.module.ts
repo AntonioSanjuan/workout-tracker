@@ -17,7 +17,6 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { LibsServicesCultureModule } from '@workout-tracker/services/culture';
 import { LibsServicesMessageModule } from '@workout-tracker/services/message';
 import { LibsServicesApiModule } from '@workout-tracker/services/api';
-import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
 
 
 @NgModule({
@@ -27,7 +26,6 @@ import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
     BrowserModule,
     BrowserAnimationsModule,
     LibsServicesCultureModule,
-    LibsServicesAuthModule,
     LibsServicesApiModule,
     LibsServicesMessageModule,
     CoreModule,
