@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { CultureService } from './culture.service';
 import { LibsServicesCultureModule } from './libs/services/culture.module';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { AppInit, loadedApp } from '@workout-tracker/store';
+import { AppInit, loadedApp } from '@workout-tracker/shared-store';
 
 describe('CultureService', () => {
   let service: CultureService;

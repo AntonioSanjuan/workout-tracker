@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
-import { MessageTypes } from '@workout-tracker/libs/models';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MessageService } from './message.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageTypes } from '@workout-tracker/models';
 
 describe('MessageService', () => {
   let service: MessageService;

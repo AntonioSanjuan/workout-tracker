@@ -4,11 +4,13 @@
   "license": "MIT",
   "scripts": {
     "start:all": "nx serve shell --open --devRemotes=account --verbose",
-    "test:all": "nx run-many --all --target=test --watch",
+    "test:all": "nx run-many --all --target=test",
     "test:app:shell": "nx run-many -t test --p shell --watch",
     "test:app:account": "nx run-many -t test --p account --watch",
-    "test:lib:shared-store": "nx run-many -t test --p shared-store --watch",
-    "test:lib:services": "nx run-many -t test --p services --watch"
+    "test:lib:shared-store": "nx run-many -t test --p libs/shared-store --watch",
+    "test:lib:service:culture": "nx run-many -t test --p libs/services/culture --watch",
+    "test:lib:service:auth": "nx run-many -t test --p libs/services/auth --watch",
+    "test:lib:service:message": "nx run-many -t test --p libs/services/message --watch"
   },
   "private": true,
   "dependencies": {

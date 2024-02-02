@@ -2,10 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { AuthService } from './auth.service';
 import { Store } from '@ngrx/store';
-import { AppInit, clearUser, loadedApp, setUser, unloadedApp, userInitialState } from '@workout-tracker/store';
-import { AppRoutes, LoginResponseDto } from '@workout-tracker/libs/models';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppInit, clearUser, loadedApp, setUser, unloadedApp, userInitialState } from '@workout-tracker/shared-store';
+import { AppRoutes } from '@workout-tracker/models';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -42,7 +42,7 @@ describe('AuthService', () => {
 
       it('Login success should authenticate user', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
-        service.logIn(userNameSut, userPassSut).subscribe((resp: LoginResponseDto) => {
+        service.logIn(userNameSut, userPassSut).subscribe((resp: any) => {
           expect(dispatchSpy).toHaveBeenCalledWith(setUser({ user: resp}))
           expect(dispatchSpy).toHaveBeenCalledWith(loadedApp({initialized: AppInit.ACCOUNT}))
         })

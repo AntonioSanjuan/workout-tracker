@@ -1,5 +1,5 @@
 {
-  "name": "services-message",
+  "name": "libs/services/message",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/services/message/src",
   "prefix": "workout-tracker",
