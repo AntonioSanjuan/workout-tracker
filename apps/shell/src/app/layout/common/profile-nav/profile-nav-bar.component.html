@@ -1,7 +1,10 @@
 <div class="ProfileNavBar_MainContainer" *ngrxLet="isUserLogged$; let isUserLogged">
     <div class="ProfileNavBar_ContentContainer">
-        <button mat-mini-fab color="warn" aria-label="Logout" (click)="logOut()">
+        <button *ngIf="isUserLogged" mat-mini-fab color="warn" aria-label="Login" (click)="logOut()">
             <mat-icon>logout</mat-icon>
+        </button>
+        <button *ngIf="!isUserLogged" mat-mini-fab color="warn" aria-label="Logout" [routerLink]="appRoutes.Login">
+            <mat-icon>login</mat-icon>
         </button>
 
         <mat-select 

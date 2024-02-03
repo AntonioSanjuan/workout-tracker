@@ -1,0 +1,28 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+:host {
+    height: 100%;
+}
+
+.Login_MainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        min-width: 150px;
+        max-width: 300px;
+        width: 100%;
+        
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}

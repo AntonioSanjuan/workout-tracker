@@ -6,8 +6,15 @@ import { BaseLayoutComponent } from './layout/base-layout/base-layout.component'
 export const appRoutes: Route[] = [
   {
     path: 'account',
-    loadChildren: () =>
-      loadRemoteModule('account', './Routes').then((m) => m.remoteRoutes),
+    component: BaseLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          loadRemoteModule('account', './routes').then((m) => m.appRoutes),
+      },
+    ],
+    canActivate: [],
   },
   {
     path: '',

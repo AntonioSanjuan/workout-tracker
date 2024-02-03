@@ -28,7 +28,6 @@
       "@workout-tracker/shared-store": ["libs/shared-store/src/index.ts"],
       "@workout-tracker/test": ["libs/test/src/index.ts"],
       "@workout-tracker/ui": ["libs/ui/src/index.ts"],
-      "account/Routes": ["apps/account/src/app/remote-entry/entry.routes.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

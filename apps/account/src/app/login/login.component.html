@@ -1,0 +1,18 @@
+<div
+    class="Login_MainContainer"
+    *ngrxLet="isUserLogged$; let isUserLogged">
+
+    <form [formGroup]="loginForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput id="userName" name="userName" formControlName="userName"/>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput id="password" name="password" formControlName="password"/>     
+        </mat-form-field>
+        <button mat-flat-button color="primary" [disabled]="isUserLogged" (click)="login()">log in</button>
+
+    </form>
+</div>

@@ -9,18 +9,9 @@ import { Auth, signInWithEmailAndPassword, User, onAuthStateChanged, signOut } f
 @Injectable({ providedIn: 'root'})
 export class AuthService {
   private store: Store = inject(Store)
-  private router: Router = inject(Router)
   private auth: Auth = inject(Auth)
 
   constructor() {
-    // onAuthStateChanged(this.auth, 
-    //   (user: User | null) => {
-    //     if(user) {
-    //       this.setUser(user)
-    //     } else {
-    //       this.clearUser()
-    //     }
-    //   })
     this.authStateListener()
   }
   

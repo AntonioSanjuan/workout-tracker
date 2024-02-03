@@ -1,7 +1,10 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { RemoteEntryComponent } from './app/remote-entry/entry.component';
+import { bootstrapApplication } from '@angular/platform-browser'
+import { AppComponent } from './app/app.component';
+import { CommonModule } from '@angular/common';
+import { importProvidersFrom } from '@angular/core';
+import { RouterModule } from '@angular/router'
+import { appRoutes } from './app/app.routes';
 
-bootstrapApplication(RemoteEntryComponent, appConfig).catch((err) =>
-  console.error(err)
-);
+bootstrapApplication(AppComponent, {
+  providers: [CommonModule, importProvidersFrom(RouterModule.forRoot(appRoutes))]
+})
