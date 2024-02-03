@@ -28,24 +28,77 @@
     
             justify-content: center;
             width: 100%;
-            button {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                border-radius: 0;
-                height: 100%;
-                flex: 1;
 
-                &:after {
-                    content: ' ';
-                    height: 3px;
-                    left: 0;
-                    position: absolute;
-                    bottom: -3px;
+            #menuButton {
+                display: none;
+
+                mat-icon {
+                    margin: 0;
+                }
+            }
+
+            ul {
+                display: flex;
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+                width: 100%;
+
+                li {
                     width: 100%;
-                    background-color: colors.$navBorderColor;
-                    z-index: 1;
+
+                    button {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 0;
+                        height: 100%;
+                        flex: 1;
+                        width: 100%;
+        
+                        &:after {
+                            content: ' ';
+                            height: 3px;
+                            left: 0;
+                            position: absolute;
+                            bottom: -3px;
+                            width: 100%;
+                            background-color: colors.$navBorderColor;
+                            z-index: 1;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    .MenuNavBar_MainContainer {
+        .MenuNavBar_ContentContainer {
+            width: 100%;
+            .MenuNavBar_CenterContainer {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+
+                #menuButton {
+                    display: inherit;
+                    height: 100%;
+                }
+                ul {
+                    position: absolute;
+                    flex-direction: column;
+                    top: sizes.$navHeaderHeight;
+                    //animation
+                    // height: 0;
+                    // overflow: hidden;
+                    li {
+                        position: static;
+                        height: sizes.$navHeaderHeight;
+                    }
                 }
             }
         }
