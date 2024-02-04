@@ -2,10 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LoginForm, loginForm } from './login.form';
 import { FormGroup } from "@angular/forms";
-import { loginRequest } from './store/login.actions';
 import { LoginData } from './model/loginRequest.model';
 import { UiModule } from '@workout-tracker/ui';
-import { getIsUserLogged } from '@workout-tracker/shared-store'
+import { getIsUserLogged, loginRequest } from '@workout-tracker/shared-store'
 
 @Component({
   selector: 'workout-tracker-login',
@@ -27,8 +26,8 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     const loginData = {...this.loginForm?.getRawValue() } as LoginData
-    if(loginData.userName && loginData.password){
-      this.store.dispatch(loginRequest({ loginData }))
+    if(loginData.userEmail && loginData.password){
+      this.store.dispatch(loginRequest({ userEmail: loginData.userEmail, userPass: loginData.password }))
     }
   }
 }

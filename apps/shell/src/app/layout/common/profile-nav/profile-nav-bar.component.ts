@@ -6,7 +6,7 @@ import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { AuthService } from '@workout-tracker/services/auth';
 import { CultureService } from '@workout-tracker/services/culture';
-import { getIsUserLogged } from '@workout-tracker/shared-store';
+import { getIsUserLogged, logOutRequest } from '@workout-tracker/shared-store';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppRoutes } from '@workout-tracker/models';
 
@@ -35,7 +35,7 @@ export class ProfileNavBarComponent {
   public isUserLogged$ = this.store.select(getIsUserLogged)
 
   public logOut() {
-    this.authService.logOut()
+    this.store.dispatch(logOutRequest())
   }
 
   public changeLanguage(lang: string) {

@@ -1,9 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, from } from 'rxjs';
-import { Router } from "@angular/router";
-import { AppRoutes } from '@workout-tracker/models';
-import { AppInit, clearUser, loadedApp, setUser, unloadedApp } from '@workout-tracker/shared-store';
+import { AppInit, loadedApp, logOutRequest, setUser, unloadedApp } from '@workout-tracker/shared-store';
 import { Auth, signInWithEmailAndPassword, User, onAuthStateChanged, signOut } from '@angular/fire/auth';
 
 @Injectable({ providedIn: 'root'})
@@ -29,7 +27,7 @@ export class AuthService {
         if(user) {
           this.setUser(user)
         } else {
-          this.clearUser()
+          this.store.dispatch(logOutRequest())
         }
       }
     )  
@@ -38,10 +36,5 @@ export class AuthService {
   private setUser(user: User): void {
     this.store.dispatch(setUser({ user: user }))
     this.store.dispatch(loadedApp({initialized: AppInit.ACCOUNT}))
-  }
-
-  private clearUser(): void {
-    this.store.dispatch(clearUser())
-    this.store.dispatch(unloadedApp({uninitialized: AppInit.ACCOUNT}))
   }
 }

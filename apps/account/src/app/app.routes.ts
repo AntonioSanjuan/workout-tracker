@@ -3,7 +3,6 @@ import { StoreModule } from '@ngrx/store';
 import * as fromAccount from './+state/account.reducer';
 import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app.component';
-import { LoginEffects } from './login/store/login.effects';
 import { EffectsModule } from '@ngrx/effects'
 
 export const appRoutes: Route[] = [
@@ -20,7 +19,7 @@ export const appRoutes: Route[] = [
         path: 'login',
         providers: [
           importProvidersFrom(
-            EffectsModule.forFeature([LoginEffects])
+            EffectsModule.forFeature([])
           )
         ],    
         loadComponent: () =>

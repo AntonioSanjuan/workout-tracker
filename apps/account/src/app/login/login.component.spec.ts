@@ -50,7 +50,7 @@ describe('LoginComponent', () => {
         const passwordSut = 'password test';
 
         component.loginForm.setValue({
-          userName: userNameSut,
+          userEmail: userNameSut,
           password: passwordSut
         })
 
@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
 
         expect(dispatchSpy).toHaveBeenCalledWith(loginRequest({
           loginData: {
-            userName: userNameSut,
+            userEmail: userNameSut,
             password: passwordSut
           } as LoginData
          })
@@ -71,7 +71,7 @@ describe('LoginComponent', () => {
         const passwordSut = 'password test';
 
         component.loginForm.setValue({
-          userName: userNameSut,
+          userEmail: userNameSut,
           password: null
         })
 

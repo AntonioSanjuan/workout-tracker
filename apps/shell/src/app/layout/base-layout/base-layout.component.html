@@ -1,11 +1,11 @@
-<div class="BaseLayout_MainContainer">
+<div class="BaseLayout_MainContainer" *ngrxLet="navBarIsOpened$; let navBarIsOpened">
     <div class="BaseLayout_HeaderContainer">
         <workout-tracker-menu-top></workout-tracker-menu-top>
     </div>
     <div class="BaseLayout_NavBarContainer">
         <workout-tracker-menu-nav-bar></workout-tracker-menu-nav-bar>
     </div>
-    <div class="BaseLayout_BodyContainer">
+    <div class="BaseLayout_BodyContainer" [@opacity]="navBarIsOpened">
         <workout-tracker-profile-nav-bar></workout-tracker-profile-nav-bar>
         <div class="BaseLayout_ContentContainer">
             <router-outlet></router-outlet>

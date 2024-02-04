@@ -23,29 +23,5 @@
         position: fixed;
 
         z-index: 3;
-
-
-        mat-select {
-            background-color: transparent !important;
-           
-            .mat-mdc-select-trigger {
-                .mat-mdc-select-arrow-wrapper {
-                    display: none !important;
-                }
-            }
-            mat-select-trigger {
-                img {
-                    border: 1px solid black;
-                    border-radius: 50%;
-                }
-
-                .mat-mdc-select-arrow-wrapper {
-                    display: none;
-                }
-            }
-            mat-option {
-                border-radius: 10px;
-            }
-        }
     }
 }

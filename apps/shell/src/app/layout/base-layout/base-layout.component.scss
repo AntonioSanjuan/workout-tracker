@@ -50,4 +50,11 @@
 }
 
 @media (max-width: 960px) {
+    .BaseLayout_MainContainer {
+        .BaseLayout_BodyContainer {
+            workout-tracker-profile-nav-bar {
+                display: none;
+            }
+        }
+    }
 }
