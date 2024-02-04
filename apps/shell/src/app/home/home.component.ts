@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'workout-tracker-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports:[
-  ],
+  imports:[],
   standalone: true
 })
 export class HomeComponent {}
