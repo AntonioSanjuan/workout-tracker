@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginData } from './model/loginRequest.model';
+import { loginRequest } from '@workout-tracker/shared-store';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -56,10 +57,8 @@ describe('LoginComponent', () => {
         component.login()
 
         expect(dispatchSpy).toHaveBeenCalledWith(loginRequest({
-          loginData: {
-            userEmail: userNameSut,
-            password: passwordSut
-          } as LoginData
+          userEmail: userNameSut,
+          userPass: passwordSut
          })
         )
       })
@@ -67,7 +66,6 @@ describe('LoginComponent', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
 
         const userNameSut = 'username test';
-        const passwordSut = 'password test';
 
         component.loginForm.setValue({
           userEmail: userNameSut,
