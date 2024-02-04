@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BaseLayoutComponent } from './base-layout.component';
 import { RouterOutlet } from '@angular/router';
-import { userStateMock } from '@workout-tracker/test';
+import { layoutStateMock, userStateMock } from '@workout-tracker/test';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CultureService } from '@workout-tracker/services/culture';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BaseLayoutComponent', () => {
   let component: BaseLayoutComponent;
@@ -18,14 +19,18 @@ describe('BaseLayoutComponent', () => {
       providers: [
         CultureService,
         provideMockStore({
-          initialState: userStateMock
+          initialState: {
+            ...layoutStateMock,
+            ...userStateMock
+          }
         }),
       ],
       imports: [
+        BrowserAnimationsModule,
         RouterOutlet,
         RouterTestingModule,
         TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
         BaseLayoutComponent
       ],

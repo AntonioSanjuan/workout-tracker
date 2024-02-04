@@ -65,12 +65,14 @@
                         width: 100%;
         
                         &:after {
+                            position: absolute;
                             content: ' ';
                             height: 3px;
-                            left: 0;
-                            position: absolute;
-                            bottom: -3px;
                             width: 100%;
+
+                            left: 0;
+                            bottom: -3px;
+
                             background-color: colors.$navBorderColor;
                             z-index: 1;
                         }
@@ -106,6 +108,22 @@
                     li {
                         position: static;
                         height: sizes.$navHeaderHeight;
+
+                        button {
+                            &:after {
+                                position: absolute;
+                                content: ' ';
+                                height: 100%;
+                                width: 3px;
+
+                                right: 0;
+                                left: unset;
+                                bottom: unset;
+
+                                background-color: colors.$navBorderColor;
+                                z-index: 1;
+                            }
+                        }
                     }
                 }
             }

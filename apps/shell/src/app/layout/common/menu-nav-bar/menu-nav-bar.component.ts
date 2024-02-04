@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UiModule, collapseAnimation } from '@workout-tracker/ui';
 import { AppRoutes } from '@workout-tracker/models'

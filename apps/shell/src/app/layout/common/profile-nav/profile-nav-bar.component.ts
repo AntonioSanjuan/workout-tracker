@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { UiModule } from '@workout-tracker/ui';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
-import { AuthService } from '@workout-tracker/services/auth';
 import { CultureService } from '@workout-tracker/services/culture';
 import { getIsUserLogged, logOutRequest } from '@workout-tracker/shared-store';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -25,8 +24,6 @@ import { AppRoutes } from '@workout-tracker/models';
   ]
 })
 export class ProfileNavBarComponent {
-  private authService: AuthService = inject(AuthService)
-  private cultureService: CultureService = inject(CultureService);
   public translateService: TranslateService = inject(TranslateService)
   private store: Store = inject(Store);
 
@@ -36,10 +33,5 @@ export class ProfileNavBarComponent {
 
   public logOut() {
     this.store.dispatch(logOutRequest())
-  }
-
-  public changeLanguage(lang: string) {
-    console.log("lang", lang)
-    this.cultureService.changeLanguage(lang)
   }
 }

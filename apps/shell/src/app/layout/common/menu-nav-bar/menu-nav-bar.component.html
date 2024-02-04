@@ -7,7 +7,7 @@
                     <mat-icon>density_medium</mat-icon>
                 </button>
                 <div>
-                    <button mat-mini-fab color="warn" aria-label="Login">
+                    <button mat-mini-fab color="warn" aria-label="Login" [routerLink]="appRoutes.Settings">
                         <mat-icon>settings</mat-icon>
                     </button>
 
@@ -15,7 +15,7 @@
                         <mat-icon>logout</mat-icon>
                     </button>
                     <button *ngIf="!vm.isUserLogged" mat-mini-fab color="warn" aria-label="Logout" [routerLink]="appRoutes.Login">
-                        <mat-icon>login</mat-icon>
+                        <mat-icon>account_circle</mat-icon>
                     </button>
                 </div>
             </div>

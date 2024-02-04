@@ -10,15 +10,14 @@ import { AuthService } from '@workout-tracker/services/auth';
 import { userStateMock } from '@workout-tracker/test';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { logOutRequest } from '@workout-tracker/shared-store';
 
 
 describe('ProfileNavBarComponent', () => {
   let component: ProfileNavBarComponent;
   let fixture: ComponentFixture<ProfileNavBarComponent>;
   let store: Store;
-  let authService: AuthService;
   let translateService: TranslateService;
-  let cultureService: CultureService;
   let actions: Observable<Action>;
   let router: Router;
 
@@ -33,8 +32,6 @@ describe('ProfileNavBarComponent', () => {
 
       ],
       providers: [
-        AuthService,
-        CultureService,
         provideMockActions(() => actions),
         provideMockStore({
           initialState: userStateMock
@@ -47,8 +44,6 @@ describe('ProfileNavBarComponent', () => {
     store = TestBed.inject(Store)
     router = TestBed.inject(Router);
 
-    authService = TestBed.inject(AuthService);
-    cultureService = TestBed.inject(CultureService);
     translateService = TestBed.inject(TranslateService);
     fixture.detectChanges();
   });
@@ -60,10 +55,10 @@ describe('ProfileNavBarComponent', () => {
   })
 
   describe('Integration tests', () => {
-    it('logOut should request authService logout', () => {
-      const authServiceLogOutSpy = jest.spyOn(authService, 'logOut')
+    it('logOut should dispatch logOutRequest', () => {
+      const dispatchSpy = jest.spyOn(store, 'dispatch')
       component.logOut();
-      expect(authServiceLogOutSpy).toHaveBeenCalled()
+      expect(dispatchSpy).toHaveBeenCalledWith(logOutRequest())
     });
   })
 });
