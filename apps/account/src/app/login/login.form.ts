@@ -6,6 +6,6 @@ export interface LoginForm {
 }
 
 export const loginForm = (): FormGroup<LoginForm> => new FormGroup<LoginForm>({
-  userEmail: new FormControl('', Validators.required),
+  userEmail: new FormControl('', [Validators.required, Validators.email]),
   password: new FormControl('', Validators.required)
 })
