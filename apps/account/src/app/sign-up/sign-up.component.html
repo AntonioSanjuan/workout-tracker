@@ -1,0 +1,24 @@
+<div
+    class="SignUp_MainContainer">
+
+    <form [formGroup]="signUpForm">
+        <mat-form-field>
+            <mat-label>
+                {{ 'apps.account.signUp.form.fields.userEmail' | translate }}
+            </mat-label>
+            <input matInput id="userEmail" name="userEmail" formControlName="userEmail"/>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>
+                {{ 'apps.account.signUp.form.fields.userPass' | translate }}
+            </mat-label>
+            <input matInput id="password" name="password" formControlName="password"/>     
+        </mat-form-field>
+        <button mat-flat-button color="primary" [disabled]="signUpForm.valid" (click)="login()">
+            {{ 'apps.account.signUp.form.actions.submit' | translate }}
+        </button>
+
+
+    </form>
+</div>
