@@ -18,7 +18,6 @@ import { getIsUserLogged, loginRequest } from '@workout-tracker/shared-store'
 export class LoginComponent implements OnInit {
   private store = inject(Store)
   public loginForm!: FormGroup<LoginForm>
-  public isUserLogged$ = this.store.select(getIsUserLogged)
 
   ngOnInit(): void {
       this.loginForm = loginForm()
