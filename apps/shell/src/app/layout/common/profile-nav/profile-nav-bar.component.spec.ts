@@ -11,6 +11,7 @@ import { userStateMock } from '@workout-tracker/test';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { logOutRequest } from '@workout-tracker/shared-store';
+import { Actions } from '@ngrx/effects';
 
 
 describe('ProfileNavBarComponent', () => {
@@ -43,6 +44,7 @@ describe('ProfileNavBarComponent', () => {
     component = fixture.componentInstance;
     store = TestBed.inject(Store)
     router = TestBed.inject(Router);
+    actions = TestBed.inject(Actions)
 
     translateService = TestBed.inject(TranslateService);
     fixture.detectChanges();

@@ -1,20 +1,20 @@
 import { createReducer, on } from "@ngrx/store"
 import { userInitialState } from "./models/userState.initialState";
 import { UserState } from "./models/userState.model";
-import { logOutRequest, setUser } from "./user.actions";
+import { setUserData, unsetUserData } from "./user.actions";
 
 export const USER_FEATURE_KEY = 'user';
 
 export const userReducer = createReducer(
     userInitialState,
-    on(setUser, (state: UserState, { user }) => {
+    on(setUserData, (state: UserState, { user }) => {
         return {
             ...state, 
-            user,
+            user: user,
             isLogged: true
         }
     }),
-    on(logOutRequest, (state: UserState) => ({
+    on(unsetUserData, (state: UserState) => ({
         ...state,
         user: undefined,
         isLogged: false

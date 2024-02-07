@@ -1,5 +1,4 @@
-
 export interface UserState {
-    user: any | undefined
+    user: firebase.default.User | undefined
     isLogged: boolean;
 }

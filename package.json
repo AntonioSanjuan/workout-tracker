@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "build:all": "nx  build shell --verbose",
     "start:all": "nx serve shell --open --devRemotes=account --verbose",
     "test:all": "nx run-many --all --target=test",
     "test:app:shell": "nx run-many -t test --p shell --watch",
@@ -61,7 +62,7 @@
     "@swc-node/register": "~1.6.7",
     "@swc/core": "~1.3.85",
     "@swc/helpers": "~0.5.2",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",

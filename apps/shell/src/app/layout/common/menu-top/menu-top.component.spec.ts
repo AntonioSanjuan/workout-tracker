@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { appRoutes } from '../../../app.routes';
 import { TranslateModule } from '@ngx-translate/core';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('MenuTopComponent', () => {
   let component: MenuTopComponent;
@@ -17,6 +18,11 @@ describe('MenuTopComponent', () => {
         RouterTestingModule.withRoutes(appRoutes),
         TranslateModule.forRoot()
       ],
+      providers: [
+        provideMockStore({
+          
+        })
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MenuTopComponent);

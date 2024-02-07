@@ -11,7 +11,7 @@ export class UiEffects {
     private requestsCounter = 0;
     public requestOnGoing: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
-    private initRequest$ = createEffect(() => 
+    initRequest$ = createEffect(() => 
         this.actions$.pipe(
             ofType(startRequest),
             tap(() => {
@@ -23,7 +23,7 @@ export class UiEffects {
         ), { dispatch: false}
     );
 
-    private endRequest$ = createEffect(() => 
+    endRequest$ = createEffect(() => 
         this.actions$.pipe(
             ofType(endRequest),
             tap(() => {

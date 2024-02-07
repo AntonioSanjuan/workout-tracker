@@ -9,7 +9,7 @@ export class LayoutEffects {
     private actions$ = inject(Actions);
 
 
-    private routerNavigationAction$ = createEffect(() => 
+    routerNavigationAction$ = createEffect(() => 
         this.actions$.pipe(
             ofType(routerNavigationAction),
             switchMap(() =>

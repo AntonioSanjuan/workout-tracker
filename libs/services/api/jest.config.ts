@@ -2,7 +2,7 @@
 export default {
   displayName: 'services-api',
   preset: '../../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts', , '../../../common-test-setup.ts'],
   coverageDirectory: '../../../coverage/libs/services/api',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [

@@ -2,7 +2,7 @@
 export default {
   displayName: 'shared-store',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts', '../../common-test-setup.ts'],
   coverageDirectory: '../../coverage/libs/shared-store',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [

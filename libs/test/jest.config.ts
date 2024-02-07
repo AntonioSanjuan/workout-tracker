@@ -2,7 +2,7 @@
 export default {
   displayName: 'test',
   preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts', '../../common-test-setup.ts'],
   coverageDirectory: '../../coverage/libs/test',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [

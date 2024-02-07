@@ -3,8 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess } from "./user.actions";
 import { catchError, map, of, switchMap } from "rxjs";
-import { AppInit, unloadedApp } from "../ui";
-import { UserCredential } from "@angular/fire/auth";
+import { AppInit, loadedApp, unloadedApp } from "../ui";
 
 
 @Injectable()
@@ -16,9 +15,16 @@ export class UserEffects {
         ofType(loginRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.logIn(userEmail, userPass).pipe(
-                map((loginResponse: UserCredential) => loginRequestSuccess()),
+                map((loginResponse: firebase.default.auth.UserCredential) => loginRequestSuccess()),
                 catchError(_ => of(loginRequestError()))
             )
+        )
+    ))
+
+    loginRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(loginRequestSuccess),
+        switchMap(() =>
+            of(loadedApp({initialized: AppInit.ACCOUNT}))
         )
     ))
 
