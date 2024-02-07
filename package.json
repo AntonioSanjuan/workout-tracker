@@ -5,13 +5,13 @@
   "scripts": {
     "build:all": "nx  build shell --verbose",
     "start:all": "nx serve shell --open --devRemotes=account --verbose",
-    "test:all": "nx run-many --all --target=test",
-    "test:app:shell": "nx run-many -t test --p shell --watch",
-    "test:app:account": "nx run-many -t test --p account --watch",
-    "test:lib:shared-store": "nx run-many -t test --p libs/shared-store --watch",
-    "test:lib:service:culture": "nx run-many -t test --p libs/services/culture --watch",
-    "test:lib:service:auth": "nx run-many -t test --p libs/services/auth --watch",
-    "test:lib:service:message": "nx run-many -t test --p libs/services/message --watch"
+    "test:all": "nx run-many --all --target=test --no-cache --coverage=true",
+    "test:app:shell": "nx run-many -t test --p shell --watch --no-cache --coverage=true",
+    "test:app:account": "nx run-many -t test --p account --watch --no-cache --coverage=true",
+    "test:lib:shared-store": "nx run-many -t test --p libs/shared-store --watch --no-cache --coverage=true",
+    "test:lib:service:culture": "nx run-many -t test --p libs/services/culture --watch --no-cache --coverage=true",
+    "test:lib:service:auth": "nx run-many -t test --p libs/services/auth --watch --no-cache --coverage=true",
+    "test:lib:service:message": "nx run-many -t test --p libs/services/message --watch --no-cache --coverage=true"
   },
   "private": true,
   "dependencies": {
