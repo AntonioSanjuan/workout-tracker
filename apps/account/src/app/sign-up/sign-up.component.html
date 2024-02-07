@@ -1,5 +1,8 @@
 <div
     class="SignUp_MainContainer">
+    <h2>
+        {{ 'apps.account.signUp.title' | translate }}
+    </h2>
 
     <form [formGroup]="signUpForm">
         <mat-form-field>
@@ -15,10 +18,11 @@
             </mat-label>
             <input matInput id="password" name="password" formControlName="password"/>     
         </mat-form-field>
-        <button mat-flat-button color="primary" [disabled]="signUpForm.valid" (click)="login()">
+        <button mat-flat-button color="primary" [disabled]="signUpForm.valid" (click)="signUp()">
             {{ 'apps.account.signUp.form.actions.submit' | translate }}
         </button>
-
-
     </form>
+    <a [routerLink]="appRoutes.Login">
+        {{ 'apps.account.login.form.actions.signUp' | translate }}
+    </a>
 </div>

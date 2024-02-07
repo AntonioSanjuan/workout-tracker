@@ -28,24 +28,29 @@
         },
         "account": {
             "login": {
+                "title": "Accede con tu cuenta",
                 "form": {
                     "fields": {
                         "userEmail": "Email",
                         "userPass": "Contraseña"
                     },
                     "actions": {
-                        "submit": "Acceder"
+                        "submit": "Acceder",
+                        "signUp": "¿No tienes cuenta? ¡Registrate ya!"
                     }
                 }
             },
             "signUp": {
+                "title": "Registrate",
                 "form": {
                     "fields": {
                         "userEmail": "Email",
                         "userPass": "Contraseña"
                     },
                     "actions": {
-                        "submit": "Registrarse"
+                        "submit": "Registrarse",
+                        "login": "¿Ya tienes cuenta? ¡Accede con ella!"
+
                     }
                 }
             }

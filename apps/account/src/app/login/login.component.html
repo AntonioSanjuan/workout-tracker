@@ -1,6 +1,8 @@
 <div
     class="Login_MainContainer">
-
+    <h2>
+        {{ 'apps.account.login.title' | translate }}
+    </h2>
     <form [formGroup]="loginForm">
         <mat-form-field>
             <mat-label>
@@ -18,7 +20,8 @@
         <button mat-flat-button color="primary" [disabled]="loginForm.valid" (click)="login()">
             {{ 'apps.account.login.form.actions.submit' | translate }}
         </button>
-
-
     </form>
+    <a [routerLink]="appRoutes.SignUp">
+        {{ 'apps.account.login.form.actions.signUp' | translate }}
+    </a>
 </div>

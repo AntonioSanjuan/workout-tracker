@@ -3,5 +3,6 @@ export enum AppRoutes {
     Home = '/',
     //account
     Login = '/account/login',
+    SignUp = '/account/signUp',
     Settings = '/account/settings',
 }
