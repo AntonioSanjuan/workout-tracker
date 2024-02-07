@@ -24,6 +24,16 @@ export const appRoutes: Route[] = [
         ],    
         loadComponent: () =>
           import('./login/login.component').then((m) => m.LoginComponent),
+      },
+      {
+        path: 'signUp',
+        providers: [
+          importProvidersFrom(
+            EffectsModule.forFeature([])
+          )
+        ],    
+        loadComponent: () =>
+          import('./sign-up/sign-up.component').then((m) => m.SignUpComponent),
       }
     ]
 
