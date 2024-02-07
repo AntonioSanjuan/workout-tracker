@@ -7,6 +7,8 @@ import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { loginRequest } from '@workout-tracker/shared-store';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { appRoutes } from '../app.routes';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -29,6 +31,7 @@ describe('LoginComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
+        RouterTestingModule.withRoutes(appRoutes),
       ]
     }).compileComponents();
 
