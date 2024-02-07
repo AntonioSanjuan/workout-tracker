@@ -3,15 +3,22 @@
 
     <form [formGroup]="loginForm">
         <mat-form-field>
-            <mat-label>Name</mat-label>
+            <mat-label>
+                {{ 'apps.account.login.form.fields.userEmail' | translate }}
+            </mat-label>
             <input matInput id="userEmail" name="userEmail" formControlName="userEmail"/>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Password</mat-label>
+            <mat-label>
+                {{ 'apps.account.login.form.fields.userPass' | translate }}
+            </mat-label>
             <input matInput id="password" name="password" formControlName="password"/>     
         </mat-form-field>
-        <button mat-flat-button color="primary" [disabled]="loginForm.valid" (click)="login()">log in</button>
+        <button mat-flat-button color="primary" [disabled]="loginForm.valid" (click)="login()">
+            {{ 'apps.account.login.form.actions.submit' | translate }}
+        </button>
+
 
     </form>
 </div>
