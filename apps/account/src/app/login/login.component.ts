@@ -5,12 +5,14 @@ import { FormGroup } from "@angular/forms";
 import { LoginData } from './model/loginRequest.model';
 import { UiModule } from '@workout-tracker/ui';
 import { getIsUserLogged, loginRequest } from '@workout-tracker/shared-store'
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'workout-tracker-login',
   templateUrl: './login.component.html',
   imports: [
     UiModule,
+    TranslateModule
   ],
   styleUrls: ['./login.component.scss'],
   standalone: true

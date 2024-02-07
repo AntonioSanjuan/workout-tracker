@@ -5,8 +5,8 @@ import { accountAppStateMock } from '../+state/test/accountStateMock/accountStat
 import { Store } from '@ngrx/store';
 import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginData } from './model/loginRequest.model';
 import { loginRequest } from '@workout-tracker/shared-store';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -25,7 +25,10 @@ describe('LoginComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
-        LoginComponent
+        LoginComponent,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        }),
       ]
     }).compileComponents();
 
