@@ -6,10 +6,11 @@ import { routerNavigationAction } from '@ngrx/router-store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess } from './user.actions';
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess } from './user.actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppInit, loadedApp, unloadedApp } from '../ui';
 import firebase from 'firebase/compat/app';
+import { showError } from '../error-messages';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
@@ -75,6 +76,81 @@ describe('UserEffects', () => {
       it('should return loadedApp ACCOUNT', async () => {
         const result = await firstValueFrom(effects.loginRequestSuccess$)
         expect(result).toEqual(loadedApp({initialized: AppInit.ACCOUNT}))
+      })
+    })
+  });
+
+  describe('loginRequestError$', () => {
+    const errorMock = { message: 'message', code: "error code exmaple"} as firebase.FirebaseError
+    describe('when loginRequestError is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(loginRequestError({ error: errorMock}))
+      })
+
+      it('should return showError', async () => {
+        const result = await firstValueFrom(effects.loginRequestError$)
+        expect(result).toEqual(showError({errorMessage: errorMock.code}))
+      })
+    })
+  });
+
+  describe('signUpRequest$', () => {
+    describe('when signUpRequest is dispatched', () => {
+      const userEmailSut = 'userEmailSut'
+      const userPassSut = 'userPassSut'
+      describe('when authService.signUp throws error', () => {
+        const errorCodeMock = 'testing error code'
+        const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+        const errorResp = throwError(() => errorMock )
+        beforeEach(() => { 
+          jest.spyOn(authService, 'signUp').mockReturnValue(errorResp)
+          actions = of(signUpRequest({ userEmail: userEmailSut, userPass: userPassSut }))
+        })
+
+        it('should call signUpRequestError', async () => {
+          const result = await firstValueFrom(effects.signUpRequest$)
+          expect(result).toEqual(signUpRequestError({error: errorMock}))
+        })
+      })
+
+      describe('when authService.signUp success', () => {
+        const successResp: Partial<firebase.auth.UserCredential> = { additionalUserInfo: null } 
+        beforeEach(() => { 
+          jest.spyOn(authService, 'signUp').mockReturnValue(of(successResp as firebase.auth.UserCredential))
+          actions = of(signUpRequest({ userEmail: userEmailSut, userPass: userPassSut }))
+        })
+
+        it('should call signUpRequestSuccess', async () => {
+          const result = await firstValueFrom(effects.signUpRequest$)
+          expect(result).toEqual(signUpRequestSuccess())
+        })
+      })
+    })
+  });
+
+  describe('signUpRequestSuccess$', () => {
+    describe('when signUpRequestSuccess is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(signUpRequestSuccess())
+      })
+
+      it('should return loadedApp ACCOUNT', async () => {
+        const result = await firstValueFrom(effects.signUpRequestSuccess$)
+        expect(result).toEqual(loadedApp({initialized: AppInit.ACCOUNT}))
+      })
+    })
+  });
+
+  describe('signUpRequestError$', () => {
+    const errorMock = { message: 'message', code: "error code exmaple"} as firebase.FirebaseError
+    describe('when signUpRequestError is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(signUpRequestError({ error: errorMock}))
+      })
+
+      it('should return showError', async () => {
+        const result = await firstValueFrom(effects.signUpRequestError$)
+        expect(result).toEqual(showError({errorMessage: errorMock.code}))
       })
     })
   });

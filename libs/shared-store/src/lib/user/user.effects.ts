@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
 import { catchError, map, of, switchMap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
@@ -31,6 +31,30 @@ export class UserEffects {
 
     loginRequestError$ = createEffect(() => this.actions$.pipe(
         ofType(loginRequestError),
+        switchMap(({ error }) =>
+            of(showError({errorMessage: error.code}))
+        )
+    ))
+
+    signUpRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(signUpRequest),
+        switchMap(({ userEmail, userPass }) =>
+            this.authService.signUp(userEmail, userPass).pipe(
+                map((loginResponse: firebase.auth.UserCredential) => signUpRequestSuccess()),
+                catchError((err: firebase.FirebaseError) => of(signUpRequestError({ error: err })))
+            )
+        )
+    ))
+
+    signUpRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(signUpRequestSuccess),
+        switchMap(() =>
+            of(loadedApp({initialized: AppInit.ACCOUNT}))
+        )
+    ))
+
+    signUpRequestError$ = createEffect(() => this.actions$.pipe(
+        ofType(signUpRequestError),
         switchMap(({ error }) =>
             of(showError({errorMessage: error.code}))
         )
