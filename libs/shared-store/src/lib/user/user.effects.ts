@@ -5,6 +5,7 @@ import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess } f
 import { catchError, map, of, switchMap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
+import { showError } from "../error-messages";
 
 @Injectable()
 export class UserEffects {
@@ -16,7 +17,7 @@ export class UserEffects {
         switchMap(({ userEmail, userPass }) =>
             this.authService.logIn(userEmail, userPass).pipe(
                 map((loginResponse: firebase.auth.UserCredential) => loginRequestSuccess()),
-                catchError(_ => of(loginRequestError()))
+                catchError((err: firebase.FirebaseError) => of(loginRequestError({ error: err })))
             )
         )
     ))
@@ -25,6 +26,13 @@ export class UserEffects {
         ofType(loginRequestSuccess),
         switchMap(() =>
             of(loadedApp({initialized: AppInit.ACCOUNT}))
+        )
+    ))
+
+    loginRequestError$ = createEffect(() => this.actions$.pipe(
+        ofType(loginRequestError),
+        switchMap(({ error }) =>
+            of(showError({errorMessage: error.code}))
         )
     ))
 

@@ -9,7 +9,7 @@ export const loginRequest = createAction(LOGIN_REQUEST, props<{ userEmail: strin
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const loginRequestSuccess = createAction(LOGIN_SUCCESS)
 export const LOGIN_ERROR = 'LOGIN_ERROR'
-export const loginRequestError = createAction(LOGIN_ERROR)
+export const loginRequestError = createAction(LOGIN_ERROR, props<{ error: firebase.FirebaseError }>())
   
 export const SET_USER = 'SET_USER'
 export const setUserData = createAction(SET_USER, props<{ user: firebase.User }>())

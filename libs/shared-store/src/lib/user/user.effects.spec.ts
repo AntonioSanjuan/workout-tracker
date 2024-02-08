@@ -37,7 +37,9 @@ describe('UserEffects', () => {
       const userEmailSut = 'userEmailSut'
       const userPassSut = 'userPassSut'
       describe('when authService.logIn throws error', () => {
-        const errorResp = throwError(() => new HttpErrorResponse( { error: '', status: 500} ))
+        const errorCodeMock = 'testing error code'
+        const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+        const errorResp = throwError(() => errorMock )
         beforeEach(() => { 
           jest.spyOn(authService, 'logIn').mockReturnValue(errorResp)
           actions = of(loginRequest({ userEmail: userEmailSut, userPass: userPassSut }))
@@ -45,7 +47,7 @@ describe('UserEffects', () => {
 
         it('should call loginRequestError', async () => {
           const result = await firstValueFrom(effects.loginRequest$)
-          expect(result).toEqual(loginRequestError())
+          expect(result).toEqual(loginRequestError({error: errorMock}))
         })
       })
 
