@@ -17,6 +17,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { LibsServicesCultureModule } from '@workout-tracker/services/culture';
 import { LibsServicesMessageModule } from '@workout-tracker/services/message';
 import { LibsServicesApiModule } from '@workout-tracker/services/api';
+import { ErrorMessageEffects } from 'libs/shared-store/src/lib/error-messages';
 
 
 @NgModule({
@@ -41,7 +42,13 @@ import { LibsServicesApiModule } from '@workout-tracker/services/api';
         },
       }
     ),
-    EffectsModule.forRoot([UiEffects, RequestEffects, LayoutEffects, UserEffects]),
+    EffectsModule.forRoot([
+      UiEffects, 
+      RequestEffects, 
+      LayoutEffects, 
+      UserEffects, 
+      ErrorMessageEffects
+    ]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ logOnly: !isDevMode() }),
   ],
