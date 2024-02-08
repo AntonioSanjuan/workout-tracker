@@ -20,6 +20,7 @@ describe('AuthService', () => {
   const mock = {
     signInWithEmailAndPassword: jest.fn().mockReturnValue({ additionalUserInfo: { isNewUser: true }} as firebase.auth.UserCredential),
     signOut: jest.fn(),
+    createUserWithEmailAndPassword: jest.fn(),
     authState: authStateObservable
   };
 
@@ -71,6 +72,19 @@ describe('AuthService', () => {
         const logOutSpy = jest.spyOn(fireAuth, 'signOut').mockResolvedValue()
         service.logOut().subscribe((resp: any) => {
           expect(logOutSpy).toHaveBeenCalledWith()
+        })
+      })
+    })
+
+    describe('signUp', () => {
+      const userNameSut = 'userNameTest'
+      const userPassSut = '****'
+
+      it('signUp success should request createUserWithEmailAndPassword', () => {
+        const UserCredentialSut = { user: { phoneNumber: '666-66-66-66'}} as firebase.auth.UserCredential
+        const createUserWithEmailAndPasswordSpy = jest.spyOn(fireAuth, 'createUserWithEmailAndPassword').mockResolvedValue(UserCredentialSut)
+        service.signUp(userNameSut, userPassSut).subscribe((resp: any) => {
+          expect(createUserWithEmailAndPasswordSpy).toHaveBeenCalledWith(userNameSut, userPassSut)
         })
       })
     })

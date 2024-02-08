@@ -22,6 +22,10 @@ export class AuthService {
     return from(this.auth.signOut())
   }
 
+  public signUp(userName: string, password: string): Observable<firebase.auth.UserCredential> {
+    return from(this.auth.createUserWithEmailAndPassword(userName, password))
+  }
+
   private authStateListener() {
     this.auth.authState.subscribe((user: firebase.User | null) => {
       
