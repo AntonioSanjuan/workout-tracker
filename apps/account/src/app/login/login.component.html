@@ -17,7 +17,7 @@
             </mat-label>
             <input matInput id="password" name="password" formControlName="password"/>     
         </mat-form-field>
-        <button mat-flat-button color="primary" [disabled]="loginForm.valid" (click)="login()">
+        <button mat-flat-button color="primary" [disabled]="!loginForm.valid" (click)="login()">
             {{ 'apps.account.login.form.actions.submit' | translate }}
         </button>
     </form>
