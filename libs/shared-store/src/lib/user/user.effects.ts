@@ -4,7 +4,7 @@ import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess } from "./user.actions";
 import { catchError, map, of, switchMap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
-
+import firebase from 'firebase/compat/app/';
 
 @Injectable()
 export class UserEffects {
@@ -15,7 +15,7 @@ export class UserEffects {
         ofType(loginRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.logIn(userEmail, userPass).pipe(
-                map((loginResponse: firebase.default.auth.UserCredential) => loginRequestSuccess()),
+                map((loginResponse: firebase.auth.UserCredential) => loginRequestSuccess()),
                 catchError(_ => of(loginRequestError()))
             )
         )

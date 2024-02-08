@@ -9,6 +9,7 @@ import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess } from './user.actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppInit, loadedApp, unloadedApp } from '../ui';
+import firebase from 'firebase/compat/app';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
@@ -49,9 +50,9 @@ describe('UserEffects', () => {
       })
 
       describe('when authService.logIn success', () => {
-        const successResp: Partial<firebase.default.auth.UserCredential> = { additionalUserInfo: null } 
+        const successResp: Partial<firebase.auth.UserCredential> = { additionalUserInfo: null } 
         beforeEach(() => { 
-          jest.spyOn(authService, 'logIn').mockReturnValue(of(successResp as firebase.default.auth.UserCredential))
+          jest.spyOn(authService, 'logIn').mockReturnValue(of(successResp as firebase.auth.UserCredential))
           actions = of(loginRequest({ userEmail: userEmailSut, userPass: userPassSut }))
         })
 

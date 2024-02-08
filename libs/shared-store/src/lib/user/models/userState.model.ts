@@ -1,4 +1,6 @@
+import firebase from 'firebase/compat/app/';
+
 export interface UserState {
-    user: firebase.default.User | undefined
+    user: firebase.User | undefined
     isLogged: boolean;
 }

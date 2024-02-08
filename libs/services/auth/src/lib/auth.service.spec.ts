@@ -8,6 +8,7 @@ import { setUserData, unsetUserData, userInitialState } from '@workout-tracker/s
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import { BehaviorSubject, of } from 'rxjs';
+import firebase from 'firebase/compat/app';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,9 +16,9 @@ describe('AuthService', () => {
   let router: Router;
   let fireAuth: AngularFireAuth;
 
-  const authStateObservable = new BehaviorSubject<firebase.default.User | null>(null);
+  const authStateObservable = new BehaviorSubject<firebase.User | null>(null);
   const mock = {
-    signInWithEmailAndPassword: jest.fn().mockReturnValue({ additionalUserInfo: { isNewUser: true }} as firebase.default.auth.UserCredential),
+    signInWithEmailAndPassword: jest.fn().mockReturnValue({ additionalUserInfo: { isNewUser: true }} as firebase.auth.UserCredential),
     signOut: jest.fn(),
     authState: authStateObservable
   };
@@ -57,7 +58,7 @@ describe('AuthService', () => {
       const userPassSut = '****'
 
       it('Login success should request signInWithEmailAndPassword', () => {
-        const UserCredentialSut = { user: { phoneNumber: '666-66-66-66'}} as firebase.default.auth.UserCredential
+        const UserCredentialSut = { user: { phoneNumber: '666-66-66-66'}} as firebase.auth.UserCredential
         const signInWithEmailAndPasswordSpy = jest.spyOn(fireAuth, 'signInWithEmailAndPassword').mockResolvedValue(UserCredentialSut)
         service.logIn(userNameSut, userPassSut).subscribe((resp: any) => {
           expect(signInWithEmailAndPasswordSpy).toHaveBeenCalledWith(userNameSut, userPassSut)
@@ -76,7 +77,7 @@ describe('AuthService', () => {
 
     describe('authStateListener', () => {
       it('with user', () => {
-        const userMock = { phoneNumber: '666-66-66-66'} as firebase.default.User 
+        const userMock = { phoneNumber: '666-66-66-66'} as firebase.User 
         authStateObservable.next(userMock)
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')

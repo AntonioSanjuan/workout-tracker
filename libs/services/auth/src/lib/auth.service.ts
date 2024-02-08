@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, from } from 'rxjs';
 import { setUserData, unsetUserData } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
+import firebase from 'firebase/compat/app/';
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     this.authStateListener()
   }
   
-  public logIn(userName: string, password: string): Observable<firebase.default.auth.UserCredential> {
+  public logIn(userName: string, password: string): Observable<firebase.auth.UserCredential> {
     return from(this.auth.signInWithEmailAndPassword(userName, password))
   }
 
@@ -22,7 +23,7 @@ export class AuthService {
   }
 
   private authStateListener() {
-    this.auth.authState.subscribe((user: firebase.default.User | null) => {
+    this.auth.authState.subscribe((user: firebase.User | null) => {
       
       if(user) {
         this.store.dispatch(setUserData({ user: user }))
