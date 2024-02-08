@@ -64,7 +64,7 @@ export class UserEffects {
         ofType(logOutRequest),
         switchMap(() =>
             this.authService.logOut().pipe(
-                map(() => unloadedApp({uninitialized: AppInit.ACCOUNT})),
+                map((_) => unloadedApp({uninitialized: AppInit.ACCOUNT})),
             )
         )
     ))

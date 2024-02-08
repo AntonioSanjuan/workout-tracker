@@ -5,6 +5,8 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { environment } from "@env";
 import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireAuthModule, PERSISTENCE } from "@angular/fire/compat/auth";
 export const HttpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
 
 @NgModule({
@@ -21,11 +23,13 @@ export const HttpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(h
             extend: true,
             isolate: false
         }),
-        AngularFireModule.initializeApp({ 
-            apiKey: environment.FIREBASE_API_KEY,
-            authDomain: environment.FIREBASE_AUTH_DOMAIN,
-            projectId: environment.FIREBASE_PROJECT_ID
-         }),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFireDatabaseModule
+    ],
+    providers: [
+        { provide: PERSISTENCE, useValue: 'local' },
+
     ]
 })
 export class CoreModule {}
