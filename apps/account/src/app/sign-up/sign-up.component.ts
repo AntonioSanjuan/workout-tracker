@@ -4,7 +4,7 @@ import { SignUpForm, signUpForm } from './sign-up.form';
 import { FormGroup } from "@angular/forms";
 import { SignUpData } from './model/signUpRequest.model';
 import { UiModule } from '@workout-tracker/ui';
-import { loginRequest } from '@workout-tracker/shared-store'
+import { loginRequest, signUpRequest } from '@workout-tracker/shared-store'
 import { TranslateModule } from '@ngx-translate/core';
 import { AppRoutes } from '@workout-tracker/models'
 import { RouterModule } from '@angular/router';
@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
   signUp(): void {
     const signUpData = {...this.signUpForm?.getRawValue() } as SignUpData
     if(signUpData.userEmail && signUpData.password){
-      this.store.dispatch(loginRequest({ userEmail: signUpData.userEmail, userPass: signUpData.password }))
+      this.store.dispatch(signUpRequest({ userEmail: signUpData.userEmail, userPass: signUpData.password }))
     }
   }
 }

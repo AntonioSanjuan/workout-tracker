@@ -5,7 +5,7 @@ import { accountAppStateMock } from '../+state/test/accountStateMock/accountStat
 import { Store } from '@ngrx/store';
 import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { loginRequest } from '@workout-tracker/shared-store';
+import { loginRequest, signUpRequest } from '@workout-tracker/shared-store';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { appRoutes } from '../app.routes';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -62,7 +62,7 @@ describe('SignUpComponent', () => {
 
         component.signUp()
 
-        expect(dispatchSpy).toHaveBeenCalledWith(loginRequest({
+        expect(dispatchSpy).toHaveBeenCalledWith(signUpRequest({
           userEmail: userNameSut,
           userPass: passwordSut
          })
@@ -80,7 +80,7 @@ describe('SignUpComponent', () => {
 
         component.signUp()
 
-        expect(dispatchSpy).not.toHaveBeenCalledWith(loginRequest(expect.anything())
+        expect(dispatchSpy).not.toHaveBeenCalledWith(signUpRequest(expect.anything())
         )
       })
     });
