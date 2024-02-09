@@ -19,9 +19,12 @@ export class CultureService {
 
     public initialize(): void {
         this.translateService.setDefaultLang(this.defaultLangCode);
-        this.translateService.addLangs(this.acceptedLanguages)
-        const browserLang: string | undefined = this.translateService.getBrowserCultureLang();
-        this.changeLanguage(browserLang || this.defaultLangCode)
+        this.translateService.addLangs(this.acceptedLanguages);
+        this.changeLanguage(this.getBrowserLanguage() || this.defaultLangCode)
+    }
+
+    private getBrowserLanguage(): string | undefined {
+        return this.translateService.getBrowserCultureLang();
     }
 
     private getLangCode(cultureCode: string): string {
