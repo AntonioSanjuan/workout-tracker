@@ -1,6 +1,6 @@
 import { userReducer } from "./user.reducer"
 import { userInitialState } from "./models/userState.initialState";
-import { setAnonymousUserData, setUserData } from "./user.actions";
+import { setAnonymousUserData, setAuthenticatedUserData } from "./user.actions";
 import firebase from 'firebase/compat/app/';
 
 
@@ -8,7 +8,7 @@ describe('userReducer', () => {
     describe('setUserData action', () => {
         it('should handle setUserData action', () => {
             const userSut = { email: 'test@test.com'} as firebase.User
-            const action = setUserData({ user: userSut})
+            const action = setAuthenticatedUserData({ user: userSut, isNewUser: true})
             const state = userReducer(userInitialState, action)
 
             expect(state.user).toEqual(userSut)

@@ -1,17 +1,43 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { CultureService } from '@workout-tracker/services/culture';
-import { AppModule } from './app.module';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Action, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Actions } from '@ngrx/effects';
 
 describe('AppComponent', () => {
   let cultureService: CultureService
+  let translateService: TranslateService;
+  let actions: Observable<Action>;
+  let router: Router;
+  let store: Store;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule],
-      providers: [CultureService]
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
+        }),
+        RouterTestingModule.withRoutes([])
+      ],
+      providers: [
+        CultureService,
+        provideMockActions(() => actions),
+        provideMockStore({
+          initialState: {}
+        }),
+      ]
     }).compileComponents();
 
-    cultureService = TestBed.inject(CultureService)
+    cultureService = TestBed.inject(CultureService);
+    store = TestBed.inject(Store);
+    router = TestBed.inject(Router);
+    actions = TestBed.inject(Actions);
   });
 
   describe('Unit tests', () => {

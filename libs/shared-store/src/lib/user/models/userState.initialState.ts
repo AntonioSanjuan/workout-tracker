@@ -2,5 +2,6 @@ import { UserState } from "./userState.model";
 
 export const userInitialState: UserState =  {
     user: undefined,
-    isLogged: false
+    isLogged: false,
+    settings: undefined
 }

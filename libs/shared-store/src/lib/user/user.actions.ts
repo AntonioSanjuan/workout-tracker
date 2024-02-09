@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store"
 import { User } from '@angular/fire/auth';
 import firebase from 'firebase/compat/app/';
+import { UserSettings } from "@workout-tracker/models";
 
 export const LOGOUT = "LOGOUT_USER"
 export const logOutRequest = createAction(LOGOUT)
@@ -17,7 +18,10 @@ export const signUpRequestSuccess = createAction(SIGNUP_SUCCESS)
 export const SIGNUP_ERROR = 'SIGNUP_ERROR'
 export const signUpRequestError = createAction(SIGNUP_ERROR, props<{ error: firebase.FirebaseError }>())
   
-export const SET_USER = 'SET_USER'
-export const setUserData = createAction(SET_USER, props<{ user: firebase.User, isNewUser: boolean }>())
+export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER'
+export const setAuthenticatedUserData = createAction(SET_AUTHENTICATED_USER, props<{ user: firebase.User, isNewUser: boolean }>())
 export const SET_ANONYMOUS_USER = 'SET_ANONYMOUS_USER'
 export const setAnonymousUserData = createAction(SET_ANONYMOUS_USER)
+
+export const SET_USER_SUCCESS = 'SET_USER_SUCCESS'
+export const setUserSuccess = createAction(SET_USER_SUCCESS, props<{ userSettings: UserSettings }>())

@@ -11,11 +11,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AppInit, loadedApp, unloadedApp } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
+import { UserSettingsService, userSettingsServiceMock } from '@workout-tracker/services/user-settings';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
   let effects: UserEffects
   let authService: AuthService
+  let userSettingsService: UserSettingsService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,6 +25,7 @@ describe('UserEffects', () => {
       ],
       providers: [
         { provide: AuthService, useValue: authServiceMock },
+        { provide: UserSettingsService, useValue: userSettingsServiceMock },
         UserEffects,
         provideMockActions(() => actions),
       ],
@@ -31,6 +34,7 @@ describe('UserEffects', () => {
     effects = TestBed.inject(UserEffects);
     actions = TestBed.inject(Actions)
     authService = TestBed.inject(AuthService)
+    userSettingsService = TestBed.inject(UserSettingsService)
   });
 
   describe('loginRequest$', () => {

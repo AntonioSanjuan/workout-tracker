@@ -1,12 +1,13 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, setAnonymousUserData, setAuthenticatedUserData, setUserSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { UserSettingsService } from '@workout-tracker/services/user-settings'
+import { UserSettings } from "@workout-tracker/models";
 
 @Injectable()
 export class UserEffects {
@@ -18,7 +19,7 @@ export class UserEffects {
         ofType(loginRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.logIn(userEmail, userPass).pipe(
-                map((loginResponse: firebase.auth.UserCredential) => loginRequestSuccess()),
+                map((_) => loginRequestSuccess()),
                 catchError((err: firebase.FirebaseError) => of(loginRequestError({ error: err })))
             )
         )
@@ -42,7 +43,7 @@ export class UserEffects {
         ofType(signUpRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.signUp(userEmail, userPass).pipe(
-                map((loginResponse: firebase.auth.UserCredential) => signUpRequestSuccess()),
+                map((_) => signUpRequestSuccess()),
                 catchError((err: firebase.FirebaseError) => of(signUpRequestError({ error: err })))
             )
         )
@@ -51,6 +52,7 @@ export class UserEffects {
     signUpRequestSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(signUpRequestSuccess),
         switchMap(() =>
+        //to-do -> replace for showSuccess(message) and delegate the AppInit.ACCOUNT into new action FETCH_USER_DATA
             of(loadedApp({initialized: AppInit.ACCOUNT}))
         )
     ))
@@ -66,8 +68,44 @@ export class UserEffects {
         ofType(logOutRequest),
         switchMap(() =>
             this.authService.logOut().pipe(
+        //to-do -> replace for showSuccess(message) and delegate the AppInit.ACCOUNT into new action FETCH_USER_DATA
                 map((_) => unloadedApp({uninitialized: AppInit.ACCOUNT})),
             )
+        )
+    ))
+
+    setAuthenticatedUserData$ = createEffect(() => this.actions$.pipe(
+        ofType(setAuthenticatedUserData),
+        switchMap(({ user, isNewUser}) =>
+            (isNewUser ?
+                this.userSettingsService.setUserSettings(user.uid):
+                this.userSettingsService.getUserSettings(user.uid)
+            ).pipe(
+                map((userSettings: UserSettings) => 
+                    setUserSuccess({ userSettings: userSettings})
+                )
+
+            )
+        )
+    ))
+
+    setAnonymousUserData$ = createEffect(() => this.actions$.pipe(
+        ofType(setAnonymousUserData),
+        switchMap(() =>
+            this.userSettingsService.getAnonymousSettings()
+            .pipe(
+                map((userSettings: UserSettings) => 
+                    setUserSuccess({ userSettings: userSettings})
+                )
+
+            )
+        )
+    ))
+
+    setUserSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(setUserSuccess),
+        switchMap(() =>
+            of(loadedApp({initialized: AppInit.ACCOUNT}))
         )
     ))
 

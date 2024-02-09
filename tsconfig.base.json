@@ -29,7 +29,7 @@
       "@workout-tracker/test": ["libs/test/src/index.ts"],
       "@workout-tracker/ui": ["libs/ui/src/index.ts"],
       "@workout-tracker/services/user-settings": [
-        "libs/services/userSettings/src/index.ts"
+        "libs/services/user-settings/src/index.ts"
       ]
     }
   },

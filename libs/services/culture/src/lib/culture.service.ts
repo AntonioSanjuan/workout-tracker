@@ -13,18 +13,17 @@ export class CultureService {
     private readonly acceptedLanguages: string[] = [ 'EN-GB', 'ES-ES' ];
       
     public changeLanguage(lang: string) {
-        const cultureLang = this.getLangCode(lang);
-        this.setCulture(cultureLang);
+        this.setCulture(lang);
     }
 
     public initialize(): void {
         this.translateService.setDefaultLang(this.defaultLangCode);
         this.translateService.addLangs(this.acceptedLanguages);
-        this.changeLanguage(this.getBrowserLanguage() || this.defaultLangCode)
+        // this.changeLanguage(this.getBrowserLanguage())
     }
 
-    private getBrowserLanguage(): string | undefined {
-        return this.translateService.getBrowserCultureLang();
+    public getBrowserLanguage(): string {
+        return this.getLangCode(this.translateService.getBrowserCultureLang() || this.defaultLangCode);
     }
 
     private getLangCode(cultureCode: string): string {

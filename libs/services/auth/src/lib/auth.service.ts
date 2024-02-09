@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, from, of } from 'rxjs';
-import { setUserData, setAnonymousUserData } from '@workout-tracker/shared-store';
+import { setAuthenticatedUserData, setAnonymousUserData } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import firebase from 'firebase/compat/app/';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ export class AuthService {
   private router: Router = inject(Router)
 
   constructor() {
-    this.authStateListener()
+    this.credentialListener()
   }
   
   public logIn(userName: string, password: string): Observable<firebase.auth.UserCredential> {
@@ -33,12 +33,12 @@ export class AuthService {
     return !!userCredential.additionalUserInfo?.isNewUser
   }
 
-  private authStateListener() {
+  private credentialListener() {
     this.auth.credential.subscribe((credentials: firebase.auth.UserCredential | null) => {
       if(credentials) {        
         //que cojones es esto
         let userCopy = JSON.parse(JSON.stringify(credentials.credential));
-        this.store.dispatch(setUserData({ 
+        this.store.dispatch(setAuthenticatedUserData({ 
           user: userCopy, 
           isNewUser: !!credentials.additionalUserInfo?.isNewUser 
         }))

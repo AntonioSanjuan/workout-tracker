@@ -16,16 +16,16 @@ describe('AuthService', () => {
   let router: Router;
   let fireAuth: AngularFireAuth;
 
-  const authStateObservable = new BehaviorSubject<firebase.User | null>(null);
+  const credentialObservable = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
   const mock = {
     signInWithEmailAndPassword: jest.fn().mockReturnValue({ additionalUserInfo: { isNewUser: true }} as firebase.auth.UserCredential),
     signOut: jest.fn(),
     createUserWithEmailAndPassword: jest.fn(),
-    authState: authStateObservable
+    credential: credentialObservable
   };
 
   beforeEach(() => {
-    authStateObservable.next(null);
+    credentialObservable.next(null);
 
     TestBed.configureTestingModule({
       providers: [
@@ -89,21 +89,32 @@ describe('AuthService', () => {
       })
     })
 
-    describe('authStateListener', () => {
-      it('with user', () => {
-        const userMock = { phoneNumber: '666-66-66-66'} as firebase.User 
-        authStateObservable.next(userMock)
+    describe('credentialListener', () => {
+      it('with new user', () => {
+        const userMock = { additionalUserInfo: { isNewUser: true},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
+        credentialObservable.next(userMock)
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
-        fireAuth.authState.subscribe((data) => {
-          expect(dispatchSpy).toHaveBeenCalledWith(setUserData({ user: userMock }))
+        fireAuth.credential.subscribe((data) => {
+          expect(dispatchSpy).toHaveBeenCalledWith(setUserData({ user: userMock.user as firebase.User, isNewUser: true }))
+
+        })
+      })
+
+      it('with non new user', () => {
+        const userMock = { additionalUserInfo: { isNewUser: false},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
+        credentialObservable.next(userMock)
+
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+        fireAuth.credential.subscribe((data) => {
+          expect(dispatchSpy).toHaveBeenCalledWith(setUserData({ user: userMock.user as firebase.User, isNewUser: false }))
 
         })
       })
 
       it('without user', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
-        fireAuth.authState.subscribe((data) => {
+        fireAuth.credential.subscribe((data) => {
           expect(dispatchSpy).toHaveBeenCalledWith(setAnonymousUserData())
         })
       })

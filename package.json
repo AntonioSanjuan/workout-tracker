@@ -11,7 +11,8 @@
     "test:lib:shared-store": "nx run-many -t test --p libs/shared-store --watch --no-cache --coverage=true",
     "test:lib:service:culture": "nx run-many -t test --p libs/services/culture --watch --no-cache --coverage=true",
     "test:lib:service:auth": "nx run-many -t test --p libs/services/auth --watch --no-cache --coverage=true",
-    "test:lib:service:message": "nx run-many -t test --p libs/services/message --watch --no-cache --coverage=true"
+    "test:lib:service:message": "nx run-many -t test --p libs/services/message --watch --no-cache --coverage=true",
+    "test:lib:service:user-settings": "nx run-many -t test --p libs/services/user-settings --watch --no-cache --coverage=true"
   },
   "private": true,
   "dependencies": {
