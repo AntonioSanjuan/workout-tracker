@@ -16,6 +16,7 @@ import { CoreModule } from './core/core.module';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { LibsServicesCultureModule } from '@workout-tracker/services/culture';
 import { LibsServicesMessageModule } from '@workout-tracker/services/message';
+import { LibsServicesUserSettingsModule } from '@workout-tracker/services/user-settings';
 import { LibsServicesApiModule } from '@workout-tracker/services/api';
 import { ErrorMessageEffects } from 'libs/shared-store/src/lib/error-messages';
 
@@ -29,6 +30,7 @@ import { ErrorMessageEffects } from 'libs/shared-store/src/lib/error-messages';
     LibsServicesCultureModule,
     LibsServicesApiModule,
     LibsServicesMessageModule,
+    LibsServicesUserSettingsModule,
     CoreModule,
     BaseLayoutComponent,
     LoadingSpinnerComponent,

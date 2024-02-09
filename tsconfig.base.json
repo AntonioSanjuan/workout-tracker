@@ -28,6 +28,9 @@
       "@workout-tracker/shared-store": ["libs/shared-store/src/index.ts"],
       "@workout-tracker/test": ["libs/test/src/index.ts"],
       "@workout-tracker/ui": ["libs/ui/src/index.ts"],
+      "@workout-tracker/services/user-settings": [
+        "libs/services/userSettings/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

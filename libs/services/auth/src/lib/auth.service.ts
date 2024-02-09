@@ -34,11 +34,14 @@ export class AuthService {
   }
 
   private authStateListener() {
-    this.auth.authState.subscribe((user: firebase.User | null) => {
-      if(user) {        
+    this.auth.credential.subscribe((credentials: firebase.auth.UserCredential | null) => {
+      if(credentials) {        
         //que cojones es esto
-        let copy = JSON.parse(JSON.stringify(user));
-        this.store.dispatch(setUserData({ user: copy }))
+        let userCopy = JSON.parse(JSON.stringify(credentials.credential));
+        this.store.dispatch(setUserData({ 
+          user: userCopy, 
+          isNewUser: !!credentials.additionalUserInfo?.isNewUser 
+        }))
         this.router.navigate([AppRoutes.Home])
       } else {
         this.store.dispatch(setAnonymousUserData())

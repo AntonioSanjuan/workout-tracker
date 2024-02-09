@@ -2,14 +2,16 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, map, of, switchMap, tap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
+import { UserSettingsService } from '@workout-tracker/services/user-settings'
 
 @Injectable()
 export class UserEffects {
     private authService: AuthService = inject(AuthService)
+    private userSettingsService: UserSettingsService = inject(UserSettingsService)
     private actions$ = inject(Actions);
 
     loginRequest$ = createEffect(() => this.actions$.pipe(
