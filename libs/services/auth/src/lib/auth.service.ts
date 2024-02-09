@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, from, of } from 'rxjs';
-import { setUserData, unsetUserData } from '@workout-tracker/shared-store';
+import { setUserData, setAnonymousUserData } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import firebase from 'firebase/compat/app/';
 import { Router } from '@angular/router';
@@ -39,7 +39,7 @@ export class AuthService {
         this.store.dispatch(setUserData({ user: copy }))
         this.router.navigate([AppRoutes.Home])
       } else {
-        this.store.dispatch(unsetUserData())
+        this.store.dispatch(setAnonymousUserData())
       }
     }) 
   }

@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { setUserData, unsetUserData, userInitialState } from '@workout-tracker/shared-store';
+import { setAnonymousUserData, setUserData, userInitialState } from '@workout-tracker/shared-store';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import { BehaviorSubject, of } from 'rxjs';
@@ -104,7 +104,7 @@ describe('AuthService', () => {
       it('without user', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.authState.subscribe((data) => {
-          expect(dispatchSpy).toHaveBeenCalledWith(unsetUserData())
+          expect(dispatchSpy).toHaveBeenCalledWith(setAnonymousUserData())
         })
       })
     })

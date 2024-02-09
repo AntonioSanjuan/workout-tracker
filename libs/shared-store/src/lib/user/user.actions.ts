@@ -19,5 +19,5 @@ export const signUpRequestError = createAction(SIGNUP_ERROR, props<{ error: fire
   
 export const SET_USER = 'SET_USER'
 export const setUserData = createAction(SET_USER, props<{ user: firebase.User }>())
-export const UNSET_USER = 'UNSET_USER'
-export const unsetUserData = createAction(UNSET_USER)
+export const SET_ANONYMOUS_USER = 'SET_ANONYMOUS_USER'
+export const setAnonymousUserData = createAction(SET_ANONYMOUS_USER)

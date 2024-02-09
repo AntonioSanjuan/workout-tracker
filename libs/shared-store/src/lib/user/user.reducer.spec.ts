@@ -1,6 +1,6 @@
 import { userReducer } from "./user.reducer"
 import { userInitialState } from "./models/userState.initialState";
-import { setUserData, unsetUserData } from "./user.actions";
+import { setAnonymousUserData, setUserData } from "./user.actions";
 import firebase from 'firebase/compat/app/';
 
 
@@ -16,9 +16,9 @@ describe('userReducer', () => {
         })
     })
 
-    describe('unsetUserData action', () => {
-        it('should handle unsetUserData action', () => {
-            const action = unsetUserData()
+    describe('setAnonymousUserData action', () => {
+        it('should handle setAnonymousUserData action', () => {
+            const action = setAnonymousUserData()
             const state = userReducer(userInitialState, action)
 
             expect(state.user).toBeUndefined()
