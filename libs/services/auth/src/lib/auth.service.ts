@@ -29,13 +29,15 @@ export class AuthService {
     return from(this.auth.createUserWithEmailAndPassword(userName, password))
   }
 
+  public isNewUser(userCredential: firebase.auth.UserCredential):boolean {
+    return !!userCredential.additionalUserInfo?.isNewUser
+  }
+
   private authStateListener() {
     this.auth.authState.subscribe((user: firebase.User | null) => {
-      console.log("user", user)
       if(user) {        
         //que cojones es esto
         let copy = JSON.parse(JSON.stringify(user));
-        
         this.store.dispatch(setUserData({ user: copy }))
         this.router.navigate([AppRoutes.Home])
       } else {
