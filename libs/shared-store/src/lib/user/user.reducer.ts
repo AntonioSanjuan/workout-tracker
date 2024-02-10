@@ -17,7 +17,8 @@ export const userReducer = createReducer(
     on(setAnonymousUserData, (state: UserState) => ({
         ...state,
         user: undefined,
-        isLogged: false
+        isLogged: false,
+        settings: undefined
     })),
     on(setUserSuccess, (state: UserState, { userSettings }) => ({
         ...state,

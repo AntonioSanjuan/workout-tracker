@@ -14,12 +14,12 @@ describe('CultureService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ 
-        LibsServicesCultureModule,
         TranslateModule.forRoot({
             loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
         })
      ],
       providers: [
+        CultureService,
         provideMockStore({
           initialState: {}
         })
@@ -37,49 +37,77 @@ describe('CultureService', () => {
   })
 
   describe('Integration tests', () => {
-    it('initialize should use browser language if its supported', () => {
-      const langSut = 'EN-GB'
-      jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(langSut)
-      const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+    it('initialize should set setDefaultLang "ES-ES"', () => {
+      const langSut = "ES-ES"
+      const setDefaultLangSpy = jest.spyOn(translateService, "setDefaultLang")
   
       service.initialize()
   
-      expect(useSpy).toHaveBeenCalledWith(langSut)
+      expect(setDefaultLangSpy).toHaveBeenCalledWith(langSut)
     });
+
+    it('initialize should set addLangs', () => {
+      const addLangsSpy = jest.spyOn(translateService, "addLangs")
   
-    it('initialize should use default language (ES-ES) if browser language its not supported', () => {
+      service.initialize()
+  
+      expect(addLangsSpy).toHaveBeenCalled()
+    });
+
+    it('changeLanguage should use default language (ES-ES) if language its not supported', () => {
       const langSut = 'unsupported lang';
       const defaultLang = 'ES-ES';
   
-      jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(langSut)
       const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
   
-      service.initialize()
+      service.changeLanguage(langSut)
   
       expect(useSpy).not.toHaveBeenCalledWith(langSut)
       expect(useSpy).toHaveBeenCalledWith(defaultLang)
     });
+
+    it('changeLanguage should set language if its supported', () => {
+      const langSut = 'EN-GB';
   
-    it('initialize should use default language (ES-ES) if browser language its UNDEFINED', () => {
+      const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+  
+      service.changeLanguage(langSut)
+  
+      expect(useSpy).toHaveBeenCalledWith(langSut)
+    });
+
+    it('changeLanguage should dispatch loadedApp UI', () => {
+      const langSut = 'EN-GB';
+
+      const dispatchSpy = jest.spyOn(store, "dispatch")
+      jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+  
+      service.changeLanguage(langSut)
+  
+      expect(dispatchSpy).toHaveBeenCalledWith(loadedApp({ initialized: AppInit.UI }))
+    });
+  
+    it('getBrowserLanguage should return default language (ES-ES) if browser language its UNDEFINED', () => {
       const undefinedLangSut = undefined;
       const defaultLang = 'ES-ES';
   
       jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(undefinedLangSut)
-      const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
   
-      service.initialize();
+      const browserLanguageSut = service.getBrowserLanguage();
   
-      expect(useSpy).not.toHaveBeenCalledWith(undefinedLangSut)
-      expect(useSpy).toHaveBeenCalledWith(defaultLang)
+      expect(browserLanguageSut).toEqual(defaultLang)
+    });
+
+    it('getBrowserLanguage should return browser language if exists', () => {
+      const browserLang = 'ES-ES';
+  
+      jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(browserLang)
+  
+      const browserLanguageSut = service.getBrowserLanguage();
+  
+      expect(browserLanguageSut).toEqual(browserLang)
     });
   
-    it('initialize should dispatch loadedApp UI', () => {
-      const dispatchSpy = jest.spyOn(store, "dispatch")
-      jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
-  
-      service.initialize()
-  
-      expect(dispatchSpy).toHaveBeenCalledWith(loadedApp({ initialized: AppInit.UI }))
-    });
+
   })
 });

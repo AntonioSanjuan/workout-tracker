@@ -4,11 +4,12 @@ import { AuthService } from './auth.service';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { setAnonymousUserData, setUserData, userInitialState } from '@workout-tracker/shared-store';
+import { setAnonymousUserData, setAuthenticatedUserData, userInitialState } from '@workout-tracker/shared-store';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import { BehaviorSubject, of } from 'rxjs';
 import firebase from 'firebase/compat/app';
+import { AppRoutes } from '@workout-tracker/models';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -96,7 +97,7 @@ describe('AuthService', () => {
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe((data) => {
-          expect(dispatchSpy).toHaveBeenCalledWith(setUserData({ user: userMock.user as firebase.User, isNewUser: true }))
+          expect(dispatchSpy).toHaveBeenCalledWith(setAuthenticatedUserData({ user: userMock.user as firebase.User, isNewUser: true }))
 
         })
       })
@@ -107,10 +108,22 @@ describe('AuthService', () => {
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe((data) => {
-          expect(dispatchSpy).toHaveBeenCalledWith(setUserData({ user: userMock.user as firebase.User, isNewUser: false }))
+          expect(dispatchSpy).toHaveBeenCalledWith(setAuthenticatedUserData({ user: userMock.user as firebase.User, isNewUser: false }))
 
         })
       })
+
+      it('with use should redirect to Home', () => {
+        const userMock = { additionalUserInfo: { isNewUser: true},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
+        credentialObservable.next(userMock)
+
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        fireAuth.credential.subscribe((data) => {
+          expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
+
+        })
+      })
+
 
       it('without user', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')

@@ -12,9 +12,7 @@ export class CultureService {
 
     private readonly acceptedLanguages: string[] = [ 'EN-GB', 'ES-ES' ];
       
-    public changeLanguage(lang: string) {
-        this.setCulture(lang);
-    }
+
 
     public initialize(): void {
         this.translateService.setDefaultLang(this.defaultLangCode);
@@ -22,6 +20,10 @@ export class CultureService {
         // this.changeLanguage(this.getBrowserLanguage())
     }
 
+    public changeLanguage(lang: string) {
+        this.setCulture(lang);
+    }
+    
     public getBrowserLanguage(): string {
         return this.getLangCode(this.translateService.getBrowserCultureLang() || this.defaultLangCode);
     }

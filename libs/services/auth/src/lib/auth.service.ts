@@ -37,7 +37,7 @@ export class AuthService {
     this.auth.credential.subscribe((credentials: firebase.auth.UserCredential | null) => {
       if(credentials) {        
         //que cojones es esto
-        let userCopy = JSON.parse(JSON.stringify(credentials.credential));
+        let userCopy = JSON.parse(JSON.stringify(credentials.user));
         this.store.dispatch(setAuthenticatedUserData({ 
           user: userCopy, 
           isNewUser: !!credentials.additionalUserInfo?.isNewUser 
