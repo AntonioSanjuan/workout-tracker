@@ -18,10 +18,10 @@ export const signUpRequestSuccess = createAction(SIGNUP_SUCCESS)
 export const SIGNUP_ERROR = 'SIGNUP_ERROR'
 export const signUpRequestError = createAction(SIGNUP_ERROR, props<{ error: firebase.FirebaseError }>())
   
-export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER'
-export const setAuthenticatedUserData = createAction(SET_AUTHENTICATED_USER, props<{ user: firebase.User, isNewUser: boolean }>())
-export const SET_ANONYMOUS_USER = 'SET_ANONYMOUS_USER'
-export const setAnonymousUserData = createAction(SET_ANONYMOUS_USER)
+export const FETCH_AUTHENTICATED_USER = 'FETCH_AUTHENTICATED_USER'
+export const fetchAuthenticatedUserData = createAction(FETCH_AUTHENTICATED_USER, props<{ user: firebase.User, isNewUser: boolean }>())
+export const FETCH_ANONYMOUS_USER = 'FETCH_ANONYMOUS_USER'
+export const fetchAnonymousUserData = createAction(FETCH_ANONYMOUS_USER)
 
-export const SET_USER_SUCCESS = 'SET_USER_SUCCESS'
-export const setUserSuccess = createAction(SET_USER_SUCCESS, props<{ userSettings: UserSettings }>())
+export const SET_USER_DATA = 'SET_USER_DATA'
+export const setUserData = createAction(SET_USER_DATA, props<{ userSettings: UserSettings }>())

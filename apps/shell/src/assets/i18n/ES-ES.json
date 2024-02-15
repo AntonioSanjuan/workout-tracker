@@ -53,6 +53,18 @@
 
                     }
                 }
+            },
+            "settings": {
+                "title": "Configura tu cuenta",
+                "form": {
+                    "fields": {
+                        "language": "Idioma",
+                        "darkMode": "Modo oscuro"
+                    },
+                    "actions": {
+                        "submit": "Guardar"
+                    }
+                }
             }
         }
     },

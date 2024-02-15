@@ -1,0 +1,48 @@
+<div
+    class="Settings_MainContainer">
+    <h2>
+        {{ 'apps.account.settings.title' | translate }}
+    </h2>
+
+    <form [formGroup]="settingsForm">
+        <mat-form-field>
+            <mat-select 
+            [value]="translateService.currentLang" 
+            class="lang" 
+            [panelClass]="'language-select'"
+            placeholder="{{ 'shell.layout.profileNav.language.placeholder' | translate }}">
+            <mat-select-trigger>
+                <img 
+                mat-card-image 
+                [src]="'../../../../assets/images/flags/' + translateService.currentLang + '.png'" 
+                height="40px"
+                [ngStyle]="{backgroundColor: 'transparent'}"
+                width="40px"
+                alt="{{translateService.currentLang}} flag">
+            </mat-select-trigger>
+                <mat-option 
+                    *ngFor="let lang of translateService.getLangs()" 
+                    [value]="lang">
+                    <img 
+                        mat-card-image 
+                        [src]="'../../../../assets/images/flags/' + lang + '.png'" 
+                        height="32px"
+                        width="32px"
+                        alt="{{lang}} flag">
+                    {{lang}}
+
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>
+                {{ 'apps.account.settings.form.fields.userPass' | translate }}
+            </mat-label>
+            <input matInput id="password" name="password" formControlName="password"/>     
+        </mat-form-field>
+        <button mat-flat-button color="primary" [disabled]="!settingsForm.valid" (click)="updateSettings()">
+            {{ 'apps.account.settings.form.actions.submit' | translate }}
+        </button>
+    </form>
+</div>

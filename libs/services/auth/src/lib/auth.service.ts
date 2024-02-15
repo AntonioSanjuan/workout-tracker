@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, from, of } from 'rxjs';
-import { setAuthenticatedUserData, setAnonymousUserData } from '@workout-tracker/shared-store';
+import { fetchAuthenticatedUserData, fetchAnonymousUserData } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import firebase from 'firebase/compat/app/';
 import { Router } from '@angular/router';
@@ -37,14 +37,14 @@ export class AuthService {
     this.auth.credential.subscribe((credentials: firebase.auth.UserCredential | null) => {
       if(credentials) {        
         //que cojones es esto
-        let userCopy = JSON.parse(JSON.stringify(credentials.user));
-        this.store.dispatch(setAuthenticatedUserData({ 
+        const userCopy = JSON.parse(JSON.stringify(credentials.user));
+        this.store.dispatch(fetchAuthenticatedUserData({ 
           user: userCopy, 
           isNewUser: !!credentials.additionalUserInfo?.isNewUser 
         }))
         this.router.navigate([AppRoutes.Home])
       } else {
-        this.store.dispatch(setAnonymousUserData())
+        this.store.dispatch(fetchAnonymousUserData())
       }
     }) 
   }

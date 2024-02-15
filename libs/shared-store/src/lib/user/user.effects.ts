@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, setAnonymousUserData, setAuthenticatedUserData, setUserSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, fetchAnonymousUserData, fetchAuthenticatedUserData, setUserData, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
@@ -75,14 +75,14 @@ export class UserEffects {
     ))
 
     setAuthenticatedUserData$ = createEffect(() => this.actions$.pipe(
-        ofType(setAuthenticatedUserData),
+        ofType(fetchAuthenticatedUserData),
         switchMap(({ user, isNewUser}) =>
             (isNewUser ?
                 this.userSettingsService.setUserSettings(user.uid):
                 this.userSettingsService.getUserSettings(user.uid)
             ).pipe(
                 map((userSettings: UserSettings) => 
-                    setUserSuccess({ userSettings: userSettings})
+                    setUserData({ userSettings: userSettings})
                 )
 
             )
@@ -90,12 +90,12 @@ export class UserEffects {
     ))
 
     setAnonymousUserData$ = createEffect(() => this.actions$.pipe(
-        ofType(setAnonymousUserData),
+        ofType(fetchAnonymousUserData),
         switchMap(() =>
             this.userSettingsService.getAnonymousSettings()
             .pipe(
                 map((userSettings: UserSettings) => 
-                    setUserSuccess({ userSettings: userSettings})
+                    setUserData({ userSettings: userSettings})
                 )
 
             )
@@ -103,7 +103,7 @@ export class UserEffects {
     ))
 
     setUserSuccess$ = createEffect(() => this.actions$.pipe(
-        ofType(setUserSuccess),
+        ofType(setUserData),
         switchMap(() =>
             of(loadedApp({initialized: AppInit.ACCOUNT}))
         )

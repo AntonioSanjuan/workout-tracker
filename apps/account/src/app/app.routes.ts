@@ -34,6 +34,16 @@ export const appRoutes: Route[] = [
         ],    
         loadComponent: () =>
           import('./sign-up/sign-up.component').then((m) => m.SignUpComponent),
+      },
+      {
+        path: 'settings',
+        providers: [
+          importProvidersFrom(
+            EffectsModule.forFeature([])
+          )
+        ],    
+        loadComponent: () =>
+          import('./settings/settings.component').then((m) => m.SettingsComponent),
       }
     ]
 
