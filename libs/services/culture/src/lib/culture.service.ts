@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { TranslateService } from '@ngx-translate/core'
 // import { Store } from '@ngrx/store'
-import { first } from "rxjs";
+import { Observable, first } from "rxjs";
 // import { AppInit, loadedApp } from "@workout-tracker/shared-store";
 
 @Injectable()
@@ -17,11 +17,10 @@ export class CultureService {
     public initialize(): void {
         this.translateService.setDefaultLang(this.defaultLangCode);
         this.translateService.addLangs(this.acceptedLanguages);
-        // this.changeLanguage(this.getBrowserLanguage())
     }
 
-    public changeLanguage(lang: string) {
-        this.setCulture(lang);
+    public changeLanguage(lang: string): Observable<void> {
+        return this.setCulture(lang);
     }
     
     public getBrowserLanguage(): string {
@@ -41,11 +40,11 @@ export class CultureService {
         return langCode || this.defaultLangCode;
     }
 
-    private setCulture(cultureName: string) {
-        this.translateService.use(this.getLangCode(cultureName)).pipe(first())
-        .subscribe(() => {
+    private setCulture(cultureName: string): Observable<void> {
+        return this.translateService.use(this.getLangCode(cultureName)).pipe(first())
+        // .subscribe(() => {
             // this.store.dispatch(loadedApp({ initialized: AppInit.UI }))
-        });
+        // });
     }
 
     private setDarkMode(darkMode: boolean) {

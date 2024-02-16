@@ -55,7 +55,6 @@ export class UserEffects {
     signUpRequestSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(signUpRequestSuccess),
         switchMap(() =>
-        //to-do -> replace for showSuccess(message) and delegate the AppInit.ACCOUNT into new action FETCH_USER_DATA
             of(loadedApp({initialized: AppInit.ACCOUNT}))
         )
     ))
@@ -71,7 +70,6 @@ export class UserEffects {
         ofType(logOutRequest),
         switchMap(() =>
             this.authService.logOut().pipe(
-        //to-do -> replace for showSuccess(message) and delegate the AppInit.ACCOUNT into new action FETCH_USER_DATA
                 map(() => unloadedApp({uninitialized: AppInit.ACCOUNT})),
             )
         )
@@ -108,7 +106,7 @@ export class UserEffects {
     setUserData$ = createEffect(() => this.actions$.pipe(
         ofType(setUserData),
         switchMap(() =>
-            of(loadedApp({initialized: AppInit.ACCOUNT}))
+            of(loadedApp({initialized: AppInit.UI}))
         )
     ))
 
