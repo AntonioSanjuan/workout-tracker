@@ -3,7 +3,7 @@ import { UserSettingsService } from './user-settings.service';
 import { UserSettings } from '@workout-tracker/models';
 
 export const userSettingsServiceMock: Partial<UserSettingsService> = {
-  setUserSettingsSuccess: () => of({} as UserSettings),
+  setUserSettings: () => of({} as UserSettings),
   getUserSettings: () => of({} as UserSettings),
   getAnonymousSettings: () => of({} as UserSettings),
   updateAnonymousSettings: () => of({} as UserSettings),

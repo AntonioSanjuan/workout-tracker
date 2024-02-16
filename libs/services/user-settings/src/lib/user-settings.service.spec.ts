@@ -7,6 +7,7 @@ import { CultureService } from '@workout-tracker/services/culture';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserSettings } from '@workout-tracker/models';
 import firebase from 'firebase/compat/app/';
+import { of } from 'rxjs';
 
 const mock = {
   collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>)
@@ -56,44 +57,211 @@ describe('UserSettingsService', () => {
         jest.spyOn(cultureService, 'getBrowserIsDarkMode').mockReturnValue(browserIsDarkModeSut)  
       })
 
-      it('getAnonymousSettings should request cultureService changeLanguage function', () => {
+      it('getAnonymousSettings should request cultureService changeLanguage function', (done) => {
         const changeLanguageSpy = jest.spyOn(cultureService, 'changeLanguage')
 
-        service.getAnonymousSettings()
-
-        expect(changeLanguageSpy).toHaveBeenCalledWith(browserLanguageSut)
+        service.getAnonymousSettings().subscribe((asdasd) => {
+          expect(changeLanguageSpy).toHaveBeenCalledWith(browserLanguageSut)
+          done()
+        })
       })
 
-      it('getAnonymousSettings should return browser language & darkmode', () => {
-        const changeLanguageSpy = jest.spyOn(cultureService, 'changeLanguage')
+      it('getAnonymousSettings should request cultureService changeDarkMode function', (done) => {
+        const changeDarkModeSpy = jest.spyOn(cultureService, 'changeDarkMode')
 
+        service.getAnonymousSettings().subscribe((asdasd) => {
+          expect(changeDarkModeSpy).toHaveBeenCalledWith(browserIsDarkModeSut)
+          done()
+        })
+      })
+
+      it('getAnonymousSettings should return browser language & darkmode', (done) => {
         service.getAnonymousSettings().subscribe((userSettings: UserSettings) => {
           expect(userSettings.language).toEqual(browserLanguageSut)
           expect(userSettings.darkMode).toEqual(browserIsDarkModeSut)
+          done()
         })
-
-        expect(changeLanguageSpy).toHaveBeenCalledWith(browserLanguageSut)
       })
     })
 
     describe('getUserSettings', () => {
-      const userSettingsSut = {
-        language: 'testing lang'
+      const userIdSut = 'asd'
+      const storedUserSettingsSut = {
+        language: 'testing lang',
+        darkMode: true
       } as UserSettings
 
       beforeEach(() => {
         mock.collection.mockReturnValue({
           doc: jest.fn().mockReturnValue({
-            get: jest.fn().mockReturnValue({
-                data: jest.fn().mockReturnValue(userSettingsSut)
-            })
+            get: jest.fn().mockReturnValue(of(
+              {
+                data: jest.fn().mockReturnValue(storedUserSettingsSut)
+              } as Partial<firebase.firestore.DocumentSnapshot<UserSettings>>
+            ))
           })
         })
       })
 
-      it('getUserSettings should return userSettings stored into Firebase', () => {
-        service.getUserSettings('asd').subscribe((userSettings) => {
+      it('getUserSettings should request cultureService changeLanguage function', (done) => {
+        const changeLanguageSpy = jest.spyOn(cultureService, 'changeLanguage')
+
+        service.getUserSettings(userIdSut).subscribe(() => {
+          expect(changeLanguageSpy).toHaveBeenCalledWith(storedUserSettingsSut.language)
+          done()
+        })
+      })
+
+      it('getUserSettings should request cultureService changeDarkMode function', (done) => {
+        const changeDarkModeSpy = jest.spyOn(cultureService, 'changeDarkMode')
+
+        service.getUserSettings(userIdSut).subscribe((asdasd) => {
+          expect(changeDarkModeSpy).toHaveBeenCalledWith(storedUserSettingsSut.darkMode)
+          done()
+        })
+      })
+
+      it('getUserSettings should return userSettings stored into Firebase collection', (done) => {
+        service.getUserSettings(userIdSut).subscribe((userSettings) => {
+          expect(userSettings).toEqual(storedUserSettingsSut)
+          done()
+        })
+      })
+    })
+
+    describe('setUserSettings', () => {
+      const userIdSut = 'asd'
+      const browserLanguageSut = 'browserLang';
+      const browserIsDarkModeSut = true
+
+      const setFunction = jest.fn().mockReturnValue(of({}))
+      beforeEach(() => {
+        jest.spyOn(cultureService, 'getBrowserLanguage').mockReturnValue(browserLanguageSut)  
+        jest.spyOn(cultureService, 'getBrowserIsDarkMode').mockReturnValue(browserIsDarkModeSut)  
+
+        mock.collection.mockReturnValue({
+          doc: jest.fn().mockReturnValue({
+            set: setFunction
+          })
+        })
+      })
+
+      it('setUserSettings should request cultureService changeLanguage function', (done) => {
+        const changeLanguageSpy = jest.spyOn(cultureService, 'changeLanguage')
+
+        service.setUserSettings(userIdSut).subscribe(() => {
+          expect(changeLanguageSpy).toHaveBeenCalledWith(browserLanguageSut)
+          done()
+        })
+      })
+
+      it('setUserSettings should request cultureService changeDarkMode function', (done) => {
+        const changeDarkModeSpy = jest.spyOn(cultureService, 'changeDarkMode')
+
+        service.setUserSettings(userIdSut).subscribe(() => {
+          expect(changeDarkModeSpy).toHaveBeenCalledWith(browserIsDarkModeSut)
+          done()
+        })
+      })
+
+      it('setUserSettings should return userSettings from browser', (done) => {
+        service.setUserSettings(userIdSut).subscribe((userSettings) => {
+          expect(userSettings).toEqual({
+            language: browserLanguageSut,
+            darkMode: browserIsDarkModeSut
+          } as UserSettings)
+          done()
+        })
+      })
+
+      it('setUserSettings should request set into Firebase collection', (done) => {
+        service.setUserSettings(userIdSut).subscribe(() => {
+          expect(setFunction).toHaveBeenCalledWith({
+            language: browserLanguageSut,
+            darkMode: browserIsDarkModeSut
+          } as UserSettings, {})
+          done()
+        })
+      })
+    })
+
+    describe('updateAnonymousSettings', () => {
+      const userSettingsSut = {
+        language: 'test lang',
+        darkMode: true
+      } as UserSettings
+
+      it('updateAnonymousSettings should request cultureService changeLanguage function', (done) => {
+        const changeLanguageSpy = jest.spyOn(cultureService, 'changeLanguage')
+
+        service.updateAnonymousSettings(userSettingsSut).subscribe(() => {
+          expect(changeLanguageSpy).toHaveBeenCalledWith(userSettingsSut.language)
+          done()
+        })
+      })
+
+      it('updateAnonymousSettings should request cultureService changeDarkMode function', (done) => {
+        const changeDarkModeSpy = jest.spyOn(cultureService, 'changeDarkMode')
+
+        service.updateAnonymousSettings(userSettingsSut).subscribe(() => {
+          expect(changeDarkModeSpy).toHaveBeenCalledWith(userSettingsSut.darkMode)
+          done()
+        })
+      })
+
+      it('updateAnonymousSettings should return userSettings from browser', (done) => {
+        service.updateAnonymousSettings(userSettingsSut).subscribe((userSettings) => {
           expect(userSettings).toEqual(userSettingsSut)
+          done()
+        })
+      })
+    })
+
+    describe('updateUserSettings', () => {
+      const userIdSut = 'asd'
+      const userSettingsSut = {
+        language: 'test lang',
+        darkMode: true
+      } as UserSettings
+
+      const updateFunction = jest.fn().mockReturnValue(of({}))
+      beforeEach(() => {
+        mock.collection.mockReturnValue({
+          doc: jest.fn().mockReturnValue({
+            update: updateFunction
+          })
+        })
+      })
+
+      it('updateUserSettings should request cultureService changeLanguage function', (done) => {
+        const changeLanguageSpy = jest.spyOn(cultureService, 'changeLanguage')
+
+        service.updateUserSettings(userIdSut, userSettingsSut).subscribe(() => {
+          expect(changeLanguageSpy).toHaveBeenCalledWith(userSettingsSut.language)
+          done()
+        })
+      })
+
+      it('updateUserSettings should request cultureService changeDarkMode function', (done) => {
+        const changeDarkModeSpy = jest.spyOn(cultureService, 'changeDarkMode')
+
+        service.updateUserSettings(userIdSut, userSettingsSut).subscribe(() => {
+          expect(changeDarkModeSpy).toHaveBeenCalledWith(userSettingsSut.darkMode)
+          done()
+        })
+      })
+
+      it('updateUserSettings should return input userSettings', (done) => {
+        service.updateUserSettings(userIdSut, userSettingsSut).subscribe((userSettings) => {
+          expect(userSettings).toEqual(userSettingsSut)
+          done()
+        })
+      })
+
+      it('updateUserSettings should request set into Firebase collection', (done) => {
+        service.updateUserSettings(userIdSut, userSettingsSut).subscribe(() => {
+          expect(updateFunction).toHaveBeenCalledWith(userSettingsSut)
+          done()
         })
       })
     })

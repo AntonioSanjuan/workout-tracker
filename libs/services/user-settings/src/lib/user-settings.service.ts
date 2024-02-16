@@ -13,56 +13,54 @@ export class UserSettingsService {
         return this.firebaseDataBase.collection('user').doc(userId)
     }
 
-    private getInitialLanguage(): string {
-        return this.cultureService.getBrowserLanguage()
+    private applyUserSettings(userSettings: UserSettings): void {
+        this.cultureService.changeLanguage(userSettings.language)
+        this.cultureService.changeDarkMode(userSettings.darkMode)
     }
 
-    private getInitialDarkMode(): boolean {
-        return this.cultureService.getBrowserIsDarkMode()
+    private getBrowserSettings(): UserSettings {
+        return { 
+            language: this.cultureService.getBrowserLanguage(),
+            darkMode: this.cultureService.getBrowserIsDarkMode()
+        } as UserSettings
     }
 
     public getAnonymousSettings(): Observable<UserSettings> {
-        const browserLanguage = this.getInitialLanguage()
-        this.cultureService.changeLanguage(browserLanguage)
+        const browserSettings = this.getBrowserSettings()
+        this.applyUserSettings(browserSettings)
 
-        return of({
-            language: this.cultureService.getBrowserLanguage(),
-            darkMode: this.cultureService.getBrowserIsDarkMode()
-        } as UserSettings)
+        return of(browserSettings)
     }
 
     public getUserSettings(userId: string): Observable<UserSettings> {
         return this.getUserSettingsDocRef(userId).get().pipe(
             map((userSettingsResp: firebase.firestore.DocumentSnapshot<UserSettings>) => {
                 const userSettings = userSettingsResp.data() as UserSettings
-                this.cultureService.changeLanguage(userSettings.language)
-                
-                return userSettingsResp.data() as UserSettings
+                this.applyUserSettings(userSettings)
+                return userSettings;
             })
         )
     }
 
-    public setUserSettingsSuccess(userId: string): Observable<UserSettings> {
-        const initialUserSettings: UserSettings = {
-            language: this.getInitialLanguage(),
-            darkMode: this.getInitialDarkMode()
-        }
+    public setUserSettings(userId: string): Observable<UserSettings> {
+        const initialUserSettings: UserSettings = this.getBrowserSettings()
         return from(this.getUserSettingsDocRef(userId).set(initialUserSettings, {} as firebase.firestore.SetOptions)).pipe(
             map(() => {
+                this.applyUserSettings(initialUserSettings)
                 return initialUserSettings
             })
         )
     }
 
     public updateAnonymousSettings(userSettings: UserSettings): Observable<UserSettings> {
-        this.cultureService.changeLanguage(userSettings.language)
-        this.cultureService.changeDarkMode(userSettings.darkMode)
+        this.applyUserSettings(userSettings)
         return of(userSettings)
     }
 
     public updateUserSettings(userId: string, userSettings: UserSettings): Observable<UserSettings> {
         return from(this.getUserSettingsDocRef(userId).update(userSettings)).pipe(
             map(() => {
+                this.applyUserSettings(userSettings)
                 return userSettings
             })
         )

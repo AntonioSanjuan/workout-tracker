@@ -79,7 +79,7 @@ export class UserEffects {
         ofType(authenticatedUserDataRequest),
         switchMap(({ user, isNewUser}) =>
             (isNewUser ?
-                this.userSettingsService.setUserSettingsSuccess(user.uid):
+                this.userSettingsService.setUserSettings(user.uid):
                 this.userSettingsService.getUserSettings(user.uid)
             ).pipe(
                 map((userSettings: UserSettings) => 
