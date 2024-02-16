@@ -174,7 +174,7 @@ describe('UserSettingsService', () => {
         })
       })
 
-      it('setUserSettings should request set into Firebase collection', (done) => {
+      it('setUserSettings should request set userSettings into Firebase collection', (done) => {
         service.setUserSettings(userIdSut).subscribe(() => {
           expect(setFunction).toHaveBeenCalledWith({
             language: browserLanguageSut,
@@ -209,7 +209,7 @@ describe('UserSettingsService', () => {
         })
       })
 
-      it('updateAnonymousSettings should return userSettings from browser', (done) => {
+      it('updateAnonymousSettings should return input userSettings', (done) => {
         service.updateAnonymousSettings(userSettingsSut).subscribe((userSettings) => {
           expect(userSettings).toEqual(userSettingsSut)
           done()
