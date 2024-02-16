@@ -42,9 +42,6 @@ export class CultureService {
 
     private setCulture(cultureName: string): Observable<void> {
         return this.translateService.use(this.getLangCode(cultureName)).pipe(first())
-        // .subscribe(() => {
-            // this.store.dispatch(loadedApp({ initialized: AppInit.UI }))
-        // });
     }
 
     private setDarkMode(darkMode: boolean) {

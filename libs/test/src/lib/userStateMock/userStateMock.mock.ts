@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { USER_FEATURE_KEY, userInitialState } from "@workout-tracker/shared-store";
 
 export const userStateMock = {

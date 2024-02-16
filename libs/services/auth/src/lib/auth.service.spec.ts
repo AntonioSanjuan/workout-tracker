@@ -1,12 +1,12 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { AuthService } from './auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { userInitialState } from '@workout-tracker/shared-store';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import firebase from 'firebase/compat/app';
-
+import { userStateMock } from '@workout-tracker/test'
 describe('AuthService', () => {
   let service: AuthService;
   let fireAuth: AngularFireAuth;
@@ -23,7 +23,9 @@ describe('AuthService', () => {
         { provide: AngularFireAuth, useValue: mock },
         AuthService,
         provideMockStore({
-          initialState: userInitialState
+          initialState: {
+            ...userStateMock
+          }
         }),
       ],
       imports: [
