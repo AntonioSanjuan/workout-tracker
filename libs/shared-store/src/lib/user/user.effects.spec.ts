@@ -190,14 +190,14 @@ describe('UserEffects', () => {
     describe('when authenticatedUserDataRequest is dispatched', () => {
       describe('if its new user', () => {
         beforeEach(() => { 
-          jest.spyOn(userSettingsService, 'setUserSettingsSuccess').mockReturnValue(of(userSettingsSut))
+          jest.spyOn(userSettingsService, 'setUserSettings').mockReturnValue(of(userSettingsSut))
           actions = of(authenticatedUserDataRequest({
             user: user,
             isNewUser:true
           }))
         })
         it('should return setUserSettingsSuccess', async () => {
-          const setUserSettingsSpy = jest.spyOn(userSettingsService, 'setUserSettingsSuccess')
+          const setUserSettingsSpy = jest.spyOn(userSettingsService, 'setUserSettings')
           const result = await firstValueFrom(effects.authenticatedUserDataRequest$)
           expect(setUserSettingsSpy).toHaveBeenCalledWith(user.uid)
           expect(result).toEqual(setUserSettingsSuccess({ userSettings: userSettingsSut}))
