@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
-import { Observable, firstValueFrom, of, throwError } from 'rxjs';
+import { EMPTY, Observable, firstValueFrom, isEmpty, of, throwError } from 'rxjs';
 import { UserEffects } from './user.effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
 import { anonymousUserDataRequest, authenticatedUserDataRequest, logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, setUserSettingsSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from './user.actions';
-import { AppInit, loadedApp, unloadedApp } from '../ui';
+import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
 import { UserSettingsService, userSettingsServiceMock } from '@workout-tracker/services/user-settings';
@@ -245,12 +245,29 @@ describe('UserEffects', () => {
       darkMode: true
     } as UserSettings
 
-    beforeEach(() => { 
-      actions = of(setUserSettingsSuccess({ userSettings: userSettingsSut}))
+    describe('if UI app its already loaded', () => {
+      beforeEach(() => { 
+        actions = of(setUserSettingsSuccess({ userSettings: userSettingsSut}))
+        store.overrideSelector(getIsUILoadedApp, true)
+      })
+      it('should return EMPTY', (done) => {
+        effects.setUserSettingsSuccess$.
+        pipe(isEmpty()).subscribe( (res) => {
+          expect(res).toEqual(true)
+          done()
+         });
+      })
     })
-    it('should return loadedApp AppInit.UI', async () => {
-      const result = await firstValueFrom(effects.setUserSettingsSuccess$)
-      expect(result).toEqual(loadedApp({initialized: AppInit.UI}))
+
+    describe('if UI app its not already loaded', () => {
+      beforeEach(() => { 
+        actions = of(setUserSettingsSuccess({ userSettings: userSettingsSut}))
+        store.overrideSelector(getIsUILoadedApp, false)
+      })
+      it('should return loadedApp AppInit.UI', async () => {
+        const result = await firstValueFrom(effects.setUserSettingsSuccess$)
+        expect(result).toEqual(loadedApp({initialized: AppInit.UI}))
+      })
     })
   })
 

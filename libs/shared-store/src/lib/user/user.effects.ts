@@ -2,8 +2,8 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, anonymousUserDataRequest, authenticatedUserDataRequest, setUserSettingsSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from "./user.actions";
-import { catchError, map, of, switchMap } from "rxjs";
-import { AppInit, loadedApp, unloadedApp } from "../ui";
+import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
+import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { UserSettingsService } from '@workout-tracker/services/user-settings'
@@ -105,8 +105,13 @@ export class UserEffects {
 
     setUserSettingsSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(setUserSettingsSuccess),
-        switchMap(() =>
-            of(loadedApp({initialized: AppInit.UI}))
+        concatLatestFrom(() => this.store.select(getIsUILoadedApp)),
+        switchMap(([_, isUILoadedApp]) =>
+            iif(
+                () => !isUILoadedApp,
+                of(loadedApp({initialized: AppInit.UI})),
+                EMPTY
+            )
         )
     ))
 
