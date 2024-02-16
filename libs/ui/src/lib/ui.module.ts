@@ -9,11 +9,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    MatFormFieldModule,
     MaterialModule,
     LetDirective,
     PushPipe,
@@ -26,6 +29,7 @@ import { MatOptionModule } from '@angular/material/core';
   exports: [
     CommonModule,
     FormsModule,
+    MatFormFieldModule,
     MaterialModule,
     LetDirective,
     PushPipe,
@@ -34,6 +38,7 @@ import { MatOptionModule } from '@angular/material/core';
     MatProgressSpinnerModule,
     MatCardModule,
     MatSelectModule,
+    MatCheckboxModule,
     MatOptionModule,
     MatSnackBarModule
   ]

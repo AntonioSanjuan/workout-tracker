@@ -25,6 +25,7 @@
             width: 100%;
 
             mat-select {
+                
                 background-color: transparent !important;
                
                 .mat-mdc-select-trigger {
@@ -37,7 +38,11 @@
                         border: 1px solid black;
                         border-radius: 50%;
                     }
-    
+                    .mat-mdc-select-value {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
                     .mat-mdc-select-arrow-wrapper {
                         display: none;
                     }
@@ -47,9 +52,5 @@
                 }
             }
         }
-    }
-    
-    a {
-        margin-top: 10px;
     }
 }
