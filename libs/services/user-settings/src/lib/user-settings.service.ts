@@ -48,7 +48,7 @@ export class UserSettingsService {
             darkMode: this.getInitialDarkMode()
         }
         return from(this.getUserSettingsDocRef(userId).set(initialUserSettings, {} as firebase.firestore.SetOptions)).pipe(
-            map((_) => {
+            map(() => {
                 return initialUserSettings
             })
         )
@@ -62,7 +62,7 @@ export class UserSettingsService {
 
     public updateUserSettings(userId: string, userSettings: UserSettings): Observable<UserSettings> {
         return from(this.getUserSettingsDocRef(userId).update(userSettings)).pipe(
-            map((_) => {
+            map(() => {
                 return userSettings
             })
         )

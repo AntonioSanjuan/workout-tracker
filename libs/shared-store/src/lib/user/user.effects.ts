@@ -2,13 +2,13 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, fetchAnonymousUserData, fetchAuthenticatedUserData, setUserData, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from "./user.actions";
-import { catchError, map, of, switchMap, tap } from "rxjs";
+import { catchError, map, of, switchMap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { UserSettingsService } from '@workout-tracker/services/user-settings'
 import { UserSettings } from "@workout-tracker/models";
-import { getIsUserLogged, getUser } from "./user.selectors";
+import { getUser } from "./user.selectors";
 import { Store } from "@ngrx/store";
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UserEffects {
         ofType(loginRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.logIn(userEmail, userPass).pipe(
-                map((_) => loginRequestSuccess()),
+                map(() => loginRequestSuccess()),
                 catchError((err: firebase.FirebaseError) => of(loginRequestError({ error: err })))
             )
         )
@@ -46,7 +46,7 @@ export class UserEffects {
         ofType(signUpRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.signUp(userEmail, userPass).pipe(
-                map((_) => signUpRequestSuccess()),
+                map(() => signUpRequestSuccess()),
                 catchError((err: firebase.FirebaseError) => of(signUpRequestError({ error: err })))
             )
         )
@@ -72,7 +72,7 @@ export class UserEffects {
         switchMap(() =>
             this.authService.logOut().pipe(
         //to-do -> replace for showSuccess(message) and delegate the AppInit.ACCOUNT into new action FETCH_USER_DATA
-                map((_) => unloadedApp({uninitialized: AppInit.ACCOUNT})),
+                map(() => unloadedApp({uninitialized: AppInit.ACCOUNT})),
             )
         )
     ))

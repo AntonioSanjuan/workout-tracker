@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { AuthPersistanceService } from '@workout-tracker/services/auth-persistance';
 import { CultureService } from '@workout-tracker/services/culture';
 
 @Component({
@@ -8,8 +9,10 @@ import { CultureService } from '@workout-tracker/services/culture';
 })
 export class AppComponent implements OnInit {
   private cultureService: CultureService = inject(CultureService)
+  private authPersistanceService: AuthPersistanceService = inject(AuthPersistanceService)
 
   ngOnInit(): void {
       this.cultureService.initialize()
+      this.authPersistanceService.initialize()
   }
 }

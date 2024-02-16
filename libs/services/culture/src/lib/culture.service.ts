@@ -1,14 +1,14 @@
 import { Injectable, inject } from "@angular/core";
 import { TranslateService } from '@ngx-translate/core'
-import { Store } from '@ngrx/store'
+// import { Store } from '@ngrx/store'
 import { first } from "rxjs";
-import { AppInit, loadedApp } from "@workout-tracker/shared-store";
+// import { AppInit, loadedApp } from "@workout-tracker/shared-store";
 
 @Injectable()
 export class CultureService {
     private readonly defaultLangCode: string = "ES-ES"
     private translateService: TranslateService = inject(TranslateService)
-    private store: Store = inject(Store)
+    // private store: Store = inject(Store)
 
     private readonly acceptedLanguages: string[] = [ 'EN-GB', 'ES-ES' ];
       
@@ -44,7 +44,7 @@ export class CultureService {
     private setCulture(cultureName: string) {
         this.translateService.use(this.getLangCode(cultureName)).pipe(first())
         .subscribe(() => {
-            this.store.dispatch(loadedApp({ initialized: AppInit.UI }))
+            // this.store.dispatch(loadedApp({ initialized: AppInit.UI }))
         });
     }
 
