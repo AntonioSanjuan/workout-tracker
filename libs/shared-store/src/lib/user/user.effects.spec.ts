@@ -5,7 +5,7 @@ import { UserEffects } from './user.effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
-import { fetchAnonymousUserDataRequest, fetchAuthenticatedUserDataRequest, logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, setUserSettingsSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from './user.actions';
+import { anonymousUserDataRequest, authenticatedUserDataRequest, logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, setUserSettingsSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from './user.actions';
 import { AppInit, loadedApp, unloadedApp } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
@@ -180,25 +180,25 @@ describe('UserEffects', () => {
     })
   });
 
-  describe('fetchAuthenticatedUserDataRequest$', () => {
+  describe('authenticatedUserDataRequest$', () => {
     const user =  { uid: 'testUID'} as firebase.User
 
     const userSettingsSut = {
       language: 'langTest',
       darkMode: true
     } as UserSettings
-    describe('when fetchAuthenticatedUserDataRequest is dispatched', () => {
+    describe('when authenticatedUserDataRequest is dispatched', () => {
       describe('if its new user', () => {
         beforeEach(() => { 
           jest.spyOn(userSettingsService, 'setUserSettingsSuccess').mockReturnValue(of(userSettingsSut))
-          actions = of(fetchAuthenticatedUserDataRequest({
+          actions = of(authenticatedUserDataRequest({
             user: user,
             isNewUser:true
           }))
         })
         it('should return setUserSettingsSuccess', async () => {
           const setUserSettingsSpy = jest.spyOn(userSettingsService, 'setUserSettingsSuccess')
-          const result = await firstValueFrom(effects.fetchAuthenticatedUserDataRequest$)
+          const result = await firstValueFrom(effects.authenticatedUserDataRequest$)
           expect(setUserSettingsSpy).toHaveBeenCalledWith(user.uid)
           expect(result).toEqual(setUserSettingsSuccess({ userSettings: userSettingsSut}))
         })
@@ -207,21 +207,21 @@ describe('UserEffects', () => {
       describe('if its not new user', () => {
         beforeEach(() => { 
           jest.spyOn(userSettingsService, 'getUserSettings').mockReturnValue(of(userSettingsSut))
-          actions = of(fetchAuthenticatedUserDataRequest({
+          actions = of(authenticatedUserDataRequest({
             user: user,
             isNewUser:false
           }))
         })
         it('should return setUserSettingsSuccess', async () => {
           const getUserSettingsSpy = jest.spyOn(userSettingsService, 'getUserSettings')
-          const result = await firstValueFrom(effects.fetchAuthenticatedUserDataRequest$)
+          const result = await firstValueFrom(effects.authenticatedUserDataRequest$)
           expect(getUserSettingsSpy).toHaveBeenCalledWith(user.uid)
           expect(result).toEqual(setUserSettingsSuccess({ userSettings: userSettingsSut}))
         })
       })
     })
   })
-  describe('when fetchAnonymousUserDataRequest is dispatched', () => {
+  describe('when anonymousUserDataRequest is dispatched', () => {
     const userSettingsSut = {
       language: 'langTest',
       darkMode: true
@@ -229,11 +229,11 @@ describe('UserEffects', () => {
 
     beforeEach(() => { 
       jest.spyOn(userSettingsService, 'getAnonymousSettings').mockReturnValue(of(userSettingsSut))
-      actions = of(fetchAnonymousUserDataRequest())
+      actions = of(anonymousUserDataRequest())
     })
     it('should return setUserSettingsSuccess', async () => {
       const getAnonymousSettingsSpy = jest.spyOn(userSettingsService, 'getAnonymousSettings')
-      const result = await firstValueFrom(effects.fetchAnonymousUserDataRequest$)
+      const result = await firstValueFrom(effects.anonymousUserDataRequest$)
       expect(getAnonymousSettingsSpy).toHaveBeenCalledWith()
       expect(result).toEqual(setUserSettingsSuccess({ userSettings: userSettingsSut}))
     })
