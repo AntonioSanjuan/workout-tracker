@@ -7,19 +7,19 @@ import { endRequest, startRequest } from "../ui";
 export class RequestEffects {
     private actions$ = inject(Actions);
 
-    // private initRequest$ = createEffect(() => 
-    //     this.actions$.pipe(
-    //         filter(action => 
-    //              action.type.endsWith('Request')
-    //         ),
-    //         concatMap(() => of(startRequest()))
-    //     )
-    // );
-    // private endRequest$ = createEffect(() => 
-    //     this.actions$.pipe(
-    //         filter(action => 
-    //              action.type.endsWith('Success') || action.type.endsWith('Error')),
-    //         concatMap(() => of(endRequest()))
-    //     )
-    // );
+    private initRequest$ = createEffect(() => 
+        this.actions$.pipe(
+            filter(action => 
+                 action.type.endsWith('Request')
+            ),
+            concatMap(() => of(startRequest()))
+        )
+    );
+    private endRequest$ = createEffect(() => 
+        this.actions$.pipe(
+            filter(action => 
+                 action.type.endsWith('Success') || action.type.endsWith('Error')),
+            concatMap(() => of(endRequest()))
+        )
+    );
 }
