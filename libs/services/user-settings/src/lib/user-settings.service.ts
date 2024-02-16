@@ -42,7 +42,7 @@ export class UserSettingsService {
         )
     }
 
-    public setUserSettings(userId: string): Observable<UserSettings> {
+    public setUserSettingsSuccess(userId: string): Observable<UserSettings> {
         const initialUserSettings: UserSettings = {
             language: this.getInitialLanguage(),
             darkMode: this.getInitialDarkMode()

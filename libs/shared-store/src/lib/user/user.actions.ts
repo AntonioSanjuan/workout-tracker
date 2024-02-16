@@ -17,12 +17,12 @@ export const signUpRequestSuccess = createAction(SIGNUP_SUCCESS)
 export const SIGNUP_ERROR = 'SIGNUP Error'
 export const signUpRequestError = createAction(SIGNUP_ERROR, props<{ error: firebase.FirebaseError }>())
   
-export const FETCH_AUTHENTICATED_USER = 'FETCH_AUTHENTICATED_USER Request'
-export const fetchAuthenticatedUserData = createAction(FETCH_AUTHENTICATED_USER, props<{ user: firebase.User, isNewUser: boolean }>())
-export const FETCH_ANONYMOUS_USER = 'FETCH_ANONYMOUS_USER Request'
-export const fetchAnonymousUserData = createAction(FETCH_ANONYMOUS_USER)
-
-export const SET_USER_SETTINGS = 'SET_USER_SETTINGS Success'
-export const setUserSettings = createAction(SET_USER_SETTINGS, props<{ userSettings: UserSettings }>())
+export const FETCH_AUTHENTICATED_USER_REQUEST = 'FETCH_AUTHENTICATED_USER Request'
+export const fetchAuthenticatedUserDataRequest = createAction(FETCH_AUTHENTICATED_USER_REQUEST, props<{ user: firebase.User, isNewUser: boolean }>())
+export const FETCH_ANONYMOUS_USER_REQUEST = 'FETCH_ANONYMOUS_USER Request'
+export const fetchAnonymousUserDataRequest = createAction(FETCH_ANONYMOUS_USER_REQUEST)
 export const UPDATE_USER_SETTINGS = 'UPDATE_USER_SETTINGS Request'
 export const updateUserSettings = createAction(UPDATE_USER_SETTINGS, props<{ userSettings: UserSettings }>())
+
+export const SET_USER_SETTINGS_SUCCESS = 'SET_USER_SETTINGS Success'
+export const setUserSettingsSuccess = createAction(SET_USER_SETTINGS_SUCCESS, props<{ userSettings: UserSettings }>())

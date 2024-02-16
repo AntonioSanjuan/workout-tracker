@@ -3,14 +3,14 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { fetchAuthenticatedUserData, userInitialState } from '@workout-tracker/shared-store';
+import { fetchAuthenticatedUserDataRequest, userInitialState } from '@workout-tracker/shared-store';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import { BehaviorSubject } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { AppRoutes } from '@workout-tracker/models';
 import { AuthPersistanceService } from './auth-persistance.service';
-import { fetchAnonymousUserData } from '@workout-tracker/shared-store'
+import { fetchAnonymousUserDataRequest } from '@workout-tracker/shared-store'
 describe('AuthPersistanceService', () => {
   let service: AuthPersistanceService;
   let store: Store;
@@ -60,7 +60,7 @@ describe('AuthPersistanceService', () => {
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe(() => {
-          expect(dispatchSpy).toHaveBeenCalledWith(fetchAuthenticatedUserData({ user: userMock.user as firebase.User, isNewUser: true }))
+          expect(dispatchSpy).toHaveBeenCalledWith(fetchAuthenticatedUserDataRequest({ user: userMock.user as firebase.User, isNewUser: true }))
 
         })
       })
@@ -71,7 +71,7 @@ describe('AuthPersistanceService', () => {
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe(() => {
-          expect(dispatchSpy).toHaveBeenCalledWith(fetchAuthenticatedUserData({ user: userMock.user as firebase.User, isNewUser: false }))
+          expect(dispatchSpy).toHaveBeenCalledWith(fetchAuthenticatedUserDataRequest({ user: userMock.user as firebase.User, isNewUser: false }))
 
         })
       })
@@ -91,7 +91,7 @@ describe('AuthPersistanceService', () => {
       it('without user', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe(() => {
-          expect(dispatchSpy).toHaveBeenCalledWith(fetchAnonymousUserData())
+          expect(dispatchSpy).toHaveBeenCalledWith(fetchAnonymousUserDataRequest())
         })
       })
     })

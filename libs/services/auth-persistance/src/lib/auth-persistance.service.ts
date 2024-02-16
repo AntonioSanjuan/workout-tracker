@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { fetchAuthenticatedUserData, fetchAnonymousUserData } from '@workout-tracker/shared-store';
+import { fetchAuthenticatedUserDataRequest, fetchAnonymousUserDataRequest } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import firebase from 'firebase/compat/app/';
 import { Router } from '@angular/router';
@@ -27,13 +27,13 @@ export class AuthPersistanceService {
       if(credentials) {        
         //que cojones es esto
         const userCopy = JSON.parse(JSON.stringify(credentials.user));
-        this.store.dispatch(fetchAuthenticatedUserData({ 
+        this.store.dispatch(fetchAuthenticatedUserDataRequest({ 
           user: userCopy, 
           isNewUser: this.isNewUser(credentials)
         }))
         this.router.navigate([AppRoutes.Home])
       } else {
-        this.store.dispatch(fetchAnonymousUserData())
+        this.store.dispatch(fetchAnonymousUserDataRequest())
       }
     }) 
   }

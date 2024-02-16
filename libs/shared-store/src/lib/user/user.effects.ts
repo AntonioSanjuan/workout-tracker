@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, fetchAnonymousUserData, fetchAuthenticatedUserData, setUserSettings, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, fetchAnonymousUserDataRequest, fetchAuthenticatedUserDataRequest, setUserSettingsSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from "./user.actions";
 import { catchError, map, of, switchMap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
@@ -75,36 +75,36 @@ export class UserEffects {
         )
     ))
 
-    fetchAuthenticatedUserData$ = createEffect(() => this.actions$.pipe(
-        ofType(fetchAuthenticatedUserData),
+    fetchAuthenticatedUserDataRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(fetchAuthenticatedUserDataRequest),
         switchMap(({ user, isNewUser}) =>
             (isNewUser ?
-                this.userSettingsService.setUserSettings(user.uid):
+                this.userSettingsService.setUserSettingsSuccess(user.uid):
                 this.userSettingsService.getUserSettings(user.uid)
             ).pipe(
                 map((userSettings: UserSettings) => 
-                    setUserSettings({ userSettings: userSettings})
+                    setUserSettingsSuccess({ userSettings: userSettings})
                 )
 
             )
         )
     ))
 
-    fetchAnonymousUserData$ = createEffect(() => this.actions$.pipe(
-        ofType(fetchAnonymousUserData),
+    fetchAnonymousUserDataRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(fetchAnonymousUserDataRequest),
         switchMap(() =>
             this.userSettingsService.getAnonymousSettings()
             .pipe(
                 map((userSettings: UserSettings) => 
-                    setUserSettings({ userSettings: userSettings})
+                    setUserSettingsSuccess({ userSettings: userSettings})
                 )
 
             )
         )
     ))
 
-    setUserSettings$ = createEffect(() => this.actions$.pipe(
-        ofType(setUserSettings),
+    setUserSettingsSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(setUserSettingsSuccess),
         switchMap(() =>
             of(loadedApp({initialized: AppInit.UI}))
         )
@@ -119,7 +119,7 @@ export class UserEffects {
                 this.userSettingsService.updateAnonymousSettings(userSettings)
             ).pipe(
                 map((userSettings: UserSettings) => 
-                    setUserSettings({ userSettings: userSettings})
+                    setUserSettingsSuccess({ userSettings: userSettings})
                 )
 
             )
