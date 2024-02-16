@@ -1,8 +1,8 @@
 /* eslint-disable */
 export default {
-  displayName: 'services-auth-persistance',
+  displayName: 'libs/services/auth-persistance',
   preset: '../../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts', '../../../common-test-setup.ts'],
   coverageDirectory: '../../../coverage/libs/services/auth-persistance',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [

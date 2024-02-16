@@ -1,25 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { accountAppStateMock } from '../+state/test/accountStateMock/accountStateMock.mock';
-import { Store } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { signUpRequest } from '@workout-tracker/shared-store';
+import { getUserSettings, updateUserSettings } from '@workout-tracker/shared-store';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { appRoutes } from '../app.routes';
-import { RouterTestingModule } from '@angular/router/testing';
 import { SettingsComponent } from './settings.component';
-
+import { UserSettings } from '@workout-tracker/models';
+import { userStateMock } from '@workout-tracker/test'
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
-  let store: Store;
+  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
         provideMockStore({
           initialState: {
-            ...accountAppStateMock, 
+            ...accountAppStateMock,
+            ...userStateMock, 
           }
         }),
       ],
@@ -33,7 +32,7 @@ describe('SettingsComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsComponent);
-    store = TestBed.inject(Store)
+    store = TestBed.inject(MockStore)
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -45,39 +44,42 @@ describe('SettingsComponent', () => {
   })
 
   describe('Integration tests', () => {
-    describe('SignUp', () => {
-      it('signUp with valid form should dispatch signUpRequest', () => {
+    describe('Initialization (ngOnInit)', ()=> {
+      const userSettingsSut = {
+        language: 'lang test',
+        darkMode: false
+      } as UserSettings
+
+      beforeEach(() => {
+        store.overrideSelector(getUserSettings, userSettingsSut)
+        store.refreshState()
+      })
+
+      it('getUserSettings trigger should update settingsForm', () => {
+        expect(component.settingsForm.getRawValue().language).toEqual(userSettingsSut.language)
+        expect(component.settingsForm.getRawValue().darkMode).toEqual(userSettingsSut.darkMode)
+      })
+    })
+    describe('updateSettings', () => {
+      it('updateSettings should dispatch updateUserSettings', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
 
-        const userNameSut = 'username test';
-        const passwordSut = 'password test';
+        const languageSut = 'language test';
+        const darkModeSut = true;
 
         component.settingsForm.setValue({
-          userEmail: userNameSut,
-          password: passwordSut
+          language: languageSut,
+          darkMode: darkModeSut
         })
 
-        component.signUp()
+        component.updateSettings()
 
-        expect(dispatchSpy).toHaveBeenCalledWith(signUpRequest({
-          userEmail: userNameSut,
-          userPass: passwordSut
+        expect(dispatchSpy).toHaveBeenCalledWith(updateUserSettings({
+          userSettings: {
+            language: languageSut,
+            darkMode: darkModeSut
+          }
          })
-        )
-      })
-      it('signUp with invalid form should not dispatch signUpRequest', () => {
-        const dispatchSpy = jest.spyOn(store, 'dispatch')
-
-        const userNameSut = 'username test';
-
-        component.signUpForm.setValue({
-          userEmail: userNameSut,
-          password: null
-        })
-
-        component.signUp()
-
-        expect(dispatchSpy).not.toHaveBeenCalledWith(signUpRequest(expect.anything())
         )
       })
     });

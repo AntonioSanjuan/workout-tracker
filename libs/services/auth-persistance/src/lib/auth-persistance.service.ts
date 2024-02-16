@@ -14,7 +14,6 @@ export class AuthPersistanceService {
   private router: Router = inject(Router)
 
   public initialize() {
-    console.log("??")
     this.credentialListener()
   }
   
@@ -25,7 +24,6 @@ export class AuthPersistanceService {
   private credentialListener() {
     this.auth.credential.pipe(distinctUntilChanged())
     .subscribe((credentials: firebase.auth.UserCredential | null) => {
-      console.log("que pasa aqui")
       if(credentials) {        
         //que cojones es esto
         const userCopy = JSON.parse(JSON.stringify(credentials.user));

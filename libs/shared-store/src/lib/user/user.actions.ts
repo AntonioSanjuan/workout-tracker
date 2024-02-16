@@ -1,5 +1,4 @@
 import { createAction, props } from "@ngrx/store"
-import { User } from '@angular/fire/auth';
 import firebase from 'firebase/compat/app/';
 import { UserSettings } from "@workout-tracker/models";
 
@@ -23,7 +22,7 @@ export const fetchAuthenticatedUserData = createAction(FETCH_AUTHENTICATED_USER,
 export const FETCH_ANONYMOUS_USER = 'FETCH_ANONYMOUS_USER'
 export const fetchAnonymousUserData = createAction(FETCH_ANONYMOUS_USER)
 
-export const SET_USER_DATA = 'SET_USER_DATA'
-export const setUserData = createAction(SET_USER_DATA, props<{ userSettings: UserSettings }>())
+export const SET_USER_SETTINGS = 'SET_USER_SETTINGS'
+export const setUserSettings = createAction(SET_USER_SETTINGS, props<{ userSettings: UserSettings }>())
 export const UPDATE_USER_SETTINGS = 'UPDATE_USER_SETTINGS'
 export const updateUserSettings = createAction(UPDATE_USER_SETTINGS, props<{ userSettings: UserSettings }>())

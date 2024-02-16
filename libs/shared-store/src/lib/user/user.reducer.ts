@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { userInitialState } from "./models/userState.initialState";
 import { UserState } from "./models/userState.model";
-import { fetchAuthenticatedUserData, fetchAnonymousUserData, setUserData } from "./user.actions";
+import { fetchAuthenticatedUserData, fetchAnonymousUserData, setUserSettings } from "./user.actions";
 
 export const USER_FEATURE_KEY = 'user';
 
@@ -20,7 +20,7 @@ export const userReducer = createReducer(
         isLogged: false,
         settings: undefined
     })),
-    on(setUserData, (state: UserState, { userSettings }) => ({
+    on(setUserSettings, (state: UserState, { userSettings }) => ({
         ...state,
         settings: userSettings
     })),

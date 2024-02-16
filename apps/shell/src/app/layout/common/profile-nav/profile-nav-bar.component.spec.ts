@@ -5,8 +5,6 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
-import { CultureService } from '@workout-tracker/services/culture';
-import { AuthService } from '@workout-tracker/services/auth';
 import { userStateMock } from '@workout-tracker/test';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';

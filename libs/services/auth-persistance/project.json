@@ -1,5 +1,5 @@
 {
-  "name": "services-auth-persistance",
+  "name": "libs/services/auth-persistance",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/services/auth-persistance/src",
   "prefix": "workout-tracker",
