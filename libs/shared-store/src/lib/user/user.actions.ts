@@ -25,3 +25,5 @@ export const fetchAnonymousUserData = createAction(FETCH_ANONYMOUS_USER)
 
 export const SET_USER_DATA = 'SET_USER_DATA'
 export const setUserData = createAction(SET_USER_DATA, props<{ userSettings: UserSettings }>())
+export const UPDATE_USER_SETTINGS = 'UPDATE_USER_SETTINGS'
+export const updateUserSettings = createAction(UPDATE_USER_SETTINGS, props<{ userSettings: UserSettings }>())

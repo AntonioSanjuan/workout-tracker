@@ -10,7 +10,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatCardModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
     MatOptionModule,
     MatSnackBarModule
   ]

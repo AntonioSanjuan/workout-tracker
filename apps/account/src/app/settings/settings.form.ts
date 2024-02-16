@@ -8,5 +8,5 @@ export interface SettingsForm {
 
 export const settingsForm = (settings: UserSettings|undefined): FormGroup<SettingsForm> => new FormGroup<SettingsForm>({
   language: new FormControl<string|null>(settings?.language || null),
-  darkMode: new FormControl<boolean|null>(settings?.darkMode || null)
+  darkMode: new FormControl<boolean|null>(!!settings?.darkMode)
 })

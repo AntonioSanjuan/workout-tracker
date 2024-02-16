@@ -4,14 +4,16 @@
         {{ 'apps.account.settings.title' | translate }}
     </h2>
 
-    <form *ngIf="settingsForm" [formGroup]="settingsForm" (change)="updateSettings()">
+    <form *ngIf="settingsForm" [formGroup]="settingsForm">
         <mat-form-field>
             <mat-label>
                 {{ 'apps.account.settings.form.fields.language' | translate }}
             </mat-label>
             <mat-select 
+            id="language"
             name="language"
             formControlName="language"
+            (selectionChange)="updateSettings()"
             [value]="translateService.currentLang" 
             class="lang" >
                 <mat-select-trigger>
@@ -39,12 +41,22 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <div class="Settings_DarkModeContainer">
             <mat-label>
                 {{ 'apps.account.settings.form.fields.darkMode' | translate }}
             </mat-label>
-            <mat-checkbox>
-        </mat-checkbox>   
-        </mat-form-field>
+            <div class="Settings_DarkModeSlide">
+                <mat-icon>bedtime</mat-icon>
+                <mat-slide-toggle
+                    id="darkMode"
+                    name="darkMode"
+                    formControlName="darkMode"
+                    (change)="updateSettings()">
+                </mat-slide-toggle>
+                <mat-icon>
+                    brightness_7
+                </mat-icon>
+            </div>
+        </div>
     </form>
 </div>

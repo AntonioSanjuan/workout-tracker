@@ -28,6 +28,14 @@ export class CultureService {
         return this.getLangCode(this.translateService.getBrowserCultureLang() || this.defaultLangCode);
     }
 
+    public changeDarkMode(darkMode: boolean) {
+        this.setDarkMode(darkMode);
+    }
+    
+    public getBrowserIsDarkMode(): boolean {
+        return false
+    }
+
     private getLangCode(cultureCode: string): string {
         const langCode = this.acceptedLanguages.find(lang => lang === cultureCode.toUpperCase());
         return langCode || this.defaultLangCode;
@@ -38,5 +46,9 @@ export class CultureService {
         .subscribe(() => {
             this.store.dispatch(loadedApp({ initialized: AppInit.UI }))
         });
+    }
+
+    private setDarkMode(darkMode: boolean) {
+        console.log("setDarkMode", darkMode)
     }
 }

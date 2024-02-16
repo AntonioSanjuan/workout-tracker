@@ -1,18 +1,21 @@
 import { Injectable, inject } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, fetchAnonymousUserData, fetchAuthenticatedUserData, setUserData, signUpRequest, signUpRequestError, signUpRequestSuccess } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, fetchAnonymousUserData, fetchAuthenticatedUserData, setUserData, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserSettings } from "./user.actions";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { UserSettingsService } from '@workout-tracker/services/user-settings'
 import { UserSettings } from "@workout-tracker/models";
+import { getIsUserLogged, getUser } from "./user.selectors";
+import { Store } from "@ngrx/store";
 
 @Injectable()
 export class UserEffects {
     private authService: AuthService = inject(AuthService)
     private userSettingsService: UserSettingsService = inject(UserSettingsService)
+    private store: Store = inject(Store)
     private actions$ = inject(Actions);
 
     loginRequest$ = createEffect(() => this.actions$.pipe(
@@ -102,10 +105,26 @@ export class UserEffects {
         )
     ))
 
-    setUserSuccess$ = createEffect(() => this.actions$.pipe(
+    setUserData$ = createEffect(() => this.actions$.pipe(
         ofType(setUserData),
         switchMap(() =>
             of(loadedApp({initialized: AppInit.ACCOUNT}))
+        )
+    ))
+
+    updateUserData$ = createEffect(() => this.actions$.pipe(
+        ofType(updateUserSettings),
+        concatLatestFrom(() => this.store.select(getUser)),
+        switchMap(([{userSettings}, user]) =>
+            (user ?
+                this.userSettingsService.updateUserSettings(user.uid, userSettings):
+                this.userSettingsService.updateAnonymousSettings(userSettings)
+            ).pipe(
+                map((userSettings: UserSettings) => 
+                    setUserData({ userSettings: userSettings})
+                )
+
+            )
         )
     ))
 
