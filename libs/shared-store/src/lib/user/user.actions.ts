@@ -17,13 +17,22 @@ export const signUpRequestSuccess = createAction(SIGNUP_SUCCESS)
 export const SIGNUP_ERROR = 'SIGNUP Error'
 export const signUpRequestError = createAction(SIGNUP_ERROR, props<{ error: firebase.FirebaseError }>())
   
-export const AUTHENTICATED_USER_DATA_REQUEST = 'AUTHENTICATED_USER_DATA Request'
-export const authenticatedUserDataRequest = createAction(AUTHENTICATED_USER_DATA_REQUEST, props<{ user: firebase.User, isNewUser: boolean }>())
-export const ANONYMOUS_USER_DATA_REQUEST = 'ANONYMOUS_USER_DATA Request'
-export const anonymousUserDataRequest = createAction(ANONYMOUS_USER_DATA_REQUEST)
+export const SET_AUTHENTICATED_USER = 'SET AUTHENTICATED USER'
+export const setAuthenticatedUser = createAction(SET_AUTHENTICATED_USER, props<{ user: firebase.User, isNewUser: boolean }>())
+export const SET_ANONYMOUS_USER = 'SET ANONYMOUS USER'
+export const setAnonymousUser = createAction(SET_ANONYMOUS_USER)
 
-export const UPDATE_USER_SETTINGS = 'UPDATE_USER_SETTINGS Request'
-export const updateUserSettings = createAction(UPDATE_USER_SETTINGS, props<{ userSettings: UserSettings }>())
+export const GET_AUTHENTICATED_USER_DATA_REQUEST = 'GET AUTHENTICATED USER DATA Request'
+export const getAuthenticatedUserDataRequest = createAction(GET_AUTHENTICATED_USER_DATA_REQUEST, props<{ user: firebase.User, isNewUser: boolean }>())
+export const GET_AUTHENTICATED_USER_DATA_SUCCESS = 'GET AUTHENTICATED USER DATA Success'
+export const getAuthenticatedUserDataRequestSuccess = createAction(GET_AUTHENTICATED_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
+export const GET_ANONYMOUS_USER_DATA_REQUEST = 'GET ANONYMOUS USER DATA Request'
+export const getAnonymousUserDataRequest = createAction(GET_ANONYMOUS_USER_DATA_REQUEST)
+export const GET_ANONYMOUS_USER_DATA_SUCCESS = 'GET ANONYMOUS USER DATA Success'
+export const getAnonymousUserDataRequestSuccess = createAction(GET_ANONYMOUS_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
 
-export const SET_USER_SETTINGS_SUCCESS = 'SET_USER_SETTINGS Success'
-export const setUserSettingsSuccess = createAction(SET_USER_SETTINGS_SUCCESS, props<{ userSettings: UserSettings }>())
+export const UPDATE_USER_DATA_REQUEST = 'UPDATE USER DATA Request'
+export const updateUserDataRequest = createAction(UPDATE_USER_DATA_REQUEST, props<{ userSettings: UserSettings }>())
+export const UPDATE_USER_DATA_SUCCESS = 'UPDATE USER DATA Success'
+export const updateUserDataRequestSuccess = createAction(UPDATE_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
+

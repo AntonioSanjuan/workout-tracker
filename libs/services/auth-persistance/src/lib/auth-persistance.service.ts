@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { authenticatedUserDataRequest, anonymousUserDataRequest } from '@workout-tracker/shared-store';
+import { getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, setAnonymousUser, setAuthenticatedUser } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import firebase from 'firebase/compat/app/';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
-import { distinctUntilChanged } from 'rxjs';
+import {combineLatest, distinctUntilChanged, forkJoin, merge, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root'})
 export class AuthPersistanceService {
@@ -13,28 +13,33 @@ export class AuthPersistanceService {
   private auth: AngularFireAuth = inject(AngularFireAuth)
   private router: Router = inject(Router)
 
+  private user$ = this.auth.authState
+  private credentials$ = this.auth.credential
+
   public initialize() {
-    this.credentialListener()
+    combineLatest([this.user$, this.credentials$]).pipe(distinctUntilChanged()).subscribe(
+      ([user, credentials]) => {
+        console.log([user, credentials])
+        this.vitaminizedListener(user, credentials)
+      })
   }
   
-  private isNewUser(userCredential: firebase.auth.UserCredential):boolean {
-    return !!userCredential.additionalUserInfo?.isNewUser
+  private isNewUser(userCredential: firebase.auth.UserCredential|null):boolean {
+    return !!userCredential?.additionalUserInfo?.isNewUser
   }
 
-  private credentialListener() {
-    this.auth.credential.pipe(distinctUntilChanged())
-    .subscribe((credentials: firebase.auth.UserCredential | null) => {
-      if(credentials) {        
-        //que cojones es esto
-        const userCopy = JSON.parse(JSON.stringify(credentials.user));
-        this.store.dispatch(authenticatedUserDataRequest({ 
-          user: userCopy, 
-          isNewUser: this.isNewUser(credentials)
-        }))
-        this.router.navigate([AppRoutes.Home])
-      } else {
-        this.store.dispatch(anonymousUserDataRequest())
-      }
-    }) 
+  private vitaminizedListener(user: firebase.User | null, credential: firebase.auth.UserCredential | null) {
+    if(user) {
+      const userCopy = JSON.parse(JSON.stringify(user));
+      this.store.dispatch(setAuthenticatedUser({ 
+        user: userCopy, 
+        isNewUser: this.isNewUser(credential)
+      }))
+      this.router.navigate([AppRoutes.Home])
+    }
+
+    if(!user) {
+      this.store.dispatch(setAnonymousUser())
+    }
   }
 }

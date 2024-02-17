@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { accountAppStateMock } from '../+state/test/accountStateMock/accountStateMock.mock';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { getUserSettings, updateUserSettings } from '@workout-tracker/shared-store';
+import { getUserSettings, updateUserDataRequest } from '@workout-tracker/shared-store';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SettingsComponent } from './settings.component';
 import { UserSettings } from '@workout-tracker/models';
@@ -74,7 +74,7 @@ describe('SettingsComponent', () => {
 
         component.updateSettings()
 
-        expect(dispatchSpy).toHaveBeenCalledWith(updateUserSettings({
+        expect(dispatchSpy).toHaveBeenCalledWith(updateUserDataRequest({
           userSettings: {
             language: languageSut,
             darkMode: darkModeSut
