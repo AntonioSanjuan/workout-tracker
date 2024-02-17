@@ -3,14 +3,13 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { authenticatedUserDataRequest, userInitialState } from '@workout-tracker/shared-store';
+import { getAuthenticatedUserDataRequest, getAnonymousUserDataRequest, userInitialState } from '@workout-tracker/shared-store';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import { BehaviorSubject } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { AppRoutes } from '@workout-tracker/models';
 import { AuthPersistanceService } from './auth-persistance.service';
-import { anonymousUserDataRequest } from '@workout-tracker/shared-store'
 describe('AuthPersistanceService', () => {
   let service: AuthPersistanceService;
   let store: Store;
@@ -18,9 +17,11 @@ describe('AuthPersistanceService', () => {
   let fireAuth: AngularFireAuth;
 
   const credentialObservable = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
+  const authStateObservable = new BehaviorSubject<firebase.User | null>(null);
   const mock = {
     createUserWithEmailAndPassword: jest.fn(),
-    credential: credentialObservable
+    credential: credentialObservable,
+    authState: authStateObservable
   };
 
   beforeEach(() => {
@@ -55,30 +56,36 @@ describe('AuthPersistanceService', () => {
   describe('Integration tests', () => {
     describe('credentialListener', () => {
       it('with new user', () => {
-        const userMock = { additionalUserInfo: { isNewUser: true},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
-        credentialObservable.next(userMock)
+        const credentialMock = { additionalUserInfo: { isNewUser: true},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
+        const userMock = { phoneNumber: '666-66-66-66'} as firebase.User
+        credentialObservable.next(credentialMock)
+        authStateObservable.next(userMock)
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe(() => {
-          expect(dispatchSpy).toHaveBeenCalledWith(authenticatedUserDataRequest({ user: userMock.user as firebase.User, isNewUser: true }))
+          expect(dispatchSpy).toHaveBeenCalledWith(getAuthenticatedUserDataRequest({ user: credentialMock.user as firebase.User, isNewUser: true }))
 
         })
       })
 
       it('with non new user', () => {
-        const userMock = { additionalUserInfo: { isNewUser: false},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
-        credentialObservable.next(userMock)
+        const credentialMock = { additionalUserInfo: { isNewUser: false},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
+        const userMock = { phoneNumber: '666-66-66-66'} as firebase.User
+        credentialObservable.next(credentialMock)
+        authStateObservable.next(userMock)
 
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe(() => {
-          expect(dispatchSpy).toHaveBeenCalledWith(authenticatedUserDataRequest({ user: userMock.user as firebase.User, isNewUser: false }))
+          expect(dispatchSpy).toHaveBeenCalledWith(getAuthenticatedUserDataRequest({ user: credentialMock.user as firebase.User, isNewUser: false }))
 
         })
       })
 
       it('with use should redirect to Home', () => {
-        const userMock = { additionalUserInfo: { isNewUser: true},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
-        credentialObservable.next(userMock)
+        const credentialMock = { additionalUserInfo: { isNewUser: true},  user: { phoneNumber: '666-66-66-66'} as firebase.User} as firebase.auth.UserCredential
+        const userMock = { phoneNumber: '666-66-66-66'} as firebase.User
+        credentialObservable.next(credentialMock)
+        authStateObservable.next(userMock)
 
         const navigateSpy = jest.spyOn(router, 'navigate')
         fireAuth.credential.subscribe(() => {
@@ -91,7 +98,7 @@ describe('AuthPersistanceService', () => {
       it('without user', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
         fireAuth.credential.subscribe(() => {
-          expect(dispatchSpy).toHaveBeenCalledWith(anonymousUserDataRequest())
+          expect(dispatchSpy).toHaveBeenCalledWith(getAnonymousUserDataRequest())
         })
       })
     })
