@@ -21,19 +21,6 @@ export const userReducer = createReducer(
         isLogged: false,
         settings: undefined
     })),
-    on(getAuthenticatedUserDataRequest, (state: UserState, { user }) => {
-        return {
-            ...state, 
-            user: user,
-            isLogged: true
-        }
-    }),
-    on(getAnonymousUserDataRequest, (state: UserState) => ({
-        ...state,
-        user: undefined,
-        isLogged: false,
-        settings: undefined
-    })),
     on(
         getAuthenticatedUserDataRequestSuccess, 
         getAnonymousUserDataRequestSuccess, 
