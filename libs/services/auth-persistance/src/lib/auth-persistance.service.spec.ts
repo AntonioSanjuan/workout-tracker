@@ -19,7 +19,6 @@ describe('AuthPersistanceService', () => {
   const credentialObservable = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
   const authStateObservable = new BehaviorSubject<firebase.User | null>(null);
   const mock = {
-    createUserWithEmailAndPassword: jest.fn(),
     credential: credentialObservable,
     authState: authStateObservable
   };

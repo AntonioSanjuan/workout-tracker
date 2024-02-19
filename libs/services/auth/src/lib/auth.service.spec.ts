@@ -15,6 +15,7 @@ describe('AuthService', () => {
     signInWithEmailAndPassword: jest.fn().mockReturnValue({ additionalUserInfo: { isNewUser: true }} as firebase.auth.UserCredential),
     signOut: jest.fn(),
     createUserWithEmailAndPassword: jest.fn(),
+    signInWithPopup: jest.fn()
   };
 
   beforeEach(() => {
