@@ -4,7 +4,7 @@ import { LoginForm, loginForm } from './login.form';
 import { FormGroup } from "@angular/forms";
 import { LoginData } from './model/loginRequest.model';
 import { UiModule } from '@workout-tracker/ui';
-import { loginRequest } from '@workout-tracker/shared-store'
+import { loginGoogleRequest, loginRequest } from '@workout-tracker/shared-store'
 import { TranslateModule } from '@ngx-translate/core';
 import { AppRoutes } from '@workout-tracker/models'
 import { RouterModule } from '@angular/router';
@@ -35,5 +35,9 @@ export class LoginComponent implements OnInit {
     if(loginData.userEmail && loginData.password){
       this.store.dispatch(loginRequest({ userEmail: loginData.userEmail, userPass: loginData.password }))
     }
+  }
+
+  loginWithGoogle(): void {
+    this.store.dispatch(loginGoogleRequest())
   }
 }

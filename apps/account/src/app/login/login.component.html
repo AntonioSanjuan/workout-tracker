@@ -20,6 +20,17 @@
         <button mat-flat-button color="primary" [disabled]="!loginForm.valid" (click)="login()">
             {{ 'apps.account.login.form.actions.submit' | translate }}
         </button>
+        <button type="button" mat-flat-button color="primary" (click)="loginWithGoogle()">
+            <div class="Login_loginWithGoogle">
+                <img 
+                mat-card-image 
+                [src]="'assets/images/google/Google.logo.png'" 
+                height="40px"
+                width="40px"
+                alt="Log in with google ">
+                Login with google
+            </div>
+        </button>
     </form>
     <a [routerLink]="appRoutes.SignUp">
         {{ 'apps.account.login.form.actions.signUp' | translate }}

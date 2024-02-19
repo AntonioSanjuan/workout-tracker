@@ -21,7 +21,6 @@ export class AuthService {
 
   public googleSignIn(): Observable<firebase.auth.UserCredential> {
     const provider = new firebase.auth.GoogleAuthProvider();
-
     return from(this.auth.signInWithPopup(provider))
   }
 }

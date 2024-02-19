@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserDataRequest, setAuthenticatedUser, setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserDataRequest, setAuthenticatedUser, setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError } from "./user.actions";
 import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
 import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
@@ -28,15 +28,25 @@ export class UserEffects {
         )
     ))
 
+    loginGoogleRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(loginGoogleRequest),
+        switchMap(() =>
+            this.authService.googleSignIn().pipe(
+                map(() => loginGoogleRequestSuccess()),
+                catchError((err: firebase.FirebaseError) => of(loginGoogleRequestError({ error: err })))
+            )
+        )
+    ))
+
     loginRequestSuccess$ = createEffect(() => this.actions$.pipe(
-        ofType(loginRequestSuccess),
+        ofType(loginRequestSuccess, loginGoogleRequestSuccess),
         switchMap(() =>
             of(loadedApp({initialized: AppInit.ACCOUNT}))
         )
     ))
 
     loginRequestError$ = createEffect(() => this.actions$.pipe(
-        ofType(loginRequestError),
+        ofType(loginRequestError, loginGoogleRequestError),
         switchMap(({ error }) =>
             of(showError({errorMessage: error.code}))
         )
