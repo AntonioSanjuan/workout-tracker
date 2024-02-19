@@ -1,15 +1,26 @@
 import { userReducer } from "./user.reducer"
 import { userInitialState } from "./models/userState.initialState";
-import { getAnonymousUserDataRequest, getAnonymousUserDataRequestSuccess, getAuthenticatedUserDataRequest, getAuthenticatedUserDataRequestSuccess, setAnonymousUser, setAuthenticatedUser, updateUserDataRequestSuccess } from "./user.actions";
+import { getAnonymousUserDataRequestSuccess, getAuthenticatedUserDataRequestSuccess, setAnonymousUser, setAuthenticatedUser, setUserInfo, updateUserDataRequestSuccess } from "./user.actions";
 import firebase from 'firebase/compat/app/';
 import { UserSettings } from "@workout-tracker/models";
 
 
 describe('userReducer', () => {
+    describe('setUserInfo action', () => {
+        it('should handle setUserInfo action', () => {
+            const isNewUser = false;
+            const userName = 'userNameTest'
+            const action = setUserInfo({ isNewUser: isNewUser, userName: userName })
+            const state = userReducer(userInitialState, action)
+
+            expect(state.userName).toEqual(userName)
+            expect(state.isNewUser).toEqual(isNewUser)
+        })
+    })
     describe('setAuthenticatedUser action', () => {
         it('should handle setAuthenticatedUser action', () => {
             const userSut = { email: 'test@test.com'} as firebase.User
-            const action = setAuthenticatedUser({ user: userSut, isNewUser: true})
+            const action = setAuthenticatedUser({ user: userSut })
             const state = userReducer(userInitialState, action)
 
             expect(state.user).toEqual(userSut)

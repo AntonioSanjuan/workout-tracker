@@ -7,4 +7,5 @@ export const authServiceMock: Partial<AuthService> = {
   logOut: () => of(),
   signUp: () => of({} as firebase.auth.UserCredential),
   googleSignIn: () => of({} as firebase.auth.UserCredential),
+  isNewUser: () => true
 }

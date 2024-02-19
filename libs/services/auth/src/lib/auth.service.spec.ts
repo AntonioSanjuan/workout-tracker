@@ -90,5 +90,21 @@ describe('AuthService', () => {
         })
       })
     })
+
+    describe('isNewUser', () => {
+      it('Should return true if credentials its new user flag is active', () => {
+        const credentials = { additionalUserInfo: { isNewUser: true }} as firebase.auth.UserCredential
+        expect(service.isNewUser(credentials)).toBeTruthy()
+      })
+
+      it('Should return false if credentials its new user flag is not active', () => {
+        const credentials = { additionalUserInfo: { isNewUser: false }} as firebase.auth.UserCredential
+        expect(service.isNewUser(credentials)).toBeFalsy()
+      })
+
+      it('Should return false if not credentials', () => {
+        expect(service.isNewUser(null)).toBeFalsy()
+      })
+    })
   })
 });

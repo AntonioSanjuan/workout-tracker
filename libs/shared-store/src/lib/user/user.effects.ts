@@ -22,7 +22,7 @@ export class UserEffects {
         ofType(loginRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.logIn(userEmail, userPass).pipe(
-                map(() => loginRequestSuccess()),
+                map((credentials) => loginRequestSuccess( {credentials: credentials })),
                 catchError((err: firebase.FirebaseError) => of(loginRequestError({ error: err })))
             )
         )
@@ -62,16 +62,6 @@ export class UserEffects {
         )
     ))
 
-    checkNewUser$ = createEffect(() => this.actions$.pipe(
-        ofType(signUpRequestSuccess, loginGoogleRequestSuccess),
-        switchMap(({ credentials }) =>
-            of(setUserInfo({
-                isNewUser: this.authService.isNewUser(credentials),
-                userName: credentials.additionalUserInfo?.username ?? undefined
-            }))
-        )
-    ))
-
     signUpRequestSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(signUpRequestSuccess),
         switchMap(() =>
@@ -83,6 +73,16 @@ export class UserEffects {
         ofType(signUpRequestError),
         switchMap(({ error }) =>
             of(showError({errorMessage: error.code}))
+        )
+    ))
+
+    checkNewUser$ = createEffect(() => this.actions$.pipe(
+        ofType(signUpRequestSuccess, loginGoogleRequestSuccess, loginRequestSuccess),
+        switchMap(({ credentials }) =>
+            of(setUserInfo({
+                isNewUser: this.authService.isNewUser(credentials),
+                userName: credentials.additionalUserInfo?.username ?? undefined
+            }))
         )
     ))
 
@@ -150,9 +150,6 @@ export class UserEffects {
             )
         )
     ))
-
-
-
 
     updateUserSettings$ = createEffect(() => this.actions$.pipe(
         ofType(updateUserDataRequest),

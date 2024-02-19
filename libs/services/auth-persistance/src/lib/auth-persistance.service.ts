@@ -23,12 +23,9 @@ export class AuthPersistanceService {
 
   private vitaminizedListener(user: firebase.User | null) {
     if(user) {
-      const userCopy = JSON.parse(JSON.stringify(user));
-      console.log("userCopy", userCopy)
       this.store.dispatch(setAuthenticatedUser({ 
-        user: userCopy, 
+        user: Object.freeze(user), 
       }))
-      console.log("userCopy", userCopy)
       this.router.navigate([AppRoutes.Home])
     }
 
