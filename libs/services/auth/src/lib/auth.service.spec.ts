@@ -79,5 +79,15 @@ describe('AuthService', () => {
         })
       })
     })
+
+    describe('googleSignIn', () => {
+      it('googleSignIn success should request signInWithPopup', () => {
+        const UserCredentialSut = { user: { phoneNumber: '666-66-66-66'}} as firebase.auth.UserCredential
+        const signInWithPopupSpy = jest.spyOn(fireAuth, 'signInWithPopup').mockResolvedValue(UserCredentialSut)
+        service.googleSignIn().subscribe(() => {
+          expect(signInWithPopupSpy).toHaveBeenCalledWith(new firebase.auth.GoogleAuthProvider())
+        })
+      })
+    })
   })
 });

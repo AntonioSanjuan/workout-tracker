@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, setAnonymousUser, setAuthenticatedUser } from '@workout-tracker/shared-store';
-import { AngularFireAuth } from '@angular/fire/compat/auth'
-import firebase from 'firebase/compat/app/';
+import { setAnonymousUser, setAuthenticatedUser } from '@workout-tracker/shared-store';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
-import {combineLatest, distinctUntilChanged, forkJoin, merge, tap } from 'rxjs';
+import {combineLatest, distinctUntilChanged } from 'rxjs';
 
 @Injectable({ providedIn: 'root'})
 export class AuthPersistanceService {
