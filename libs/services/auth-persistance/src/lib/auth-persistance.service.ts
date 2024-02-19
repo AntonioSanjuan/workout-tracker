@@ -4,8 +4,8 @@ import { setAnonymousUser, setAuthenticatedUser, setUserInfo } from '@workout-tr
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
+import { distinctUntilChanged } from 'rxjs';
 import { AppRoutes } from '@workout-tracker/models';
-import {combineLatest, distinctUntilChanged } from 'rxjs';
 
 @Injectable({ providedIn: 'root'})
 export class AuthPersistanceService {
@@ -13,10 +13,8 @@ export class AuthPersistanceService {
   private auth: AngularFireAuth = inject(AngularFireAuth)
   private router: Router = inject(Router)
 
-  private user$ = this.auth.authState
-
   public initialize() {
-    this.user$.pipe(distinctUntilChanged()).subscribe(
+    this.auth.authState.pipe(distinctUntilChanged()).subscribe(
       (user) => {
         console.log([user])
         this.vitaminizedListener(user)
@@ -26,9 +24,11 @@ export class AuthPersistanceService {
   private vitaminizedListener(user: firebase.User | null) {
     if(user) {
       const userCopy = JSON.parse(JSON.stringify(user));
+      console.log("userCopy", userCopy)
       this.store.dispatch(setAuthenticatedUser({ 
         user: userCopy, 
       }))
+      console.log("userCopy", userCopy)
       this.router.navigate([AppRoutes.Home])
     }
 

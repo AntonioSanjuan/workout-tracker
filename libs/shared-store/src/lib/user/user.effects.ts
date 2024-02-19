@@ -32,7 +32,7 @@ export class UserEffects {
         ofType(loginGoogleRequest),
         switchMap(() =>
             this.authService.googleSignIn().pipe(
-                map((credentials) => loginGoogleRequestSuccess({ credentials: credentials})),
+                map((credentials) => loginGoogleRequestSuccess({ credentials: Object.freeze(credentials)})),
                 catchError((err: firebase.FirebaseError) => of(loginGoogleRequestError({ error: err })))
             )
         )
@@ -56,7 +56,7 @@ export class UserEffects {
         ofType(signUpRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.signUp(userEmail, userPass).pipe(
-                map((credentials) => signUpRequestSuccess({ credentials: credentials })),
+                map((credentials) => signUpRequestSuccess({ credentials: Object.freeze(credentials) })),
                 catchError((err: firebase.FirebaseError) => of(signUpRequestError({ error: err })))
             )
         )
