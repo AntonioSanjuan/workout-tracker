@@ -23,4 +23,8 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     return from(this.auth.signInWithPopup(provider))
   }
+
+  public isNewUser(userCredential: firebase.auth.UserCredential|null):boolean {
+    return !!userCredential?.additionalUserInfo?.isNewUser
+  }
 }

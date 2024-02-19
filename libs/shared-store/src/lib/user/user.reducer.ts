@@ -1,13 +1,20 @@
 import { createReducer, on } from "@ngrx/store"
 import { userInitialState } from "./models/userState.initialState";
 import { UserState } from "./models/userState.model";
-import { getAuthenticatedUserDataRequest, getAnonymousUserDataRequest, setAuthenticatedUser, setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess } from "./user.actions";
+import { setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess, setAuthenticatedUser, setUserInfo } from "./user.actions";
 
 export const USER_FEATURE_KEY = 'user'; 
 
 export const userReducer = createReducer(
     userInitialState,
-    on(setAuthenticatedUser, (state: UserState, { user, isNewUser }) => {
+    on(setUserInfo, (state: UserState, { isNewUser, userName }) => {
+        return {
+            ...state, 
+            isNewUser: isNewUser,
+            userName: userName
+        }
+    }),
+    on(setAuthenticatedUser, (state: UserState, { user }) => {
         return {
             ...state, 
             user: user,

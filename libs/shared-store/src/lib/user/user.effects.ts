@@ -1,14 +1,14 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserDataRequest, setAuthenticatedUser, setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserDataRequest, setUserInfo, setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError, setAuthenticatedUser } from "./user.actions";
 import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
 import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { UserSettingsService } from '@workout-tracker/services/user-settings'
 import { UserSettings } from "@workout-tracker/models";
-import { getUser } from "./user.selectors";
+import { getIsNewUser, getUser } from "./user.selectors";
 import { Store } from "@ngrx/store";
 
 @Injectable()
@@ -32,7 +32,7 @@ export class UserEffects {
         ofType(loginGoogleRequest),
         switchMap(() =>
             this.authService.googleSignIn().pipe(
-                map(() => loginGoogleRequestSuccess()),
+                map((credentials) => loginGoogleRequestSuccess({ credentials: credentials})),
                 catchError((err: firebase.FirebaseError) => of(loginGoogleRequestError({ error: err })))
             )
         )
@@ -56,9 +56,19 @@ export class UserEffects {
         ofType(signUpRequest),
         switchMap(({ userEmail, userPass }) =>
             this.authService.signUp(userEmail, userPass).pipe(
-                map(() => signUpRequestSuccess()),
+                map((credentials) => signUpRequestSuccess({ credentials: credentials })),
                 catchError((err: firebase.FirebaseError) => of(signUpRequestError({ error: err })))
             )
+        )
+    ))
+
+    checkNewUser$ = createEffect(() => this.actions$.pipe(
+        ofType(signUpRequestSuccess, loginGoogleRequestSuccess),
+        switchMap(({ credentials }) =>
+            of(setUserInfo({
+                isNewUser: this.authService.isNewUser(credentials),
+                userName: credentials.additionalUserInfo?.username ?? undefined
+            }))
         )
     ))
 
@@ -87,8 +97,8 @@ export class UserEffects {
 
     setAuthenticatedUser$ = createEffect(() => this.actions$.pipe(
         ofType(setAuthenticatedUser),
-        switchMap(({user, isNewUser}) =>
-            of(getAuthenticatedUserDataRequest({ user, isNewUser}))
+        switchMap(({user}) =>
+            of(getAuthenticatedUserDataRequest({ user}))
         )
     ))
 
@@ -102,7 +112,8 @@ export class UserEffects {
 
     getAuthenticatedUserDataRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserDataRequest),
-        switchMap(({ user, isNewUser}) =>
+        concatLatestFrom(() => this.store.select(getIsNewUser)),
+        switchMap(([{ user }, isNewUser]) =>
             (isNewUser ?
                 this.userSettingsService.setUserSettings(user.uid):
                 this.userSettingsService.getUserSettings(user.uid)

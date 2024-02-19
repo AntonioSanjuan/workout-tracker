@@ -4,5 +4,7 @@ import firebase from 'firebase/compat/app/';
 export interface UserState {
     user: firebase.User | undefined
     isLogged: boolean;
+    isNewUser: boolean;
+    userName?: string;
     settings: UserSettings | undefined
 }
