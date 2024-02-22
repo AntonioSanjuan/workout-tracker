@@ -162,7 +162,6 @@ export class UserEffects {
                 map((userSettings: UserSettings) => 
                     updateUserDataRequestSuccess({ userSettings: userSettings})
                 )
-
             )
         )
     ))

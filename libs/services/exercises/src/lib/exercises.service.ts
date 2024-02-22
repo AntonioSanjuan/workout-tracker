@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat
 import { Exercise } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, of } from "rxjs";
+
 @Injectable()
 export class ExercisesService {
     private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
@@ -11,19 +12,19 @@ export class ExercisesService {
         return this.firebaseDataBase.collection('user').doc(userId)
     }
 
-    public getExercises(userId: string|undefined): Observable<Exercise> {
-        return of({} as Exercise)
+    public getExercises(userId: string): Observable<Exercise[]> {
+        return of([{} as Exercise])
     }
 
-    public setExercises(userId: string|undefined, exercise: Exercise): Observable<Exercise> {
+    public setExercises(userId: string, exercise: Exercise): Observable<Exercise> {
         return of({} as Exercise)  
     }
 
-    public updateExercises(userId: string|undefined, exercise: Exercise): Observable<Exercise> {
+    public updateExercises(userId: string, exercise: Exercise): Observable<Exercise> {
         return of({} as Exercise)
     }
 
-    public deleteExercise(userId: string|undefined): Observable<boolean> {
+    public deleteExercise(userId: string): Observable<boolean> {
         return of(true)
     }
 }

@@ -16,7 +16,6 @@ export class AuthPersistanceService {
   public initialize() {
     this.auth.authState.pipe(distinctUntilChanged()).subscribe(
       (user) => {
-        console.log([user])
         this.vitaminizedListener(user)
       })
   }

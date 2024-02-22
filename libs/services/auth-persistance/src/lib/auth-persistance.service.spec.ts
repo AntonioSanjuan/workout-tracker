@@ -3,7 +3,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { getAuthenticatedUserDataRequest, getAnonymousUserDataRequest, userInitialState, setAuthenticatedUser, setAnonymousUser } from '@workout-tracker/shared-store';
+import { userInitialState, setAuthenticatedUser, setAnonymousUser } from '@workout-tracker/shared-store';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import { BehaviorSubject } from 'rxjs';
@@ -16,13 +16,12 @@ describe('AuthPersistanceService', () => {
   let router: Router;
   let fireAuth: AngularFireAuth;
 
-  const authStateObservable = new BehaviorSubject<firebase.User | null>(null);
   const mock = {
-    authState: authStateObservable
+    authState: new BehaviorSubject<firebase.User | null>(null)
   };
 
   beforeEach(() => {
-    authStateObservable.next(null);
+    mock.authState.next(null);
 
     TestBed.configureTestingModule({
       providers: [
@@ -59,12 +58,11 @@ describe('AuthPersistanceService', () => {
       const nonUserMock = null
       describe('if user', () => {
         beforeEach(() => {
-          authStateObservable.next(nonUserMock)
 
           dispatchSpy = jest.spyOn(store, 'dispatch')
         })
         it('should dispatch setAuthenticatedUser', (done) => {
-          authStateObservable.next(userMock)
+          mock.authState.next(userMock)
 
           fireAuth.authState.subscribe((user) => {
             expect(dispatchSpy).toHaveBeenCalledWith(setAuthenticatedUser({ user: userMock as firebase.User}))
@@ -73,10 +71,11 @@ describe('AuthPersistanceService', () => {
         })
   
         it('should redirect to Home', (done) => {  
-          authStateObservable.next(userMock)
-
+          // authStateObservable.next({ phoneNumber: '666-66-66-66'} as firebase.User)
           const navigateSpy = jest.spyOn(router, 'navigate')
-          fireAuth.authState.subscribe(() => {
+          mock.authState.next({ phoneNumber: '666-66-66-66'} as firebase.User)
+          fireAuth.authState.subscribe((user) => {
+            console.log("user")
             expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
             done()
           })
@@ -84,15 +83,16 @@ describe('AuthPersistanceService', () => {
       })
       describe('if non user', () => {
         beforeEach(() => {
-          authStateObservable.next(userMock)
+          mock.authState.next(userMock)
 
           dispatchSpy = jest.spyOn(store, 'dispatch')
   
         })
         it('should dispatch setAnonymousUser', (done) => {
-          authStateObservable.next(nonUserMock)
-
           const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+          mock.authState.next(nonUserMock)
+
           fireAuth.authState.subscribe(() => {
             expect(dispatchSpy).toHaveBeenCalledWith(setAnonymousUser())
             done()

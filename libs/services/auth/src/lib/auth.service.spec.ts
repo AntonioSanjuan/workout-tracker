@@ -2,7 +2,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { AuthService } from './auth.service';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AngularFireModule } from '@angular/fire/compat';
 import firebase from 'firebase/compat/app';
@@ -32,7 +31,6 @@ describe('AuthService', () => {
       imports: [
         AngularFireModule.initializeApp({}),
         AngularFireAuthModule,
-        RouterTestingModule.withRoutes([])
       ]
     });
     service = TestBed.inject(AuthService);

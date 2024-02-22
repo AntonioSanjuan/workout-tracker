@@ -3,11 +3,8 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { ExercisesService } from './exercises.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { CultureService } from '@workout-tracker/services/culture';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { UserSettings } from '@workout-tracker/models';
-import firebase from 'firebase/compat/app/';
-import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const mock = {
   collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>)
@@ -22,6 +19,7 @@ describe('ExercisesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
         }),
