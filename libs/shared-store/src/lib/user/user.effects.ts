@@ -1,20 +1,17 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
-import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserDataRequest, setUserInfo, setAnonymousUser, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError, setAuthenticatedUser } from "./user.actions";
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setUserInfo, setAnonymousUser, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError, setAuthenticatedUser } from "./user.actions";
 import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
 import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
-import { UserSettingsService } from '@workout-tracker/services/user-settings'
-import { UserSettings } from "@workout-tracker/models";
-import { getIsNewUser, getUser } from "./user.selectors";
 import { Store } from "@ngrx/store";
+import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestSuccess } from "../settings";
 
 @Injectable()
 export class UserEffects {
     private authService: AuthService = inject(AuthService)
-    private userSettingsService: UserSettingsService = inject(UserSettingsService)
     private store: Store = inject(Store)
     private actions$ = inject(Actions);
 
@@ -97,50 +94,21 @@ export class UserEffects {
 
     setAuthenticatedUser$ = createEffect(() => this.actions$.pipe(
         ofType(setAuthenticatedUser),
-        switchMap(({user}) =>
-            of(getAuthenticatedUserDataRequest({ user}))
+        switchMap(() =>
+            of(getAuthenticatedUserSettingsRequest())
         )
     ))
 
     setAnonymousUser$ = createEffect(() => this.actions$.pipe(
         ofType(setAnonymousUser),
         switchMap(() =>
-            of(getAnonymousUserDataRequest())
+            of(getAnonymousUserSettingsRequest())
         )
     ))
 
-
-    getAuthenticatedUserDataRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getAuthenticatedUserDataRequest),
-        concatLatestFrom(() => this.store.select(getIsNewUser)),
-        switchMap(([{ user }, isNewUser]) =>
-            (isNewUser ?
-                this.userSettingsService.setUserSettings(user.uid):
-                this.userSettingsService.getUserSettings(user.uid)
-            ).pipe(
-                map((userSettings: UserSettings) => 
-                    getAuthenticatedUserDataRequestSuccess({ userSettings: userSettings})
-                )
-
-            )
-        )
-    ))
-
-    getAnonymousUserDataRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getAnonymousUserDataRequest),
-        switchMap(() =>
-            this.userSettingsService.getAnonymousSettings()
-            .pipe(
-                map((userSettings: UserSettings) => 
-                    getAnonymousUserDataRequestSuccess({ userSettings: userSettings})
-                )
-
-            )
-        )
-    ))
-
+    //to-do como hacerlo
     userDataLoaded$ = createEffect(() => this.actions$.pipe(
-        ofType(getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess),
+        ofType(getAuthenticatedUserSettingsRequestSuccess, getAnonymousUserSettingsRequestSuccess),
         concatLatestFrom(() => this.store.select(getIsUILoadedApp)),
         switchMap(([_, isUILoadedApp]) =>
             iif(
@@ -151,19 +119,6 @@ export class UserEffects {
         )
     ))
 
-    updateUserSettings$ = createEffect(() => this.actions$.pipe(
-        ofType(updateUserDataRequest),
-        concatLatestFrom(() => this.store.select(getUser)),
-        switchMap(([{userSettings}, user]) =>
-            (user ?
-                this.userSettingsService.updateUserSettings(user.uid, userSettings):
-                this.userSettingsService.updateAnonymousSettings(userSettings)
-            ).pipe(
-                map((userSettings: UserSettings) => 
-                    updateUserDataRequestSuccess({ userSettings: userSettings})
-                )
-            )
-        )
-    ))
+
 
 }

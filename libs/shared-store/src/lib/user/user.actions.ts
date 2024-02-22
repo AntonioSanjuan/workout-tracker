@@ -30,18 +30,3 @@ export const SET_AUTHENTICATED_USER = 'SET AUTHENTICATED USER'
 export const setAuthenticatedUser = createAction(SET_AUTHENTICATED_USER, props<{ user: firebase.User }>())
 export const SET_ANONYMOUS_USER = 'SET ANONYMOUS USER'
 export const setAnonymousUser = createAction(SET_ANONYMOUS_USER)
-
-export const GET_AUTHENTICATED_USER_DATA_REQUEST = 'GET AUTHENTICATED USER DATA Request'
-export const getAuthenticatedUserDataRequest = createAction(GET_AUTHENTICATED_USER_DATA_REQUEST, props<{ user: firebase.User }>())
-export const GET_AUTHENTICATED_USER_DATA_SUCCESS = 'GET AUTHENTICATED USER DATA Success'
-export const getAuthenticatedUserDataRequestSuccess = createAction(GET_AUTHENTICATED_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
-export const GET_ANONYMOUS_USER_DATA_REQUEST = 'GET ANONYMOUS USER DATA Request'
-export const getAnonymousUserDataRequest = createAction(GET_ANONYMOUS_USER_DATA_REQUEST)
-export const GET_ANONYMOUS_USER_DATA_SUCCESS = 'GET ANONYMOUS USER DATA Success'
-export const getAnonymousUserDataRequestSuccess = createAction(GET_ANONYMOUS_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
-
-export const UPDATE_USER_DATA_REQUEST = 'UPDATE USER DATA Request'
-export const updateUserDataRequest = createAction(UPDATE_USER_DATA_REQUEST, props<{ userSettings: UserSettings }>())
-export const UPDATE_USER_DATA_SUCCESS = 'UPDATE USER DATA Success'
-export const updateUserDataRequestSuccess = createAction(UPDATE_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
-

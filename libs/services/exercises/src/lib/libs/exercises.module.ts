@@ -8,4 +8,4 @@ import { ExercisesService } from '../exercises.service';
     ExercisesService
   ]
 })
-export class LibsServicesUserSettingsModule {}
+export class LibsServicesExercisesModule {}

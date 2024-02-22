@@ -1,6 +1,6 @@
 import { userReducer } from "./user.reducer"
 import { userInitialState } from "./models/userState.initialState";
-import { getAnonymousUserDataRequestSuccess, getAuthenticatedUserDataRequestSuccess, setAnonymousUser, setAuthenticatedUser, setUserInfo, updateUserDataRequestSuccess } from "./user.actions";
+import { setAnonymousUser, setAuthenticatedUser, setUserInfo } from "./user.actions";
 import firebase from 'firebase/compat/app/';
 import { UserSettings } from "@workout-tracker/models";
 
@@ -25,7 +25,6 @@ describe('userReducer', () => {
 
             expect(state.user).toEqual(userSut)
             expect(state.isLogged).toBeTruthy()
-            expect(state.settings).toBeUndefined()
         })
     })
 
@@ -36,37 +35,6 @@ describe('userReducer', () => {
 
             expect(state.user).toBeUndefined()
             expect(state.isLogged).toBeFalsy()
-            expect(state.settings).toBeUndefined()
-        })
-    })
-
-    describe('getAuthenticatedUserDataRequestSuccess action', () => {
-        const userSettings = {language: 'test lang', darkMode: false} as UserSettings
-        it('should handle getAuthenticatedUserDataRequestSuccess action', () => {
-            const action = getAuthenticatedUserDataRequestSuccess({ userSettings: userSettings})
-            const state = userReducer(userInitialState, action)
-
-            expect(state.settings).toEqual(userSettings)
-        })
-    })
-
-    describe('getAnonymousUserDataRequestSuccess action', () => {
-        const userSettings = {language: 'test lang', darkMode: false} as UserSettings
-        it('should handle getAnonymousUserDataRequestSuccess action', () => {
-            const action = getAnonymousUserDataRequestSuccess({ userSettings: userSettings})
-            const state = userReducer(userInitialState, action)
-
-            expect(state.settings).toEqual(userSettings)
-        })
-    })
-
-    describe('updateUserDataRequestSuccess action', () => {
-        const userSettings = {language: 'test lang', darkMode: false} as UserSettings
-        it('should handle updateUserDataRequestSuccess action', () => {
-            const action = updateUserDataRequestSuccess({ userSettings: userSettings})
-            const state = userReducer(userInitialState, action)
-
-            expect(state.settings).toEqual(userSettings)
         })
     })
 })

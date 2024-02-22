@@ -5,7 +5,7 @@ import { UserEffects } from './user.effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
-import { getAnonymousUserDataRequest, getAuthenticatedUserDataRequest, logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, updateUserDataRequest, getAuthenticatedUserDataRequestSuccess, getAnonymousUserDataRequestSuccess, updateUserDataRequestSuccess, setAuthenticatedUser, setAnonymousUser, setUserInfo } from './user.actions';
+import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setAuthenticatedUser, setAnonymousUser, setUserInfo } from './user.actions';
 import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
@@ -13,13 +13,12 @@ import { UserSettingsService, userSettingsServiceMock } from '@workout-tracker/s
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
 import { UserSettings } from '@workout-tracker/models';
-import { getIsNewUser, getUser } from './user.selectors';
+import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestSuccess } from '../settings';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
   let effects: UserEffects
   let authService: AuthService
-  let userSettingsService: UserSettingsService
   let store: MockStore
 
   beforeEach(() => {
@@ -28,7 +27,6 @@ describe('UserEffects', () => {
       ],
       providers: [
         { provide: AuthService, useValue: authServiceMock },
-        { provide: UserSettingsService, useValue: userSettingsServiceMock },
         UserEffects,
         provideMockStore({
           initialState: userStateMock
@@ -41,7 +39,6 @@ describe('UserEffects', () => {
     actions = TestBed.inject(Actions)
     authService = TestBed.inject(AuthService)
     store = TestBed.inject(MockStore)
-    userSettingsService = TestBed.inject(UserSettingsService)
   });
 
   describe('loginRequest$', () => {
@@ -310,9 +307,9 @@ describe('UserEffects', () => {
         actions = of(setAuthenticatedUser({ user: user}))
       })
 
-      it('should return getAuthenticatedUserDataRequest', async () => {
+      it('should return getAuthenticatedUserSettingsRequest', async () => {
         const result = await firstValueFrom(effects.setAuthenticatedUser$)
-        expect(result).toEqual(getAuthenticatedUserDataRequest({ user: user}))
+        expect(result).toEqual(getAuthenticatedUserSettingsRequest())
       })
     })
   });
@@ -322,101 +319,15 @@ describe('UserEffects', () => {
         actions = of(setAnonymousUser())
       })
 
-      it('should return getAnonymousUserDataRequest', async () => {
+      it('should return getAnonymousUserSettingsRequest', async () => {
         const result = await firstValueFrom(effects.setAnonymousUser$)
-        expect(result).toEqual(getAnonymousUserDataRequest())
+        expect(result).toEqual(getAnonymousUserSettingsRequest())
       })
     })
   });
-  describe('authenticatedUserDataRequest$', () => {
-    const user =  { uid: 'testUID'} as firebase.User
 
-    const userSettingsSut = {
-      language: 'langTest',
-      darkMode: true
-    } as UserSettings
-
- 
-    describe('when getAuthenticatedUserDataRequest is dispatched', () => {
-      describe('if its new user', () => {
-        let setUserSettingsSpy!: jest.SpyInstance<Observable<UserSettings>>
-
-        beforeEach(() => { 
-          jest.spyOn(userSettingsService, 'setUserSettings').mockReturnValue(of(userSettingsSut))
-          actions = of(getAuthenticatedUserDataRequest({
-            user: user,
-          }))
-
-          setUserSettingsSpy = jest.spyOn(userSettingsService, 'setUserSettings')
-
-
-          store.overrideSelector(getIsNewUser, true)
-          store.refreshState
-        })
-
-        it('should request setUserSettings', async () => {
-          await firstValueFrom(effects.getAuthenticatedUserDataRequest$)
-          expect(setUserSettingsSpy).toHaveBeenCalledWith(user.uid)
-        })
-
-        it('should return getAuthenticatedUserDataRequestSuccess', async () => {
-          const result = await firstValueFrom(effects.getAuthenticatedUserDataRequest$)
-          expect(result).toEqual(getAuthenticatedUserDataRequestSuccess({ userSettings: userSettingsSut}))
-        })
-      })
-
-      describe('if its not new user', () => {
-        let getUserSettingsSpy!: jest.SpyInstance<Observable<UserSettings>>
-
-        beforeEach(() => { 
-          jest.spyOn(userSettingsService, 'getUserSettings').mockReturnValue(of(userSettingsSut))
-          actions = of(getAuthenticatedUserDataRequest({
-            user: user,
-          }))
-
-          getUserSettingsSpy = jest.spyOn(userSettingsService, 'getUserSettings')
-
-          store.overrideSelector(getIsNewUser, false)
-          store.refreshState
-        })
-        it('should request setUserSettings', async () => {
-          await firstValueFrom(effects.getAuthenticatedUserDataRequest$)
-          expect(getUserSettingsSpy).toHaveBeenCalledWith(user.uid)
-        })
-
-        it('should return getAuthenticatedUserDataRequestSuccess', async () => {
-          const result = await firstValueFrom(effects.getAuthenticatedUserDataRequest$)
-          expect(result).toEqual(getAuthenticatedUserDataRequestSuccess({ userSettings: userSettingsSut}))
-        })
-      })
-    })
-  })
-
-  describe('getAnonymousUserDataRequest$', () => {
-    describe('when anonymousUserDataRequest is dispatched', () => {
-      const userSettingsSut = {
-        language: 'langTest',
-        darkMode: true
-      } as UserSettings
-  
-      beforeEach(() => { 
-        jest.spyOn(userSettingsService, 'getAnonymousSettings').mockReturnValue(of(userSettingsSut))
-        actions = of(getAnonymousUserDataRequest())
-      })
-      it('should request getAnonymousSettings', async () => {
-        const getUserSettingsSpy = jest.spyOn(userSettingsService, 'getAnonymousSettings')
-        await firstValueFrom(effects.getAnonymousUserDataRequest$)
-        expect(getUserSettingsSpy).toHaveBeenCalled()
-      })
-      it('should return userDataSuccess', async () => {
-        const result = await firstValueFrom(effects.getAnonymousUserDataRequest$)
-        expect(result).toEqual(getAnonymousUserDataRequestSuccess({ userSettings: userSettingsSut}))
-      })
-    })
-  })
-
-  describe('userDataLoaded$', () => {
-    describe('when getAuthenticatedUserDataRequestSuccess is dispatched', () => {
+  describe('UserSettingsLoaded$', () => {
+    describe('when getAuthenticatedUserSettingsRequestSuccess is dispatched', () => {
       const userSettingsSut = {
         language: 'langTest',
         darkMode: true
@@ -424,7 +335,7 @@ describe('UserEffects', () => {
   
       describe('if UI app its already loaded', () => {
         beforeEach(() => { 
-          actions = of(getAuthenticatedUserDataRequestSuccess({ userSettings: userSettingsSut}))
+          actions = of(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
           store.overrideSelector(getIsUILoadedApp, true)
         })
         it('should return EMPTY', (done) => {
@@ -438,7 +349,7 @@ describe('UserEffects', () => {
   
       describe('if UI app its not already loaded', () => {
         beforeEach(() => { 
-          actions = of(getAuthenticatedUserDataRequestSuccess({ userSettings: userSettingsSut}))
+          actions = of(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
           store.overrideSelector(getIsUILoadedApp, false)
         })
         it('should return loadedApp AppInit.UI', async () => {
@@ -448,7 +359,7 @@ describe('UserEffects', () => {
       })
     })
   
-    describe('when getAnonymousUserDataRequestSuccess is dispatched', () => {
+    describe('when getAnonymousUserSettingsRequestSuccess is dispatched', () => {
       const userSettingsSut = {
         language: 'langTest',
         darkMode: true
@@ -456,7 +367,7 @@ describe('UserEffects', () => {
   
       describe('if UI app its already loaded', () => {
         beforeEach(() => { 
-          actions = of(getAnonymousUserDataRequestSuccess({ userSettings: userSettingsSut}))
+          actions = of(getAnonymousUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
           store.overrideSelector(getIsUILoadedApp, true)
         })
         it('should return EMPTY', (done) => {
@@ -470,7 +381,7 @@ describe('UserEffects', () => {
   
       describe('if UI app its not already loaded', () => {
         beforeEach(() => { 
-          actions = of(getAnonymousUserDataRequestSuccess({ userSettings: userSettingsSut}))
+          actions = of(getAnonymousUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
           store.overrideSelector(getIsUILoadedApp, false)
         })
         it('should return loadedApp AppInit.UI', async () => {
@@ -480,54 +391,4 @@ describe('UserEffects', () => {
       })
     })
   })
-
-  describe('updateUserSettings$', () => {
-    describe('when updateUserSettings is dispatched', () => {
-      const userSettingsSut = {
-        language: 'langTest',
-        darkMode: true
-      } as UserSettings
-  
-      const user =  { uid: 'testUID'} as firebase.User
-  
-      describe('if user stored', () => {
-        beforeEach(() => { 
-          store.overrideSelector(getUser, user);
-          jest.spyOn(userSettingsService, 'updateUserSettings').mockReturnValue(of(userSettingsSut))
-          actions = of(updateUserDataRequest({
-            userSettings: userSettingsSut
-          }))
-        })
-        it('should request updateUserSettings', async () => {
-          const updateUserSettingsSpy = jest.spyOn(userSettingsService, 'updateUserSettings')
-          await firstValueFrom(effects.updateUserSettings$)
-          expect(updateUserSettingsSpy).toHaveBeenCalledWith(user.uid, userSettingsSut)
-        })
-        it('should return updateUserDataRequestSuccess', async () => {
-          const result = await firstValueFrom(effects.updateUserSettings$)
-          expect(result).toEqual(updateUserDataRequestSuccess({ userSettings: userSettingsSut}))
-        })
-      })
-  
-      describe('if its not user stored', () => {
-        beforeEach(() => { 
-          store.overrideSelector(getUser, undefined);
-          jest.spyOn(userSettingsService, 'updateAnonymousSettings').mockReturnValue(of(userSettingsSut))
-          actions = of(updateUserDataRequest({
-            userSettings: userSettingsSut
-          }))
-        })
-        it('should request updateAnonymousSettings', async () => {
-          const updateUserSettingsSpy = jest.spyOn(userSettingsService, 'updateAnonymousSettings')
-          await firstValueFrom(effects.updateUserSettings$)
-          expect(updateUserSettingsSpy).toHaveBeenCalledWith(userSettingsSut)
-        })
-        it('should return updateUserDataRequestSuccess', async () => {
-          const result = await firstValueFrom(effects.updateUserSettings$)
-          expect(result).toEqual(updateUserDataRequestSuccess({ userSettings: userSettingsSut}))
-        })
-      })
-    })
-  })
- 
 });

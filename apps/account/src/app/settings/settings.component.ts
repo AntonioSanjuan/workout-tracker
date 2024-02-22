@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { SettingsForm, settingsForm } from './settings.form';
 import { FormGroup } from "@angular/forms";
 import { UiModule } from '@workout-tracker/ui';
-import { getUserSettings, updateUserDataRequest } from '@workout-tracker/shared-store'
+import { getUserSettings, updateUserSettingsRequest } from '@workout-tracker/shared-store'
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppRoutes, UserSettings } from '@workout-tracker/models'
 import { Subject, takeUntil } from 'rxjs';
@@ -44,6 +44,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   updateSettings(): void {
     const settingsData = {...this.settingsForm?.getRawValue() } as UserSettings
-    this.store.dispatch(updateUserDataRequest({ userSettings: settingsData}))
+    this.store.dispatch(updateUserSettingsRequest({ userSettings: settingsData}))
   }
 }

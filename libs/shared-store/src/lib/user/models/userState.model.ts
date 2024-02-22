@@ -6,5 +6,4 @@ export interface UserState {
     isLogged: boolean;
     isNewUser: boolean;
     userName?: string;
-    settings: UserSettings | undefined
 }

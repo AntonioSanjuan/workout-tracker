@@ -110,7 +110,7 @@ describe('ExercisesEffects', () => {
           await firstValueFrom(effects.getExercisesRequest$)
           expect(getExercisesSpy).not.toHaveBeenCalled()
         })
-        it('should return updateUserDataRequestSuccess with stored data', async () => {
+        it('should return getExercisesRequestSuccess with stored data', async () => {
           const result = await firstValueFrom(effects.getExercisesRequest$)
           expect(result).toEqual(getExercisesRequestSuccess({ exercises: alreadyStoredExercises}))
         })

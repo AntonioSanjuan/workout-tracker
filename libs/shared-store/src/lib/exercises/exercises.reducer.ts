@@ -1,20 +1,20 @@
 import { createReducer, on } from "@ngrx/store"
-import { exerciseInitialState } from "./models/exerciseState.initialState";
+import { exercisesInitialState } from "./models/exercisesState.initialState";
 import { getExercisesRequestSuccess, updateExercisesQueryFilters } from "./exercises.actions";
-import { ExerciseState } from "./models/exerciseState.model";
+import { ExercisesState } from "./models/exercisesState.model";
 
 export const EXERCISES_FEATURE_KEY = 'exercises'; 
 
 export const exercisesReducer = createReducer(
-    exerciseInitialState,
-    on(getExercisesRequestSuccess, (state: ExerciseState, { exercises }) => {
+    exercisesInitialState,
+    on(getExercisesRequestSuccess, (state: ExercisesState, { exercises }) => {
         return {
             ...state, 
             list: exercises,
             filtered: exercises
         }
     }),
-    on(updateExercisesQueryFilters, (state: ExerciseState, { filters }) => {
+    on(updateExercisesQueryFilters, (state: ExercisesState, { filters }) => {
         return {
             ...state, 
             query: {

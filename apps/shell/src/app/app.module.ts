@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers, rootInitialState } from './store/reducers';
-import { LayoutEffects, RequestEffects, UiEffects, UserEffects, ErrorMessageEffects } from '@workout-tracker/shared-store';
+import { LayoutEffects, RequestEffects, UiEffects, ExercisesEffects, UserEffects, ErrorMessageEffects, SettingsEffects } from '@workout-tracker/shared-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 import { CoreModule } from './core/core.module';
@@ -19,6 +19,7 @@ import { LibsServicesMessageModule } from '@workout-tracker/services/message';
 import { LibsServicesUserSettingsModule } from '@workout-tracker/services/user-settings';
 import { LibsServicesApiModule } from '@workout-tracker/services/api';
 import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
+import { LibsServicesExercisesModule } from '@workout-tracker/services/exercises';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
     LibsServicesApiModule,
     LibsServicesMessageModule,
     LibsServicesUserSettingsModule,
+    LibsServicesExercisesModule,
     CoreModule,
     BaseLayoutComponent,
     LoadingSpinnerComponent,
@@ -49,7 +51,9 @@ import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
       UiEffects, 
       RequestEffects, 
       LayoutEffects, 
-      UserEffects, 
+      UserEffects,
+      ExercisesEffects,
+      SettingsEffects,
       ErrorMessageEffects
     ]),
     StoreRouterConnectingModule.forRoot(),
