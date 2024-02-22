@@ -1,13 +1,14 @@
 import { Injectable, inject } from "@angular/core";
-import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setUserInfo, setAnonymousUser, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError, setAuthenticatedUser } from "./user.actions";
-import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
-import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from "../ui";
+import { catchError, map, of, switchMap } from "rxjs";
+import { AppInit, loadedApp, unloadedApp } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { Store } from "@ngrx/store";
-import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestSuccess } from "../settings";
+import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from "../settings";
+import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from "../exercises";
 
 @Injectable()
 export class UserEffects {
@@ -92,33 +93,31 @@ export class UserEffects {
         )
     ))
 
-    setAuthenticatedUser$ = createEffect(() => this.actions$.pipe(
+    setAuthenticatedUserSettings$ = createEffect(() => this.actions$.pipe(
         ofType(setAuthenticatedUser),
         switchMap(() =>
             of(getAuthenticatedUserSettingsRequest())
         )
     ))
 
-    setAnonymousUser$ = createEffect(() => this.actions$.pipe(
+    setAnonymousUserSettings$ = createEffect(() => this.actions$.pipe(
         ofType(setAnonymousUser),
         switchMap(() =>
             of(getAnonymousUserSettingsRequest())
         )
     ))
 
-    //to-do como hacerlo
-    userDataLoaded$ = createEffect(() => this.actions$.pipe(
-        ofType(getAuthenticatedUserSettingsRequestSuccess, getAnonymousUserSettingsRequestSuccess),
-        concatLatestFrom(() => this.store.select(getIsUILoadedApp)),
-        switchMap(([_, isUILoadedApp]) =>
-            iif(
-                () => !isUILoadedApp,
-                of(loadedApp({initialized: AppInit.UI})),
-                EMPTY
-            )
+    setAuthenticatedUserExercises$ = createEffect(() => this.actions$.pipe(
+        ofType(setAuthenticatedUser),
+        switchMap(() =>
+            of(getAuthenticatedUserExercisesRequest())
         )
     ))
 
-
-
+    setAnonymousUserExercises$ = createEffect(() => this.actions$.pipe(
+        ofType(setAnonymousUser),
+        switchMap(() =>
+            of(getAnonymousUserExercisesRequest())
+        )
+    ))
 }

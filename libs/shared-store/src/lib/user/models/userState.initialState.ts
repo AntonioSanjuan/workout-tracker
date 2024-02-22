@@ -4,4 +4,5 @@ export const userInitialState: UserState =  {
     user: undefined,
     isLogged: false,
     isNewUser: false,
+    userName: undefined
 }

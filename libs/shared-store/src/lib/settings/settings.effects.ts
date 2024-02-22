@@ -1,11 +1,13 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
-import { map, of, switchMap } from "rxjs";
-import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestSuccess, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from "./settings.actions";
+import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
+import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestError, getAuthenticatedUserSettingsRequestSuccess, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from "./settings.actions";
 import { UserSettingsService } from "@workout-tracker/services/user-settings";
 import { Store } from "@ngrx/store";
 import { getIsNewUser, getUser } from "../user";
 import { UserSettings } from "@workout-tracker/models";
+import { AppInit, getIsUILoadedApp, loadedApp } from "../ui";
+import firebase from 'firebase/compat/app';
 
 @Injectable()
 export class SettingsEffects {
@@ -23,7 +25,8 @@ export class SettingsEffects {
             ).pipe(
                 map((userSettings: UserSettings) => 
                     getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettings})
-                )
+                ),
+                catchError((err: firebase.FirebaseError) => of(getAuthenticatedUserSettingsRequestError({ error: err })))
 
             )
         )
@@ -53,6 +56,18 @@ export class SettingsEffects {
                 map((userSettings: UserSettings) => 
                     updateUserSettingsRequestSuccess({ userSettings: userSettings})
                 )
+            )
+        )
+    ))
+
+    UserSettingsLoaded$ = createEffect(() => this.actions$.pipe(
+        ofType(getAuthenticatedUserSettingsRequestSuccess, getAnonymousUserSettingsRequestSuccess),
+        concatLatestFrom(() => this.store.select(getIsUILoadedApp)),
+        switchMap(([_, isUILoadedApp]) =>
+            iif(
+                () => !isUILoadedApp,
+                of(loadedApp({initialized: AppInit.UI})),
+                EMPTY
             )
         )
     ))

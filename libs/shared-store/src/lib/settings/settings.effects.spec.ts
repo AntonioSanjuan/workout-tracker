@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
-import { Observable, firstValueFrom, of } from 'rxjs';
+import { Observable, firstValueFrom, isEmpty, of, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
@@ -10,8 +10,9 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
 import { SettingsEffects } from './settings.effects';
 import { UserSettings } from '@workout-tracker/models'
-import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestSuccess, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from './settings.actions';
+import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestError, getAuthenticatedUserSettingsRequestSuccess, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from './settings.actions';
 import { getIsNewUser, getUser } from '../user';
+import { AppInit, getIsUILoadedApp, loadedApp } from '../ui';
 describe('SettingsEffects', () => {
   let actions: Observable<Action>;
   let effects: SettingsEffects
@@ -55,9 +56,6 @@ describe('SettingsEffects', () => {
         let setUserSettingsSpy!: jest.SpyInstance<Observable<UserSettings>>
 
         beforeEach(() => { 
-          jest.spyOn(userSettingsService, 'setUserSettings').mockReturnValue(of(userSettingsSut))
-          actions = of(getAuthenticatedUserSettingsRequest())
-
           setUserSettingsSpy = jest.spyOn(userSettingsService, 'setUserSettings')
 
 
@@ -65,15 +63,42 @@ describe('SettingsEffects', () => {
           store.overrideSelector(getUser, user)
           store.refreshState
         })
+        //
+        describe('when userSettingsService.setUserSettings throws error', () => {
+          const errorCodeMock = 'testing error code'
+          const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+          const errorResp = throwError(() => errorMock )
+  
+          beforeEach(() => {
+            jest.spyOn(userSettingsService, 'setUserSettings').mockReturnValue(errorResp)
+            actions = of(getAuthenticatedUserSettingsRequest())
+          })
 
-        it('should request setUserSettings', async () => {
-          await firstValueFrom(effects.getAuthenticatedUserSettingsRequest$)
-          expect(setUserSettingsSpy).toHaveBeenCalledWith(user.uid)
+          it('should request setUserSettings', async () => {
+            await firstValueFrom(effects.getAuthenticatedUserSettingsRequest$)
+            expect(setUserSettingsSpy).toHaveBeenCalledWith(user.uid)
+          })
+  
+          it('should return getAuthenticatedUserSettingsRequestSuccess', async () => {
+            const result = await firstValueFrom(effects.getAuthenticatedUserSettingsRequest$)
+            expect(result).toEqual(getAuthenticatedUserSettingsRequestError({ error: errorMock}))
+          })
         })
-
-        it('should return getAuthenticatedUserSettingsRequestSuccess', async () => {
-          const result = await firstValueFrom(effects.getAuthenticatedUserSettingsRequest$)
-          expect(result).toEqual(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+        describe('when userSettingsService.setUserSettings success', () => {
+          beforeEach(() => {
+            jest.spyOn(userSettingsService, 'setUserSettings').mockReturnValue(of(userSettingsSut))
+            actions = of(getAuthenticatedUserSettingsRequest())
+          })
+  
+          it('should request setUserSettings', async () => {
+            await firstValueFrom(effects.getAuthenticatedUserSettingsRequest$)
+            expect(setUserSettingsSpy).toHaveBeenCalledWith(user.uid)
+          })
+  
+          it('should return getAuthenticatedUserSettingsRequestSuccess', async () => {
+            const result = await firstValueFrom(effects.getAuthenticatedUserSettingsRequest$)
+            expect(result).toEqual(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+          })
         })
       })
 
@@ -169,6 +194,72 @@ describe('SettingsEffects', () => {
         it('should return updateUserSettingsRequestSuccess', async () => {
           const result = await firstValueFrom(effects.updateUserSettings$)
           expect(result).toEqual(updateUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+        })
+      })
+    })
+  })
+
+  describe('UserSettingsLoaded$', () => {
+    describe('when getAuthenticatedUserSettingsRequestSuccess is dispatched', () => {
+      const userSettingsSut = {
+        language: 'langTest',
+        darkMode: true
+      } as UserSettings
+  
+      describe('if UI app its already loaded', () => {
+        beforeEach(() => { 
+          actions = of(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+          store.overrideSelector(getIsUILoadedApp, true)
+        })
+        it('should return EMPTY', (done) => {
+          effects.UserSettingsLoaded$.
+          pipe(isEmpty()).subscribe( (res) => {
+            expect(res).toEqual(true)
+            done()
+           });
+        })
+      })
+  
+      describe('if UI app its not already loaded', () => {
+        beforeEach(() => { 
+          actions = of(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+          store.overrideSelector(getIsUILoadedApp, false)
+        })
+        it('should return loadedApp AppInit.UI', async () => {
+          const result = await firstValueFrom(effects.UserSettingsLoaded$)
+          expect(result).toEqual(loadedApp({initialized: AppInit.UI}))
+        })
+      })
+    })
+  
+    describe('when getAnonymousUserSettingsRequestSuccess is dispatched', () => {
+      const userSettingsSut = {
+        language: 'langTest',
+        darkMode: true
+      } as UserSettings
+  
+      describe('if UI app its already loaded', () => {
+        beforeEach(() => { 
+          actions = of(getAnonymousUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+          store.overrideSelector(getIsUILoadedApp, true)
+        })
+        it('should return EMPTY', (done) => {
+          effects.UserSettingsLoaded$.
+          pipe(isEmpty()).subscribe( (res) => {
+            expect(res).toEqual(true)
+            done()
+           });
+        })
+      })
+  
+      describe('if UI app its not already loaded', () => {
+        beforeEach(() => { 
+          actions = of(getAnonymousUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
+          store.overrideSelector(getIsUILoadedApp, false)
+        })
+        it('should return loadedApp AppInit.UI', async () => {
+          const result = await firstValueFrom(effects.UserSettingsLoaded$)
+          expect(result).toEqual(loadedApp({initialized: AppInit.UI}))
         })
       })
     })

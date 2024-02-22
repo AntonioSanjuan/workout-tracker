@@ -1,10 +1,13 @@
 import { createAction, props } from "@ngrx/store"
 import { UserSettings } from "@workout-tracker/models"
+import firebase from 'firebase/compat/app';
 
 export const GET_AUTHENTICATED_USER_SETTINGS_REQUEST = 'GET AUTHENTICATED USER SETTINGS Request'
 export const getAuthenticatedUserSettingsRequest = createAction(GET_AUTHENTICATED_USER_SETTINGS_REQUEST)
 export const GET_AUTHENTICATED_USER_DATA_SUCCESS = 'GET AUTHENTICATED USER SETTINGS Success'
 export const getAuthenticatedUserSettingsRequestSuccess = createAction(GET_AUTHENTICATED_USER_DATA_SUCCESS, props<{ userSettings: UserSettings }>())
+export const GET_AUTHENTICATED_USER_DATA_ERROR = 'GET AUTHENTICATED USER SETTINGS Success'
+export const getAuthenticatedUserSettingsRequestError = createAction(GET_AUTHENTICATED_USER_DATA_ERROR, props<{ error: firebase.FirebaseError }>())
 export const GET_ANONYMOUS_USER_SETTINGS_REQUEST = 'GET ANONYMOUS USER SETTINGS Request'
 export const getAnonymousUserSettingsRequest = createAction(GET_ANONYMOUS_USER_SETTINGS_REQUEST)
 export const GET_ANONYMOUS_USER_SETTINGS_SUCCESS = 'GET ANONYMOUS USER SETTINGS Success'

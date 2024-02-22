@@ -1,14 +1,25 @@
-import { Exercise, ExerciseQuery, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
-import { getExercisesRequestSuccess, updateExercisesQueryFilters } from "./exercises.actions";
+import { Exercise, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
+import { getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, updateExercisesQueryFilters } from "./exercises.actions";
 import { exercisesReducer } from "./exercises.reducer";
 import { exercisesInitialState } from "./models/exercisesState.initialState";
 import { ExercisesState } from "./models/exercisesState.model";
 
 describe('exercisesReducer', () => {
-    describe('getExercisesRequestSuccess action', () => {
-        it('should handle getExercisesRequestSuccess action', () => {
+    describe('getAuthenticatedUserExercisesRequestSuccess action', () => {
+        it('should handle getAuthenticatedUserExercisesRequestSuccess action', () => {
             const exerciseSut = [ { name: 'testName' } as Exercise]
-            const action = getExercisesRequestSuccess({ exercises: exerciseSut })
+            const action = getAuthenticatedUserExercisesRequestSuccess({ exercises: exerciseSut })
+            const state = exercisesReducer(exercisesInitialState, action)
+
+            expect(state.list).toEqual(exerciseSut)
+            expect(state.filtered).toEqual(exerciseSut)
+        })
+    })
+
+    describe('getAnonymousUserExercisesRequestSuccess action', () => {
+        it('should handle getAnonymousUserExercisesRequestSuccess action', () => {
+            const exerciseSut = [ { name: 'testName' } as Exercise]
+            const action = getAnonymousUserExercisesRequestSuccess({ exercises: exerciseSut })
             const state = exercisesReducer(exercisesInitialState, action)
 
             expect(state.list).toEqual(exerciseSut)

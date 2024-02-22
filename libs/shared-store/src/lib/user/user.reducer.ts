@@ -19,13 +19,17 @@ export const userReducer = createReducer(
             ...state, 
             user: user,
             isLogged: true,
-            settings: undefined
+            isNewUser: true,
+            userName: undefined
         }
     }),
-    on(setAnonymousUser, (state: UserState) => ({
-        ...state,
-        user: undefined,
-        isLogged: false,
-        settings: undefined
-    })),
+    on(setAnonymousUser, (state: UserState) => {
+        return {
+            ...state,
+            user: undefined,
+            isLogged: false,
+            settings: undefined,
+            userName: undefined
+        }
+    }),
 )

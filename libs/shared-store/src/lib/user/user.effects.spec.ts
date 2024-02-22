@@ -1,19 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
-import { Observable, firstValueFrom, isEmpty, of, throwError } from 'rxjs';
+import { Observable, firstValueFrom, of, throwError } from 'rxjs';
 import { UserEffects } from './user.effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setAuthenticatedUser, setAnonymousUser, setUserInfo } from './user.actions';
-import { AppInit, getIsUILoadedApp, loadedApp, unloadedApp } from '../ui';
+import { AppInit, loadedApp, unloadedApp } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
-import { UserSettingsService, userSettingsServiceMock } from '@workout-tracker/services/user-settings';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
-import { UserSettings } from '@workout-tracker/models';
-import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestSuccess } from '../settings';
+import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from '../settings';
+import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from '../exercises';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
@@ -300,7 +299,7 @@ describe('UserEffects', () => {
       })
     })
   });
-  describe('setAuthenticatedUser$', () => {
+  describe('setAuthenticatedUserSettings$', () => {
     describe('when setAuthenticatedUser is dispatched', () => {
       const user = { email: 'testemail@gmail.com'} as firebase.User
       beforeEach(() => { 
@@ -308,87 +307,47 @@ describe('UserEffects', () => {
       })
 
       it('should return getAuthenticatedUserSettingsRequest', async () => {
-        const result = await firstValueFrom(effects.setAuthenticatedUser$)
+        const result = await firstValueFrom(effects.setAuthenticatedUserSettings$)
         expect(result).toEqual(getAuthenticatedUserSettingsRequest())
       })
     })
   });
-  describe('setAnonymousUser$', () => {
+  describe('setAnonymousUserSettings$', () => {
     describe('when setAnonymousUser is dispatched', () => {
       beforeEach(() => { 
         actions = of(setAnonymousUser())
       })
 
       it('should return getAnonymousUserSettingsRequest', async () => {
-        const result = await firstValueFrom(effects.setAnonymousUser$)
+        const result = await firstValueFrom(effects.setAnonymousUserSettings$)
         expect(result).toEqual(getAnonymousUserSettingsRequest())
       })
     })
   });
 
-  describe('UserSettingsLoaded$', () => {
-    describe('when getAuthenticatedUserSettingsRequestSuccess is dispatched', () => {
-      const userSettingsSut = {
-        language: 'langTest',
-        darkMode: true
-      } as UserSettings
-  
-      describe('if UI app its already loaded', () => {
-        beforeEach(() => { 
-          actions = of(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
-          store.overrideSelector(getIsUILoadedApp, true)
-        })
-        it('should return EMPTY', (done) => {
-          effects.userDataLoaded$.
-          pipe(isEmpty()).subscribe( (res) => {
-            expect(res).toEqual(true)
-            done()
-           });
-        })
+  describe('setAuthenticatedUserExercises$', () => {
+    describe('when setAuthenticatedUser is dispatched', () => {
+      const user = { email: 'testemail@gmail.com'} as firebase.User
+      beforeEach(() => { 
+        actions = of(setAuthenticatedUser({ user: user}))
       })
-  
-      describe('if UI app its not already loaded', () => {
-        beforeEach(() => { 
-          actions = of(getAuthenticatedUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
-          store.overrideSelector(getIsUILoadedApp, false)
-        })
-        it('should return loadedApp AppInit.UI', async () => {
-          const result = await firstValueFrom(effects.userDataLoaded$)
-          expect(result).toEqual(loadedApp({initialized: AppInit.UI}))
-        })
+
+      it('should return getAuthenticatedUserExercisesRequest', async () => {
+        const result = await firstValueFrom(effects.setAuthenticatedUserExercises$)
+        expect(result).toEqual(getAuthenticatedUserExercisesRequest())
       })
     })
-  
-    describe('when getAnonymousUserSettingsRequestSuccess is dispatched', () => {
-      const userSettingsSut = {
-        language: 'langTest',
-        darkMode: true
-      } as UserSettings
-  
-      describe('if UI app its already loaded', () => {
-        beforeEach(() => { 
-          actions = of(getAnonymousUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
-          store.overrideSelector(getIsUILoadedApp, true)
-        })
-        it('should return EMPTY', (done) => {
-          effects.userDataLoaded$.
-          pipe(isEmpty()).subscribe( (res) => {
-            expect(res).toEqual(true)
-            done()
-           });
-        })
+  });
+  describe('setAnonymousUserExercises$', () => {
+    describe('when setAnonymousUser is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(setAnonymousUser())
       })
-  
-      describe('if UI app its not already loaded', () => {
-        beforeEach(() => { 
-          actions = of(getAnonymousUserSettingsRequestSuccess({ userSettings: userSettingsSut}))
-          store.overrideSelector(getIsUILoadedApp, false)
-        })
-        it('should return loadedApp AppInit.UI', async () => {
-          const result = await firstValueFrom(effects.userDataLoaded$)
-          expect(result).toEqual(loadedApp({initialized: AppInit.UI}))
-        })
+
+      it('should return getAnonymousUserExercisesRequest', async () => {
+        const result = await firstValueFrom(effects.setAnonymousUserExercises$)
+        expect(result).toEqual(getAnonymousUserExercisesRequest())
       })
     })
-  })
+  });
 });
