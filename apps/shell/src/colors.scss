@@ -1,6 +1,19 @@
-//layout
-$navBackgroundColor: #f5f5f5;
-$navBorderColor: #dedede;
+$white: #ffffff;
+$grey1: #f2f2f2;
+$grey2: #cccccc;
+$grey3: #a5a5a5;
+$grey4: #7f7f7f;
+$grey5: #595959;
+$mainColor: #05668d;
+$errorColor: #e71d36;
 
-$bodyBackgroundColor: #fff;
-$backdropBackgroundColor: #424242;
+//layout
+$navBackgroundColor: $grey1;
+$navBorderColor: $grey2;
+
+$loginButtonColor: $mainColor;
+$logoutButtonColor: $errorColor;
+$settingsButtonColor: $grey4;
+
+$bodyBackgroundColor: $white;
+$backdropBackgroundColor: $grey5;

@@ -1,11 +1,12 @@
-@use "./../../../../sizes.scss" as sizes;
+@use "css/main" as shellStyles;
+
 
 .MenuBottom_MainContainer {
     display: flex;
     flex-direction: column;
 
-    min-height: sizes.$navFooterHeight;
-    height: sizes.$navFooterHeight;
+    min-height: shellStyles.$navFooterHeight;
+    height: shellStyles.$navFooterHeight;
 
     p {
         margin: 0;

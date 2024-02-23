@@ -21,6 +21,11 @@
           "apps/workout-exercises/src/assets"
         ],
         "styles": ["apps/workout-exercises/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "apps/shell/src/assets"
+          ]
+        },
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/workout-exercises/webpack.config.ts"

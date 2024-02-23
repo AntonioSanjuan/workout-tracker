@@ -1,9 +1,9 @@
-@use "./../../../colors.scss" as colors;
+@use "css/main" as shellStyles;
 
 .menu {
     display: flex;
     flex-direction: column;
     justify-content: center;
     
-    background-color: colors.$navBackgroundColor;
+    background-color: shellStyles.$navBackgroundColor;
 }

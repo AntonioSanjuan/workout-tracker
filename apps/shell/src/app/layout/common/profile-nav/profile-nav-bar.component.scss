@@ -1,5 +1,4 @@
-@use "./../../../../sizes.scss" as sizes;
-
+@use "css/main" as shellStyles;
 :host {
     width: 100%;
 }
@@ -17,11 +16,23 @@
         gap: 10px;
         padding-left: 10px;
     
-        height: sizes.$navProfileHeight;
-        width: sizes.$navProfileWidth;
+        height: shellStyles.$navProfileHeight;
+        width: shellStyles.$navProfileWidth;
 
         position: fixed;
 
         z-index: 3;
+
+        #logout {
+            background-color: shellStyles.$logoutButtonColor;
+        }
+
+        #login {
+            background-color: shellStyles.$loginButtonColor;
+        }
+
+        #settings {
+            background-color: shellStyles.$settingsButtonColor;
+        }
     }
 }

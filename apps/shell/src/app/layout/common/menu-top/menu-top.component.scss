@@ -1,9 +1,9 @@
-@use "./../../../../colors.scss" as colors;
+@use "css/main" as shellStyles;
 
 .MenuTop_MainContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    border-bottom: solid 2px colors.$navBorderColor;
+    border-bottom: solid 2px shellStyles.$navBorderColor;
 }

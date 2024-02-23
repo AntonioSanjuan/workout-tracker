@@ -1,12 +1,11 @@
-@use "./../../../../sizes.scss" as sizes;
-@use "./../../../../colors.scss" as colors;
+@use "css/main" as shellStyles;
 
 .MenuNavBar_MainContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-color: colors.$navBackgroundColor;
+    background-color: shellStyles.$navBackgroundColor;
 
     .MenuNavBar_ContentContainer {
         display: flex;
@@ -15,9 +14,9 @@
         position: sticky;
         top: 0;
 
-        min-height: sizes.$navHeaderHeight;
-        height: sizes.$navHeaderHeight;
-        width: sizes.$ContentWidth;
+        min-height: shellStyles.$navHeaderHeight;
+        height: shellStyles.$navHeaderHeight;
+        width: shellStyles.$ContentWidth;
         max-width: 1024px;
 
         z-index: 3;
@@ -40,7 +39,19 @@
 
                 div {
                     display: flex;
-                    gap: 5px
+                    gap: 5px;
+
+                    #logout {
+                        background-color: shellStyles.$logoutButtonColor;
+                    }
+            
+                    #login {
+                        background-color: shellStyles.$loginButtonColor;
+                    }
+
+                    #settings {
+                        background-color: shellStyles.$settingsButtonColor;
+                    }
                 }
             }
 
@@ -63,6 +74,7 @@
                         height: 100%;
                         flex: 1;
                         width: 100%;
+                        background-color: shellStyles.$grey3;
         
                         &:after {
                             position: absolute;
@@ -73,7 +85,7 @@
                             left: 0;
                             bottom: -3px;
 
-                            background-color: colors.$navBorderColor;
+                            background-color: shellStyles.$navBorderColor;
                             z-index: 1;
                         }
                     }
@@ -101,13 +113,13 @@
                 ul {
                     position: absolute;
                     flex-direction: column;
-                    top: sizes.$navHeaderHeight;
+                    top: shellStyles.$navHeaderHeight;
                     //animation
                     // height: 0;
                     // overflow: hidden;
                     li {
                         position: static;
-                        height: sizes.$navHeaderHeight;
+                        height: shellStyles.$navHeaderHeight;
 
                         button {
                             &:after {
@@ -120,7 +132,7 @@
                                 left: unset;
                                 bottom: unset;
 
-                                background-color: colors.$navBorderColor;
+                                background-color: shellStyles.$navBorderColor;
                                 z-index: 1;
                             }
                         }

@@ -7,14 +7,14 @@
                     <mat-icon>density_medium</mat-icon>
                 </button>
                 <div>
-                    <button mat-mini-fab color="warn" aria-label="Login" [routerLink]="appRoutes.Settings">
+                    <button mat-mini-fab id="settings" color="warn" aria-label="Settings" [routerLink]="appRoutes.Settings">
                         <mat-icon>settings</mat-icon>
                     </button>
 
-                    <button *ngIf="vm.isUserLogged" mat-mini-fab color="warn" aria-label="Login" (click)="logOut()">
+                    <button *ngIf="vm.isUserLogged" id="logout" mat-mini-fab color="warn" aria-label="Login" (click)="logOut()">
                         <mat-icon>logout</mat-icon>
                     </button>
-                    <button *ngIf="!vm.isUserLogged" mat-mini-fab color="warn" aria-label="Logout" [routerLink]="appRoutes.Login">
+                    <button *ngIf="!vm.isUserLogged" id="login" mat-mini-fab color="warn" aria-label="Logout" [routerLink]="appRoutes.Login">
                         <mat-icon>account_circle</mat-icon>
                     </button>
                 </div>

@@ -1,11 +1,10 @@
-@use "./../../../sizes.scss" as sizes;
-@use "./../../../colors.scss" as colors;
+@use "css/main" as shellStyles;
 
 .BaseLayout_MainContainer {
     display: flex;
     flex-direction: column;
 
-    background: colors.$backdropBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
+    background: shellStyles.$backdropBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
     align-items: center;
     min-height: 100vh;
     height: auto;
@@ -29,17 +28,17 @@
         align-items: center;
         flex: 1;
         margin: 0 auto;
-        max-width: sizes.$BodyMaxWidth;
+        max-width: shellStyles.$BodyMaxWidth;
         width: 100%;
-        background: colors.$bodyBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
+        background: shellStyles.$bodyBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
 
         .BaseLayout_ContentContainer {
-            background-color: colors.$bodyBackgroundColor;
+            background-color: shellStyles.$bodyBackgroundColor;
             display: flex;
             flex-direction: column;
             flex: 1 1 100%;
-            max-width: sizes.$ContentMaxWidth;
-            width: sizes.$ContentWidth;
+            max-width: shellStyles.$ContentMaxWidth;
+            width: shellStyles.$ContentWidth;
             // justify-content: center;
         }
     }

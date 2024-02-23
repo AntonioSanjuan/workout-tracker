@@ -18,6 +18,11 @@
         "inlineStyleLanguage": "scss",
         "assets": ["apps/account/src/favicon.ico", "apps/account/src/assets"],
         "styles": ["apps/account/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "apps/shell/src/assets"
+          ]
+        },
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/account/webpack.config.ts"

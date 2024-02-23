@@ -1,5 +1,5 @@
+@use "css/main.scss" as shellStyles;
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
 
 :host {
     height: 100%;
@@ -28,9 +28,15 @@
         button {
             margin-bottom: 15px;
         }
-        .Login_loginWithGoogle {
-            display: flex;
-            align-items: center;
+        #googleButton {
+            background-color: shellStyles.$grey3;
+            height: fit-content;
+            .Login_loginWithGoogle {
+                display: flex;
+                align-items: center;
+                padding: 5px 0px;
+                gap: 10px;
+            }
         }
     }
 }

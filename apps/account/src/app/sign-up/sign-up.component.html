@@ -21,7 +21,7 @@
         <button mat-flat-button color="primary" [disabled]="!signUpForm.valid" (click)="signUp()">
             {{ 'apps.account.signUp.form.actions.submit' | translate }}
         </button>
-        <button type="button" mat-flat-button color="primary" (click)="loginWithGoogle()">
+        <button id="googleButton" type="button" mat-flat-button color="primary" (click)="loginWithGoogle()">
             <div class="Login_loginWithGoogle">
                 <img 
                 mat-card-image 

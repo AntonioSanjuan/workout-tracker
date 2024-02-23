@@ -1,13 +1,13 @@
 <div class="ProfileNavBar_MainContainer" *ngrxLet="isUserLogged$; let isUserLogged">
     <div class="ProfileNavBar_ContentContainer">
-        <button *ngIf="isUserLogged" mat-mini-fab color="warn" aria-label="Login" (click)="logOut()">
+        <button *ngIf="isUserLogged" id="logout" mat-mini-fab color="warn" aria-label="Login" (click)="logOut()">
             <mat-icon>logout</mat-icon>
         </button>
-        <button *ngIf="!isUserLogged" mat-mini-fab color="warn" aria-label="Logout" [routerLink]="appRoutes.Login">
+        <button *ngIf="!isUserLogged" id="login" mat-mini-fab color="warn" aria-label="Logout" [routerLink]="appRoutes.Login">
             <mat-icon>account_circle</mat-icon>
         </button>
 
-        <button mat-mini-fab color="warn" aria-label="Login" [routerLink]="appRoutes.Settings">
+        <button mat-mini-fab color="warn" id="settings" aria-label="Settings" [routerLink]="appRoutes.Settings">
             <mat-icon>settings</mat-icon>
         </button>
     </div>
