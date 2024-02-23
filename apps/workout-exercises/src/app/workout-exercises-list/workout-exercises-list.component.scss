@@ -1,0 +1,14 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+:host {
+    height: 100%;
+}
+
+.WorkoutExerciseList_MainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}

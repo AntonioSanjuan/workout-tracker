@@ -3,8 +3,48 @@ import { getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesR
 import { exercisesReducer } from "./exercises.reducer";
 import { exercisesInitialState } from "./models/exercisesState.initialState";
 import { ExercisesState } from "./models/exercisesState.model";
+import { setAnonymousUser } from "../user";
 
 describe('exercisesReducer', () => {
+
+    describe('setAnonymousUser action', () => {
+        //clear exercises if anonymous user is setted
+        const exerciseInitialStateMock = {
+            ...exercisesInitialState,
+            list: [ 
+                { name: 'testName', type: ExerciseType.Arms } as Exercise,
+                { name: 'testName1', type: ExerciseType.Arms } as Exercise,
+                { name: 'testName1', type: ExerciseType.Leg } as Exercise,
+                { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+            ]
+        } as ExercisesState
+        it('should handle setAnonymousUser action', () => {
+            const action = setAnonymousUser()
+            const state = exercisesReducer(exerciseInitialStateMock, action)
+
+            expect(state).toEqual(exercisesInitialState)
+        })
+    })
+
+    describe('setAuthenticatedUser action', () => {
+        //clear exercises if auth user is setted
+        const exerciseInitialStateMock = {
+            ...exercisesInitialState,
+            list: [ 
+                { name: 'testName', type: ExerciseType.Arms } as Exercise,
+                { name: 'testName1', type: ExerciseType.Arms } as Exercise,
+                { name: 'testName1', type: ExerciseType.Leg } as Exercise,
+                { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+            ]
+        } as ExercisesState
+        it('should handle setAuthenticatedUser action', () => {
+            const action = setAnonymousUser()
+            const state = exercisesReducer(exerciseInitialStateMock, action)
+
+            expect(state).toEqual(exercisesInitialState)
+        })
+    })
+
     describe('getAuthenticatedUserExercisesRequestSuccess action', () => {
         it('should handle getAuthenticatedUserExercisesRequestSuccess action', () => {
             const exerciseSut = [ { name: 'testName' } as Exercise]

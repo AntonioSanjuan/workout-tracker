@@ -4,7 +4,7 @@ import { SignUpForm, signUpForm } from './sign-up.form';
 import { FormGroup } from "@angular/forms";
 import { SignUpData } from './model/signUpRequest.model';
 import { UiModule } from '@workout-tracker/ui';
-import { loginRequest, signUpRequest } from '@workout-tracker/shared-store'
+import { loginGoogleRequest, loginRequest, signUpRequest } from '@workout-tracker/shared-store'
 import { TranslateModule } from '@ngx-translate/core';
 import { AppRoutes } from '@workout-tracker/models'
 import { RouterModule } from '@angular/router';
@@ -35,5 +35,9 @@ export class SignUpComponent implements OnInit {
     if(signUpData.userEmail && signUpData.password){
       this.store.dispatch(signUpRequest({ userEmail: signUpData.userEmail, userPass: signUpData.password }))
     }
+  }
+
+  loginWithGoogle(): void {
+    this.store.dispatch(loginGoogleRequest())
   }
 }

@@ -17,17 +17,29 @@ export const appRoutes: Route[] = [
     canActivate: [],
   },
   {
+    path: 'exercises',
+    component: BaseLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          loadRemoteModule('workout-exercises', './routes').then((m) => m.appRoutes),
+      },
+    ],
+    canActivate: [],
+  },
+  {
     path: '',
     component: BaseLayoutComponent,
     children: [
       {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
       },
     ],
   },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: '',
   },
 ];

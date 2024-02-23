@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@env": ["apps/shell/src/environments/environment"],
-      "@workout-tracker/services/exercises": ["libs/services/exercises/src/index.ts"],
       "@workout-tracker/models": ["libs/models/src/index.ts"],
       "@workout-tracker/services/api": ["libs/services/api/src/index.ts"],
       "@workout-tracker/services/auth": ["libs/services/auth/src/index.ts"],
@@ -26,6 +25,9 @@
       "@workout-tracker/services/culture": [
         "libs/services/culture/src/index.ts"
       ],
+      "@workout-tracker/services/exercises": [
+        "libs/services/exercises/src/index.ts"
+      ],
       "@workout-tracker/services/message": [
         "libs/services/message/src/index.ts"
       ],
@@ -34,7 +36,7 @@
       ],
       "@workout-tracker/shared-store": ["libs/shared-store/src/index.ts"],
       "@workout-tracker/test": ["libs/test/src/index.ts"],
-      "@workout-tracker/ui": ["libs/ui/src/index.ts"]
+      "@workout-tracker/ui": ["libs/ui/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

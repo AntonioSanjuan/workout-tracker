@@ -5,7 +5,7 @@ import { accountAppStateMock } from '../+state/test/accountStateMock/accountStat
 import { Store } from '@ngrx/store';
 import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { loginRequest, signUpRequest } from '@workout-tracker/shared-store';
+import { loginGoogleRequest, loginRequest, signUpRequest } from '@workout-tracker/shared-store';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { appRoutes } from '../app.routes';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -81,6 +81,17 @@ describe('SignUpComponent', () => {
         component.signUp()
 
         expect(dispatchSpy).not.toHaveBeenCalledWith(signUpRequest(expect.anything())
+        )
+      })
+    });
+
+    describe('loginWithGoogle', () => {
+      it('loginWithGoogle should dispatch loginGoogleRequest', () => {
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+        component.loginWithGoogle()
+
+        expect(dispatchSpy).toHaveBeenCalledWith(loginGoogleRequest()
         )
       })
     });

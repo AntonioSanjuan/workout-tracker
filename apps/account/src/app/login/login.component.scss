@@ -25,13 +25,12 @@
             width: 100%;
         }
 
+        button {
+            margin-bottom: 15px;
+        }
         .Login_loginWithGoogle {
             display: flex;
             align-items: center;
         }
-    }
-
-    a {
-        margin-top: 10px;
     }
 }

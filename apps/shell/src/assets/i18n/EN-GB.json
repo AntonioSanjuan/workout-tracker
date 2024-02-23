@@ -1,28 +1,76 @@
 {
-    "shell": {
-        "layout": {
-            "menuTop": {
-                "content": "Top menu works"
-            },
-            "menuBottom": {
-                "content": "Bottom menu works"
-            },
-            "profileNav": {
-                "language": {
-                    "placeholder": "Language"
+    "apps": {
+        "shell": {
+            "layout": {
+                "menuTop": {
+                    "content": "Top menu works"
+                },
+                "menuBottom": {
+                    "content": "Bottom menu works"
+                },
+                "profileNav": {
+                    "language": {
+                        "placeholder": "Language"
+                    }
+                },
+                "menuNav": {
+                    "home": "Home",
+                    "exercises": "Exercises",
+                    "news": "News"
                 }
             },
-            "menuNav": {
-                "home": "Home",
-                "pokedex": "Pokedex",
-                "news": "News"
+            "home": {
+                "content": "It works!"
+            },
+            "loadingSpinner": {
+                "title": "Loading..."
             }
         },
-        "home": {
-            "content": "It works!"
+        "account": {
+            "login": {
+                "title": "Access with your account",
+                "form": {
+                    "fields": {
+                        "userEmail": "Email",
+                        "userPass": "Password"
+                    },
+                    "actions": {
+                        "submit": "Access",
+                        "googleLogin": "Access with Google",
+                        "signUp": "You do not have an account? Register now!"
+                    }
+                }
+            },
+            "signUp": {
+                "title": "Sign up",
+                "form": {
+                    "fields": {
+                        "userEmail": "Email",
+                        "userPass": "Password"
+                    },
+                    "actions": {
+                        "submit": "Sign In",
+                        "googleLogin": "Sign In with Google",
+                        "login": "Do you already have an account? Access with it!"
+
+                    }
+                }
+            },
+            "settings": {
+                "title": "Set up your account",
+                "form": {
+                    "fields": {
+                        "language": "Language",
+                        "darkMode": "Dark mode"
+                    }
+                }
+            }
         },
-        "loadingSpinner": {
-            "title": "Loading..."
+        "workout-exercises": {
+            "list": {
+                "filter": {},
+                "title": "List of exercises"
+            }
         }
     },
     "libs": {

@@ -15,7 +15,7 @@
                 },
                 "menuNav": {
                     "home": "Inicio",
-                    "pokedex": "Pokedex",
+                    "exercises": "Ejercicios",
                     "news": "Novedades"
                 }
             },
@@ -36,6 +36,7 @@
                     },
                     "actions": {
                         "submit": "Acceder",
+                        "googleLogin": "Accede con Google",
                         "signUp": "¿No tienes cuenta? ¡Registrate ya!"
                     }
                 }
@@ -49,6 +50,7 @@
                     },
                     "actions": {
                         "submit": "Registrarse",
+                        "googleLogin": "Registrate con Google",
                         "login": "¿Ya tienes cuenta? ¡Accede con ella!"
 
                     }
@@ -62,6 +64,12 @@
                         "darkMode": "Modo oscuro"
                     }
                 }
+            }
+        },
+        "workout-exercises": {
+            "list": {
+                "filter": {},
+                "title": "Lista de ejercicios"
             }
         }
     },
