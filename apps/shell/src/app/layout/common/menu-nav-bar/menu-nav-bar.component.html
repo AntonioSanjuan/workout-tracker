@@ -1,4 +1,4 @@
-<div class="MenuNavBar_MainContainer" *ngrxLet="{isUserLogged: isUserLogged$, navBarIsOpened: navBarIsOpened$} as vm">
+<div class="MenuNavBar_MainContainer" *ngrxLet="{isUserLogged: isUserLogged$, navBarIsOpened: navBarIsOpened$, currentRoute: currentRoute$} as vm">
     <div class="MenuNavBar_ContentContainer">
         <div class="MenuNavBar_CenterContainer">
 
@@ -21,10 +21,21 @@
             </div>
             <ul [@collapse]="!vm.navBarIsOpened">
                 <li>
-                    <button mat-flat-button color="warn" [routerLink]="appRoutes.Home">{{ 'apps.shell.layout.menuNav.home' | translate }}</button>
+                    <button 
+                        mat-flat-button 
+                        color="warn" 
+                        [class.currentRoute]="vm.currentRoute === appRoutes.Home"
+                        [routerLink]="appRoutes.Home">
+                            {{ 'apps.shell.layout.menuNav.home' | translate }}
+                    </button>
                 </li>
                 <li>
-                    <button mat-flat-button color="primary" [routerLink]="appRoutes.WorkoutExercisesList">{{ 'apps.shell.layout.menuNav.exercises' | translate }}</button>
+                    <button 
+                        mat-flat-button color="primary"
+                        [class.currentRoute]="vm.currentRoute === appRoutes.WorkoutExercisesList"
+                        [routerLink]="appRoutes.WorkoutExercisesList">
+                        {{ 'apps.shell.layout.menuNav.exercises' | translate }}
+                    </button>
                 </li>
                 <li>
                     <button mat-flat-button color="primary" disabled>{{ 'apps.shell.layout.menuNav.news' | translate }}</button>

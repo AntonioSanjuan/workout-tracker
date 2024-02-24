@@ -1,5 +1,12 @@
 @use "css/main" as shellStyles;
 
+
+.currentRoute {
+    &:after {
+        background-color:shellStyles.$mainColor !important;
+        
+    }
+}
 .MenuNavBar_MainContainer {
     display: flex;
     flex-direction: column;
