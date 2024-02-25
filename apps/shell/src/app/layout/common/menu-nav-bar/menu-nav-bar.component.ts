@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterModule, UrlSegment } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { UiModule, collapseAnimation } from '@workout-tracker/ui';
 import { AppRoutes } from '@workout-tracker/models'
 import { TranslateModule } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
-import { getIsUserLogged, getMenuNavBarIsOpened, logOutRequest, switchNavBar } from '@workout-tracker/shared-store';
+import { getCurrentRoute, getIsUserLogged, getMenuNavBarIsOpened, logOutRequest, switchNavBar } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'workout-tracker-menu-nav-bar',
@@ -30,11 +29,7 @@ export class MenuNavBarComponent {
 
   public isUserLogged$ = this.store.select(getIsUserLogged)
   public navBarIsOpened$ = this.store.select(getMenuNavBarIsOpened)
-  public currentRoute$ = inject(ActivatedRoute).url.pipe(
-    map((urls: UrlSegment[]) => {
-      return '/'+ (urls[0]?.path ?? '')
-    })
-  )
+  public currentRoute$ = this.store.select(getCurrentRoute)
 
 
   public switch() {

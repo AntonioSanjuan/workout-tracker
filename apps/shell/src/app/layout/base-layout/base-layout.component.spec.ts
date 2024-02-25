@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BaseLayoutComponent } from './base-layout.component';
 import { RouterOutlet } from '@angular/router';
-import { layoutStateMock, userStateMock } from '@workout-tracker/test';
+import { layoutStateMock, userStateMock, routerStateMock } from '@workout-tracker/test';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,6 +21,7 @@ describe('BaseLayoutComponent', () => {
         provideMockStore({
           initialState: {
             ...layoutStateMock,
+            ...routerStateMock,
             ...userStateMock
           }
         }),

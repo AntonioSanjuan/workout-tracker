@@ -6,7 +6,7 @@ import { appRoutes } from '../../../app.routes';
 import { TranslateModule } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { layoutStateMock, userStateMock } from '@workout-tracker/test'
+import { layoutStateMock, userStateMock, routerStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { logOutRequest, switchNavBar } from '@workout-tracker/shared-store';
 describe('MenuNavBarComponent', () => {
@@ -21,7 +21,8 @@ describe('MenuNavBarComponent', () => {
         provideMockStore({
           initialState: {
             ...layoutStateMock, 
-            ...userStateMock
+            ...userStateMock,
+            ...routerStateMock
           }
         }),
       ],

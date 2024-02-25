@@ -6,8 +6,9 @@ import { routerNavigationAction } from '@ngrx/router-store';
 import { closeNavBar } from './layout.actions';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
+import { setCurrentRoute } from '../router/router.actions';
 
-describe('PokemonListEffects', () => {
+describe('LayoutEffects', () => {
   let actions: Observable<Action>;
   let effects: LayoutEffects
 
@@ -25,15 +26,15 @@ describe('PokemonListEffects', () => {
     actions = TestBed.inject(Actions)
   });
 
-  describe('routerNavigationAction$', () => {
-    describe('when routerNavigationAction is dispatched', () => {
+  describe('setCurrentRoute$', () => {
+    describe('when setCurrentRoute is dispatched', () => {
 
       beforeEach(() => { 
-        actions = of(routerNavigationAction({} as any))
+        actions = of(setCurrentRoute({} as any))
       })
 
-      it('should call getNextPokemonListPageRequestError', async () => {
-        const result = await firstValueFrom(effects.routerNavigationAction$)
+      it('should call closeNavBar', async () => {
+        const result = await firstValueFrom(effects.setCurrentRoute$)
         expect(result).toEqual(closeNavBar())
       })
     });
