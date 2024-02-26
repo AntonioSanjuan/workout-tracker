@@ -1,4 +1,13 @@
 {
+    "common": {
+        "exerciseType": {
+            "Legs": "Piernas",
+            "Arms": "Brazos",
+            "Shoulder": "Hombros",
+            "Back": "Espalda",
+            "Chest": "Pecho"
+        }
+    },
     "apps": {
         "shell": {
             "layout": {
@@ -68,7 +77,16 @@
         },
         "workout-exercises": {
             "list": {
-                "filter": {},
+                "filter": {
+                    "banner": {
+                        "title": "",
+                        "content": "Puedes buscar un ejercicio por su nombre, o filtrarlo por el tipo del mismo"
+                    },
+                    "byNameLabel": "Busca el ejercicio por nombre",
+                    "byNamePlaceholder": "Nombre del ejercicio...",
+                    "byTypeLabel": "Busca  el ejercicio por tipo",
+                    "filteredByTypes": "Filtrado por..."
+                },
                 "title": "Lista de ejercicios"
             }
         }

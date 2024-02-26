@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WorkoutExercisesListComponent } from './workout-exercises-list.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
-import { userStateMock } from '@workout-tracker/test'
+import { userStateMock, exercisesStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { workoutExercisesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock'
+import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-filter/workout-exercises-list-filter.component';
 
 describe('WorkoutExercisesListComponent', () => {
   let component: WorkoutExercisesListComponent;
@@ -17,6 +18,7 @@ describe('WorkoutExercisesListComponent', () => {
       providers: [
         provideMockStore({
           initialState: {
+            ...exercisesStateMock,
             ...workoutExercisesAppStateMock, 
             ...userStateMock
           }
@@ -25,6 +27,7 @@ describe('WorkoutExercisesListComponent', () => {
       imports: [
         BrowserAnimationsModule,
         WorkoutExercisesListComponent,
+        WorkoutExercisesFilterListComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),

@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store"
-import { Exercise, ExerciseQueryFilters } from "@workout-tracker/models"
+import { Exercise, ExerciseType } from "@workout-tracker/models"
 import firebase from 'firebase/compat/app';
 
 export const GET_AUTHENTICATED_USER_EXERCISES_REQUEST = 'GET AUTHENTICATED USER EXERCISES Request'
@@ -13,6 +13,9 @@ export const getAnonymousUserExercisesRequest = createAction(GET_ANONYMOUS_USER_
 export const GET_ANONYMOUS_USER_EXERCISES_SUCCESS = 'GET ANONYMOUS USER EXERCISES Success'
 export const getAnonymousUserExercisesRequestSuccess = createAction(GET_ANONYMOUS_USER_EXERCISES_SUCCESS, props<{ exercises: Exercise[] }>())
 
-export const UPDATE_EXERCISES_QUERY_FILTERS = 'EXERCISES update query filters'
-export const updateExercisesQueryFilters = createAction(UPDATE_EXERCISES_QUERY_FILTERS, props<{ filters: ExerciseQueryFilters}>())
-  
+export const SET_EXERCISE_TYPE_QUERY_FILTER = 'SET EXERCISE TYPE QUERY FILTER'
+export const setExerciseTypeQueryFilter = createAction(SET_EXERCISE_TYPE_QUERY_FILTER, props<{ exerciseType: ExerciseType}>())
+export const SET_EXERCISE_NAME_QUERY_FILTER = 'SET EXERCISE NAME QUERY FILTER'
+export const setExerciseNameQueryFilter = createAction(SET_EXERCISE_NAME_QUERY_FILTER, props<{ exerciseName: string}>())
+export const CLEAR_EXERCISE_QUERY_FILTER = 'CLEAR EXERCISE QUERY FILTER'
+export const clearExerciseQueryFilter = createAction(CLEAR_EXERCISE_QUERY_FILTER)

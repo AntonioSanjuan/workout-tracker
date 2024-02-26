@@ -1,0 +1,59 @@
+<div class="ExerciseFilter_MainContainer"
+*ngrxLet="{ exercisesFilters: exercisesFilters$ } as vm">
+
+    <div class="ExerciseFilter_NameFilterContainer">
+        <mat-form-field>
+            <mat-label>{{'apps.workout-exercises.list.filter.byNamePlaceholder' | translate}}</mat-label>
+            <input matInput type="text" [value]="vm.exercisesFilters.byName" #byNameInput>
+        </mat-form-field>
+        <button mat-mini-fab color="warn" 
+            attr.aria-label="{{'apps.workout-exercises.list.filter.byNameLabel' | translate }}"  
+            [disabled]="!byNameInput.value" 
+            (click)="searchByName(byNameInput.value)">
+            <mat-icon>search</mat-icon>
+        </button>
+        <div class="ExerciseFilter_NameFilterBanner">
+            <workout-tracker-banner 
+                [content]="'apps.workout-exercises.list.filter.banner.content' | translate">
+            </workout-tracker-banner>
+        </div>
+    </div>
+    <div class="ExerciseFilter_TypeFilterContainer" [@accordion]="collapsed">
+        <div class="ExerciseFilter_TypeFilter">
+            <div class="ExerciseFilter_TypeFilterHeader">
+                <h2>{{'apps.workout-exercises.list.filter.byTypeLabel' | translate}}</h2>
+            </div>
+            <div class="ExerciseFilter_TypeFilterContent">
+                <div class="ExerciseFilter_TypeFilters"  
+                    *ngFor="let exerciseType of exerciseTypes" 
+                    (click)="filterByExerciseType(exerciseType)">
+                    <workout-tracker-exercise-type-pill [exerciseType]="exerciseType"></workout-tracker-exercise-type-pill>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ExerciseFilter_TypeFilterActionsContainer">
+        
+        <div class="ExerciseFilter_TypeFiltersActive" *ngIf="vm.exercisesFilters.byTypes.length">
+            <h2>{{'apps.workout-exercises.list.filter.filteredByTypes' | translate}}</h2>
+            <div>
+                <div class="ExerciseFilter_TypeFilters"  
+                    *ngFor="let exerciseType of vm.exercisesFilters.byTypes">
+                    <div class="ExerciseFilter_TypeFiltersCurrent" (click)="filterByExerciseType(exerciseType)">
+                        <workout-tracker-exercise-type-pill [exerciseType]="exerciseType"></workout-tracker-exercise-type-pill>
+                        <mat-icon>close</mat-icon>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <button 
+            [@rotate]="!collapsed"
+            (click)="toggle()"
+            mat-mini-fab 
+            color="primary" 
+            attr.aria-label="{{'pokemon.list.filter.openFilter' | translate }}">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </div>
+</div>

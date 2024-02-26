@@ -5,6 +5,7 @@ export const exercisesInitialState: ExercisesState =  {
     filtered: [],
     query: {
         filters: {
+            byName: '',
             byTypes: []
         }
     }

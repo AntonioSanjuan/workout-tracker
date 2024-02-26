@@ -1,0 +1,37 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-banner {
+    display: flex;
+    width: 100%;
+    .Banner_MainContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        background-color: shellStyles.$mainColor;
+        border-radius: 5px;
+        width: 100%;
+        gap: 15px;
+        padding: 10px;
+    
+        .Banner_TypeContainer {
+            color: #ffff;
+            mat-icon {
+                font-size: 50px;
+                height: 50px;
+                width: 50px;
+            }
+
+        }
+        .Banner_ContentContainer {
+            .Banner_TitleContainer {}
+            .Banner_ContentContainer {
+
+                p {
+                    margin: 0;
+                    color: #ffff
+                }
+            }
+        }
+    }
+}

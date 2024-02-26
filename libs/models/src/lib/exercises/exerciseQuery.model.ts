@@ -5,5 +5,6 @@ export interface ExerciseQuery {
 }
 
 export interface ExerciseQueryFilters {
+    byName: string
     byTypes: ExerciseType[]
 }

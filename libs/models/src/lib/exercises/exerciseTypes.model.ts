@@ -1,7 +1,7 @@
 export enum ExerciseType {
-    Leg,
-    Arms,
-    Shoulder,
-    Back,
-    Chest
+    Legs = "Legs",
+    Arms = "Arms",
+    Shoulder = "Shoulder",
+    Back = "Back",
+    Chest = "Chest"
 }

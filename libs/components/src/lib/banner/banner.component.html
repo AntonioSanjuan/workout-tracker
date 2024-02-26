@@ -1,0 +1,16 @@
+<div class="Banner_MainContainer">
+  <div class="Banner_TypeContainer">
+    <mat-icon *ngIf="type === BannerType.Info">info</mat-icon>
+    <mat-icon *ngIf="type === BannerType.Error">error</mat-icon>
+    <mat-icon *ngIf="type === BannerType.Success">done</mat-icon>
+    <mat-icon *ngIf="type === BannerType.Warning">warning</mat-icon>
+  </div>
+  <div class="Banner_ContentContainer">
+    <div *ngIf="title" class="Banner_TitleContainer">
+      <h2>{{ title }}</h2>
+    </div>
+    <div *ngIf="content "class="Banner_ContentContainer"> 
+      <p>{{ content }}</p>
+    </div>
+  </div>
+</div>

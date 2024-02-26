@@ -1,4 +1,13 @@
 {
+    "common": {
+        "exerciseType": {
+            "Legs": "Legs",
+            "Arms": "Arms",
+            "Shoulder": "Shoulder",
+            "Back": "Back",
+            "Chest": "Chest"
+        }
+    },
     "apps": {
         "shell": {
             "layout": {
@@ -68,7 +77,12 @@
         },
         "workout-exercises": {
             "list": {
-                "filter": {},
+                "filter": {
+                    "byNameLabel": "Search exercises by name",
+                    "byNamePlaceholder": "Exercise name...",
+                    "byTypeLabel": "Search exercise by type",
+                    "filteredByTypes": "Filtered by..."
+                },
                 "title": "List of exercises"
             }
         }

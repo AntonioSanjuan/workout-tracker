@@ -1,0 +1,18 @@
+.ExerciseTypePill_MainContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+
+    p {
+        display: flex;
+        justify-content: center;
+        
+        padding: 5px 10px;
+        border: 2px solid #a4a4a4;
+        border-radius: 7px;
+        margin: 0;
+        width: 100%;
+        font-size: 20px;
+    }
+}

@@ -1,5 +1,5 @@
 import { Exercise, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
-import { getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, updateExercisesQueryFilters } from "./exercises.actions";
+import { clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseTypeQueryFilter } from "./exercises.actions";
 import { exercisesReducer } from "./exercises.reducer";
 import { exercisesInitialState } from "./models/exercisesState.initialState";
 import { ExercisesState } from "./models/exercisesState.model";
@@ -14,7 +14,7 @@ describe('exercisesReducer', () => {
             list: [ 
                 { name: 'testName', type: ExerciseType.Arms } as Exercise,
                 { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Leg } as Exercise,
+                { name: 'testName1', type: ExerciseType.Legs } as Exercise,
                 { name: 'testName1', type: ExerciseType.Chest } as Exercise,
             ]
         } as ExercisesState
@@ -33,7 +33,7 @@ describe('exercisesReducer', () => {
             list: [ 
                 { name: 'testName', type: ExerciseType.Arms } as Exercise,
                 { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Leg } as Exercise,
+                { name: 'testName1', type: ExerciseType.Legs } as Exercise,
                 { name: 'testName1', type: ExerciseType.Chest } as Exercise,
             ]
         } as ExercisesState
@@ -67,40 +67,84 @@ describe('exercisesReducer', () => {
         })
     })
 
-    describe('updateExercisesQueryFilters action', () => {
-        const exerciseInitialStateMock = {
-            ...exercisesInitialState,
-            list: [ 
-                { name: 'testName', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Leg } as Exercise,
-                { name: 'testName1', type: ExerciseType.Chest } as Exercise,
-            ]
-        } as ExercisesState
+    describe('clearExerciseQueryFilter action', () => {
+        it('should handle clearExerciseQueryFilter action', () => {
+            const exerciseInitialStateMock = {
+                ...exercisesInitialState,
+                list: [ 
+                    { name: 'testName', type: ExerciseType.Arms } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Arms } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Legs } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                ],
+                query: {
+                    ...exercisesInitialState.query,
+                    filters: {
+                        ...exercisesInitialState.query.filters,
+                        byTypes: [ExerciseType.Arms]
+                    }
+                }
+            } as ExercisesState
 
-        it('should handle updateExercisesQueryFilters action with one ExerciseType', () => {
-            const exerciseQueryFilterSut = {
-                byTypes: [ ExerciseType.Arms ]
-            } as ExerciseQueryFilters
-            
-            const action = updateExercisesQueryFilters({ filters: exerciseQueryFilterSut })
+            const action = clearExerciseQueryFilter()
             const state = exercisesReducer(exerciseInitialStateMock, action)
 
-            expect(state.query.filters).toEqual(exerciseQueryFilterSut)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) => exerciseQueryFilterSut.byTypes.includes(exerciseListInitial.type)))
+            expect(state.list).toEqual(exerciseInitialStateMock.list)
+            expect(state.query.filters).toEqual(exercisesInitialState.query.filters)
+        })
+    })
+
+
+    describe('setExerciseTypeQueryFilter action', () => {
+        it('should handle setExerciseTypeQueryFilter action adding new one ExerciseType', () => {
+            const exerciseInitialStateMock = {
+                ...exercisesInitialState,
+                list: [ 
+                    { name: 'testName', type: ExerciseType.Arms } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Arms } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Legs } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                ]
+            } as ExercisesState
+
+            const exerciseTypeSut = ExerciseType.Arms
+            
+            const action = setExerciseTypeQueryFilter({ exerciseType: exerciseTypeSut })
+            const state = exercisesReducer(exerciseInitialStateMock, action)
+
+            const expectedByTypes = [exerciseTypeSut]
+            expect(state.query.filters.byTypes).toEqual(expectedByTypes)
+            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) => [exerciseTypeSut].includes(exerciseListInitial.type)))
         })
 
         
-        it('should handle updateExercisesQueryFilters action with one ExerciseType', () => {
-            const exerciseQueryFilterSut = {
-                byTypes: [ ExerciseType.Arms, ExerciseType.Chest ]
-            } as ExerciseQueryFilters
+        it('should handle updateExercisesQueryFilters action adding new ExerciseType to existing byType filters', () => {
+            const exerciseInitialStateMock = {
+                ...exercisesInitialState,
+                list: [ 
+                    { name: 'testName', type: ExerciseType.Arms } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Arms } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Legs } as Exercise,
+                    { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                ],
+                query: {
+                    ...exercisesInitialState.query,
+                    filters: {
+                        ...exercisesInitialState.query.filters,
+                        byTypes: [ExerciseType.Arms]
+                    }
+                }
+            } as ExercisesState
+
+            const exerciseTypeSut = ExerciseType.Chest
+
             
-            const action = updateExercisesQueryFilters({ filters: exerciseQueryFilterSut })
+            const action = setExerciseTypeQueryFilter({ exerciseType: exerciseTypeSut })
             const state = exercisesReducer(exerciseInitialStateMock, action)
 
-            expect(state.query.filters).toEqual(exerciseQueryFilterSut)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) => exerciseQueryFilterSut.byTypes.includes(exerciseListInitial.type)))
+            const expectedByTypes = [...exerciseInitialStateMock.query.filters.byTypes, exerciseTypeSut]
+            expect(state.query.filters.byTypes).toEqual(expectedByTypes)
+            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) => expectedByTypes.includes(exerciseListInitial.type)))
         })
     })
 })
