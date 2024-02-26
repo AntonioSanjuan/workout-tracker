@@ -20,4 +20,5 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ExerciseTypePillComponent {
   @Input() public exerciseType!: ExerciseType;
+  @Input() public opacity: boolean = false;
 }

@@ -31,8 +31,11 @@ export class ExercisesService {
 
     public setExercises(userId: string, exercise: Exercise): Observable<Exercise> {
         return from(this.getExercisesCollectionRef(userId).add(exercise)).pipe(
-            map(() => {
-                return exercise
+            map((doc: firebase.firestore.DocumentData) => {
+                console.log("doc", doc)
+                return {
+                    ...exercise
+                }
             })
         )
     }

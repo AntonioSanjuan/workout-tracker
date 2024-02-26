@@ -2,6 +2,11 @@
     class="WorkoutExerciseList_MainContainer">
 
     <workout-tracker-exercises-list-filter></workout-tracker-exercises-list-filter>
+    
+    <button mat-flat-button color="primary" (click)="newExercise()">
+        {{ 'apps.workout-exercises.list.actions.addNewExercise' | translate }}
+    </button>
+    
     <h2>
         {{ 'apps.workout-exercises.list.title' | translate }}
     </h2>

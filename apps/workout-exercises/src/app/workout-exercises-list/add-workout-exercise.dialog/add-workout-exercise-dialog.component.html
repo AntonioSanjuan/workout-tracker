@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{ 'apps.workout-exercises.list.addExercise.title' | translate }}</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+        <mat-form-field>
+            <mat-label>
+                {{ 'apps.workout-exercises.list.addExercise.form.fields.name' | translate }}
+            </mat-label>
+            <input matInput id="name" name="name" formControlName="name"/>
+        </mat-form-field>
+
+        <div class="AddExerciseDialog_TypeContainer">
+            <div class="AddExerciseDialog_TypeSelection"  
+                *ngFor="let exerciseType of exerciseTypes" 
+                (click)="selectExerciseType(exerciseType)">
+                <workout-tracker-exercise-type-pill 
+                    [exerciseType]="exerciseType" 
+                    [opacity]="!isSelectedExerciseType(exerciseType)">
+                </workout-tracker-exercise-type-pill>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+        {{ 'common.actions.cancel' | translate }}
+    </button>
+    <button mat-button [mat-dialog-close]="false" (click)="createExercise()" [disabled]="!form.valid">
+        {{ 'common.actions.create' | translate }}
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,23 @@
+workout-tracker-add-exercise-dialog {
+    mat-dialog-content {
+        form {
+            display: flex;
+            flex-direction: column;
+
+            .AddExerciseDialog_TypeContainer {
+                display: flex;    
+                flex-direction: column;
+                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+
+                .AddExerciseDialog_TypeSelection {
+                    cursor: pointer;
+                }
+            }
+
+        }
+    }
+}

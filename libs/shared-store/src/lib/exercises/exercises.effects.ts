@@ -7,7 +7,7 @@ import { getUser } from "../user";
 import firebase from 'firebase/compat/app';
 import { getExercisesList } from "./exercises.selectors";
 import { Exercise } from "@workout-tracker/models";
-import { getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess } from "./exercises.actions";
+import { addUserExerciseRequest, addUserExerciseRequestError, addUserExerciseRequestSuccess, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess } from "./exercises.actions";
 
 @Injectable()
 export class ExercisesEffects {
@@ -24,6 +24,22 @@ export class ExercisesEffects {
                 getAuthenticatedUserExercisesRequestSuccess({ exercises: exercises})
             ),
             catchError((err: firebase.FirebaseError) => of(getAuthenticatedUserExercisesRequestError({ error: err })))
+            )
+        )
+    ))
+
+    addUserExerciseRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(addUserExerciseRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        switchMap(([{ exercise }, user]) =>
+            (user ?
+                this.exercisesService.setExercises(user.uid, exercise):
+                of(exercise)
+            ).pipe(
+                map((exercise: Exercise) => 
+                    addUserExerciseRequestSuccess({ exercise: exercise})
+                ),
+                catchError((err: firebase.FirebaseError) => of(addUserExerciseRequestError({ error: err})))
             )
         )
     ))

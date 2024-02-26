@@ -6,6 +6,10 @@
             "Shoulder": "Hombros",
             "Back": "Espalda",
             "Chest": "Pecho"
+        },
+        "actions": {
+            "cancel": "Cancelar",
+            "create": "Crear"
         }
     },
     "apps": {
@@ -87,7 +91,19 @@
                     "byTypeLabel": "Busca  el ejercicio por tipo",
                     "filteredByTypes": "Filtrado por..."
                 },
-                "title": "Lista de ejercicios"
+                "addExercise": {
+                    "title": "Añadir ejercicio",
+                    "form": {
+                        "fields": {
+                            "name": "Nombre",
+                            "type": "Tipo"
+                        }
+                    }
+                },
+                "title": "Lista de ejercicios",
+                "actions": {
+                    "addNewExercise": "Nuevo ejercicio"
+                }
             }
         }
     },

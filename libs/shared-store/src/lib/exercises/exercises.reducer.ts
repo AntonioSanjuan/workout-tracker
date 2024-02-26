@@ -1,9 +1,9 @@
 import { createReducer, on } from "@ngrx/store"
 import { exercisesInitialState } from "./models/exercisesState.initialState";
-import { clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseTypeQueryFilter } from "./exercises.actions";
+import { addUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseTypeQueryFilter } from "./exercises.actions";
 import { ExercisesState } from "./models/exercisesState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
-import { Exercise, ExerciseQueryFilters } from "@workout-tracker/models";
+import { Exercise, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
 
 export const EXERCISES_FEATURE_KEY = 'exercises'; 
 
@@ -55,6 +55,13 @@ export const exercisesReducer = createReducer(
             filtered: filterExercises(state.list, newFilters)
         }
     }),
+    on(addUserExerciseRequestSuccess, (state: ExercisesState, { exercise }) => {
+        return {
+            ...state, 
+            list: [...state.list, exercise],
+            filtered: filterExercises([...state.list, exercise], exercisesInitialState.query.filters)
+        }
+    }),
 
     on(clearExerciseQueryFilter, (state: ExercisesState) => {
         return {
@@ -76,8 +83,7 @@ const filterExercises = (exercises: Exercise[], filters: ExerciseQueryFilters): 
 
     //filter by type
     if(filters.byTypes.length > 0) {
-
-        filteredExercises = filteredExercises.filter((exercise) => filters.byTypes.includes(exercise.type))
+        filteredExercises = filteredExercises.filter((exercise) => filters.byTypes.some((type: ExerciseType) => exercise.types.includes(type)))
     }
 
     return filteredExercises;

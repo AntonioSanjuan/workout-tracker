@@ -20,6 +20,7 @@ import { LibsServicesUserSettingsModule } from '@workout-tracker/services/user-s
 import { LibsServicesApiModule } from '@workout-tracker/services/api';
 import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
 import { LibsServicesExercisesModule } from '@workout-tracker/services/exercises';
+import { LibsServicesDialogModule } from '@workout-tracker/services/dialog';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { LibsServicesExercisesModule } from '@workout-tracker/services/exercises
     LibsServicesAuthModule,
     LibsServicesApiModule,
     LibsServicesMessageModule,
+    LibsServicesDialogModule,
     LibsServicesUserSettingsModule,
     LibsServicesExercisesModule,
     CoreModule,

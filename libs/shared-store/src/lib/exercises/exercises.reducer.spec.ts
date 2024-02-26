@@ -1,5 +1,5 @@
 import { Exercise, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
-import { clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseTypeQueryFilter } from "./exercises.actions";
+import { addUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseTypeQueryFilter } from "./exercises.actions";
 import { exercisesReducer } from "./exercises.reducer";
 import { exercisesInitialState } from "./models/exercisesState.initialState";
 import { ExercisesState } from "./models/exercisesState.model";
@@ -12,10 +12,10 @@ describe('exercisesReducer', () => {
         const exerciseInitialStateMock = {
             ...exercisesInitialState,
             list: [ 
-                { name: 'testName', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Legs } as Exercise,
-                { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                { name: 'testName', types: [ExerciseType.Arms] } as Exercise,
+                { name: 'testName1', types: [ExerciseType.Arms] } as Exercise,
+                { name: 'testName1', types: [ExerciseType.Legs] } as Exercise,
+                { name: 'testName1', types: [ExerciseType.Chest] } as Exercise,
             ]
         } as ExercisesState
         it('should handle setAnonymousUser action', () => {
@@ -31,10 +31,10 @@ describe('exercisesReducer', () => {
         const exerciseInitialStateMock = {
             ...exercisesInitialState,
             list: [ 
-                { name: 'testName', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                { name: 'testName1', type: ExerciseType.Legs } as Exercise,
-                { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                { name: 'testName', types: [ExerciseType.Arms] } as Exercise,
+                { name: 'testName1', types: [ExerciseType.Arms] } as Exercise,
+                { name: 'testName1', types: [ExerciseType.Legs] } as Exercise,
+                { name: 'testName1', types: [ExerciseType.Chest] } as Exercise,
             ]
         } as ExercisesState
         it('should handle setAuthenticatedUser action', () => {
@@ -72,10 +72,10 @@ describe('exercisesReducer', () => {
             const exerciseInitialStateMock = {
                 ...exercisesInitialState,
                 list: [ 
-                    { name: 'testName', type: ExerciseType.Arms } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Legs } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                    { name: 'testName', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Legs] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Chest] } as Exercise,
                 ],
                 query: {
                     ...exercisesInitialState.query,
@@ -100,10 +100,10 @@ describe('exercisesReducer', () => {
             const exerciseInitialStateMock = {
                 ...exercisesInitialState,
                 list: [ 
-                    { name: 'testName', type: ExerciseType.Arms } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Legs } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                    { name: 'testName', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Legs] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Chest] } as Exercise,
                 ]
             } as ExercisesState
 
@@ -114,7 +114,8 @@ describe('exercisesReducer', () => {
 
             const expectedByTypes = [exerciseTypeSut]
             expect(state.query.filters.byTypes).toEqual(expectedByTypes)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) => [exerciseTypeSut].includes(exerciseListInitial.type)))
+            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) =>
+                exerciseListInitial.types.some((type) => expectedByTypes.includes(type))))
         })
 
         
@@ -122,10 +123,10 @@ describe('exercisesReducer', () => {
             const exerciseInitialStateMock = {
                 ...exercisesInitialState,
                 list: [ 
-                    { name: 'testName', type: ExerciseType.Arms } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Arms } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Legs } as Exercise,
-                    { name: 'testName1', type: ExerciseType.Chest } as Exercise,
+                    { name: 'testName', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Legs] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Chest] } as Exercise,
                 ],
                 query: {
                     ...exercisesInitialState.query,
@@ -144,7 +145,37 @@ describe('exercisesReducer', () => {
 
             const expectedByTypes = [...exerciseInitialStateMock.query.filters.byTypes, exerciseTypeSut]
             expect(state.query.filters.byTypes).toEqual(expectedByTypes)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) => expectedByTypes.includes(exerciseListInitial.type)))
+            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) =>             
+                exerciseListInitial.types.some((type) => expectedByTypes.includes(type))))
+
+        })
+
+        it('should handle addUserExerciseRequestSuccess action adding new exercise', () => {
+            const exerciseInitialStateMock = {
+                ...exercisesInitialState,
+                list: [ 
+                    { name: 'testName', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Arms] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Legs] } as Exercise,
+                    { name: 'testName1', types: [ExerciseType.Chest] } as Exercise,
+                ],
+                query: {
+                    ...exercisesInitialState.query,
+                    filters: {
+                        ...exercisesInitialState.query.filters,
+                        byTypes: [ExerciseType.Arms]
+                    }
+                }
+            } as ExercisesState
+
+            const exerciseSut = { name: 'exercise name (add)'} as Exercise
+
+            
+            const action = addUserExerciseRequestSuccess({ exercise: exerciseSut })
+            const state = exercisesReducer(exerciseInitialStateMock, action)
+
+            expect(state.list).toEqual([...exerciseInitialStateMock.list, exerciseSut])
+            
         })
     })
 })
