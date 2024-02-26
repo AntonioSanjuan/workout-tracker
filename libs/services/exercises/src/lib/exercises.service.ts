@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore'
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/compat/firestore'
 import { Exercise } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, from, map, of } from "rxjs";
@@ -31,10 +31,10 @@ export class ExercisesService {
 
     public setExercises(userId: string, exercise: Exercise): Observable<Exercise> {
         return from(this.getExercisesCollectionRef(userId).add(exercise)).pipe(
-            map((doc: firebase.firestore.DocumentData) => {
-                console.log("doc", doc)
+            map((doc: DocumentReference<firebase.firestore.DocumentData>) => {
                 return {
-                    ...exercise
+                    ...exercise,
+                    id: doc.id
                 }
             })
         )
