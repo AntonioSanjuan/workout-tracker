@@ -2,12 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { ExercisesService } from './exercises.service';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import firebase from 'firebase/compat/app/';
+import { Exercise } from '@workout-tracker/models';
 
 const mock = {
-  collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>)
+  collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>),
+  doc: jest.fn().mockReturnValue({}  as AngularFirestoreDocument<unknown>)
 };
 
 
@@ -44,5 +48,125 @@ describe('ExercisesService', () => {
     });
   })
   describe('Integration tests', () => {
+
+    describe('getExercises', () => {
+      const userIdSut = 'asd'
+
+      const storedExercises = [
+        {
+          name: 'exercise test name 0'
+        } as Exercise,
+        {
+          name: 'exercise test name 1'
+        } as Exercise,
+        {
+          name: 'exercise test name 2'
+        } as Exercise
+      ]
+
+      beforeEach(() => {
+        mock.collection.mockReturnValue({
+          get: jest.fn().mockReturnValue(of(
+            {
+              docs: storedExercises.map((exercise: Exercise) => {
+                return {
+                  data: jest.fn().mockReturnValue(exercise)
+                }
+              })
+            }
+          ))
+        })
+      })
+
+      it('getExercises should return exercises stored into Firebase collection',  (done) => {
+        service.getExercises(userIdSut).subscribe((exercises) => {
+          expect(exercises).toEqual(storedExercises)
+          done()
+        })
+      })
+    });
+
+    describe('setExercises', () => {
+      const userIdSut = 'asd'
+
+      const exerciseSut = {
+        name: 'exercise test name 0'
+      } as Exercise;
+        
+      const addSpy = jest.fn()
+      beforeEach(() => {
+        addSpy.mockReset()
+        mock.collection.mockReturnValue({
+          add: addSpy.mockResolvedValue(exerciseSut)
+        })
+      })
+
+      it('setExercises should request collection add',  (done) => {
+        service.setExercises(userIdSut, exerciseSut).subscribe(() => {
+          expect(addSpy).toHaveBeenCalledWith(exerciseSut)
+          done()
+        })
+      })
+
+      it('setExercises should return exercise',  (done) => {
+        service.setExercises(userIdSut, exerciseSut).subscribe((exercises) => {
+          expect(exercises).toEqual(exerciseSut)
+          done()
+        })
+      })
+    });
+
+    describe('updateExercises', () => {
+      const userIdSut = 'asd'
+
+      const exerciseSut = {
+        name: 'exercise test name 0'
+      } as Exercise;
+        
+      const updateSpy = jest.fn()
+      beforeEach(() => {
+        updateSpy.mockReset()
+        mock.doc.mockReturnValue({
+          update: updateSpy.mockResolvedValue(exerciseSut)
+        })
+      })
+
+      it('updateExercises should request doc update',  (done) => {
+        service.updateExercise(userIdSut, exerciseSut).subscribe(() => {
+          expect(updateSpy).toHaveBeenCalledWith(exerciseSut)
+          done()
+        })
+      })
+
+      it('updateExercises should return exercise',  (done) => {
+        service.updateExercise(userIdSut, exerciseSut).subscribe((exercises) => {
+          expect(exercises).toEqual(exerciseSut)
+          done()
+        })
+      })
+    });
+
+    describe('deleteExercise', () => {
+      const userIdSut = 'asd'
+
+      const exerciseSut = {
+        name: 'exercise test name 0'
+      } as Exercise;
+        
+      const deleteExerciseSpy = jest.fn()
+      beforeEach(() => {
+        deleteExerciseSpy.mockReset()
+        mock.doc.mockReturnValue({
+          delete: deleteExerciseSpy.mockResolvedValue(true)
+        })
+      })
+
+      it('deleteExercise should request doc update',  (done) => {
+        service.deleteExercise(userIdSut, exerciseSut).subscribe(() => {
+          expect(deleteExerciseSpy).toHaveBeenCalled()
+          done()
+        })
+      })
+    });
   })
 })

@@ -1,30 +1,53 @@
 import { Injectable, inject } from "@angular/core";
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore'
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore'
 import { Exercise } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
-import { Observable, of } from "rxjs";
+import { Observable, from, map, of } from "rxjs";
 
 @Injectable()
 export class ExercisesService {
     private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
 
-    private getExercisesDocRef(userId: string): AngularFirestoreDocument<Exercise> {
-        return this.firebaseDataBase.collection('user').doc(userId)
+    private getExercisesCollectionRef(userId: string): AngularFirestoreCollection {
+        return this.firebaseDataBase.collection(`user/${userId}/exercises`)
+    }
+
+    private getExerciseDocRef(userId: string, exerciseId: string): AngularFirestoreDocument {
+        return this.firebaseDataBase.doc(`user/${userId}/exercises/${exerciseId}`)
     }
 
     public getExercises(userId: string): Observable<Exercise[]> {
-        return of([{} as Exercise])
+        return this.getExercisesCollectionRef(userId).get().pipe(
+            map((querySnapshot: firebase.firestore.QuerySnapshot) => {
+                return querySnapshot.docs.map((doc) => {
+                    return {
+                        ...doc.data() as Exercise,
+                        id:doc.id
+                    }
+                })
+            })
+        )
     }
 
     public setExercises(userId: string, exercise: Exercise): Observable<Exercise> {
-        return of({} as Exercise)  
+        return from(this.getExercisesCollectionRef(userId).add(exercise)).pipe(
+            map(() => {
+                return exercise
+            })
+        )
     }
 
-    public updateExercises(userId: string, exercise: Exercise): Observable<Exercise> {
-        return of({} as Exercise)
+    public updateExercise(userId: string, exercise: Exercise): Observable<Exercise> {
+        return from(this.getExerciseDocRef(userId, exercise.id).update(exercise)).pipe(
+            map(() => {
+                return exercise
+            })
+        )
     }
 
-    public deleteExercise(userId: string): Observable<boolean> {
-        return of(true)
+    public deleteExercise(userId: string, exercise: Exercise): Observable<boolean> {
+        return from(this.getExerciseDocRef(userId, exercise.id).delete()).pipe(
+            map(() => true)
+        )
     }
 }
