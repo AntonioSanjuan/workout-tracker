@@ -96,19 +96,29 @@ describe('WorkoutExercisesListComponent', () => {
       const inputNameSut = 'name test'
       const inputTypesSut = [ExerciseType.Chest, ExerciseType.Arms]
       describe('if form its valid', () => {
+        const today = new Date(2020, 3, 1)
         beforeEach(() => {
           component.form.setValue({
             name: inputNameSut,
             types: inputTypesSut
           })
+
+          jest.useFakeTimers();
+          jest.setSystemTime(today);
         })        
+
+        afterEach(() => {
+          jest.useRealTimers();
+        })
+
         it('should dispatch addUserExercisesRequest', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
           component.createExercise()
 
           expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseRequest({exercise: {
             name:inputNameSut,
-            types: inputTypesSut
+            types: inputTypesSut,
+            creationDate: today
           } as Exercise}))
         });
       })

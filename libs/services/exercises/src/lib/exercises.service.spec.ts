@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import firebase from 'firebase/compat/app/';
 import { Exercise } from '@workout-tracker/models';
+import { ExerciseAdapter } from '@workout-tracker/adapters';
 
 const mock = {
   collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>),
@@ -54,13 +55,16 @@ describe('ExercisesService', () => {
 
       const storedExercises = [
         {
-          name: 'exercise test name 0'
+          name: 'exercise test name 0',
+          creationDate: new Date()
         } as Exercise,
         {
-          name: 'exercise test name 1'
+          name: 'exercise test name 1',
+          creationDate: new Date()
         } as Exercise,
         {
-          name: 'exercise test name 2'
+          name: 'exercise test name 2',
+          creationDate: new Date()
         } as Exercise
       ]
 
@@ -70,7 +74,7 @@ describe('ExercisesService', () => {
             {
               docs: storedExercises.map((exercise: Exercise) => {
                 return {
-                  data: jest.fn().mockReturnValue(exercise)
+                  data: jest.fn().mockReturnValue(ExerciseAdapter.toDto(exercise))
                 }
               })
             }
@@ -90,20 +94,21 @@ describe('ExercisesService', () => {
       const userIdSut = 'asd'
 
       const exerciseSut = {
-        name: 'exercise test name 0'
+        name: 'exercise test name 0',
+        creationDate: new Date()
       } as Exercise;
         
       const addSpy = jest.fn()
       beforeEach(() => {
         addSpy.mockReset()
         mock.collection.mockReturnValue({
-          add: addSpy.mockResolvedValue(exerciseSut)
+          add: addSpy.mockResolvedValue(ExerciseAdapter.toDto(exerciseSut))
         })
       })
 
       it('setExercises should request collection add',  (done) => {
         service.setExercises(userIdSut, exerciseSut).subscribe(() => {
-          expect(addSpy).toHaveBeenCalledWith(exerciseSut)
+          expect(addSpy).toHaveBeenCalledWith(ExerciseAdapter.toDto(exerciseSut))
           done()
         })
       })
@@ -120,20 +125,21 @@ describe('ExercisesService', () => {
       const userIdSut = 'asd'
 
       const exerciseSut = {
-        name: 'exercise test name 0'
+        name: 'exercise test name 0',
+        creationDate: new Date()
       } as Exercise;
         
       const updateSpy = jest.fn()
       beforeEach(() => {
         updateSpy.mockReset()
         mock.doc.mockReturnValue({
-          update: updateSpy.mockResolvedValue(exerciseSut)
+          update: updateSpy.mockResolvedValue(ExerciseAdapter.toDto(exerciseSut))
         })
       })
 
       it('updateExercises should request doc update',  (done) => {
         service.updateExercise(userIdSut, exerciseSut).subscribe(() => {
-          expect(updateSpy).toHaveBeenCalledWith(exerciseSut)
+          expect(updateSpy).toHaveBeenCalledWith(ExerciseAdapter.toDto(exerciseSut))
           done()
         })
       })

@@ -4,5 +4,6 @@ export interface Exercise {
     id: string,
     name: string,
     types: ExerciseType[],
-    image?: string
+    image?: string,
+    creationDate: Date
 }

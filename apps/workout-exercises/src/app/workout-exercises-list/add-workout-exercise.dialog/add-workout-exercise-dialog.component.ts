@@ -47,7 +47,10 @@ export class AddWorkoutExerciseDialogComponent implements OnInit {
 
   public createExercise() {
     if(this.form.valid) {
-      const exercise = this.form.getRawValue() as Exercise
+      const exercise = {
+        ...this.form.getRawValue(), 
+        creationDate: new Date()
+      } as Exercise
       this.store.dispatch(addUserExerciseRequest({ exercise: exercise}))
       this.dialogRef.close()
     }

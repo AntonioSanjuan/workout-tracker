@@ -1,6 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/compat/firestore'
-import { Exercise } from "@workout-tracker/models";
+import { ExerciseAdapter } from "@workout-tracker/adapters";
+import { Exercise, ExerciseDto } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, from, map, of } from "rxjs";
 
@@ -20,30 +21,27 @@ export class ExercisesService {
         return this.getExercisesCollectionRef(userId).get().pipe(
             map((querySnapshot: firebase.firestore.QuerySnapshot) => {
                 return querySnapshot.docs.map((doc) => {
-                    return {
-                        ...doc.data() as Exercise,
-                        id:doc.id
-                    }
+                    return ExerciseAdapter.toState({...doc.data() as ExerciseDto}, doc.id);
                 })
             })
         )
     }
 
     public setExercises(userId: string, exercise: Exercise): Observable<Exercise> {
-        return from(this.getExercisesCollectionRef(userId).add(exercise)).pipe(
+        const exerciseInput = ExerciseAdapter.toDto(exercise);
+        return from(this.getExercisesCollectionRef(userId).add(exerciseInput)).pipe(
             map((doc: DocumentReference<firebase.firestore.DocumentData>) => {
-                return {
-                    ...exercise,
-                    id: doc.id
-                }
+                return ExerciseAdapter.toState({...exerciseInput as ExerciseDto}, doc.id);
             })
         )
     }
 
     public updateExercise(userId: string, exercise: Exercise): Observable<Exercise> {
-        return from(this.getExerciseDocRef(userId, exercise.id).update(exercise)).pipe(
+        const exerciseInput = ExerciseAdapter.toDto(exercise);
+
+        return from(this.getExerciseDocRef(userId, exercise.id).update(exerciseInput)).pipe(
             map(() => {
-                return exercise
+                return {...exercise}
             })
         )
     }
