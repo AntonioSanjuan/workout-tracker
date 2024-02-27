@@ -10,13 +10,22 @@
                 {{ 'apps.account.signUp.form.fields.userEmail' | translate }}
             </mat-label>
             <input matInput id="userEmail" name="userEmail" formControlName="userEmail"/>
+            @if (signUpForm.controls.userEmail.hasError('required')) {
+                <mat-error>{{ 'apps.account.signUp.form.errors.userEmailRequired' | translate }}</mat-error>
+            }
+            @if (signUpForm.controls.userEmail.hasError('email')) {
+                <mat-error>{{ 'apps.account.signUp.form.errors.userEmailFormat' | translate }}</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>
                 {{ 'apps.account.signUp.form.fields.userPass' | translate }}
             </mat-label>
-            <input matInput id="password" name="password" formControlName="password"/>     
+            <input matInput id="password" name="password" formControlName="password"/>  
+            @if (signUpForm.controls.password.hasError('required')) {
+                <mat-error>{{ 'apps.account.signUp.form.errors.passwordRequired' | translate }}</mat-error>
+            }   
         </mat-form-field>
         <button mat-flat-button color="primary" [disabled]="!signUpForm.valid" (click)="signUp()">
             {{ 'apps.account.signUp.form.actions.submit' | translate }}

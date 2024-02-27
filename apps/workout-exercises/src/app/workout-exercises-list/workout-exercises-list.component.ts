@@ -16,7 +16,6 @@ import { AddWorkoutExerciseDialogComponent } from './add-workout-exercise.dialog
     WorkoutExercisesFilterListComponent,
     RouterModule
   ],
-  providers: [DialogService],
   styleUrls: ['./workout-exercises-list.component.scss'],
   standalone: true
 })

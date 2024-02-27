@@ -47,6 +47,11 @@
                         "userEmail": "Email",
                         "userPass": "Contraseña"
                     },
+                    "errors": {
+                        "userEmailRequired": "Campo email requerido",
+                        "userEmailFormat": "Campo email formato inválido",
+                        "passwordRequired": "Campo contraseña requerido"
+                    },
                     "actions": {
                         "submit": "Acceder",
                         "googleLogin": "Accede con Google",
@@ -60,6 +65,11 @@
                     "fields": {
                         "userEmail": "Email",
                         "userPass": "Contraseña"
+                    },
+                    "errors": {
+                        "userEmailRequired": "Campo email requerido",
+                        "userEmailFormat": "Campo email formato inválido",
+                        "passwordRequired": "Campo contraseña requerido"
                     },
                     "actions": {
                         "submit": "Registrarse",

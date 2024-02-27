@@ -9,13 +9,22 @@
                 {{ 'apps.account.login.form.fields.userEmail' | translate }}
             </mat-label>
             <input matInput id="userEmail" name="userEmail" formControlName="userEmail"/>
+            @if (loginForm.controls.userEmail.hasError('required')) {
+                <mat-error>{{ 'apps.account.login.form.errors.userEmailRequired' | translate }}</mat-error>
+            }
+            @if (loginForm.controls.userEmail.hasError('email')) {
+                <mat-error>{{ 'apps.account.login.form.errors.userEmailFormat' | translate }}</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>
                 {{ 'apps.account.login.form.fields.userPass' | translate }}
             </mat-label>
-            <input matInput id="password" name="password" formControlName="password"/>     
+            <input matInput id="password" name="password" formControlName="password"/>
+            @if (loginForm.controls.password.hasError('required')) {
+                <mat-error>{{ 'apps.account.login.form.errors.passwordRequired' | translate }}</mat-error>
+            }
         </mat-form-field>
         <button mat-flat-button color="primary" [disabled]="!loginForm.valid" (click)="login()">
             {{ 'apps.account.login.form.actions.submit' | translate }}

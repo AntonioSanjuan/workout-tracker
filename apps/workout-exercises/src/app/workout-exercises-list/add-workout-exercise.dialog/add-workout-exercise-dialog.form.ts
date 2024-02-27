@@ -1,5 +1,4 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AddWorkoutExerciseDialogComponent } from "./add-workout-exercise-dialog.component";
 import { ExerciseType } from "@workout-tracker/models";
 
 export interface AddWorkoutExerciseForm {
