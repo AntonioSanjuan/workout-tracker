@@ -6,6 +6,9 @@
                 {{ 'apps.workout-exercises.list.addExercise.form.fields.name' | translate }}
             </mat-label>
             <input matInput id="name" name="name" formControlName="name"/>
+              @if (form.controls.name.hasError('required')) {
+                <mat-error>{{ 'apps.workout-exercises.list.addExercise.form.errors.nameRequired' | translate }}</mat-error>
+              }
         </mat-form-field>
 
         <div class="AddExerciseDialog_TypeContainer">
@@ -17,6 +20,9 @@
                     [opacity]="!isSelectedExerciseType(exerciseType)">
                 </workout-tracker-exercise-type-pill>
             </div>
+            @if (form.controls.types.hasError('required') || form.controls.types.hasError('minLength')) {
+                <mat-error>{{ 'apps.workout-exercises.list.addExercise.form.errors.typeRequired' | translate }}</mat-error>
+            }
         </div>
     </form>
 </mat-dialog-content>

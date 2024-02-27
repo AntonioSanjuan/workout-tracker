@@ -24,6 +24,6 @@ export class WorkoutExercisesListComponent {
   private dialogService = inject(DialogService)
 
   public newExercise() {
-    this.dialogService.showDialog(AddWorkoutExerciseDialogComponent)
+    this.dialogService.showDialog(AddWorkoutExerciseDialogComponent, true)
   }
 }

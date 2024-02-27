@@ -97,6 +97,10 @@
                         "fields": {
                             "name": "Nombre",
                             "type": "Tipo"
+                        },
+                        "errors": {
+                            "nameRequired": "Campo nombre requerido",
+                            "typeRequired": "Debes de seleccionar al menos un tipo"
                         }
                     }
                 },

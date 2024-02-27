@@ -3,6 +3,7 @@ workout-tracker-add-exercise-dialog {
         form {
             display: flex;
             flex-direction: column;
+            gap: 15px;
 
             .AddExerciseDialog_TypeContainer {
                 display: flex;    
@@ -11,13 +12,21 @@ workout-tracker-add-exercise-dialog {
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                padding: 10px;
+                padding: 0 20px;
 
                 .AddExerciseDialog_TypeSelection {
+                    width: 100%;
                     cursor: pointer;
                 }
             }
 
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    workout-tracker-add-exercise-dialog {
+        mat-dialog-content {
         }
     }
 }

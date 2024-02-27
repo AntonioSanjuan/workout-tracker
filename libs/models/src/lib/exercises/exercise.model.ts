@@ -5,5 +5,7 @@ export interface Exercise {
     name: string,
     types: ExerciseType[],
     image?: string,
+    
+
     creationDate: Date
 }

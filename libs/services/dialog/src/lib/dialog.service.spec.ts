@@ -55,7 +55,7 @@ describe('DialogService', () => {
       it('showDialog success should request dialog.open', () => {
         const dialogOpenSpy = jest.spyOn(matDialog, 'open')
 
-        service.showDialog(DummyComponent).subscribe(() => {
+        service.showDialog(DummyComponent, true).subscribe(() => {
           expect(dialogOpenSpy).toHaveBeenCalledWith(DummyComponent, expect.anything())
         })
       })

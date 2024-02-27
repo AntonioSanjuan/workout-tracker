@@ -9,10 +9,11 @@ import { Observable } from "rxjs";
 export class DialogService {
     private dialog: MatDialog = inject(MatDialog)
 
-    public showDialog(component: any, options?: MatDialogConfig<any>): Observable<boolean> {
+    public showDialog(component: any, closable: boolean, options?: MatDialogConfig<any>): Observable<boolean> {
         return this.dialog.open(component, { 
+            ...options,
             panelClass: 'dialogClass',
-            ...options
+            disableClose: !closable
         } as MatDialogConfig).afterClosed()
     }
 }
