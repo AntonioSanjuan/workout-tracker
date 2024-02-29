@@ -17,6 +17,14 @@ export class ExercisesService {
         return this.firebaseDataBase.doc(`user/${userId}/exercises/${exerciseId}`)
     }
 
+    public getExercise(userId: string, exerciseId: string): Observable<Exercise> {
+        return from(this.getExerciseDocRef(userId, exerciseId).get()).pipe(
+            map((doc: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>) => {
+                return ExerciseAdapter.toState({...doc.data() as ExerciseDto}, doc.id);
+            })
+        )
+    }
+
     public getExercises(userId: string): Observable<Exercise[]> {
         return this.getExercisesCollectionRef(userId).get().pipe(
             map((querySnapshot: firebase.firestore.QuerySnapshot) => {

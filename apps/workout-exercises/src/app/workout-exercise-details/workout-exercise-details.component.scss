@@ -1,0 +1,14 @@
+@use "css/main.scss" as shellStyles;
+
+:host {
+    height: 100%;
+}
+
+.WorkoutExerciseDetails_MainContainer {
+
+}
+
+@media (max-width: 960px) {
+    .WorkoutExerciseDetails_MainContainer {
+    }
+}

@@ -6,23 +6,28 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setAuthenticatedUser, setAnonymousUser, setUserInfo } from './user.actions';
-import { AppInit, loadedApp, unloadedApp } from '../ui';
+import { AppInit, loadedApp, initializeLoadedApps } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
 import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from '../settings';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { AppRoutes } from '@workout-tracker/models';
 import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from '../exercises';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
   let effects: UserEffects
   let authService: AuthService
+  let router: Router
   let store: MockStore
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
         { provide: AuthService, useValue: authServiceMock },
@@ -38,6 +43,7 @@ describe('UserEffects', () => {
     actions = TestBed.inject(Actions)
     authService = TestBed.inject(AuthService)
     store = TestBed.inject(MockStore)
+    router = TestBed.inject(Router);
   });
 
   describe('loginRequest$', () => {
@@ -81,6 +87,12 @@ describe('UserEffects', () => {
     describe('when loginRequestSuccess is dispatched', () => {
       beforeEach(() => { 
         actions = of(loginRequestSuccess({ credentials: successResp }))
+      })
+
+      it('should redirect to home', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        const result = await firstValueFrom(effects.loginRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
       })
 
       it('should return loadedApp ACCOUNT', async () => {
@@ -148,10 +160,18 @@ describe('UserEffects', () => {
         actions = of(signUpRequestSuccess({ credentials: successResp}))
       })
 
+      it('should redirect to home', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.signUpRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
+      })
+
       it('should return loadedApp ACCOUNT', async () => {
         const result = await firstValueFrom(effects.signUpRequestSuccess$)
         expect(result).toEqual(loadedApp({initialized: AppInit.ACCOUNT}))
       })
+
+
     })
   });
 
@@ -293,12 +313,39 @@ describe('UserEffects', () => {
         actions = of(logOutRequest())
       })
 
-      it('should return unloadedApp ACCOUNT', async () => {
+      it('should redirect to home', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
         const result = await firstValueFrom(effects.logOut$)
-        expect(result).toEqual(unloadedApp({uninitialized: AppInit.ACCOUNT}))
+        expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
       })
     })
   });
+
+  describe('setUser$', () => {
+    describe('when setAuthenticatedUser is dispatched', () => {
+      const user = { email: 'testemail@gmail.com'} as firebase.User
+      beforeEach(() => { 
+        actions = of(setAuthenticatedUser({ user: user}))
+      })
+
+      it('should return unloadedApps', async () => {
+        const result = await firstValueFrom(effects.setUser$)
+        expect(result).toEqual(initializeLoadedApps())
+      })
+    })
+
+    describe('when setAnonymousUser is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(setAnonymousUser())
+      })
+
+      it('should return unloadedApps', async () => {
+        const result = await firstValueFrom(effects.setUser$)
+        expect(result).toEqual(initializeLoadedApps())
+      })
+    })
+  });
+
   describe('setAuthenticatedUserSettings$', () => {
     describe('when setAuthenticatedUser is dispatched', () => {
       const user = { email: 'testemail@gmail.com'} as firebase.User
@@ -312,6 +359,7 @@ describe('UserEffects', () => {
       })
     })
   });
+
   describe('setAnonymousUserSettings$', () => {
     describe('when setAnonymousUser is dispatched', () => {
       beforeEach(() => { 
@@ -324,7 +372,6 @@ describe('UserEffects', () => {
       })
     })
   });
-
   describe('setAuthenticatedUserExercises$', () => {
     describe('when setAuthenticatedUser is dispatched', () => {
       const user = { email: 'testemail@gmail.com'} as firebase.User

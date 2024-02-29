@@ -1,7 +1,8 @@
 import { createReducer, on } from "@ngrx/store"
-import { endRequest, loadedApp, startRequest, unloadedApp } from "./ui.actions"
+import { endRequest, loadedApp, startRequest, unloadedApp, initializeLoadedApps } from "./ui.actions"
 import { UiState } from "./models/uiState.model"
 import { uiInitialState } from "./models/uiState.initialState"
+import { AppInit } from "./models/app-init-enum";
 
 export const UI_FEATURE_KEY = 'ui';
 
@@ -19,6 +20,12 @@ export const uiReducer = createReducer(
         return {
             ...state, 
             loadedApps: state.loadedApps.filter((loadedApps) => loadedApps !== uninitialized)
+        }
+    }),
+    on(initializeLoadedApps, (state: UiState) => {
+        return {
+            ...state, 
+            loadedApps: [AppInit.ACCOUNT]
         }
     }),
     on(startRequest, (state) => ({

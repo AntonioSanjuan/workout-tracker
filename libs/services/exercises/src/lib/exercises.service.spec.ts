@@ -90,6 +90,36 @@ describe('ExercisesService', () => {
       })
     });
 
+    describe('getExercise', () => {
+      const userIdSut = 'userId test'
+      const exerciseIdSut = 'exerciseId test'
+
+      const exerciseSample = {
+        name: 'exercise test name 0',
+        creationDate: new Date()
+      } as Exercise
+      const exerciseDtoSut = ExerciseAdapter.toDto(exerciseSample)
+
+
+      beforeEach(() => {
+        mock.doc.mockReturnValue({
+          get: jest.fn().mockReturnValue(of(
+            {
+              id: exerciseIdSut,
+              data: jest.fn().mockReturnValue(exerciseDtoSut)
+            }
+          ))
+        })
+      })
+
+      it('getExercise should return exercise stored into Firebase collection',  (done) => {
+        service.getExercise(userIdSut, exerciseIdSut).subscribe((exercise) => {
+          expect(exercise).toEqual(ExerciseAdapter.toState(exerciseDtoSut, exerciseIdSut))
+          done()
+        })
+      })
+    });
+
     describe('setExercises', () => {
       const userIdSut = 'asd'
 

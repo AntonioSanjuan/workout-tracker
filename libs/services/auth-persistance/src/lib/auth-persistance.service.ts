@@ -25,7 +25,6 @@ export class AuthPersistanceService {
       this.store.dispatch(setAuthenticatedUser({ 
         user: Object.freeze(user), 
       }))
-      this.router.navigate([AppRoutes.Home])
     }
 
     if(!user) {

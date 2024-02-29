@@ -7,3 +7,6 @@ export const getExercisesState = createFeatureSelector<ExercisesState>(EXERCISES
 export const getExercisesList = createSelector(getExercisesState, (state: ExercisesState) => state.list)
 export const getExercisesFiltered = createSelector(getExercisesState, (state: ExercisesState) => state.filtered)
 export const getExercisesFilters = createSelector(getExercisesState, (state: ExercisesState) => state.query.filters)
+
+//exerciseDetails
+export const getExerciseById = (exerciseId: string) => createSelector(getExercisesState, (state: ExercisesState) => state.list.find((exercise) => exercise.id === exerciseId));

@@ -2,7 +2,7 @@ import { uiReducer } from "./ui.reducer"
 import { uiInitialState } from "./models/uiState.initialState";
 import { UiState } from "./models/uiState.model";
 import { AppInit } from "./models/app-init-enum";
-import { endRequest, loadedApp, startRequest, unloadedApp } from './ui.actions'
+import { endRequest, loadedApp, startRequest, unloadedApp, initializeLoadedApps } from './ui.actions'
 describe('uiReducer', () => {
     describe('loadedApp action', () => {
         describe('should handle loadedApp action', () => {
@@ -54,10 +54,26 @@ describe('uiReducer', () => {
                     ...uiInitialState, 
                     loadedApps: [prevLoadedApp]
                 }
+                console.log("initStateMock", initStateMock)
                 const action = unloadedApp({ uninitialized: uninitializedApp})
                 const state = uiReducer(initStateMock, action)
     
                 expect(state.loadedApps).toEqual([prevLoadedApp])
+            })
+        })
+    })
+
+    describe('unloadedApps action', () => {
+        describe('should handle unloadedApps action', () => {
+            it('should restore loadedApps', () => {
+                const initStateMock: UiState = {
+                    ...uiInitialState, 
+                    loadedApps: [AppInit.ACCOUNT, AppInit.UI]
+                }
+                const action = initializeLoadedApps()
+                const state = uiReducer(initStateMock, action)
+    
+                expect(state.loadedApps).toEqual([])
             })
         })
     })

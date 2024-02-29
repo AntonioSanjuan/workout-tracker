@@ -11,7 +11,8 @@ import { getUser } from '../user';
 import { ExercisesService, exercisesServiceMock } from '@workout-tracker/services/exercises';
 import { ExercisesEffects } from './exercises.effects'
 import { getExercisesList } from './exercises.selectors';
-import { addUserExerciseRequest, addUserExerciseRequestError, addUserExerciseRequestSuccess, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess } from './exercises.actions';
+import { addUserExerciseRequest, addUserExerciseRequestError, addUserExerciseRequestSuccess, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from './exercises.actions';
+import { AppInit, loadedApp } from '../ui';
 describe('ExercisesEffects', () => {
   let actions: Observable<Action>;
   let effects: ExercisesEffects
@@ -22,7 +23,7 @@ describe('ExercisesEffects', () => {
     TestBed.configureTestingModule({
       imports: [
       ],
-      providers: [
+      providers: [ 
         { provide: ExercisesService, useValue: exercisesServiceMock },
         ExercisesEffects,
         provideMockStore({
@@ -36,6 +37,43 @@ describe('ExercisesEffects', () => {
     actions = TestBed.inject(Actions)
     store = TestBed.inject(MockStore)
     exerciseService = TestBed.inject(ExercisesService)
+  });
+
+  describe('getUserExercisesRequest$', () => {    
+    describe('when getUserExercisesRequest is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+      })
+
+      describe('if user', () => {
+        const user =  { uid: 'testUID'} as firebase.User
+
+        beforeEach(() => {
+          store.overrideSelector(getUser, user);
+          store.refreshState()
+
+          actions = of(getUserExercisesRequest())
+        })
+        it('should return getAuthenticatedUserExercisesRequest', async () => {
+          const result = await firstValueFrom(effects.getUserExercisesRequest$)
+          expect(result).toEqual(getAuthenticatedUserExercisesRequest())
+        })
+      })
+
+      describe('if non user', () => {
+        beforeEach(() => {
+          store.overrideSelector(getUser, undefined);
+          store.refreshState()
+
+          actions = of(getUserExercisesRequest())
+        })
+        it('should return getAnonymousUserExercisesRequest', async () => {
+          const result = await firstValueFrom(effects.getUserExercisesRequest$)
+          expect(result).toEqual(getAnonymousUserExercisesRequest())
+        })
+      })
+
+    })
   });
 
   describe('getAuthenticatedUserExercisesRequest$', () => {
@@ -112,6 +150,30 @@ describe('ExercisesEffects', () => {
       })
     })
   })
+  
+  describe('getUserExercisesSuccess$$', () => {
+    describe('when getAuthenticatedUserExercisesRequestSuccess is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(getAuthenticatedUserExercisesRequestSuccess({ exercises: []}))
+      })
+
+      it('should return loadedApp', async () => {
+        const result = await firstValueFrom(effects.getUserExercisesSuccess$)
+        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES}))
+      })
+    })
+
+    describe('when getAnonymousUserExercisesRequestSuccess is dispatched', () => {
+      beforeEach(() => { 
+        actions = of(getAnonymousUserExercisesRequestSuccess({ exercises: []}))
+      })
+
+      it('should return loadedApp', async () => {
+        const result = await firstValueFrom(effects.getUserExercisesSuccess$)
+        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES}))
+      })
+    })
+  });
 
   describe('addUserExerciseRequest$', () => {
     describe('when addUserExerciseRequest is dispatched', () => {
@@ -122,7 +184,7 @@ describe('ExercisesEffects', () => {
   
       const user =  { uid: 'testUID'} as firebase.User
   
-      describe('if user stored', () => {
+      describe('if user', () => {
 
         beforeEach(() => { 
           jest.spyOn(exerciseService, 'setExercises').mockReset()

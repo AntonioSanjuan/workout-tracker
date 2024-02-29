@@ -7,6 +7,7 @@ import { environment } from "@env";
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule, PERSISTENCE } from "@angular/fire/compat/auth";
+import { SETTINGS } from "@angular/fire/compat/firestore";
 export const HttpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
 
 @NgModule({
@@ -29,7 +30,7 @@ export const HttpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(h
     ],
     providers: [
         { provide: PERSISTENCE, useValue: 'local' },
-
+        { provide: SETTINGS, useValue: { ignoreUndefinedProperties: true} }
     ]
 })
 export class CoreModule {}

@@ -22,4 +22,19 @@
     h2 {
         margin-top: 0;
     }
+
+    .WorkoutExerciseList_ListContainer {
+        display: flex;
+        flex-direction: column;
+
+        width: 80%;
+    }
+}
+
+@media (max-width: 960px) {
+    .WorkoutExerciseList_MainContainer {
+        .WorkoutExerciseList_ListContainer {
+            width: 90%;
+        }
+    }
 }

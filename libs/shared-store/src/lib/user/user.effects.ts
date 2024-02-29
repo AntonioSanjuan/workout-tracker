@@ -2,18 +2,21 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setUserInfo, setAnonymousUser, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError, setAuthenticatedUser } from "./user.actions";
-import { catchError, map, of, switchMap } from "rxjs";
-import { AppInit, loadedApp, unloadedApp } from "../ui";
+import { catchError, map, of, switchMap, tap } from "rxjs";
+import { AppInit, loadedApp, unloadedApp, initializeLoadedApps } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { Store } from "@ngrx/store";
 import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from "../settings";
+import { AppRoutes } from "@workout-tracker/models";
+import { Router } from "@angular/router";
 import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from "../exercises";
 
 @Injectable()
 export class UserEffects {
     private authService: AuthService = inject(AuthService)
-    private store: Store = inject(Store)
+    private store: Store = inject(Store);
+    private router: Router = inject(Router);
     private actions$ = inject(Actions);
 
     loginRequest$ = createEffect(() => this.actions$.pipe(
@@ -39,9 +42,9 @@ export class UserEffects {
     loginRequestSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(loginRequestSuccess, loginGoogleRequestSuccess),
         switchMap(() =>
-            of(loadedApp({initialized: AppInit.ACCOUNT}))
+            this.router.navigate([AppRoutes.Home]) 
         )
-    ))
+    ), { dispatch: false})
 
     loginRequestError$ = createEffect(() => this.actions$.pipe(
         ofType(loginRequestError, loginGoogleRequestError),
@@ -63,9 +66,9 @@ export class UserEffects {
     signUpRequestSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(signUpRequestSuccess),
         switchMap(() =>
-            of(loadedApp({initialized: AppInit.ACCOUNT}))
+            this.router.navigate([AppRoutes.Home]) 
         )
-    ))
+    ), { dispatch: false})
 
     signUpRequestError$ = createEffect(() => this.actions$.pipe(
         ofType(signUpRequestError),
@@ -88,8 +91,18 @@ export class UserEffects {
         ofType(logOutRequest),
         switchMap(() =>
             this.authService.logOut().pipe(
-                map(() => unloadedApp({uninitialized: AppInit.ACCOUNT})),
+                tap(() => this.router.navigate([AppRoutes.Home])) 
             )
+        )
+    ), { dispatch: false})
+
+    setUser$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            setAuthenticatedUser,
+            setAnonymousUser
+            ),
+        switchMap(() =>
+            of(initializeLoadedApps())
         )
     ))
 

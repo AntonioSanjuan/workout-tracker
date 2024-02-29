@@ -69,17 +69,6 @@ describe('AuthPersistanceService', () => {
             done()
           })
         })
-  
-        it('should redirect to Home', (done) => {  
-          // authStateObservable.next({ phoneNumber: '666-66-66-66'} as firebase.User)
-          const navigateSpy = jest.spyOn(router, 'navigate')
-          mock.authState.next({ phoneNumber: '666-66-66-66'} as firebase.User)
-          fireAuth.authState.subscribe((user) => {
-            console.log("user")
-            expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
-            done()
-          })
-        })
       })
       describe('if non user', () => {
         beforeEach(() => {
