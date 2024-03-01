@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseForm, getAddWorkoutExerciseForm } from './add-workout-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
-import { Exercise, ExerciseType } from '@workout-tracker/models';
+import { Exercise, ExerciseType, MusclesInvolved } from '@workout-tracker/models';
 import { ExerciseTypePillComponent } from '@workout-tracker/components';
 import { addUserExerciseRequest } from '@workout-tracker/shared-store';
 
@@ -29,6 +29,7 @@ export class AddWorkoutExerciseDialogComponent implements OnInit {
 
   public form!: FormGroup<AddWorkoutExerciseForm>
   public exerciseTypes = Object.values(ExerciseType) as ExerciseType[]
+  public muscles = Object.values(MusclesInvolved) as MusclesInvolved[]
 
   ngOnInit(): void {
       this.form = getAddWorkoutExerciseForm()

@@ -7,6 +7,24 @@
             "Back": "Espalda",
             "Chest": "Pecho"
         },
+        "muscles": {
+            "Abdominals": "Abdominales",
+            "Abductors": "Abductores",
+            "Adductors": "Aductores",
+            "Biceps": "Bíceps",
+            "Calves": "Pantorrillas",
+            "Chest": "Pectorales",
+            "Forearms": "Antebrazos",
+            "Glutes": "Glúteos",
+            "Hamstrings": "Isquiotibiales",
+            "Lats": "Dorsales",
+            "Lower_back": "Espalda baja",
+            "Middle_back": "Espalda media",
+            "Neck": "Cuello",
+            "Quadriceps": "Cuádriceps",
+            "Traps": "Trapecios",
+            "Triceps": "Tríceps"
+        },
         "actions": {
             "cancel": "Cancelar",
             "create": "Crear"
@@ -110,11 +128,13 @@
                     "form": {
                         "fields": {
                             "name": "Nombre",
-                            "type": "Tipo"
+                            "type": "Tipo",
+                            "musclesInvolved": "Músculos involucrados"
                         },
                         "errors": {
                             "nameRequired": "Campo nombre requerido",
-                            "typeRequired": "Debes de seleccionar al menos un tipo"
+                            "typeRequired": "Debes de seleccionar al menos un tipo",
+                            "muscleRequired": "Debes de seleccionar al menos un músculo"
                         }
                     }
                 },

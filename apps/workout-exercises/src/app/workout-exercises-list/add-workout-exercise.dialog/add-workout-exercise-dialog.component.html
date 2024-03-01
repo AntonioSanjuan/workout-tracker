@@ -11,6 +11,20 @@
               }
         </mat-form-field>
 
+        <mat-form-field>
+            <mat-label>
+                {{ 'apps.workout-exercises.list.addExercise.form.fields.musclesInvolved' | translate }}
+            </mat-label>
+            <mat-select formControlName="musclesInvolved" multiple>
+                <mat-option *ngFor="let muscle of muscles"  [value]="muscle">
+                    {{'common.muscles.' + muscle | translate}}
+                </mat-option>
+            </mat-select>
+            @if (form.controls.musclesInvolved.hasError('required') || form.controls.musclesInvolved.hasError('minLength')) {
+                <mat-error>{{ 'apps.workout-exercises.list.addExercise.form.errors.muscleRequired' | translate }}</mat-error>
+              }
+          </mat-form-field>
+
         <div class="AddExerciseDialog_TypeContainer">
             <div class="AddExerciseDialog_TypeSelection"  
                 *ngFor="let exerciseType of exerciseTypes" 

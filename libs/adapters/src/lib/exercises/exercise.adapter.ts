@@ -14,6 +14,7 @@ export class ExerciseAdapter {
         return {
             name: exercise.name,
             types: exercise.types,
+            musclesInvolved: exercise.musclesInvolved,
             image: exercise.image,
             creationDate: Timestamp.fromDate(exercise.creationDate)
         }
