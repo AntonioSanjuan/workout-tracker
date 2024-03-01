@@ -5,10 +5,8 @@ import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects'
 import { WorkoutExercisesListResolver } from './shared/workout-exercises-list/workout-exercises-list.resolver';
-import { WorkoutExerciseDetailsResolver } from './shared/workout-exercise-details/workout-exercise-details.resolver';
-import { ExerciseEffects } from './workout-exercise-details/state/workout-exercise.effects';
-import { ExercisesEffects } from '@workout-tracker/shared-store';
-import { LibsServicesExercisesModule } from '@workout-tracker/services/exercises';
+import { WorkoutExerciseResolver } from './shared/workout-exercise/workout-exercise.resolver';
+import { ExerciseEffects } from './workout-exercise/state/workout-exercise.effects';
 
 export const appRoutes: Route[] = [
   {
@@ -31,14 +29,14 @@ export const appRoutes: Route[] = [
       },
       {
         path: ':id',
-        resolve: { data: WorkoutExerciseDetailsResolver },
+        resolve: { data: WorkoutExerciseResolver },
         providers: [
           importProvidersFrom(
             EffectsModule.forFeature([ExerciseEffects])
           )
         ],    
         loadComponent: () =>
-          import('./workout-exercise-details/workout-exercise.component').then((m) => m.WorkoutExerciseComponent),
+          import('./workout-exercise/workout-exercise.component').then((m) => m.WorkoutExerciseComponent),
       }
     ]
 

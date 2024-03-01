@@ -2,14 +2,14 @@ import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Exercise } from "@workout-tracker/models";
-import { AppInit, getExerciseById, getIsAppLoaded, getIsUILoadedApp } from "@workout-tracker/shared-store";
+import { AppInit, getExerciseById, getIsAppLoaded } from "@workout-tracker/shared-store";
 import { Observable, filter, of, take, tap } from "rxjs";
-import { getUserExerciseRequest } from "../../workout-exercise-details/state/workout-exercise.actions";
+import { getUserExerciseDetailsRequest } from "../../workout-exercise/state/workout-exercise.actions";
 
 @Injectable({
     providedIn: 'root'
 })
-export class WorkoutExerciseDetailsResolver implements Resolve<any> {
+export class WorkoutExerciseResolver implements Resolve<any> {
     private store: Store = inject(Store)
 
     resolve(route: ActivatedRouteSnapshot): Observable<Exercise|undefined> {
@@ -20,7 +20,7 @@ export class WorkoutExerciseDetailsResolver implements Resolve<any> {
                 filter((isLoaded: boolean) => isLoaded),
                 take(1),
                 tap(() => {
-                    this.store.dispatch(getUserExerciseRequest({ exerciseId: exerciseId}))
+                    this.store.dispatch(getUserExerciseDetailsRequest({ exerciseId: exerciseId}))
                 })
             ).subscribe()
             return this.store.select(getExerciseById(exerciseId))
