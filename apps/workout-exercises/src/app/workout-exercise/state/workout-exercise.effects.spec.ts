@@ -5,18 +5,18 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Observable, firstValueFrom, of, throwError} from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { ExerciseDetailsEffects } from './workout-exercise-details.effects';
+import { ExerciseEffects } from './workout-exercise.effects';
 import { ExercisesService, exercisesServiceMock } from '@workout-tracker/services/exercises';
 import { initialWorkoutExercisesState } from '../../+state/models/workoutExercisesState.initialState';
 import firebase from 'firebase/compat/app';
-import { getExerciseById, getUser } from '@workout-tracker/shared-store';
-import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise-details.actions';
+import { ExercisesState, getExerciseById, getExercisesState, getUser } from '@workout-tracker/shared-store';
+import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
 import { Exercise } from '@workout-tracker/models';
 import { exercisesStateMock } from "@workout-tracker/test"
 
 describe('ExerciseDetailsEffects', () => {
   let actions: Observable<Action>;
-  let effects: ExerciseDetailsEffects;
+  let effects: ExerciseEffects;
   let exerciseService: ExercisesService
   let store: MockStore;
 
@@ -29,7 +29,7 @@ describe('ExerciseDetailsEffects', () => {
         }),
       ],
       providers: [
-        ExerciseDetailsEffects,
+        ExerciseEffects,
         { provide: ExercisesService, useValue: exercisesServiceMock },
         provideMockActions(() => actions),
         provideMockStore({
@@ -41,7 +41,7 @@ describe('ExerciseDetailsEffects', () => {
       ],
     });
 
-    effects = TestBed.inject(ExerciseDetailsEffects);
+    effects = TestBed.inject(ExerciseEffects);
     exerciseService = TestBed.inject(ExercisesService)
     store = TestBed.inject(MockStore)
   });
@@ -145,12 +145,15 @@ describe('ExerciseDetailsEffects', () => {
       const exerciseSut = { id: exerciseIdSut, name: 'exerciseNameTest0' } as Exercise  
       beforeEach(() => { 
         store.resetSelectors()
+        store.refreshState()
         actions = of(getAnonymousUserExerciseDetailsRequest({ exerciseId: exerciseIdSut}))
       })
 
       describe('if exercise its stored into the created exercises (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getExerciseById(exerciseIdSut), exerciseSut);
+          store.overrideSelector(getExercisesState, {
+            list: [exerciseSut]
+          } as ExercisesState);
           store.refreshState()
         })
 
@@ -161,6 +164,9 @@ describe('ExerciseDetailsEffects', () => {
       })
       describe('if exercise its not stored into  the created exercises (list)', () => {
         beforeEach(() => { 
+          store.overrideSelector(getExercisesState, {
+            list: [] as Exercise[]
+          } as ExercisesState);
           store.refreshState()
         })
 

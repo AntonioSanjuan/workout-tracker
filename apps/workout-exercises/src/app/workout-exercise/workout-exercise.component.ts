@@ -9,10 +9,11 @@ import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, Exercise } from '@workout-tracker/models';
 import { of } from 'rxjs';
+import { selectWorkoutExerciseDetailsState } from './state/workout-exercise.selectors';
 
 @Component({
-  selector: 'workout-tracker-exercise-details',
-  templateUrl: './workout-exercise-details.component.html',
+  selector: 'workout-tracker-exercise',
+  templateUrl: './workout-exercise.component.html',
   imports: [
     UiModule,
     LetDirective,
@@ -20,14 +21,13 @@ import { of } from 'rxjs';
     NgFor,
     RouterModule
   ],
-  styleUrls: ['./workout-exercise-details.component.scss'],
+  styleUrls: ['./workout-exercise.component.scss'],
   standalone: true
 })
-export class WorkoutExerciseDetailsComponent {
+export class WorkoutExerciseComponent {
   private store: Store = inject(Store)
   private router: Router = inject(Router)
-  public exerciseDetails$ =  of({} as Exercise)
-  // public exerciseDetails$ =  this.store.select(getExerciseDetails)
+  public exerciseDetails$ = this.store.select(selectWorkoutExerciseDetailsState)
 
   private dialogService = inject(DialogService)
 

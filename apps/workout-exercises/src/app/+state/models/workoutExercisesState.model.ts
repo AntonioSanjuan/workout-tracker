@@ -1,5 +1,5 @@
-import { WORKOUT_EXERCISES_DETAILS_FEATURE_KEY, WorkoutExerciseDetailsState } from "../../workout-exercise-details/state/workout-exercise-details.reducer";
+import { WORKOUT_EXERCISE_FEATURE_KEY, WorkoutExerciseDetailsState } from "../../workout-exercise/state/workout-exercise.reducer";
 
 export interface WorkoutExercisesState {
-  [WORKOUT_EXERCISES_DETAILS_FEATURE_KEY]: WorkoutExerciseDetailsState
+  [WORKOUT_EXERCISE_FEATURE_KEY]: WorkoutExerciseDetailsState
 }

@@ -7,9 +7,9 @@ import { ExercisesService } from '@workout-tracker/services/exercises';
 import { Store } from '@ngrx/store';
 import { getExerciseById, getUser, showError } from '@workout-tracker/shared-store';
 import { AppRoutes, Exercise } from '@workout-tracker/models';
-import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise-details.actions';
+import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
 @Injectable()
-export class ExerciseDetailsEffects {
+export class ExerciseEffects {
     private exercisesService: ExercisesService = inject(ExercisesService)
     private translateService: TranslateService = inject(TranslateService)
     private actions$: Actions = inject(Actions);

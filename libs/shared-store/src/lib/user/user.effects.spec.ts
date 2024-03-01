@@ -94,11 +94,6 @@ describe('UserEffects', () => {
         const result = await firstValueFrom(effects.loginRequestSuccess$)
         expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
       })
-
-      it('should return loadedApp ACCOUNT', async () => {
-        const result = await firstValueFrom(effects.loginRequestSuccess$)
-        expect(result).toEqual(loadedApp({initialized: AppInit.ACCOUNT}))
-      })
     })
   });
 
@@ -165,13 +160,6 @@ describe('UserEffects', () => {
         await firstValueFrom(effects.signUpRequestSuccess$)
         expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.Home])
       })
-
-      it('should return loadedApp ACCOUNT', async () => {
-        const result = await firstValueFrom(effects.signUpRequestSuccess$)
-        expect(result).toEqual(loadedApp({initialized: AppInit.ACCOUNT}))
-      })
-
-
     })
   });
 

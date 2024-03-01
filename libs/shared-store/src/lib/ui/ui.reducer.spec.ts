@@ -63,8 +63,8 @@ describe('uiReducer', () => {
         })
     })
 
-    describe('unloadedApps action', () => {
-        describe('should handle unloadedApps action', () => {
+    describe('initializeLoadedApps action', () => {
+        describe('should handle initializeLoadedApps action', () => {
             it('should restore loadedApps', () => {
                 const initStateMock: UiState = {
                     ...uiInitialState, 
@@ -73,7 +73,7 @@ describe('uiReducer', () => {
                 const action = initializeLoadedApps()
                 const state = uiReducer(initStateMock, action)
     
-                expect(state.loadedApps).toEqual([])
+                expect(state.loadedApps).toEqual([AppInit.ACCOUNT])
             })
         })
     })

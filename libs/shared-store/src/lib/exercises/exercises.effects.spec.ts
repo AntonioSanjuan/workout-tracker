@@ -11,7 +11,7 @@ import { getUser } from '../user';
 import { ExercisesService, exercisesServiceMock } from '@workout-tracker/services/exercises';
 import { ExercisesEffects } from './exercises.effects'
 import { getExercisesList } from './exercises.selectors';
-import { addUserExerciseRequest, addUserExerciseRequestError, addUserExerciseRequestSuccess, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from './exercises.actions';
+import { addAnonymousUserExerciseRequest, addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequest, addAuthenticatedUserExerciseRequestError, addAuthenticatedUserExerciseRequestSuccess, addUserExerciseRequest, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from './exercises.actions';
 import { AppInit, loadedApp } from '../ui';
 describe('ExercisesEffects', () => {
   let actions: Observable<Action>;
@@ -187,7 +187,7 @@ describe('ExercisesEffects', () => {
       describe('if user', () => {
 
         beforeEach(() => { 
-          jest.spyOn(exerciseService, 'setExercises').mockReset()
+          // jest.spyOn(exerciseService, 'setExercises').mockReset()
           store.overrideSelector(getUser, user);
           // jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
           actions = of(addUserExerciseRequest({
@@ -196,62 +196,110 @@ describe('ExercisesEffects', () => {
           
         })
 
-        describe('when exerciseService.setExercises success', () => {
-          beforeEach(() => {
-           jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
-          })
-          it('should request setExercises', async () => {
-            const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-            await firstValueFrom(effects.addUserExerciseRequest$)
-            expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseSut)
-          })
-          it('should return addUserExerciseRequestSuccess', async () => {
-            const result = await firstValueFrom(effects.addUserExerciseRequest$)
-            expect(result).toEqual(addUserExerciseRequestSuccess({ exercise: exerciseSut}))
-          })
+        it('should return addAuthenticatedUserExerciseRequest', async () => {
+          const result = await firstValueFrom(effects.addUserExerciseRequest$)
+          expect(result).toEqual(addAuthenticatedUserExerciseRequest({ exercise: exerciseSut}))
         })
 
-        describe('when exerciseService.setExercises throws error', () => {
-          const errorCodeMock = 'testing error code'
-          const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
-          const errorResp = throwError(() => errorMock )
 
-          beforeEach(() => {
-            jest.spyOn(exerciseService, 'setExercises').mockReturnValue(errorResp)
-          })
-
-          it('should request setExercises', async () => {
-            const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-            await firstValueFrom(effects.addUserExerciseRequest$)
-            expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseSut)
-          })
-          
-          it('should return addUserExerciseRequestError', async () => {
-            const result = await firstValueFrom(effects.addUserExerciseRequest$)
-            expect(result).toEqual(addUserExerciseRequestError({ error: errorMock}))
-          })
-        })
       })
   
       describe('if its not user stored', () => {
         beforeEach(() => { 
-          jest.spyOn(exerciseService, 'setExercises').mockReset()
+          // jest.spyOn(exerciseService, 'setExercises').mockReset()
           store.overrideSelector(getUser, undefined);
-          jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
+          // jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
           actions = of(addUserExerciseRequest({
             exercise: exerciseSut
           }))
         })
-        it('should not request setExercises', async () => {
-          const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-          await firstValueFrom(effects.addUserExerciseRequest$)
-          expect(setExerciseSpy).not.toHaveBeenCalled()
-        })
-        it('should return addUserExerciseRequestSuccess', async () => {
+        // it('should not request setExercises', async () => {
+        //   const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
+        //   await firstValueFrom(effects.addUserExerciseRequest$)
+        //   expect(setExerciseSpy).not.toHaveBeenCalled()
+        // })
+        it('should return addAnonymousUserExerciseRequest', async () => {
           const result = await firstValueFrom(effects.addUserExerciseRequest$)
-          expect(result).toEqual(addUserExerciseRequestSuccess({ exercise: exerciseSut}))
+          expect(result).toEqual(addAnonymousUserExerciseRequest({ exercise: exerciseSut}))
         })
       })
+    })
+  })
+  describe('addAuthenticatedUserExerciseRequest$', () => {
+    const exerciseSut = {
+      name: 'exercise test name',
+      types: [ExerciseType.Legs, ExerciseType.Back]
+    } as Exercise
+    const user =  { uid: 'testUID'} as firebase.User
+    
+    beforeEach(() => { 
+      jest.spyOn(exerciseService, 'setExercises').mockReset()
+      store.overrideSelector(getUser, user);
+      jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
+      actions = of(addAuthenticatedUserExerciseRequest({
+        exercise: exerciseSut
+      }))
+      
+    })
+    describe('when exerciseService.setExercises success', () => {
+      beforeEach(() => {
+        jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
+      })
+      it('should request setExercises', async () => {
+        const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
+        await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
+        expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseSut)
+      })
+      it('should return addAuthenticatedUserExerciseRequestSuccess', async () => {
+        const result = await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
+        expect(result).toEqual(addAuthenticatedUserExerciseRequestSuccess({ exercise: exerciseSut}))
+      })
+    })
+
+    describe('when exerciseService.setExercises throws error', () => {
+      const errorCodeMock = 'testing error code'
+      const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+      const errorResp = throwError(() => errorMock )
+
+      beforeEach(() => {
+        jest.spyOn(exerciseService, 'setExercises').mockReturnValue(errorResp)
+      })
+
+      it('should request setExercises', async () => {
+        const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
+        await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
+        expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseSut)
+      })
+      
+      it('should return addAuthenticatedUserExerciseRequestError', async () => {
+        const result = await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
+        expect(result).toEqual(addAuthenticatedUserExerciseRequestError({ error: errorMock}))
+      })
+    })
+  })
+
+  describe('addAnonymousUserExerciseRequest$', () => {
+    const exerciseSut = {
+      name: 'exercise test name',
+      types: [ExerciseType.Legs, ExerciseType.Back]
+    } as Exercise
+    const exerciseListSut = [{}, {}, {}]
+    beforeEach(() => { 
+      jest.spyOn(exerciseService, 'setExercises').mockReset()
+      store.overrideSelector(getExercisesList, exerciseListSut as Exercise[]);
+      jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
+      actions = of(addAnonymousUserExerciseRequest({
+        exercise: exerciseSut
+      }))
+    })
+    it('should not request setExercises', async () => {
+      const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
+      await firstValueFrom(effects.addAnonymousUserExerciseRequest$)
+      expect(setExerciseSpy).not.toHaveBeenCalled()
+    })
+    it('should return addAnonymousUserExerciseRequestSuccess', async () => {
+      const result = await firstValueFrom(effects.addAnonymousUserExerciseRequest$)
+      expect(result).toEqual(addAnonymousUserExerciseRequestSuccess({ exercise: {...exerciseSut, id: (exerciseListSut.length + 1).toString()}}))
     })
   })
 });

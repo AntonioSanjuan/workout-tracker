@@ -11,11 +11,11 @@ import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes, Exercise } from '@workout-tracker/models';
-import { WorkoutExerciseDetailsComponent } from './workout-exercise-details.component';
+import { WorkoutExerciseComponent } from './workout-exercise.component';
 
-describe('WorkoutExerciseDetailsComponent', () => {
-  let component: WorkoutExerciseDetailsComponent;
-  let fixture: ComponentFixture<WorkoutExerciseDetailsComponent>;
+describe('WorkoutExerciseComponent', () => {
+  let component: WorkoutExerciseComponent;
+  let fixture: ComponentFixture<WorkoutExerciseComponent>;
   let dialogService: DialogService
   let store: MockStore;
   let actions: Observable<Action>;
@@ -37,7 +37,7 @@ describe('WorkoutExerciseDetailsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         LibsServicesDialogModule,
-        WorkoutExerciseDetailsComponent,
+        WorkoutExerciseComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
@@ -45,7 +45,7 @@ describe('WorkoutExerciseDetailsComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WorkoutExerciseDetailsComponent);
+    fixture = TestBed.createComponent(WorkoutExerciseComponent);
     store = TestBed.inject(MockStore)
     router = TestBed.inject(Router);
     dialogService = TestBed.inject(DialogService)
@@ -60,19 +60,12 @@ describe('WorkoutExerciseDetailsComponent', () => {
   })
 
   describe('Integration tests', () => {
-    it('newExercise should request showDialog ', () => {
-      let showDialogSpy = jest.spyOn(dialogService, 'showDialog')
 
-      component.newExercise()
-      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutExerciseDialogComponent, true)
-    });
-
-    it('openExerciseDetails should navigate to exercise details ', () => {
-      const exerciseSut = { id: 'exerciseId'}  as Exercise
+    it('openExerciseList should navigate to exercise details ', () => {
       let navigateSpy = jest.spyOn(router, 'navigate')
 
-      component.openExerciseDetails(exerciseSut)
-      expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutExercisesList}/${exerciseSut.id}`])
+      component.openExerciseList()
+      expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.WorkoutExercisesList])
     });
   })
 });

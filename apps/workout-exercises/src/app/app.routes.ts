@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects'
 import { WorkoutExercisesListResolver } from './shared/workout-exercises-list/workout-exercises-list.resolver';
 import { WorkoutExerciseDetailsResolver } from './shared/workout-exercise-details/workout-exercise-details.resolver';
-import { ExerciseDetailsEffects } from './workout-exercise-details/state/workout-exercise-details.effects';
+import { ExerciseEffects } from './workout-exercise-details/state/workout-exercise.effects';
 import { ExercisesEffects } from '@workout-tracker/shared-store';
 import { LibsServicesExercisesModule } from '@workout-tracker/services/exercises';
 
@@ -34,11 +34,11 @@ export const appRoutes: Route[] = [
         resolve: { data: WorkoutExerciseDetailsResolver },
         providers: [
           importProvidersFrom(
-            EffectsModule.forFeature([ExerciseDetailsEffects])
+            EffectsModule.forFeature([ExerciseEffects])
           )
         ],    
         loadComponent: () =>
-          import('./workout-exercise-details/workout-exercise-details.component').then((m) => m.WorkoutExerciseDetailsComponent),
+          import('./workout-exercise-details/workout-exercise.component').then((m) => m.WorkoutExerciseComponent),
       }
     ]
 

@@ -4,7 +4,7 @@ import { Store } from "@ngrx/store";
 import { Exercise } from "@workout-tracker/models";
 import { AppInit, getExerciseById, getIsAppLoaded, getIsUILoadedApp } from "@workout-tracker/shared-store";
 import { Observable, filter, of, take, tap } from "rxjs";
-import { getUserExerciseDetailsRequest } from "../../workout-exercise-details/state/workout-exercise-details.actions";
+import { getUserExerciseRequest } from "../../workout-exercise-details/state/workout-exercise.actions";
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,7 @@ export class WorkoutExerciseDetailsResolver implements Resolve<any> {
                 filter((isLoaded: boolean) => isLoaded),
                 take(1),
                 tap(() => {
-                    this.store.dispatch(getUserExerciseDetailsRequest({ exerciseId: exerciseId}))
+                    this.store.dispatch(getUserExerciseRequest({ exerciseId: exerciseId}))
                 })
             ).subscribe()
             return this.store.select(getExerciseById(exerciseId))

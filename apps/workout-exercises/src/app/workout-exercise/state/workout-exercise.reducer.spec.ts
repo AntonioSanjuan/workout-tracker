@@ -1,6 +1,6 @@
 import { Exercise } from "@workout-tracker/models";
-import { initialWorkoutExerciseDetailsState, workoutExerciseDetailsReducer } from "./workout-exercise-details.reducer";
-import { getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequestSuccess } from "./workout-exercise-details.actions";
+import { initialWorkoutExerciseDetailsState, workoutExerciseDetailsReducer } from "./workout-exercise.reducer";
+import { getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequestSuccess } from "./workout-exercise.actions";
 
 describe('workoutExerciseDetailsReducer', () => {
     describe('getAuthenticatedUserExerciseDetailsRequestSuccess action', () => {
