@@ -17,12 +17,20 @@ export const getAnonymousUserExercisesRequestSuccess = createAction(GET_ANONYMOU
 export const GET_ANONYMOUS_USER_EXERCISES_ERROR = 'GET ANONYMOUS USER EXERCISES Error'
 export const getAnonymousUserExercisesRequestError = createAction(GET_ANONYMOUS_USER_EXERCISES_ERROR, props<{ error: firebase.FirebaseError }>())
 
-export const ADD_USER_EXERCISE_REQUEST = 'ADD USER EXERCISE Request'
+export const ADD_USER_EXERCISE_REQUEST = 'ADD USER EXERCISE'
 export const addUserExerciseRequest = createAction(ADD_USER_EXERCISE_REQUEST, props<{ exercise: Exercise }>())
-export const ADD_USER_EXERCISE_SUCCESS = 'ADD USER EXERCISE Success'
-export const addUserExerciseRequestSuccess = createAction(ADD_USER_EXERCISE_SUCCESS, props<{ exercise: Exercise }>())
-export const ADD_USER_EXERCISE_ERROR = 'ADD USER EXERCISE Error'
-export const addUserExerciseRequestError = createAction(ADD_USER_EXERCISE_ERROR, props<{ error: firebase.FirebaseError }>())
+export const ADD_AUTHENTICATED_USER_EXERCISE_REQUEST = 'ADD AUTHENTICATED USER EXERCISE Request'
+export const addAuthenticatedUserExerciseRequest = createAction(ADD_AUTHENTICATED_USER_EXERCISE_REQUEST, props<{ exercise: Exercise }>())
+export const ADD_AUTHENTICATED_USER_EXERCISE_SUCCESS = 'ADD AUTHENTICATED USER EXERCISE Success'
+export const addAuthenticatedUserExerciseRequestSuccess = createAction(ADD_AUTHENTICATED_USER_EXERCISE_SUCCESS, props<{ exercise: Exercise }>())
+export const ADD_AUTHENTICATED_USER_EXERCISE_ERROR = 'ADD AUTHENTICATED USER EXERCISE Error'
+export const addAuthenticatedUserExerciseRequestError = createAction(ADD_AUTHENTICATED_USER_EXERCISE_ERROR, props<{ error: firebase.FirebaseError }>())
+export const ADD_ANONYMOUS_USER_EXERCISE_REQUEST = 'ADD ANONYMOUS USER EXERCISE Request'
+export const addAnonymousUserExerciseRequest = createAction(ADD_ANONYMOUS_USER_EXERCISE_REQUEST, props<{ exercise: Exercise }>())
+export const ADD_ANONYMOUS_USER_EXERCISE_SUCCESS = 'ADD ANONYMOUS USER EXERCISE Success'
+export const addAnonymousUserExerciseRequestSuccess = createAction(ADD_ANONYMOUS_USER_EXERCISE_SUCCESS, props<{ exercise: Exercise }>())
+export const ADD_ANONYMOUS_USER_EXERCISE_ERROR = 'ADD ANONYMOUS USER EXERCISE Error'
+export const addAnonymousUserExerciseRequestError = createAction(ADD_ANONYMOUS_USER_EXERCISE_ERROR, props<{ error: firebase.FirebaseError }>())
 
 export const SET_EXERCISE_TYPE_QUERY_FILTER = 'SET EXERCISE TYPE QUERY FILTER'
 export const setExerciseTypeQueryFilter = createAction(SET_EXERCISE_TYPE_QUERY_FILTER, props<{ exerciseType: ExerciseType}>())

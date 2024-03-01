@@ -22,7 +22,6 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: '',
-        resolve: { data: WorkoutExercisesListResolver },
         providers: [
           importProvidersFrom(
           )

@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
 import { exercisesInitialState } from "./models/exercisesState.initialState";
-import { addUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseTypeQueryFilter } from "./exercises.actions";
+import { addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseTypeQueryFilter } from "./exercises.actions";
 import { ExercisesState } from "./models/exercisesState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
 import { Exercise, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
@@ -55,7 +55,9 @@ export const exercisesReducer = createReducer(
             filtered: filterExercises(state.list, newFilters)
         }
     }),
-    on(addUserExerciseRequestSuccess, (state: ExercisesState, { exercise }) => {
+    on(
+        addAuthenticatedUserExerciseRequestSuccess,
+        addAnonymousUserExerciseRequestSuccess, (state: ExercisesState, { exercise }) => {
         return {
             ...state, 
             list: [...state.list, exercise],

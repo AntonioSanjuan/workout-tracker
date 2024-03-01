@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, of, mergeMap, iif } from 'rxjs'
+import { map, catchError, of, mergeMap, iif, take } from 'rxjs'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ExercisesService } from '@workout-tracker/services/exercises';
@@ -41,7 +41,9 @@ export class ExerciseDetailsEffects {
 
     getAnonymousUserExerciseDetailsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAnonymousUserExerciseDetailsRequest),
-        mergeMap(({ exerciseId }) => this.store.select(getExerciseById(exerciseId)).pipe(
+        mergeMap(({ exerciseId }) => 
+            this.store.select(getExerciseById(exerciseId)).pipe(
+            take(1),
             map((exercise) => exercise ? 
                 getAnonymousUserExerciseDetailsRequestSuccess({ exercise: exercise }) : 
                 getAnonymousUserExerciseDetailsRequestError({ exerciseId: exerciseId }))

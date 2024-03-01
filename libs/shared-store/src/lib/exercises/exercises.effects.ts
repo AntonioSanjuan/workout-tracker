@@ -2,12 +2,12 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { ExercisesService } from '@workout-tracker/services/exercises'
-import { catchError, iif, map, of, switchMap } from "rxjs";
+import { catchError, iif, map, of, switchMap, take } from "rxjs";
 import { getUser } from "../user";
 import firebase from 'firebase/compat/app';
 import { getExercisesList } from "./exercises.selectors";
 import { Exercise } from "@workout-tracker/models";
-import { addUserExerciseRequest, addUserExerciseRequestError, addUserExerciseRequestSuccess, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestError, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from "./exercises.actions";
+import { addAnonymousUserExerciseRequest, addAnonymousUserExerciseRequestError, addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequest, addAuthenticatedUserExerciseRequestError, addAuthenticatedUserExerciseRequestSuccess, addUserExerciseRequest, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestError, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from "./exercises.actions";
 import { AppInit, loadedApp } from "../ui";
 
 @Injectable()
@@ -44,6 +44,7 @@ private exercisesService: ExercisesService = inject(ExercisesService)
         ofType(getAnonymousUserExercisesRequest),
         switchMap(() =>
             this.store.select(getExercisesList).pipe(
+            take(1),
             map((exercises: Exercise[]) => 
                 getAnonymousUserExercisesRequestSuccess({ exercises: exercises})
             ),
@@ -66,15 +67,40 @@ private exercisesService: ExercisesService = inject(ExercisesService)
         ofType(addUserExerciseRequest),
         concatLatestFrom(() => this.store.select(getUser)),
         switchMap(([{ exercise }, user]) =>
-            (user ?
-                this.exercisesService.setExercises(user.uid, exercise):
-                of(exercise)
-            ).pipe(
+        iif(
+            () => !!user,
+            of(addAuthenticatedUserExerciseRequest({ exercise: exercise})),
+            of(addAnonymousUserExerciseRequest({ exercise: exercise}))
+        )
+        )
+    ))
+
+    addAuthenticatedUserExerciseRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(addAuthenticatedUserExerciseRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        switchMap(([{ exercise }, user]) =>
+                this.exercisesService.setExercises(user?.uid as string, exercise).pipe(
                 map((exercise: Exercise) => 
-                    addUserExerciseRequestSuccess({ exercise: exercise})
+                addAuthenticatedUserExerciseRequestSuccess({ exercise: exercise})
                 ),
-                catchError((err: firebase.FirebaseError) => of(addUserExerciseRequestError({ error: err})))
+                catchError((err: firebase.FirebaseError) => of(addAuthenticatedUserExerciseRequestError({ error: err})))
             )
+        )
+    ))
+
+    addAnonymousUserExerciseRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(addAnonymousUserExerciseRequest),
+        concatLatestFrom(() => this.store.select(getExercisesList)),
+        switchMap(([{ exercise }, exerciseList]) =>
+            of(exercise).pipe(
+            take(1),
+            map((exercise: Exercise) => 
+            {
+                return addAnonymousUserExerciseRequestSuccess({ exercise: {...exercise, id: (exerciseList.length + 1).toString()}})
+            }
+            ),
+            catchError((err: firebase.FirebaseError) => of(addAnonymousUserExerciseRequestError({ error: err })))
+        )
         )
     ))
 }

@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthService } from "@workout-tracker/services/auth";
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setUserInfo, setAnonymousUser, loginGoogleRequest, loginGoogleRequestSuccess, loginGoogleRequestError, setAuthenticatedUser } from "./user.actions";
 import { catchError, map, of, switchMap, tap } from "rxjs";
-import { AppInit, loadedApp, unloadedApp, initializeLoadedApps } from "../ui";
+import { initializeLoadedApps } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { Store } from "@ngrx/store";
