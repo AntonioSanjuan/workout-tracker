@@ -5,9 +5,9 @@ import { LetDirective } from '@ngrx/component';
 import { accordionAnimation, rotateAnimation } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
-import { ExerciseType } from '@workout-tracker/models';
-import { clearExerciseQueryFilter, getExercisesFilters, setExerciseNameQueryFilter, setExerciseTypeQueryFilter } from '@workout-tracker/shared-store';
-import { BannerComponent, ExerciseTypePillComponent } from '@workout-tracker/components';
+import { MusclesInvolved } from '@workout-tracker/models';
+import { clearExerciseQueryFilter, getExercisesFilters, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { BannerComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-exercises-list-filter',
@@ -16,7 +16,6 @@ import { BannerComponent, ExerciseTypePillComponent } from '@workout-tracker/com
     CommonModule,
     LetDirective,
     TranslateModule,
-    ExerciseTypePillComponent,
     BannerComponent
   ],
   templateUrl: './workout-exercises-list-filter.component.html',
@@ -28,7 +27,7 @@ import { BannerComponent, ExerciseTypePillComponent } from '@workout-tracker/com
 export class WorkoutExercisesFilterListComponent {
   private store: Store = inject(Store)
   public exercisesFilters$ = this.store.select(getExercisesFilters)
-  public exerciseTypes = Object.values(ExerciseType) as ExerciseType[]
+  public muclesInvolved = Object.values(MusclesInvolved) as MusclesInvolved[]
   //filters
   public collapsed = true;
 
@@ -36,13 +35,13 @@ export class WorkoutExercisesFilterListComponent {
     this.collapsed = !this.collapsed;
   }
 
-  public filterByExerciseType(exerciseType: ExerciseType): void {
-    this.store.dispatch(setExerciseTypeQueryFilter({ 
-      exerciseType: exerciseType
+  public filterByMuscleInvolved(muscleInvolved: MusclesInvolved): void {
+    this.store.dispatch(setExerciseMuscleInvolvedQueryFilter({ 
+      muscleInvolved: muscleInvolved
     }))
   }
   
-  public clearExerciseTypeFilter(): void {
+  public clearMuscleInvolvedFilter(): void {
     this.store.dispatch(clearExerciseQueryFilter())
   }
 

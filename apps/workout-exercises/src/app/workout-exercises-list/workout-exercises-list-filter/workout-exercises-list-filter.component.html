@@ -21,30 +21,31 @@
     <div class="ExerciseFilter_TypeFilterContainer" [@accordion]="collapsed">
         <div class="ExerciseFilter_TypeFilter">
             <div class="ExerciseFilter_TypeFilterHeader">
-                <h2>{{'apps.workout-exercises.list.filter.byTypeLabel' | translate}}</h2>
+                <h2>{{'apps.workout-exercises.list.filter.byMuscleLabel' | translate}}</h2>
             </div>
             <div class="ExerciseFilter_TypeFilterContent">
-                <div class="ExerciseFilter_TypeFilters"  
-                    *ngFor="let exerciseType of exerciseTypes" 
-                    (click)="filterByExerciseType(exerciseType)">
-                    <workout-tracker-exercise-type-pill [exerciseType]="exerciseType"></workout-tracker-exercise-type-pill>
-                </div>
+                <mat-chip-set aria-label="muscle">
+                    <mat-chip
+                        *ngFor="let mucleInvolved of muclesInvolved"
+                        (click)="filterByMuscleInvolved(mucleInvolved)">
+                            {{'common.muscles.' + mucleInvolved | translate}}
+                    </mat-chip>
+                  </mat-chip-set>
             </div>
         </div>
     </div>
     <div class="ExerciseFilter_TypeFilterActionsContainer">
         
-        <div class="ExerciseFilter_TypeFiltersActive" *ngIf="vm.exercisesFilters.byTypes.length">
-            <h2>{{'apps.workout-exercises.list.filter.filteredByTypes' | translate}}</h2>
+        <div class="ExerciseFilter_TypeFiltersActive" *ngIf="vm.exercisesFilters.byMuscles.length">
+            <h2>{{'apps.workout-exercises.list.filter.filteredByMuscles' | translate}}</h2>
             <div>
-                <div class="ExerciseFilter_TypeFilters"  
-                    *ngFor="let exerciseType of vm.exercisesFilters.byTypes">
-                    <div class="ExerciseFilter_TypeFiltersCurrent" (click)="filterByExerciseType(exerciseType)">
-                        <workout-tracker-exercise-type-pill [exerciseType]="exerciseType"></workout-tracker-exercise-type-pill>
-                        <mat-icon>close</mat-icon>
-                    </div>
-                    
-                </div>
+                <mat-chip-set aria-label="muscle">
+                    <mat-chip
+                    *ngFor="let mucleInvolved of vm.exercisesFilters.byMuscles"
+                        (click)="filterByMuscleInvolved(mucleInvolved)">
+                            {{'common.muscles.' + mucleInvolved | translate}}
+                    </mat-chip>
+                  </mat-chip-set>
             </div>
         </div>
         <button 

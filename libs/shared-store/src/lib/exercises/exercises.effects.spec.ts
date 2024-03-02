@@ -6,13 +6,19 @@ import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
-import { Exercise, ExerciseType } from '@workout-tracker/models';
+import { Exercise, MusclesInvolved } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { ExercisesService, exercisesServiceMock } from '@workout-tracker/services/exercises';
 import { ExercisesEffects } from './exercises.effects'
 import { getExercisesList } from './exercises.selectors';
 import { addAnonymousUserExerciseRequest, addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequest, addAuthenticatedUserExerciseRequestError, addAuthenticatedUserExerciseRequestSuccess, addUserExerciseRequest, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from './exercises.actions';
 import { AppInit, loadedApp } from '../ui';
+
+const exerciseSut = {
+  name: 'exercise test name',
+  musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Adductors]
+} as Exercise
+
 describe('ExercisesEffects', () => {
   let actions: Observable<Action>;
   let effects: ExercisesEffects
@@ -177,11 +183,6 @@ describe('ExercisesEffects', () => {
 
   describe('addUserExerciseRequest$', () => {
     describe('when addUserExerciseRequest is dispatched', () => {
-      const exerciseSut = {
-        name: 'exercise test name',
-        types: [ExerciseType.Legs, ExerciseType.Back]
-      } as Exercise
-  
       const user =  { uid: 'testUID'} as firebase.User
   
       describe('if user', () => {
@@ -226,10 +227,6 @@ describe('ExercisesEffects', () => {
     })
   })
   describe('addAuthenticatedUserExerciseRequest$', () => {
-    const exerciseSut = {
-      name: 'exercise test name',
-      types: [ExerciseType.Legs, ExerciseType.Back]
-    } as Exercise
     const user =  { uid: 'testUID'} as firebase.User
     
     beforeEach(() => { 
@@ -279,10 +276,6 @@ describe('ExercisesEffects', () => {
   })
 
   describe('addAnonymousUserExerciseRequest$', () => {
-    const exerciseSut = {
-      name: 'exercise test name',
-      types: [ExerciseType.Legs, ExerciseType.Back]
-    } as Exercise
     const exerciseListSut = [{}, {}, {}]
     beforeEach(() => { 
       jest.spyOn(exerciseService, 'setExercises').mockReset()

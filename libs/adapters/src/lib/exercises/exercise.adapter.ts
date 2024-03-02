@@ -6,17 +6,18 @@ export class ExerciseAdapter {
         return {
             ...exercise,
             id: exerciseId,
-            creationDate: exercise.creationDate.toDate()
+            creationDate: exercise.creationDate.toDate(),
+            lastModification: exercise.lastModification?.toDate()
         }
     }
 
     static toDto(exercise: Exercise): ExerciseDto {
         return {
             name: exercise.name,
-            types: exercise.types,
             musclesInvolved: exercise.musclesInvolved,
             image: exercise.image,
-            creationDate: Timestamp.fromDate(exercise.creationDate)
+            creationDate: Timestamp.fromDate(exercise.creationDate),
+            lastModification: exercise.lastModification ? Timestamp.fromDate(exercise.lastModification) : undefined
         }
     }
 }

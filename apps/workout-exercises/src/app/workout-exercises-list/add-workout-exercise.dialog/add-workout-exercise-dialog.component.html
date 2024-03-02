@@ -24,20 +24,6 @@
                 <mat-error>{{ 'apps.workout-exercises.list.addExercise.form.errors.muscleRequired' | translate }}</mat-error>
               }
           </mat-form-field>
-
-        <div class="AddExerciseDialog_TypeContainer">
-            <div class="AddExerciseDialog_TypeSelection"  
-                *ngFor="let exerciseType of exerciseTypes" 
-                (click)="selectExerciseType(exerciseType)">
-                <workout-tracker-exercise-type-pill 
-                    [exerciseType]="exerciseType" 
-                    [opacity]="!isSelectedExerciseType(exerciseType)">
-                </workout-tracker-exercise-type-pill>
-            </div>
-            @if (form.controls.types.hasError('required') || form.controls.types.hasError('minLength')) {
-                <mat-error>{{ 'apps.workout-exercises.list.addExercise.form.errors.typeRequired' | translate }}</mat-error>
-            }
-        </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

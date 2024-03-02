@@ -80,8 +80,8 @@
                 "filter": {
                     "byNameLabel": "Search exercises by name",
                     "byNamePlaceholder": "Exercise name...",
-                    "byTypeLabel": "Search exercise by type",
-                    "filteredByTypes": "Filtered by..."
+                    "byMuscleLabel": "Search exercise by type",
+                    "filteredByMuscles": "Filtered by..."
                 },
                 "title": "List of exercises"
             }

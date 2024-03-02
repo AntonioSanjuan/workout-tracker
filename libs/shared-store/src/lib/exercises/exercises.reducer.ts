@@ -1,9 +1,9 @@
 import { createReducer, on } from "@ngrx/store"
 import { exercisesInitialState } from "./models/exercisesState.initialState";
-import { addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseTypeQueryFilter } from "./exercises.actions";
+import { addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from "./exercises.actions";
 import { ExercisesState } from "./models/exercisesState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
-import { Exercise, ExerciseQueryFilters, ExerciseType } from "@workout-tracker/models";
+import { Exercise, ExerciseQueryFilters, MusclesInvolved } from "@workout-tracker/models";
 
 export const EXERCISES_FEATURE_KEY = 'exercises'; 
 
@@ -27,10 +27,10 @@ export const exercisesReducer = createReducer(
             filtered: exercises
         }
     }),
-    on(setExerciseTypeQueryFilter, (state: ExercisesState, { exerciseType }) => {
+    on(setExerciseMuscleInvolvedQueryFilter, (state: ExercisesState, { muscleInvolved: muscleInvolved }) => {
         const newFilters = {
             ...state.query.filters,
-            byTypes: state.query.filters.byTypes.includes(exerciseType) ? state.query.filters.byTypes.filter((byType) => byType !== exerciseType) : [...state.query.filters.byTypes, exerciseType]
+            byMuscles: state.query.filters.byMuscles.includes(muscleInvolved) ? state.query.filters.byMuscles.filter((byMuscles) => byMuscles !== muscleInvolved) : [...state.query.filters.byMuscles, muscleInvolved]
         }
         return {
             ...state, 
@@ -84,8 +84,8 @@ const filterExercises = (exercises: Exercise[], filters: ExerciseQueryFilters): 
     filteredExercises =  exercises.filter((exercise) => exercise.name.includes(filters.byName))
 
     //filter by type
-    if(filters.byTypes.length > 0) {
-        filteredExercises = filteredExercises.filter((exercise) => filters.byTypes.some((type: ExerciseType) => exercise.types.includes(type)))
+    if(filters.byMuscles.length > 0) {
+        filteredExercises = filteredExercises.filter((exercise) => filters.byMuscles.some((muscleInvolved: MusclesInvolved) => exercise.musclesInvolved.includes(muscleInvolved)))
     }
 
     return filteredExercises;

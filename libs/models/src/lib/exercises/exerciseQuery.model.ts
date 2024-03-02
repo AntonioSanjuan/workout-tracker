@@ -1,4 +1,4 @@
-import { ExerciseType } from "./exerciseTypes.model"
+import { MusclesInvolved } from "./musclesInvolved.model"
 
 export interface ExerciseQuery {
     filters: ExerciseQueryFilters
@@ -6,5 +6,5 @@ export interface ExerciseQuery {
 
 export interface ExerciseQueryFilters {
     byName: string
-    byTypes: ExerciseType[]
+    byMuscles: MusclesInvolved[]
 }

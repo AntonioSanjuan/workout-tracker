@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ExerciseCard } from './exercise-card.component';
-import { Exercise, ExerciseType } from '@workout-tracker/models';
+import { Exercise, MusclesInvolved } from '@workout-tracker/models';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ExerciseCard', () => {
   let dummyExercise = { 
     name: "exercise name test", 
-    types: [ ExerciseType.Arms, ExerciseType.Legs ],
+    musclesInvolved: [ MusclesInvolved.Calves],
     image: undefined, 
     creationDate: new Date()
   } as Exercise;

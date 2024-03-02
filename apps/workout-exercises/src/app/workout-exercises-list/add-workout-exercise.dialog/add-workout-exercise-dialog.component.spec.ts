@@ -6,7 +6,7 @@ import { userStateMock, exercisesStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Exercise, ExerciseType } from '@workout-tracker/models';
+import { Exercise, MusclesInvolved } from '@workout-tracker/models';
 import { addUserExerciseRequest } from '@workout-tracker/shared-store';
 
 describe('WorkoutExercisesListComponent', () => {
@@ -44,63 +44,18 @@ describe('WorkoutExercisesListComponent', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
     });
-
-    describe('isSelectedExerciseType', () => {
-      const exerciseTypeSut = ExerciseType.Chest
-      describe('if its not selected', () => {        
-        it('should return false', () => {
-          expect(component.isSelectedExerciseType(exerciseTypeSut)).toBeFalsy()
-        });
-      })
-      describe('if its selected', () => {
-        beforeEach(() => {
-          component.selectExerciseType(exerciseTypeSut)
-          component.selectExerciseType(ExerciseType.Arms)
-        })
-
-        it('should return true', () => {
-          expect(component.isSelectedExerciseType(exerciseTypeSut)).toBeTruthy()
-
-        });
-      })
-    })
-
-    describe('selectExerciseType', () => {
-      const exerciseTypeSut = ExerciseType.Chest
-      describe('if its not already selected', () => {
-        beforeEach(() => {
-          component.selectExerciseType(ExerciseType.Arms)
-        })        
-        it('should select it', () => {
-          component.selectExerciseType(exerciseTypeSut)
-          expect(component.isSelectedExerciseType(exerciseTypeSut)).toBeTruthy()
-        });
-      })
-      describe('if its already selected', () => {
-        beforeEach(() => {
-          component.selectExerciseType(exerciseTypeSut)
-          component.selectExerciseType(ExerciseType.Arms)
-        })
-
-        it('should deselect it', () => {
-          component.selectExerciseType(exerciseTypeSut)
-          expect(component.isSelectedExerciseType(exerciseTypeSut)).toBeFalsy()
-
-        });
-      })
-    })
   })
 
   describe('Integration tests', () => {
     describe('createExercise', () => {
       const inputNameSut = 'name test'
-      const inputTypesSut = [ExerciseType.Chest, ExerciseType.Arms]
+      const inputMusclesInvolved = [MusclesInvolved.Chest, MusclesInvolved.Traps]
       describe('if form its valid', () => {
         const today = new Date(2020, 3, 1)
         beforeEach(() => {
           component.form.setValue({
             name: inputNameSut,
-            types: inputTypesSut
+            musclesInvolved: inputMusclesInvolved
           })
 
           jest.useFakeTimers();
@@ -117,7 +72,7 @@ describe('WorkoutExercisesListComponent', () => {
 
           expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseRequest({exercise: {
             name:inputNameSut,
-            types: inputTypesSut,
+            musclesInvolved: inputMusclesInvolved,
             creationDate: today
           } as Exercise}))
         });
@@ -127,7 +82,7 @@ describe('WorkoutExercisesListComponent', () => {
           beforeEach(() => {
             component.form.setValue({
               name: null,
-              types: null
+              musclesInvolved: null
             })
           })
   
@@ -142,7 +97,7 @@ describe('WorkoutExercisesListComponent', () => {
           beforeEach(() => {
             component.form.setValue({
               name: null,
-              types: [ExerciseType.Arms]
+              musclesInvolved: [MusclesInvolved.Adductors]
             })
           })
   
@@ -154,11 +109,11 @@ describe('WorkoutExercisesListComponent', () => {
           });
         })
 
-        describe('types are null', () => {
+        describe('musclesInvolved are null', () => {
           beforeEach(() => {
             component.form.setValue({
               name: 'testName',
-              types: null
+              musclesInvolved: null
             })
           })
   
@@ -170,11 +125,11 @@ describe('WorkoutExercisesListComponent', () => {
           });
         })
 
-        describe('types length zero', () => {
+        describe('musclesInvolved length zero', () => {
           beforeEach(() => {
             component.form.setValue({
               name: 'testName',
-              types: []
+              musclesInvolved: []
             })
           })
   

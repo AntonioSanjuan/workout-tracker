@@ -1,47 +1,98 @@
-import { Exercise, ExerciseDto, ExerciseType } from "@workout-tracker/models";
+import { Exercise, ExerciseDto, MusclesInvolved } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 import { ExerciseAdapter } from "./exercise.adapter";
 
 describe('ExerciseAdapter', () => {    
-    it('toDto should convert Exercise model into ExerciseDto model', () => {
-      const createdAtSut: Date = new Date()
-      const inputExerciseCreationDateSut: Timestamp = Timestamp.fromDate(createdAtSut)
+  describe('toDto', () => {
+    const creationDateSut: Date = new Date()
+    const inputExerciseCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
 
+    it('should convert not modified Exercise model into ExerciseDto model', () => {
       const inputExerciseIdSut: string = 'exerciseIdTest'
       const inputExerciseSut: ExerciseDto = {
         name: 'exerciseNameTest',
-        types: [ ExerciseType.Arms, ExerciseType.Back ],
+        musclesInvolved: [ MusclesInvolved.Abductors, MusclesInvolved.Biceps ],
         image: undefined,
         creationDate: inputExerciseCreationDateSut,
+        lastModification: undefined
       }
 
       const exerciseDto = ExerciseAdapter.toState(inputExerciseSut, inputExerciseIdSut)
 
       expect(exerciseDto.id).toEqual(inputExerciseIdSut)
       expect(exerciseDto.name).toEqual(inputExerciseSut.name)
-      expect(exerciseDto.types).toEqual(inputExerciseSut.types)
+      expect(exerciseDto.musclesInvolved).toEqual(inputExerciseSut.musclesInvolved)
       expect(exerciseDto.image).toEqual(inputExerciseSut.image)
-      expect(exerciseDto.creationDate).toEqual(createdAtSut)     
+      expect(exerciseDto.creationDate).toEqual(creationDateSut)     
+      expect(exerciseDto.lastModification).toEqual(inputExerciseSut.lastModification)     
     });
 
-    it('toState should convert ExerciseDto model into Exercise model', () => {
-      const createdAtSut: Date = new Date()
+    it('should convert modified Exercise model into ExerciseDto model', () => {
+      const lastModificationDateSut: Date = new Date()
+      const inputExerciseLastModificationSut: Timestamp = Timestamp.fromDate(lastModificationDateSut)
 
-      const inputExerciseCreationDateSut: Timestamp = Timestamp.fromDate(createdAtSut)
-
-      const inputGameSut: Exercise = {
-        id: 'exerciseIdTest',
+      const inputExerciseIdSut: string = 'exerciseIdTest'
+      const inputExerciseSut: ExerciseDto = {
         name: 'exerciseNameTest',
-        types: [ ExerciseType.Arms, ExerciseType.Back ],
+        musclesInvolved: [ MusclesInvolved.Abductors, MusclesInvolved.Biceps ],
         image: undefined,
-        creationDate: createdAtSut
+        creationDate: inputExerciseCreationDateSut,
+        lastModification: inputExerciseLastModificationSut
       }
 
-      const exerciseState = ExerciseAdapter.toDto(inputGameSut)
+      const exerciseDto = ExerciseAdapter.toState(inputExerciseSut, inputExerciseIdSut)
 
-      expect(exerciseState.name).toEqual(inputGameSut.name)
-      expect(exerciseState.types).toEqual(inputGameSut.types)
-      expect(exerciseState.image).toEqual(inputGameSut.image)
-      expect(exerciseState.creationDate).toEqual(inputExerciseCreationDateSut)      
+      expect(exerciseDto.id).toEqual(inputExerciseIdSut)
+      expect(exerciseDto.name).toEqual(inputExerciseSut.name)
+      expect(exerciseDto.musclesInvolved).toEqual(inputExerciseSut.musclesInvolved)
+      expect(exerciseDto.image).toEqual(inputExerciseSut.image)
+      expect(exerciseDto.creationDate).toEqual(creationDateSut)     
+      expect(exerciseDto.lastModification).toEqual(lastModificationDateSut)     
     });
+  })
+
+  describe('toState', () => {
+    const creationDateSut: Date = new Date()
+    const inputExerciseCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
+    it('should convert not modified ExerciseDto model into Exercise model', () => {
+      const inputExerciseSut: Exercise = {
+        id: 'exerciseIdTest',
+        name: 'exerciseNameTest',
+        musclesInvolved: [MusclesInvolved.Abdominals],
+        image: undefined,
+        creationDate: creationDateSut,
+        lastModification: undefined
+      }
+
+      const exerciseState = ExerciseAdapter.toDto(inputExerciseSut)
+
+      expect(exerciseState.name).toEqual(inputExerciseSut.name)
+      expect(exerciseState.musclesInvolved).toEqual(inputExerciseSut.musclesInvolved)
+      expect(exerciseState.image).toEqual(inputExerciseSut.image)
+      expect(exerciseState.creationDate).toEqual(inputExerciseCreationDateSut)  
+      expect(exerciseState.lastModification).toEqual(inputExerciseSut.lastModification)    
+    });
+
+    it('should convert modified ExerciseDto model into Exercise model', () => {
+      const modifiedDateSut: Date = new Date()
+      const inputExerciseModifiedDateSut: Timestamp = Timestamp.fromDate(modifiedDateSut)
+      
+      const inputExerciseSut: Exercise = {
+        id: 'exerciseIdTest',
+        name: 'exerciseNameTest',
+        musclesInvolved: [MusclesInvolved.Abdominals],
+        image: undefined,
+        creationDate: creationDateSut,
+        lastModification: modifiedDateSut
+      }
+
+      const exerciseState = ExerciseAdapter.toDto(inputExerciseSut)
+
+      expect(exerciseState.name).toEqual(inputExerciseSut.name)
+      expect(exerciseState.musclesInvolved).toEqual(inputExerciseSut.musclesInvolved)
+      expect(exerciseState.image).toEqual(inputExerciseSut.image)
+      expect(exerciseState.creationDate).toEqual(inputExerciseCreationDateSut)  
+      expect(exerciseState.lastModification).toEqual(inputExerciseModifiedDateSut)    
+    });
+  })
 });

@@ -4,7 +4,6 @@ import { LetDirective } from '@ngrx/component';
 import { UiModule } from '@workout-tracker/ui';
 import { Exercise } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
-import { ExerciseTypePillComponent } from '../exercise-type-pill/exercise-type-pill.component';
 
 @Component({
   selector: 'workout-tracker-exercise-card',
@@ -12,7 +11,6 @@ import { ExerciseTypePillComponent } from '../exercise-type-pill/exercise-type-p
     CommonModule,
     LetDirective,
     TranslateModule,
-    ExerciseTypePillComponent,
     UiModule
   ],
   templateUrl: './exercise-card.component.html',
