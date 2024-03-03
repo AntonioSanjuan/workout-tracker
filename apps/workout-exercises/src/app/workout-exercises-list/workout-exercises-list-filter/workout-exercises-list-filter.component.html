@@ -24,11 +24,9 @@
                 <h2>{{'apps.workout-exercises.list.filter.byMuscleLabel' | translate}}</h2>
             </div>
             <div class="ExerciseFilter_MuscleFilterContent">
-                  <workout-tracker-muscle-pill *ngFor="let mucleInvolved of muclesInvolved"
-                    [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
-                    [specificMuscle]="mucleInvolved"
-                    (click)="filterByMuscleInvolved(mucleInvolved)"
-                ></workout-tracker-muscle-pill>
+                <workout-tracker-muscles-selector
+                    [label]="'apps.workout-exercises.list.addExercise.form.fields.musclesInvolved' | translate">
+            </workout-tracker-muscles-selector>
             </div>
         </div>
     </div>

@@ -2,23 +2,23 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
-import { MuscleInvolvedGroupPipe, accordionAnimation, rotateAnimation } from '@workout-tracker/ui';
+import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, accordionAnimation, rotateAnimation } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
-import { MuscleGroups, MusclesInvolved, getMuscleInvolvedGroup } from '@workout-tracker/models';
+import { MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
 import { clearExerciseQueryFilter, getExercisesFilters, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
-import { BannerComponent, MusclePillComponent } from '@workout-tracker/components';
+import { BannerComponent, MusclePillComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-exercises-list-filter',
   imports: [
     UiModule,
-    CommonModule,
     LetDirective,
     TranslateModule,
     BannerComponent,
     MusclePillComponent,
-    MuscleInvolvedGroupPipe
+    MusclesSelectorComponent,
+    MuscleInvolvedGroupPipe,
   ],
   templateUrl: './workout-exercises-list-filter.component.html',
   styleUrls: ['./workout-exercises-list-filter.component.scss'],
@@ -29,7 +29,8 @@ import { BannerComponent, MusclePillComponent } from '@workout-tracker/component
 export class WorkoutExercisesFilterListComponent {
   private store: Store = inject(Store)
   public exercisesFilters$ = this.store.select(getExercisesFilters)
-  public muclesInvolved = Object.values(MusclesInvolved) as MusclesInvolved[]
+  public musclesByGroup = muscleInvolvedByGroups;
+
   //filters
   public collapsed = true;
 

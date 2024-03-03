@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { UiModule } from '@workout-tracker/ui';
+import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseForm, getAddWorkoutExerciseForm } from './add-workout-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
 import { Exercise, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
 import { addUserExerciseRequest } from '@workout-tracker/shared-store';
+import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-add-exercise-dialog',
@@ -14,6 +15,7 @@ import { addUserExerciseRequest } from '@workout-tracker/shared-store';
   imports: [
     UiModule,
     TranslateModule,
+    MusclesSelectorComponent
   ],
   styleUrls: ['./add-workout-exercise-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None,

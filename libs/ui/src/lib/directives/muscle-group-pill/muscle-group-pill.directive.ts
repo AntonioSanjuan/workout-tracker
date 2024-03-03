@@ -23,7 +23,7 @@ const MuscleGroupBackgroundColor: { [key in MuscleGroups]: string} = {
   standalone: true
 })
 export class MuscleGroupPillDirective {
-  @Input() muscleGroup?: MuscleGroups;
+  @Input() muscleGroup?: MuscleGroups | string;
 
   constructor(private el: ElementRef<HTMLElement>) { }
 

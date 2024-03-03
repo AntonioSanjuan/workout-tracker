@@ -67,7 +67,8 @@
                 flex-direction: row;
                 width: 80%;
                 flex-wrap: wrap;
-                justify-content: space-around;
+                gap: 10px;
+                justify-content: center;
 
                 .ExerciseFilter_MuscleFilters {
                     cursor: pointer;
