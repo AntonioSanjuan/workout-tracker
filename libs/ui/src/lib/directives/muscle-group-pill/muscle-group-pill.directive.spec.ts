@@ -1,8 +1,8 @@
 import { Component, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ExerciseTypePillDirective } from './exercise-type-pill.directive';
-import { ExerciseType } from '@workout-tracker/models';
+import { MuscleGroupPillDirective } from './muscle-group-pill.directive';
+import { MuscleGroups } from '@workout-tracker/models';
 
 function rgbToHex(rgb: string) {
     // Verificar si el valor de entrada tiene el formato correcto
@@ -25,17 +25,17 @@ function rgbToHex(rgb: string) {
 
 @Component({
     template: `<div>
-        <p appExerciseTypePill [type]="type">
+        <p appMuscleGroupPill [muscleGroup]="type">
             test
         </p>
     </div>`,
     imports: [
-        ExerciseTypePillDirective
+        MuscleGroupPillDirective
     ],
     standalone: true
 })
 class DummyComponent {
-    public type = ExerciseType.Arms;
+    public type = MuscleGroups.Arms;
     constructor() {}
 }
 
@@ -53,7 +53,7 @@ describe('ExerciseTypePillDirective', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
 
-        directive = fixture.debugElement.query(By.directive(ExerciseTypePillDirective));
+        directive = fixture.debugElement.query(By.directive(MuscleGroupPillDirective));
         });
         
     it('should create an dummy component instance', () => {
@@ -64,16 +64,16 @@ describe('ExerciseTypePillDirective', () => {
         expect(directive).toBeTruthy();
     });
 
-    it('Arms type should set grass styles', () => {
-        component.type = ExerciseType.Arms;
+    it('Arms type should set grass Arms', () => {
+        component.type = MuscleGroups.Arms;
         fixture.detectChanges();
 
         expect(rgbToHex(directive.styles['backgroundColor'] as string)).toEqual('#007cae');
         expect(rgbToHex(directive.styles['color'] as string)).toEqual('#ffffff');
     });
 
-    it('Back type should set fire styles', () => {
-        component.type = ExerciseType.Back;
+    it('Back type should set Back styles', () => {
+        component.type = MuscleGroups.Back;
         fixture.detectChanges();
 
         expect(rgbToHex(directive.styles['backgroundColor'] as string)).toEqual("#00a6e1");

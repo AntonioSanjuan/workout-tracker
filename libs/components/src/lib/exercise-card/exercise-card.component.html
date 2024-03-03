@@ -6,13 +6,10 @@
                 <div class="ExerciseCard_InfoContainer">
                     <h3>{{exercise.name}}</h3>
                     <div class="ExerciseCard_TypesContainer">
-                        <mat-chip-set aria-label="muscle">
-                            <mat-chip
-                            *ngFor="let mucleInvolved of exercise.musclesInvolved">
-                              <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
-                              {{'common.muscles.' + mucleInvolved | translate}}
-                            </mat-chip>
-                          </mat-chip-set>
+                        <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exercise.musclesInvolved"
+                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                            [specificMuscle]="mucleInvolved"
+                    ></workout-tracker-muscle-pill>
                     </div>
                 </div>
             </div>

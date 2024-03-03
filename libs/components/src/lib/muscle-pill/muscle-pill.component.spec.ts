@@ -1,26 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExerciseTypePillComponent } from './exercise-type-pill.component';
-import { ExerciseType } from '@workout-tracker/models';
+import { MusclePillComponent } from './muscle-pill.component';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MuscleGroups } from '@workout-tracker/models';
 
-describe('ExerciseTypePillComponent', () => {
-  let dummyExerciseType = ExerciseType.Arms;
+describe('MusclePillComponent', () => {
+  let dummyMuscleGroup = MuscleGroups.Back;
 
-  let component: ExerciseTypePillComponent;
-  let fixture: ComponentFixture<ExerciseTypePillComponent>;
+  let component: MusclePillComponent;
+  let fixture: ComponentFixture<MusclePillComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        ExerciseTypePillComponent,
+        MusclePillComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),]
     }).compileComponents();
-    fixture = TestBed.createComponent(ExerciseTypePillComponent);
+    fixture = TestBed.createComponent(MusclePillComponent);
     component = fixture.componentInstance;
-    component.exerciseType = dummyExerciseType
+    component.muscleGroup = dummyMuscleGroup
     fixture.detectChanges();
   });
 

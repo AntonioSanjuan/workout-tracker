@@ -14,5 +14,8 @@ export enum MusclesInvolved {
     Neck = "Neck",
     Quadriceps = "Quadriceps",
     Traps = "Traps",
-    Triceps = "Triceps"
+    Triceps = "Triceps",
+    Anterior_deltoid = "Anterior_deltoid",
+    Medial_deltoid = "Medial_deltoid",
+    Posterior_deltoid = "Posterior_deltoid"
 }

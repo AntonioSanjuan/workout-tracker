@@ -1,7 +1,7 @@
 @use "css/main.scss" as shellStyles;
 
 
-.ExerciseTypePill_MainContainer {
+.MusclePill_MainContainer {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -18,14 +18,4 @@
         width: 100%;
         font-size: 20px;
     }
-}
-
-.opacity {
-    background-color: shellStyles.$grey3 !important;
-    color: shellStyles.$mainColor !important;
-}
-
-.minified {
-    font-size: 12px !important;
-
 }

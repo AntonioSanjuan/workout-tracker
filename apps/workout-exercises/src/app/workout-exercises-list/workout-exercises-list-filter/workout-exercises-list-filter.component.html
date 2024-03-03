@@ -18,34 +18,30 @@
             </workout-tracker-banner>
         </div>
     </div>
-    <div class="ExerciseFilter_TypeFilterContainer" [@accordion]="collapsed">
-        <div class="ExerciseFilter_TypeFilter">
-            <div class="ExerciseFilter_TypeFilterHeader">
+    <div class="ExerciseFilter_MuscleFilterContainer" [@accordion]="collapsed">
+        <div class="ExerciseFilter_MuscleFilter">
+            <div class="ExerciseFilter_MuscleFilterHeader">
                 <h2>{{'apps.workout-exercises.list.filter.byMuscleLabel' | translate}}</h2>
             </div>
-            <div class="ExerciseFilter_TypeFilterContent">
-                <mat-chip-set aria-label="muscle">
-                    <mat-chip
-                        *ngFor="let mucleInvolved of muclesInvolved"
-                        (click)="filterByMuscleInvolved(mucleInvolved)">
-                            {{'common.muscles.' + mucleInvolved | translate}}
-                    </mat-chip>
-                  </mat-chip-set>
+            <div class="ExerciseFilter_MuscleFilterContent">
+                  <workout-tracker-muscle-pill *ngFor="let mucleInvolved of muclesInvolved"
+                    [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                    [specificMuscle]="mucleInvolved"
+                    (click)="filterByMuscleInvolved(mucleInvolved)"
+                ></workout-tracker-muscle-pill>
             </div>
         </div>
     </div>
-    <div class="ExerciseFilter_TypeFilterActionsContainer">
+    <div class="ExerciseFilter_MuscleFilterActionsContainer">
         
-        <div class="ExerciseFilter_TypeFiltersActive" *ngIf="vm.exercisesFilters.byMuscles.length">
+        <div class="ExerciseFilter_MuscleFiltersActive" *ngIf="vm.exercisesFilters.byMuscles.length">
             <h2>{{'apps.workout-exercises.list.filter.filteredByMuscles' | translate}}</h2>
             <div>
-                <mat-chip-set aria-label="muscle">
-                    <mat-chip
-                    *ngFor="let mucleInvolved of vm.exercisesFilters.byMuscles"
-                        (click)="filterByMuscleInvolved(mucleInvolved)">
-                            {{'common.muscles.' + mucleInvolved | translate}}
-                    </mat-chip>
-                  </mat-chip-set>
+                  <workout-tracker-muscle-pill *ngFor="let mucleInvolved of vm.exercisesFilters.byMuscles"
+                    [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                    [specificMuscle]="mucleInvolved"
+                    (click)="filterByMuscleInvolved(mucleInvolved)"
+                  ></workout-tracker-muscle-pill>
             </div>
         </div>
         <button 

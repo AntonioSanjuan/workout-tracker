@@ -2,12 +2,12 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
-import { accordionAnimation, rotateAnimation } from '@workout-tracker/ui';
+import { MuscleInvolvedGroupPipe, accordionAnimation, rotateAnimation } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
-import { MusclesInvolved } from '@workout-tracker/models';
+import { MuscleGroups, MusclesInvolved, getMuscleInvolvedGroup } from '@workout-tracker/models';
 import { clearExerciseQueryFilter, getExercisesFilters, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
-import { BannerComponent } from '@workout-tracker/components';
+import { BannerComponent, MusclePillComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-exercises-list-filter',
@@ -16,7 +16,9 @@ import { BannerComponent } from '@workout-tracker/components';
     CommonModule,
     LetDirective,
     TranslateModule,
-    BannerComponent
+    BannerComponent,
+    MusclePillComponent,
+    MuscleInvolvedGroupPipe
   ],
   templateUrl: './workout-exercises-list-filter.component.html',
   styleUrls: ['./workout-exercises-list-filter.component.scss'],

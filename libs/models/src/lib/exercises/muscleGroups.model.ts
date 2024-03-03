@@ -1,7 +1,8 @@
-export enum ExerciseType {
+export enum MuscleGroups {
     Legs = "Legs",
     Arms = "Arms",
     Shoulder = "Shoulder",
     Back = "Back",
-    Chest = "Chest"
+    Chest = "Chest",
+    Core = 'Core'
 }

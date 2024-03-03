@@ -1,11 +1,12 @@
 {
     "common": {
-        "exerciseType": {
+        "muscleGroups": {
             "Legs": "Piernas",
             "Arms": "Brazos",
             "Shoulder": "Hombros",
             "Back": "Espalda",
-            "Chest": "Pecho"
+            "Chest": "Pecho",
+            "Core": "Core"
         },
         "muscles": {
             "Abdominals": "Abdominales",
@@ -23,7 +24,10 @@
             "Neck": "Cuello",
             "Quadriceps": "Cuádriceps",
             "Traps": "Trapecios",
-            "Triceps": "Tríceps"
+            "Triceps": "Tríceps",
+            "Anterior_deltoid": "Deltoides anterior",
+            "Medial_deltoid": "Deltoides medial",
+            "Posterior_deltoid": "Deltoides posterior"
         },
         "actions": {
             "cancel": "Cancelar",

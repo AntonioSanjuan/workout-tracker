@@ -48,7 +48,7 @@
         }
         
     }
-    .ExerciseFilter_TypeFilterContainer {
+    .ExerciseFilter_MuscleFilterContainer {
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -56,30 +56,30 @@
         justify-content: flex-start;
         overflow: hidden;
         
-        .ExerciseFilter_TypeFilter {
+        .ExerciseFilter_MuscleFilter {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
 
-            .ExerciseFilter_TypeFilterContent {
+            .ExerciseFilter_MuscleFilterContent {
                 display: flex;
                 flex-direction: row;
                 width: 80%;
                 flex-wrap: wrap;
                 justify-content: space-around;
 
-                .ExerciseFilter_TypeFilters {
+                .ExerciseFilter_MuscleFilters {
                     cursor: pointer;
                 }
             }
         }
     }
-    .ExerciseFilter_TypeFilterActionsContainer {
+    .ExerciseFilter_MuscleFilterActionsContainer {
         position: relative;
         min-height: 25px;
     
-        .ExerciseFilter_TypeFiltersActive {
+        .ExerciseFilter_MuscleFiltersActive {
             display: flex;
             padding: 0.75em 0.675em;
             border-radius: 10px;
@@ -89,7 +89,7 @@
             align-items: center;
             gap: 10px;
 
-            .ExerciseFilter_TypeFiltersCurrent {
+            .ExerciseFilter_MuscleFiltersCurrent {
                 display: flex;
                 flex-direction: row;
                 cursor: pointer;
@@ -121,9 +121,9 @@
             }
         }
 
-        .ExerciseFilter_TypeFilterContainer  {
-            .ExerciseFilter_TypeFilter  {
-                .ExerciseFilter_TypeFilterContent  {
+        .ExerciseFilter_MuscleFilterContainer  {
+            .ExerciseFilter_MuscleFilter  {
+                .ExerciseFilter_MuscleFilterContent  {
                     justify-content: space-between;
                     gap: 10px;
                 }

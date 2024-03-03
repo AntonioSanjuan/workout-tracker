@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   imports: [
@@ -28,7 +28,7 @@ import {MatChipsModule} from '@angular/material/chips';
     MatCardModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatChipsModule
+    MatButtonToggleModule
   ],
   exports: [
     CommonModule,
@@ -47,7 +47,7 @@ import {MatChipsModule} from '@angular/material/chips';
     MatOptionModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatChipsModule
+    MatButtonToggleModule
   ]
 })
 export class UiModule {}
