@@ -1,0 +1,93 @@
+{
+    "common": {
+        "exerciseType": {
+            "Legs": "Legs",
+            "Arms": "Arms",
+            "Shoulder": "Shoulder",
+            "Back": "Back",
+            "Chest": "Chest"
+        }
+    },
+    "apps": {
+        "shell": {
+            "layout": {
+                "menuTop": {
+                    "content": "Top menu works"
+                },
+                "menuBottom": {
+                    "content": "Bottom menu works"
+                },
+                "profileNav": {
+                    "language": {
+                        "placeholder": "Language"
+                    }
+                },
+                "menuNav": {
+                    "home": "Home",
+                    "exercises": "Exercises",
+                    "news": "News"
+                }
+            },
+            "home": {
+                "content": "It works!"
+            },
+            "loadingSpinner": {
+                "title": "Loading..."
+            }
+        },
+        "account": {
+            "login": {
+                "title": "Access with your account",
+                "form": {
+                    "fields": {
+                        "userEmail": "Email",
+                        "userPass": "Password"
+                    },
+                    "actions": {
+                        "submit": "Access",
+                        "googleLogin": "Access with Google",
+                        "signUp": "You do not have an account? Register now!"
+                    }
+                }
+            },
+            "signUp": {
+                "title": "Sign up",
+                "form": {
+                    "fields": {
+                        "userEmail": "Email",
+                        "userPass": "Password"
+                    },
+                    "actions": {
+                        "submit": "Sign In",
+                        "googleLogin": "Sign In with Google",
+                        "login": "Do you already have an account? Access with it!"
+
+                    }
+                }
+            },
+            "settings": {
+                "title": "Set up your account",
+                "form": {
+                    "fields": {
+                        "language": "Language",
+                        "darkMode": "Dark mode"
+                    }
+                }
+            }
+        },
+        "workout-exercises": {
+            "list": {
+                "filter": {
+                    "byNameLabel": "Search exercises by name",
+                    "byNamePlaceholder": "Exercise name...",
+                    "byMuscleLabel": "Search exercise by type",
+                    "filteredByMuscles": "Filtered by..."
+                },
+                "title": "List of exercises"
+            }
+        }
+    },
+    "libs": {
+        
+    }
+}
