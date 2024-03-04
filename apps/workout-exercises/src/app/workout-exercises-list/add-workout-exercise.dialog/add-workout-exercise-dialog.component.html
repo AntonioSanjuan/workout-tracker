@@ -26,7 +26,7 @@
             <mat-label>
                 ¿Quieres añadir una imágen?
             </mat-label>
-            <mat-button-toggle-group (change)="switchCameraStatus()">
+            <mat-button-toggle-group (change)="switchCameraStatus($event.value)">
                 <mat-button-toggle [value]="false">No</mat-button-toggle>
                 <mat-button-toggle [value]="true">Yes</mat-button-toggle>
             </mat-button-toggle-group>

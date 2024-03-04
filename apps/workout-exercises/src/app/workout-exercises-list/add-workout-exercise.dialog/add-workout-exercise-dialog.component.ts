@@ -49,8 +49,8 @@ export class AddWorkoutExerciseDialogComponent implements OnInit {
     }
   }
 
-  public switchCameraStatus() {
-    this.cameraOpened = !this.cameraOpened
+  public switchCameraStatus(newStatus: boolean) {
+    this.cameraOpened = newStatus
 
     if(this.cameraOpened) {
       navigator.mediaDevices

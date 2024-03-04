@@ -8,6 +8,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import { MatDialogRef } from '@angular/material/dialog';
 import { Exercise, MusclesInvolved } from '@workout-tracker/models';
 import { addUserExerciseRequest } from '@workout-tracker/shared-store';
+import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 describe('WorkoutExercisesListComponent', () => {
   let component: AddWorkoutExerciseDialogComponent;
@@ -28,6 +29,7 @@ describe('WorkoutExercisesListComponent', () => {
       imports: [
         BrowserAnimationsModule,
         AddWorkoutExerciseDialogComponent,
+        MusclesSelectorComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),

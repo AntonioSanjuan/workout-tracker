@@ -1,10 +1,10 @@
-import { Component, Input, ViewEncapsulation, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, forwardRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LetDirective } from '@ngrx/component';
 import { MuscleGroupPillDirective, UiModule } from '@workout-tracker/ui';
-import { muscleInvolvedByGroups } from '@workout-tracker/models';
+import { MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
-import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'workout-tracker-muscles-selector',
@@ -27,15 +27,25 @@ import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/for
   standalone: true,
 })
 export class MusclesSelectorComponent implements ControlValueAccessor{
+  private fb = inject(FormBuilder);
+  public musclesByGroup = muscleInvolvedByGroups;
+
   @Input() public label!: string
   @Input() public errorLabel!: string
-  @Input() public formControlName: string | number | null = null;
-  @Input() public formGroup: FormGroup<any> = new FormGroup({});
+  @Input() public formControlName: string | number | null = 'formControlName';
+  @Input() public formGroup: FormGroup<any> = this.fb.group({
+    formControlName: null
+  })
+  @Output() private muscleSelection = new EventEmitter<MusclesInvolved>();
+
   value: any;
   onChange: any = () => {};
   onTouch: any = () => {};
-  public musclesByGroup = muscleInvolvedByGroups;
 
+  public selectMuscle(muscle: MusclesInvolved) {
+    this.muscleSelection.emit(muscle)
+  }
+  
   writeValue(value: any) {
     this.value = value;
   }

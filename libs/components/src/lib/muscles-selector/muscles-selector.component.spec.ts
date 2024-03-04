@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MusclesSelectorComponent } from './muscles-selector.component';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { MuscleGroups } from '@workout-tracker/models';
+import { MusclesInvolved } from '@workout-tracker/models';
 
 describe('MusclesSelectorComponent', () => {
   let component: MusclesSelectorComponent;
@@ -11,6 +11,7 @@ describe('MusclesSelectorComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
+        BrowserAnimationsModule,
         MusclesSelectorComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
@@ -24,6 +25,16 @@ describe('MusclesSelectorComponent', () => {
   describe('Unit tests', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
+    });
+  })
+
+  describe('Integration tests', () => {
+    it('selectMuscle should emit muscleSelection', () => {
+      const mnuscleSut = MusclesInvolved.Calves
+      const emitSpy = jest.spyOn(component, 'selectMuscle')
+      component.selectMuscle(mnuscleSut);
+
+      expect(emitSpy).toHaveBeenCalledWith(mnuscleSut)
     });
   })
 });

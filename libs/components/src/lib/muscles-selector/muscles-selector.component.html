@@ -10,6 +10,7 @@
                     <mat-option 
                         appMuscleGroupPill [muscleGroup]="muscleByGroup.key"
                         *ngFor="let muscle of muscleByGroup.value" 
+                        (click)="selectMuscle(muscle)"
                         [value]="muscle">
                         {{'common.muscles.' + muscle | translate}}
                     </mat-option>

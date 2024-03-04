@@ -10,6 +10,7 @@ import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-fi
 import { exercisesStateMock } from '@workout-tracker/test';
 import { MusclesInvolved } from '@workout-tracker/models';
 import { clearExerciseQueryFilter, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 describe('WorkoutExercisesFilterListComponent', () => {
   let actions: Observable<Action>;
@@ -22,7 +23,7 @@ describe('WorkoutExercisesFilterListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         WorkoutExercisesFilterListComponent,
-        // PokemonTypePillComponent,
+        MusclesSelectorComponent,
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
       ],

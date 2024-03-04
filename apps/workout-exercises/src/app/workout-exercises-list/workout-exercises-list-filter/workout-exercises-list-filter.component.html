@@ -1,5 +1,5 @@
 <div class="ExerciseFilter_MainContainer"
-*ngrxLet="{ exercisesFilters: exercisesFilters$ } as vm">
+    *ngrxLet="{ exercisesFilters: exercisesFilters$ } as vm">
 
     <div class="ExerciseFilter_NameFilterContainer">
         <mat-form-field>
@@ -25,8 +25,9 @@
             </div>
             <div class="ExerciseFilter_MuscleFilterContent">
                 <workout-tracker-muscles-selector
-                    [label]="'apps.workout-exercises.list.addExercise.form.fields.musclesInvolved' | translate">
-            </workout-tracker-muscles-selector>
+                    [label]="'apps.workout-exercises.list.addExercise.form.fields.musclesInvolved' | translate"
+                    (muscleSelection)="filterByMuscleInvolved($event)">
+                </workout-tracker-muscles-selector>
             </div>
         </div>
     </div>
