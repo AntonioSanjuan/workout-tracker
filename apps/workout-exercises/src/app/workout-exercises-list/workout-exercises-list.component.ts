@@ -24,6 +24,7 @@ import { AppRoutes, Exercise } from '@workout-tracker/models';
     NgFor,
     RouterModule
   ],
+  providers: [DialogService],
   styleUrls: ['./workout-exercises-list.component.scss'],
   standalone: true
 })

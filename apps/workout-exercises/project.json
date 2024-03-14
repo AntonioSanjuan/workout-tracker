@@ -10,7 +10,7 @@
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/workout-exercises",
+        "outputPath": "dist/workout-tracker/workout-exercises",
         "index": "apps/workout-exercises/src/index.html",
         "main": "apps/workout-exercises/src/main.ts",
         "polyfills": ["zone.js"],

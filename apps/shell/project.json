@@ -10,14 +10,15 @@
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shell",
+        "outputPath": "dist/workout-tracker",
+        "deleteOutputPath": false,
         "index": "apps/shell/src/index.html",
         "main": "apps/shell/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/shell/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-        "styles": ["apps/shell/src/assets/css/main.scss"],
+        "styles": ["apps/shell/src/assets/css/main.scss", "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"],
         "stylePreprocessorOptions": {
           "includePaths": [
             "apps/shell/src/assets",
@@ -28,7 +29,9 @@
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/shell/webpack.config.ts"
-        }
+        },
+        "baseHref": "/workout-tracker/",
+        "deployUrl": "/workout-tracker/"
       },
       "configurations": {
         "production": {
@@ -44,6 +47,12 @@
               "maximumError": "4kb"
             }
           ],
+          "fileReplacements": [
+            {
+              "replace": "apps/shell/src/environments/environment.ts",
+              "with": "apps/shell/src/environments/environment.prod.ts"
+            }
+          ],
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/shell/webpack.prod.config.ts"
@@ -55,7 +64,9 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "baseHref": "/workout-tracker/",
+          "deployUrl": "/workout-tracker/"
         }
       },
       "defaultConfiguration": "production"
@@ -92,5 +103,9 @@
         "jestConfig": "apps/shell/jest.config.ts"
       }
     }
-  }
+  },
+  "implicitDependencies": [
+    "account",
+    "workout-exercises"
+  ]
 }

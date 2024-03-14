@@ -2,7 +2,7 @@
     <mat-card>
         <mat-card-content>
             <div class="ExerciseCard_ContentContainer">
-                <img mat-card-md-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"  alt="exercise image">
+                <img mat-card-md-image [src]="exercise.image ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
                 <div class="ExerciseCard_InfoContainer">
                     <h3>{{exercise.name}}</h3>
                     <div class="ExerciseCard_TypesContainer">

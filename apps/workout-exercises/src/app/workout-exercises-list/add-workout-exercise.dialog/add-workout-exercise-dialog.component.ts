@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, UiModule } from '@workout-tracker/ui';
+import { UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseForm, getAddWorkoutExerciseForm } from './add-workout-exercise-dialog.form';
@@ -21,8 +21,8 @@ import { MusclesSelectorComponent } from '@workout-tracker/components';
   encapsulation: ViewEncapsulation.None,
   standalone: true
 })
-export class AddWorkoutExerciseDialogComponent implements OnInit {
-  @ViewChild('video') video!: HTMLVideoElement;
+export class AddWorkoutExerciseDialogComponent implements OnInit, OnDestroy {
+  @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
 
   private dialogRef: MatDialogRef<AddWorkoutExerciseDialogComponent> = inject(MatDialogRef<AddWorkoutExerciseDialogComponent>)
   private store: Store = inject(Store)
@@ -38,11 +38,16 @@ export class AddWorkoutExerciseDialogComponent implements OnInit {
       this.form = getAddWorkoutExerciseForm()
   }
 
+  ngOnDestroy(): void {
+      this.switchCameraStatus(false)
+  }
+
   public createExercise() {
     if(this.form.valid) {
       const exercise = {
         ...this.form.getRawValue(), 
-        creationDate: new Date()
+        creationDate: new Date(),
+        image: this.photo
       } as Exercise
       this.store.dispatch(addUserExerciseRequest({ exercise: exercise}))
       this.dialogRef.close()
@@ -56,8 +61,8 @@ export class AddWorkoutExerciseDialogComponent implements OnInit {
       navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
-        this.video.srcObject = stream;
-        this.video.play();
+        this.video.nativeElement.srcObject = stream;
+        this.video.nativeElement.play();
       })
       .catch((err) => {
         console.error(`An error occurred: ${err}`);
@@ -66,16 +71,17 @@ export class AddWorkoutExerciseDialogComponent implements OnInit {
   }
   public takePhoto() {
     const canvas = document.createElement("canvas");
-    canvas.width = this.video.clientWidth * 1;
-    canvas.height = this.video.clientHeight * 1;
-    canvas.getContext('2d')?.drawImage(this.video, 0, 0, canvas.width, canvas.height);
+    canvas.width = this.video.nativeElement.clientWidth * 1;
+    canvas.height = this.video.nativeElement.clientHeight * 1;
+    canvas.getContext('2d')?.drawImage(this.video.nativeElement, 0, 0, canvas.width, canvas.height);
 
     this.photo = canvas.toDataURL()
     canvas.remove()
   }
 
   public clearPhoto() {
-
+    this.photo = undefined
+    this.switchCameraStatus(true)
   }
 
 

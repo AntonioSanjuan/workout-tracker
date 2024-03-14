@@ -83,10 +83,13 @@ private exercisesService: ExercisesService = inject(ExercisesService)
                 map((exercise: Exercise) => 
                 addAuthenticatedUserExerciseRequestSuccess({ exercise: exercise})
                 ),
-                catchError((err: firebase.FirebaseError) => of(addAuthenticatedUserExerciseRequestError({ error: err})))
+                catchError((err: firebase.FirebaseError) => {
+                    console.log("err", err)
+                    return of(addAuthenticatedUserExerciseRequestError({ error: err}))
+                }))
             )
         )
-    ))
+    )
 
     addAnonymousUserExerciseRequest$ = createEffect(() => this.actions$.pipe(
         ofType(addAnonymousUserExerciseRequest),

@@ -1,5 +1,5 @@
 export let environment = {
-    production: false,
+    production: true,
     firebase: { 
         apiKey: "AIzaSyBhhHpDC4WYqu9iDr9toWoLvtp93GJ3qbk",
         authDomain: "workout-tracker-44de7.firebaseapp.com",

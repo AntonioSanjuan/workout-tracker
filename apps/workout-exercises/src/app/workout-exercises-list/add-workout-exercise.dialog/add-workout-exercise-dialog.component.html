@@ -32,7 +32,7 @@
             </mat-button-toggle-group>
 
             <div class="AddExerciseDialog_Video" *ngIf="cameraOpened && !photo">
-                <video #video>Video stream not available.</video>
+                <video poster="https://material.angular.io/assets/img/examples/shiba2.jpg" #video>Video stream not available.</video>
                 <button mat-flat-button type="button" color="primary" (click)="takePhoto()">
                     Take photo
                 </button>
