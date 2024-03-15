@@ -6,36 +6,50 @@ workout-tracker-add-exercise-dialog {
             display: flex;
             flex-direction: column;
             align-items: center;
-            
-            form {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-                width: 100%;
+            padding: 0 !important;
+            .mat-step-header .mat-step-icon-selected,
+            .mat-step-header .mat-step-icon-state-edit {
+                background-color: shellStyles.$mainColor;
             }
-    
-            .AddExerciseDialog_VideoContainer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                .AddExerciseDialog_Video,
-                .AddExerciseDialog_Image {
+            .mat-vertical-content {
+                padding: 24px;
+
+
+                form {
                     display: flex;
                     flex-direction: column;
+                    align-items: center;
                     gap: 10px;
-                    margin-top: 10px;
                     width: 100%;
-                    video,
-                    img {
-                        width: 100%;
-                        // background-color: shellStyles.$grey5;
-                        border: 1px solid  shellStyles.$grey5;
-                    }
                 }
+        
+                .AddExerciseDialog_VideoContainer {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+                    .AddExerciseDialog_Video,
+                    .AddExerciseDialog_Image {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        margin-top: 10px;
+                        width: 100%;
+                        video,
+                        img {
+                            width: 100%;
+                            // background-color: shellStyles.$grey5;
+                            border: 1px solid  shellStyles.$grey5;
+                        }
 
+                        button {
+                            background-color: shellStyles.$mainColor;
+                        }
+                    }
+    
+                }
             }
+
         }
     }
 
@@ -43,10 +57,11 @@ workout-tracker-add-exercise-dialog {
 
 @media (max-width: 960px) {
     workout-tracker-add-exercise-dialog {
-        .AddExerciseDialog_MainContainer {
-            mat-dialog-content {
+        .mat-vertical-content {
+            .AddExerciseDialog_MainContainer {
+                mat-dialog-content {
+                }
             }
         }
-
     }
 }

@@ -14,6 +14,7 @@ describe('ExerciseAdapter', () => {
         musclesInvolved: [ MusclesInvolved.Abductors, MusclesInvolved.Biceps ],
         image: undefined,
         creationDate: inputExerciseCreationDateSut,
+        observations: 'observations',
         lastModification: undefined
       }
 
@@ -23,6 +24,7 @@ describe('ExerciseAdapter', () => {
       expect(exerciseDto.name).toEqual(inputExerciseSut.name)
       expect(exerciseDto.musclesInvolved).toEqual(inputExerciseSut.musclesInvolved)
       expect(exerciseDto.image).toEqual(inputExerciseSut.image)
+      expect(exerciseDto.observations).toEqual(inputExerciseSut.observations)
       expect(exerciseDto.creationDate).toEqual(creationDateSut)     
       expect(exerciseDto.lastModification).toEqual(inputExerciseSut.lastModification)     
     });
@@ -61,6 +63,7 @@ describe('ExerciseAdapter', () => {
         musclesInvolved: [MusclesInvolved.Abdominals],
         image: undefined,
         creationDate: creationDateSut,
+        observations: 'observations2',
         lastModification: undefined
       }
 
@@ -69,6 +72,7 @@ describe('ExerciseAdapter', () => {
       expect(exerciseState.name).toEqual(inputExerciseSut.name)
       expect(exerciseState.musclesInvolved).toEqual(inputExerciseSut.musclesInvolved)
       expect(exerciseState.image).toEqual(inputExerciseSut.image)
+      expect(exerciseState.observations).toEqual(inputExerciseSut.observations)
       expect(exerciseState.creationDate).toEqual(inputExerciseCreationDateSut)  
       expect(exerciseState.lastModification).toEqual(inputExerciseSut.lastModification)    
     });

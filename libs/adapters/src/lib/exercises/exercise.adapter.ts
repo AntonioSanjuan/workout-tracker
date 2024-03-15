@@ -16,6 +16,7 @@ export class ExerciseAdapter {
             name: exercise.name,
             musclesInvolved: exercise.musclesInvolved,
             image: exercise.image,
+            observations: exercise.observations,
             creationDate: Timestamp.fromDate(exercise.creationDate),
             lastModification: exercise.lastModification ? Timestamp.fromDate(exercise.lastModification) : undefined
         }

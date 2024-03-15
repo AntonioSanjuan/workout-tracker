@@ -14,7 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   imports: [
     CommonModule,
@@ -28,7 +29,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatCardModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatStepperModule
   ],
   exports: [
     CommonModule,
@@ -47,7 +50,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatOptionModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatStepperModule
   ]
 })
 export class UiModule {}

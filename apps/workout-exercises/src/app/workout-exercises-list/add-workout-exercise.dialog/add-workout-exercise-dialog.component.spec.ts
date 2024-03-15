@@ -52,12 +52,14 @@ describe('WorkoutExercisesListComponent', () => {
     describe('createExercise', () => {
       const inputNameSut = 'name test'
       const inputMusclesInvolved = [MusclesInvolved.Chest, MusclesInvolved.Traps]
+      const inputObservations = null
       describe('if form its valid', () => {
         const today = new Date(2020, 3, 1)
         beforeEach(() => {
           component.form.setValue({
             name: inputNameSut,
-            musclesInvolved: inputMusclesInvolved
+            musclesInvolved: inputMusclesInvolved,
+            observations: inputObservations
           })
 
           jest.useFakeTimers();
@@ -75,8 +77,9 @@ describe('WorkoutExercisesListComponent', () => {
           expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseRequest({exercise: {
             name:inputNameSut,
             musclesInvolved: inputMusclesInvolved,
+            observations: inputObservations,
             creationDate: today
-          } as Exercise}))
+          } as any}))
         });
       })
       describe('if form its not valid', () => {
@@ -84,7 +87,8 @@ describe('WorkoutExercisesListComponent', () => {
           beforeEach(() => {
             component.form.setValue({
               name: null,
-              musclesInvolved: null
+              musclesInvolved: null,
+              observations: null
             })
           })
   
@@ -99,7 +103,8 @@ describe('WorkoutExercisesListComponent', () => {
           beforeEach(() => {
             component.form.setValue({
               name: null,
-              musclesInvolved: [MusclesInvolved.Adductors]
+              musclesInvolved: [MusclesInvolved.Adductors],
+              observations: ''
             })
           })
   
@@ -115,7 +120,8 @@ describe('WorkoutExercisesListComponent', () => {
           beforeEach(() => {
             component.form.setValue({
               name: 'testName',
-              musclesInvolved: null
+              musclesInvolved: null,
+              observations:''
             })
           })
   
@@ -131,7 +137,8 @@ describe('WorkoutExercisesListComponent', () => {
           beforeEach(() => {
             component.form.setValue({
               name: 'testName',
-              musclesInvolved: []
+              musclesInvolved: [],
+              observations: null
             })
           })
   

@@ -31,7 +31,11 @@
         },
         "actions": {
             "cancel": "Cancelar",
-            "create": "Crear"
+            "create": "Crear",
+            "next": "Siguiente",
+            "previous": "Anterior",
+            "yes": "Si",
+            "no": "No"
         }
     },
     "apps": {
@@ -129,16 +133,41 @@
                 },
                 "addExercise": {
                     "title": "Añadir ejercicio",
-                    "form": {
-                        "fields": {
-                            "name": "Nombre",
-                            "type": "Tipo",
-                            "musclesInvolved": "Músculos involucrados"
+                    "step": {
+                        "basicInfo": {
+                            "title": "Descripción",
+                            "form": {
+                                "fields": {
+                                    "name": "Nombre",
+                                    "type": "Tipo",
+                                    "musclesInvolved": "Músculos involucrados"
+                                },
+                                "errors": {
+                                    "nameRequired": "Campo nombre requerido",
+                                    "typeRequired": "Debes de seleccionar al menos un tipo",
+                                    "muscleRequired": "Debes de seleccionar al menos un músculo"
+                                }
+                            }
                         },
-                        "errors": {
-                            "nameRequired": "Campo nombre requerido",
-                            "typeRequired": "Debes de seleccionar al menos un tipo",
-                            "muscleRequired": "Debes de seleccionar al menos un músculo"
+                        "image": {
+                            "title": "Imagen",
+                            "form": {
+                                "actions": {
+                                    "capture": "Capturar imagen",
+                                    "clear": "Borrar imagen"
+                                }
+                            },
+                            "errors": {
+                                "cameraError": "Tu camara no esta disponible"
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Adicional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observaciones"
+                                }
+                            }
                         }
                     }
                 },

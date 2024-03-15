@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UiModule } from '@workout-tracker/ui';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseForm, getAddWorkoutExerciseForm } from './add-workout-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
 import { Exercise, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { addUserExerciseRequest } from '@workout-tracker/shared-store';
+import { addUserExerciseRequest, showError } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 @Component({
@@ -26,6 +26,7 @@ export class AddWorkoutExerciseDialogComponent implements OnInit, OnDestroy {
 
   private dialogRef: MatDialogRef<AddWorkoutExerciseDialogComponent> = inject(MatDialogRef<AddWorkoutExerciseDialogComponent>)
   private store: Store = inject(Store)
+  private translateService: TranslateService = inject(TranslateService)
 
   public form!: FormGroup<AddWorkoutExerciseForm>
   public muscles = Object.values(MusclesInvolved) as MusclesInvolved[]
@@ -66,6 +67,7 @@ export class AddWorkoutExerciseDialogComponent implements OnInit, OnDestroy {
       })
       .catch((err) => {
         console.error(`An error occurred: ${err}`);
+        this.store.dispatch(showError({ errorMessage: this.translateService.instant('apps.workout-exercises.list.addExercise.step.image.errors.cameraError')}))
       });
     }
   }

@@ -1,58 +1,71 @@
 <div class="AddExerciseDialog_MainContainer">
     <h2 mat-dialog-title>{{ 'apps.workout-exercises.list.addExercise.title' | translate }}</h2>
     <mat-dialog-content class="mat-typography">
-        <form [formGroup]="form">
-            <mat-form-field>
-                <mat-label>
-                    {{ 'apps.workout-exercises.list.addExercise.form.fields.name' | translate }}
-                </mat-label>
-                <input matInput id="name" name="name" formControlName="name"/>
-                @if (form.controls.name.hasError('required')) {
-                    <mat-error>{{ 'apps.workout-exercises.list.addExercise.form.errors.nameRequired' | translate }}</mat-error>
-                }
-            </mat-form-field>
-
-            <workout-tracker-muscles-selector
-                [label]="'apps.workout-exercises.list.addExercise.form.fields.musclesInvolved' | translate"
-                [errorLabel]="(form.controls.musclesInvolved.hasError('required') || form.controls.musclesInvolved.hasError('minLength')) ?
-                    ('apps.workout-exercises.list.addExercise.form.errors.muscleRequired' | translate) :
-                    null"
-                [formGroup]="form"
-                [formControlName]="'musclesInvolved'">
-            </workout-tracker-muscles-selector>
-        </form>
-
-        <div class="AddExerciseDialog_VideoContainer">
-            <mat-label>
-                ¿Quieres añadir una imágen?
-            </mat-label>
-            <mat-button-toggle-group (change)="switchCameraStatus($event.value)">
-                <mat-button-toggle [value]="false">No</mat-button-toggle>
-                <mat-button-toggle [value]="true">Yes</mat-button-toggle>
-            </mat-button-toggle-group>
-
-            <div class="AddExerciseDialog_Video" *ngIf="cameraOpened && !photo">
-                <video poster="https://material.angular.io/assets/img/examples/shiba2.jpg" #video>Video stream not available.</video>
-                <button mat-flat-button type="button" color="primary" (click)="takePhoto()">
-                    Take photo
-                </button>
-            </div>
-
-            <div class="AddExerciseDialog_Image" *ngIf="cameraOpened && photo">
-                <img [src]="photo" />
-                <button mat-flat-button type="button" color="primary" (click)="clearPhoto()">
-                    Clear photo
-                </button>
-            </div>
-        </div>
+        <mat-stepper orientation="vertical" linear #stepper animationDuration="700">
+            <mat-step [stepControl]="form" [label]="'apps.workout-exercises.list.addExercise.step.basicInfo.title' | translate">
+                <form [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>
+                            {{ 'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.name' | translate }}
+                        </mat-label>
+                        <input matInput id="name" name="name" formControlName="name"/>
+                        @if (form.controls.name.hasError('required')) {
+                            <mat-error>{{ 'apps.workout-exercises.list.addExercise.step.basicInfo.form.errors.nameRequired' | translate }}</mat-error>
+                        }
+                    </mat-form-field>
         
-
+                    <workout-tracker-muscles-selector
+                        [label]="'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.musclesInvolved' | translate"
+                        [errorLabel]="(form.controls.musclesInvolved.hasError('required') || form.controls.musclesInvolved.hasError('minLength')) ?
+                            ('apps.workout-exercises.list.addExercise.step.basicInfo.form.errors.muscleRequired' | translate) :
+                            null"
+                        [formGroup]="form"
+                        [formControlName]="'musclesInvolved'">
+                    </workout-tracker-muscles-selector>
+                </form>
+            </mat-step>
+            <mat-step [label]="'apps.workout-exercises.list.addExercise.step.image.title' | translate">
+                <div class="AddExerciseDialog_VideoContainer">
+                    <mat-button-toggle-group (change)="switchCameraStatus($event.value)" [value]="cameraOpened">
+                        <mat-button-toggle [value]="false">{{'common.actions.no' | translate}}</mat-button-toggle>
+                        <mat-button-toggle [value]="true">{{'common.actions.yes' | translate}}</mat-button-toggle>
+                    </mat-button-toggle-group>
+        
+                    <div class="AddExerciseDialog_Video" *ngIf="cameraOpened && !photo">
+                        <video poster="https://material.angular.io/assets/img/examples/shiba2.jpg" #video>Video stream not available.</video>
+                        <button mat-flat-button type="button" color="primary" (click)="takePhoto()">
+                            {{'apps.workout-exercises.list.addExercise.step.image.form.actions.capture' | translate}}
+                        </button>
+                    </div>
+        
+                    <div class="AddExerciseDialog_Image" *ngIf="cameraOpened && photo">
+                        <img [src]="photo" />
+                        <button mat-flat-button type="button" color="primary" (click)="clearPhoto()">
+                            {{'apps.workout-exercises.list.addExercise.step.image.form.actions.clear' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step [label]="'apps.workout-exercises.list.addExercise.step.aditionalInfo.title' | translate">
+                <form [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>
+                            {{ 'apps.workout-exercises.list.addExercise.step.aditionalInfo.form.fields.observations' | translate }}
+                        </mat-label>
+                        <input matInput id="observations" name="observations" formControlName="observations"/>
+                    </mat-form-field>
+                </form>
+            </mat-step>
+        </mat-stepper>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>
             {{ 'common.actions.cancel' | translate }}
         </button>
-        <button mat-button [mat-dialog-close]="false" (click)="createExercise()" [disabled]="!form.valid">
+        <button *ngIf="stepper.selectedIndex !== 2" mat-button (click)="stepper.next()" [disabled]="!form.valid">
+            {{ 'common.actions.next' | translate }}
+        </button>
+        <button *ngIf="stepper.selectedIndex === 2" mat-button [mat-dialog-close]="false" (click)="createExercise()" [disabled]="!form.valid">
             {{ 'common.actions.create' | translate }}
         </button>
     </mat-dialog-actions>

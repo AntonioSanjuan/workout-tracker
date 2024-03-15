@@ -24,16 +24,16 @@ import { AppRoutes, Exercise } from '@workout-tracker/models';
     NgFor,
     RouterModule
   ],
-  providers: [DialogService],
   styleUrls: ['./workout-exercises-list.component.scss'],
   standalone: true
 })
 export class WorkoutExercisesListComponent {
   private store: Store = inject(Store)
   private router: Router = inject(Router)
+  private dialogService = inject(DialogService)
+
   public filteredExercises$ =  this.store.select(getExercisesFiltered)
 
-  private dialogService = inject(DialogService)
 
   public newExercise() {
     this.dialogService.showDialog(AddWorkoutExerciseDialogComponent, true)

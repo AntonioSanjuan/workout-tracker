@@ -1,3 +1,4 @@
+import { ExerciseDto } from "../dtos";
 import { MusclesInvolved } from "./musclesInvolved.model";
 
 export interface Exercise {
@@ -5,6 +6,7 @@ export interface Exercise {
     name: string,
     musclesInvolved: MusclesInvolved[],
     image?: string,
+    observations?: string
     
     creationDate: Date
     lastModification?: Date
