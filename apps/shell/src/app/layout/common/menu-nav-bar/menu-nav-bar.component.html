@@ -32,6 +32,14 @@
                 <li>
                     <button 
                         mat-flat-button color="primary"
+                        [class.currentRoute]="vm.currentRoute === appRoutes.WorkoutTrainings"
+                        [routerLink]="appRoutes.WorkoutTrainings">
+                        {{ 'apps.shell.layout.menuNav.trainings' | translate }}
+                    </button>
+                </li>
+                <li>
+                    <button 
+                        mat-flat-button color="primary"
                         [class.currentRoute]="vm.currentRoute === appRoutes.WorkoutExercisesList"
                         [routerLink]="appRoutes.WorkoutExercisesList">
                         {{ 'apps.shell.layout.menuNav.exercises' | translate }}

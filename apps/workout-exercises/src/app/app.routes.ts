@@ -4,8 +4,8 @@ import * as fromWorkoutExercises from './+state/workout-exercises.reducer';
 import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects'
-import { WorkoutExercisesListResolver } from './shared/workout-exercises-list/workout-exercises-list.resolver';
 import { WorkoutExerciseResolver } from './shared/workout-exercise/workout-exercise.resolver';
+import { WorkoutExercisesListResolver } from './shared/workout-exercises-list/workout-exercises-list.resolver';
 import { ExerciseEffects } from './workout-exercise/state/workout-exercise.effects';
 
 export const appRoutes: Route[] = [
@@ -20,6 +20,7 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: '',
+        resolve: { data: WorkoutExercisesListResolver },
         providers: [
           importProvidersFrom(
           )

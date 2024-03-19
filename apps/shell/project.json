@@ -106,6 +106,7 @@
   },
   "implicitDependencies": [
     "account",
-    "workout-exercises"
+    "workout-exercises",
+    "workout-trainings"
   ]
 }

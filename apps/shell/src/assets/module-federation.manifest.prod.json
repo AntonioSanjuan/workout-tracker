@@ -1,4 +1,5 @@
 {
   "account": "./account",
-  "workout-exercises": "./workout-exercises"
+  "workout-exercises": "./workout-exercises",
+  "workout-trainings": "./workout-trainings"
 }

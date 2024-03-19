@@ -1,0 +1,111 @@
+{
+  "name": "workout-trainings",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "workout-tracker",
+  "sourceRoot": "apps/workout-trainings/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/workout-trainings",
+        "index": "apps/workout-trainings/src/index.html",
+        "main": "apps/workout-trainings/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/workout-trainings/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/workout-trainings/src/favicon.ico","apps/workout-trainings/src/assets"],
+        "styles": ["apps/workout-trainings/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "apps/shell/src/assets"
+          ]
+        },
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/workout-trainings/webpack.config.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/workout-trainings/webpack.prod.config.ts"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "port": 4203,
+        "publicHost": "http://localhost:4203"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "workout-trainings:build:production"
+        },
+        "development": {
+          "buildTarget": "workout-trainings:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "workout-trainings:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/workout-trainings/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "workout-trainings:build",
+        "port": 4203,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "workout-trainings:build:development"
+        },
+        "production": {
+          "buildTarget": "workout-trainings:build:production"
+        }
+      }
+    }
+  }
+}

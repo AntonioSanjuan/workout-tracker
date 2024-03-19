@@ -16,6 +16,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
 import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from '../exercises';
+import { getUserTrainingsRequest } from '../trainings';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
@@ -382,6 +383,45 @@ describe('UserEffects', () => {
       it('should return getAnonymousUserExercisesRequest', async () => {
         const result = await firstValueFrom(effects.setAnonymousUserExercises$)
         expect(result).toEqual(getAnonymousUserExercisesRequest())
+      })
+    })
+  });
+
+  describe('getUserTrainingsRequest$', () => {
+    describe('when setAuthenticatedUser is dispatched', () => {
+      beforeEach(() => {
+        const user = { email: 'testemail@gmail.com'} as firebase.User
+        actions = of(setAuthenticatedUser({ user: user}))
+      })
+      describe('if authorized user', () => {
+        it('should return getUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getUserTrainingsRequest())
+        })
+      })
+      describe('if anonymous user', () => {
+        it('should return getUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getUserTrainingsRequest())
+        })
+      })
+    })
+
+    describe('when setAnonymousUser is dispatched', () => {
+      beforeEach(() => {
+        actions = of(setAnonymousUser())
+      })
+      describe('if authorized user', () => {
+        it('should return getUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getUserTrainingsRequest())
+        })
+      })
+      describe('if anonymous user', () => {
+        it('should return getUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getUserTrainingsRequest())
+        })
       })
     })
   });

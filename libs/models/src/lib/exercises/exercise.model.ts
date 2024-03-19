@@ -1,4 +1,3 @@
-import { ExerciseDto } from "../dtos";
 import { MusclesInvolved } from "./musclesInvolved.model";
 
 export interface Exercise {

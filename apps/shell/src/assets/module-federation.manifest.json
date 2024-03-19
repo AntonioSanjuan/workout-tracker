@@ -1,4 +1,5 @@
 {
   "account": "http://localhost:4201",
-  "workout-exercises": "http://localhost:4202"
+  "workout-exercises": "http://localhost:4202",
+  "workout-trainings": "http://localhost:4203"
 }

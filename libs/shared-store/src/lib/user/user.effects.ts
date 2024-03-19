@@ -11,6 +11,7 @@ import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } 
 import { AppRoutes } from "@workout-tracker/models";
 import { Router } from "@angular/router";
 import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from "../exercises";
+import { getUserTrainingsRequest } from "../trainings";
 
 @Injectable()
 export class UserEffects {
@@ -106,6 +107,7 @@ export class UserEffects {
         )
     ))
 
+    //TO-DO
     setAuthenticatedUserSettings$ = createEffect(() => this.actions$.pipe(
         ofType(setAuthenticatedUser),
         switchMap(() =>
@@ -131,6 +133,13 @@ export class UserEffects {
         ofType(setAnonymousUser),
         switchMap(() =>
             of(getAnonymousUserExercisesRequest())
+        )
+    ))
+
+    getUserTrainingsRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(setAuthenticatedUser, setAnonymousUser),
+        switchMap(() =>
+            of(getUserTrainingsRequest())
         )
     ))
 }

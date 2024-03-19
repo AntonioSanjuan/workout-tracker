@@ -54,6 +54,7 @@
                 },
                 "menuNav": {
                     "home": "Inicio",
+                    "trainings": "Entrenamientos",
                     "exercises": "Ejercicios",
                     "news": "Novedades"
                 }

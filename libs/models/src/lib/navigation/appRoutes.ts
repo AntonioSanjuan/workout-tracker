@@ -7,4 +7,6 @@ export enum AppRoutes {
     Settings = '/account/settings',
     //workout-exercises
     WorkoutExercisesList = '/exercises',
+    //workout-training
+    WorkoutTrainings = '/trainings',
 }

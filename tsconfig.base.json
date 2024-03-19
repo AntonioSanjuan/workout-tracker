@@ -37,9 +37,12 @@
       "@workout-tracker/services/user-settings": [
         "libs/services/user-settings/src/index.ts"
       ],
+      "@workout-tracker/services/trainings": [
+        "libs/services/trainings/src/index.ts"
+      ],
       "@workout-tracker/shared-store": ["libs/shared-store/src/index.ts"],
       "@workout-tracker/test": ["libs/test/src/index.ts"],
-      "@workout-tracker/ui": ["libs/ui/src/index.ts"]
+      "@workout-tracker/ui": ["libs/ui/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]
