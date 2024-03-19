@@ -1,3 +1,4 @@
+import { DocumentReference } from '@angular/fire/compat/firestore';
 import { Timestamp } from 'firebase/firestore';
 
 export interface TrainingDto {
@@ -9,7 +10,7 @@ export interface TrainingDto {
 }
 
 export interface TrainingExerciseDto {
-    exerciseId: string,
+    exerciseId: DocumentReference,
     series: TrainingExerciseSerieDto[]
 }
 

@@ -1,3 +1,4 @@
+import { DocumentReference } from "@angular/fire/compat/firestore";
 import {Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 
@@ -24,18 +25,17 @@ export class TrainingAdapter {
 }
 
 export class TrainingExerciseAdapter {
-    static toState(trainingExercise: TrainingExerciseDto, trainingExerciseId: string): TrainingExercise {
+    static toState(trainingExercise: TrainingExerciseDto, trainingExerciseId: string, exercise: Exercise): TrainingExercise {
         return {
-            ...trainingExercise,
             id: trainingExerciseId,
-            exercise: {} as Exercise,
+            exercise: exercise,
             series: [],
         }
     }
 
-    static toDto(trainingExercise: TrainingExercise): TrainingExerciseDto {
+    static toDto(trainingExercise: TrainingExercise, exerciseId: DocumentReference): TrainingExerciseDto {
         return {
-            exerciseId: trainingExercise.exercise.id,
+            exerciseId: exerciseId,
             series: []
         }
     }

@@ -1,9 +1,9 @@
 import { Injectable, inject } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/compat/firestore'
 import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
-import { Training, TrainingDto, TrainingExerciseDto, TrainingExerciseSerieDto } from "@workout-tracker/models";
+import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerieDto } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
-import { Observable, forkJoin, from, map, switchMap, tap } from "rxjs";
+import { Observable, combineLatest, forkJoin, from, map, of, switchMap, tap } from "rxjs";
 
 @Injectable()
 export class TrainingsService {
@@ -43,7 +43,7 @@ export class TrainingsService {
     }
 
 
-    getTrainings(userId: string): Observable<Training[]> {
+    public getTrainings(userId: string): Observable<Training[]> {
         return this.getTrainingsCollectionRef(userId).get().pipe(
             switchMap((trainingsQS: firebase.firestore.QuerySnapshot) => {
                 const observables: Observable<Training>[] = [];
@@ -52,38 +52,36 @@ export class TrainingsService {
                     const trainingId = trainingDoc.id;
                     const trainingData = trainingDoc.data() as TrainingDto;
 
-                    const exercisesObservable = this.getTrainingExercisesCollectionRef(userId, trainingId).get().pipe(
+                    const trainingExercisesObservable = this.getTrainingExercisesCollectionRef(userId, trainingId).get().pipe(
                         switchMap((trainingExercisesQS: firebase.firestore.QuerySnapshot) => {
-                            const exerciseObservables: Observable<any>[] = [];
+                            const trainingExerciseObservables: Observable<TrainingExercise>[] = [];
 
                             trainingExercisesQS.forEach((trainingExerciseDoc) => {
-                                const exerciseId = trainingExerciseDoc.id;
-                                const exerciseData = trainingExerciseDoc.data() as TrainingExerciseDto;
+                                const trainingExerciseId = trainingExerciseDoc.id;
+                                const trainingExerciseData = trainingExerciseDoc.data() as TrainingExerciseDto;
 
-                                const exerciseSeriesObservable = this.getTrainingExerciseSeriesCollectionRef(userId, trainingId, exerciseId).get().pipe(
-                                    map((exerciseSeriesQS: firebase.firestore.QuerySnapshot) => {
+                                const trainingExerciseSeriesObservable = combineLatest(trainingExerciseData.exerciseId.get() , this.getTrainingExerciseSeriesCollectionRef(userId, trainingId, trainingExerciseId).get()).pipe(
+                                    map(([exerciseTemplateId, exerciseSeriesQS]: [firebase.firestore.DocumentSnapshot, firebase.firestore.QuerySnapshot]) => {
                                         const exerciseSeries = exerciseSeriesQS.docs.map((exerciseSeriesDoc) => TrainingExerciseSerieAdapter.toState(exerciseSeriesDoc.data() as TrainingExerciseSerieDto, exerciseSeriesDoc.id) );
-                                        
                                         return {
-                                            ...TrainingExerciseAdapter.toState(exerciseData, exerciseId),
+                                            ...TrainingExerciseAdapter.toState(trainingExerciseData, trainingExerciseId, exerciseTemplateId.data() as Exercise),
                                             series: exerciseSeries
-                                        }
+                                        } as TrainingExercise
                                     })
                                 );
-
-                                exerciseObservables.push(exerciseSeriesObservable);
+                                trainingExerciseObservables.push(trainingExerciseSeriesObservable);
                             });
 
-                            return forkJoin(exerciseObservables).pipe(
-                                map((exercises) => ({
+                            return forkJoin(trainingExerciseObservables).pipe(
+                                map((trainingExercises) => ({
                                     ...TrainingAdapter.toState(trainingData, trainingId),
-                                    trainingExercises: exercises
+                                    trainingExercises: trainingExercises
                                 }))
                             );
                         })
                     );
 
-                    observables.push(exercisesObservable);
+                    observables.push(trainingExercisesObservable);
                 });
 
                 return forkJoin(observables).pipe(tap(_ => console.log("_", _)));
