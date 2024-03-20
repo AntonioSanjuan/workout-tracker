@@ -10,7 +10,7 @@ export interface TrainingDto {
 }
 
 export interface TrainingExerciseDto {
-    exerciseId: DocumentReference,
+    exerciseTemplateId: DocumentReference,
     series: TrainingExerciseSerieDto[]
 }
 

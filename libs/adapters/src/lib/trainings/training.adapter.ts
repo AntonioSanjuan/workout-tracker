@@ -1,13 +1,13 @@
 import { DocumentReference } from "@angular/fire/compat/firestore";
-import {Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
+import {Exercise, Training, TrainingDto, TrainingExerciseSerie, TrainingExerciseDto, TrainingExerciseSerieDto, TrainingExercise } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 
 export class TrainingAdapter {
-    static toState(training: TrainingDto, trainingId: string): Training {
+    static toState(training: TrainingDto, id: string, trainingExercises: TrainingExercise[]): Training {
         return {
             ...training,
-            id: trainingId,
-            trainingExercises: [],
+            id: id,
+            trainingExercises: trainingExercises,
             
             creationDate: training.creationDate.toDate(),
             finishDate: training.finishDate?.toDate()
@@ -25,27 +25,27 @@ export class TrainingAdapter {
 }
 
 export class TrainingExerciseAdapter {
-    static toState(trainingExercise: TrainingExerciseDto, trainingExerciseId: string, exercise: Exercise): TrainingExercise {
+    static toState(trainingExercise: TrainingExerciseDto, id: string, exerciseTemplate: Exercise, exerciseSeries: TrainingExerciseSerie[]): TrainingExercise {
         return {
-            id: trainingExerciseId,
-            exercise: exercise,
-            series: [],
+            id: id,
+            exerciseTemplate: exerciseTemplate,
+            series: exerciseSeries,
         }
     }
 
-    static toDto(trainingExercise: TrainingExercise, exerciseId: DocumentReference): TrainingExerciseDto {
+    static toDto(trainingExercise: TrainingExercise, exerciseTemplateId: DocumentReference): TrainingExerciseDto {
         return {
-            exerciseId: exerciseId,
+            exerciseTemplateId: exerciseTemplateId,
             series: []
         }
     }
 }
 
 export class TrainingExerciseSerieAdapter {
-    static toState(trainingExerciseSerie: TrainingExerciseSerieDto, trainingExerciseSerieId: string): TrainingExerciseSerie {
+    static toState(trainingExerciseSerie: TrainingExerciseSerieDto, id: string): TrainingExerciseSerie {
         return {
             ...trainingExerciseSerie,
-            id: trainingExerciseSerieId,
+            id: id,
         }
     }
 

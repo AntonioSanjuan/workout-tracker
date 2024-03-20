@@ -4,7 +4,9 @@ import { TrainingsService } from './trainings.service';
 export const trainingsServiceMock: Partial<TrainingsService> = {
   getTraining: () => of({} as any),
   getTrainings: () => of({} as any),
-  setTrainings: () => of({} as any),
+  setTraining: () => of({} as any),
+  setTrainingExercise: () => of({} as any),
+  setTrainingExerciseSerie: () => of({} as any),
   updateTraining: () => of({} as any),
   deleteTraining: () => of(true),
 }

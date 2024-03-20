@@ -3,15 +3,16 @@ import { Exercise } from "../exercises"
 export interface Training {
     id: string
     observations?: string
-    trainingExercises?: TrainingExercise[]
 
+    trainingExercises?: TrainingExercise[]
     creationDate: Date
     finishDate?: Date
 }
 
 export interface TrainingExercise {
     id: string
-    exercise: Exercise
+
+    exerciseTemplate: Exercise
     series: TrainingExerciseSerie[]
 }
 

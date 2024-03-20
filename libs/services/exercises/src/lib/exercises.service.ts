@@ -13,7 +13,7 @@ export class ExercisesService {
         return this.firebaseDataBase.collection(`user/${userId}/exercises`)
     }
 
-    private getExerciseDocRef(userId: string, exerciseId: string): AngularFirestoreDocument {
+    public getExerciseDocRef(userId: string, exerciseId: string): AngularFirestoreDocument {
         return this.firebaseDataBase.doc(`user/${userId}/exercises/${exerciseId}`)
     }
 

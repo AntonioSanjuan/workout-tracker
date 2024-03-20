@@ -79,7 +79,7 @@ export class TrainingsEffects {
         ofType(addAuthenticatedUserTrainingRequest),
         concatLatestFrom(() => this.store.select(getUser)),
         switchMap(([{ training }, user]) =>
-                this.trainingsService.setTrainings(user?.uid as string, training).pipe(
+                this.trainingsService.setTraining(user?.uid as string, training).pipe(
                 map((training: Training) => 
                 addAuthenticatedUserTrainingRequestSuccess({ training: training})
                 ),
