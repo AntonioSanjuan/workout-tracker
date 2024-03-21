@@ -1,12 +1,17 @@
 import { of } from 'rxjs'
 import { TrainingsService } from './trainings.service';
+import { Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 
 export const trainingsServiceMock: Partial<TrainingsService> = {
-  getTraining: () => of({} as any),
-  getTrainings: () => of({} as any),
-  setTraining: () => of({} as any),
-  setTrainingExercise: () => of({} as any),
-  setTrainingExerciseSerie: () => of({} as any),
-  updateTraining: () => of({} as any),
-  deleteTraining: () => of(true),
+  getTraining: () => of({} as Training),
+  getTrainings: () => of([] as Training[]),
+  setTraining: () => of({} as Training),
+  setTrainingExercise: () => of({} as TrainingExercise),
+  setTrainingExerciseSerie: () => of({} as TrainingExerciseSerie),
+  updateTraining: () => of({} as Training),
+  updateTrainingExercise: () => of({} as TrainingExercise),
+  updateTrainingExerciseSerie: () => of({} as TrainingExerciseSerie),
+  deleteTraining: () => of(true),  
+  deleteTrainingExercise: () => of(true),  
+  deleteTrainingExerciseSerie: () => of(true),
 }

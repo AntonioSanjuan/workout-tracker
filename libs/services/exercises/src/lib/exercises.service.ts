@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,
 import { ExerciseAdapter } from "@workout-tracker/adapters";
 import { Exercise, ExerciseDto } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
-import { Observable, from, map, of } from "rxjs";
+import { Observable, from, map } from "rxjs";
 
 @Injectable()
 export class ExercisesService {
