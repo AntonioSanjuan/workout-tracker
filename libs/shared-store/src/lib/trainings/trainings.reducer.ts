@@ -3,7 +3,7 @@ import { trainingsInitialState } from "./models/trainingsState.initialState";
 import { TrainingsState } from "./models/trainingsState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
 import { Training, TrainingQueryFilters } from "@workout-tracker/models";
-import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingNameQueryFilter } from "./trainings.actions";
+import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingExerciseTemplateNameQueryFilter } from "./trainings.actions";
 
 export const TRAININGS_FEATURE_KEY = 'trainings'; 
 
@@ -27,10 +27,10 @@ export const trainingsReducer = createReducer(
             filtered: trainings
         }
     }),
-    on(setTrainingNameQueryFilter, (state: TrainingsState, { trainingName }) => {
+    on(setTrainingExerciseTemplateNameQueryFilter, (state: TrainingsState, { trainingExerciseTemplateName: trainingName }) => {
         const newFilters = {
             ...state.query.filters,
-            byName: trainingName
+            byTemplateName: trainingName
         }
         return {
             ...state, 
@@ -63,11 +63,11 @@ export const trainingsReducer = createReducer(
     }),
 )
 
-const filterTrainings = (exercises: Training[], filters: TrainingQueryFilters): Training[] => {
-    // let filteredTrainings: Training[] = []
+const filterTrainings = (trainings: Training[], filters: TrainingQueryFilters): Training[] => {
+    let filteredTrainings: Training[] = []
 
-    //filter by name
-    // filteredTrainings =  exercises.filter((exercise) => exercise..includes(filters.byName))
+    // filter by template name
+    filteredTrainings =  trainings.filter((exercise) => exercise.trainingExercises?.map((trainingExercise) => trainingExercise.exerciseTemplate.name).includes(filters.byTemplateName))
 
-    return [...exercises];
+    return [...filteredTrainings];
 }

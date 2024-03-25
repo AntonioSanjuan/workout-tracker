@@ -1,201 +1,154 @@
-import { Exercise, MusclesInvolved } from "@workout-tracker/models";
-import { addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequestSuccess, clearExerciseQueryFilter, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequestSuccess, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from "./exercises.actions";
+import { Training, TrainingExercise } from "@workout-tracker/models";
 import { trainingsReducer } from "./trainings.reducer";
 import { trainingsInitialState } from "./models/trainingsState.initialState";
-import { ExercisesState } from "./models/trainingsState.model";
 import { setAnonymousUser } from "../user";
+import { TrainingsState } from "./models/trainingsState.model";
+import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingExerciseTemplateNameQueryFilter } from "./trainings.actions";
 
-describe('exercisesReducer', () => {
-    const exerciseInitialStateListMock = [ 
-        { name: 'testName',musclesInvolved: [MusclesInvolved.Biceps] } as Exercise,
-        { name: 'testName1', musclesInvolved: [MusclesInvolved.Abdominals] } as Exercise,
-        { name: 'testName1', musclesInvolved: [MusclesInvolved.Chest] } as Exercise,
-        { name: 'testName1', musclesInvolved: [MusclesInvolved.Chest] } as Exercise,
+describe('trainingsReducer', () => {
+    const trainingInitialStateListMock = [ 
+        { id: 'testId', trainingExercises: [{ exerciseTemplate: {name: '1'}} as TrainingExercise] } as Training,
+        { id: 'testId1', trainingExercises: [] as TrainingExercise[] } as Training,
+        { id: 'testId2', trainingExercises: [{exerciseTemplate: {name: '2'}} as TrainingExercise] } as Training,
+        { id: 'testId3', trainingExercises: [] as TrainingExercise[] } as Training,
     ]
 
     describe('setAnonymousUser action', () => {
-        //clear exercises if anonymous user is setted
-        const exerciseInitialStateMock = {
+        //clear trainings if anonymous user is setted
+        const trainingInitialStateMock = {
             ...trainingsInitialState,
-            list: exerciseInitialStateListMock
-        } as ExercisesState
+            list: trainingInitialStateListMock
+        } as TrainingsState
         it('should handle setAnonymousUser action', () => {
             const action = setAnonymousUser()
-            const state = trainingsReducer(exerciseInitialStateMock, action)
+            const state = trainingsReducer(trainingInitialStateMock, action)
 
             expect(state).toEqual(trainingsInitialState)
         })
     })
 
     describe('setAuthenticatedUser action', () => {
-        //clear exercises if auth user is setted
-        const exerciseInitialStateMock = {
+        //clear training if auth user is setted
+        const trainingInitialStateMock = {
             ...trainingsInitialState,
-            list: exerciseInitialStateListMock
-        } as ExercisesState
+            list: trainingInitialStateListMock
+        } as TrainingsState
         it('should handle setAuthenticatedUser action', () => {
             const action = setAnonymousUser()
-            const state = trainingsReducer(exerciseInitialStateMock, action)
+            const state = trainingsReducer(trainingInitialStateMock, action)
 
             expect(state).toEqual(trainingsInitialState)
         })
     })
 
-    describe('getAuthenticatedUserExercisesRequestSuccess action', () => {
-        it('should handle getAuthenticatedUserExercisesRequestSuccess action', () => {
-            const exerciseSut = [ { name: 'testName' } as Exercise]
-            const action = getAuthenticatedUserExercisesRequestSuccess({ exercises: exerciseSut })
+    describe('getAnonymousUserTrainingsRequestSuccess action', () => {
+        it('should handle getAnonymousUserTrainingsRequestSuccess action', () => {
+            const trainingSut = [ { id: 'testId' } as Training]
+            const action = getAnonymousUserTrainingsRequestSuccess({ trainings: trainingSut })
             const state = trainingsReducer(trainingsInitialState, action)
 
-            expect(state.list).toEqual(exerciseSut)
-            expect(state.filtered).toEqual(exerciseSut)
+            expect(state.list).toEqual(trainingSut)
+            expect(state.filtered).toEqual(trainingSut)
         })
     })
 
-    describe('getAnonymousUserExercisesRequestSuccess action', () => {
-        it('should handle getAnonymousUserExercisesRequestSuccess action', () => {
-            const exerciseSut = [ { name: 'testName' } as Exercise]
-            const action = getAnonymousUserExercisesRequestSuccess({ exercises: exerciseSut })
+    describe('getAuthenticatedUserTrainingsRequestSuccess action', () => {
+        it('should handle getAuthenticatedUserTrainingsRequestSuccess action', () => {
+            const trainingSut = [ { id: 'testId' } as Training]
+            const action = getAuthenticatedUserTrainingsRequestSuccess({ trainings: trainingSut })
             const state = trainingsReducer(trainingsInitialState, action)
 
-            expect(state.list).toEqual(exerciseSut)
-            expect(state.filtered).toEqual(exerciseSut)
+            expect(state.list).toEqual(trainingSut)
+            expect(state.filtered).toEqual(trainingSut)
         })
     })
 
-    describe('clearExerciseQueryFilter action', () => {
-        it('should handle clearExerciseQueryFilter action', () => {
-            const exerciseInitialStateMock = {
+    describe('clearTrainingQueryFilter action', () => {
+        it('should handle clearTrainingQueryFilter action', () => {
+            const trainingInitialStateMock = {
                 ...trainingsInitialState,
-                list: exerciseInitialStateListMock,
+                list: trainingInitialStateListMock,
                 query: {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                        byMuscles: [MusclesInvolved.Abdominals]
+                        byTemplateName: 'byName filter'
                     }
                 }
-            } as ExercisesState
+            } as TrainingsState
 
-            const action = clearExerciseQueryFilter()
-            const state = trainingsReducer(exerciseInitialStateMock, action)
+            const action = clearTrainingQueryFilter()
+            const state = trainingsReducer(trainingInitialStateMock, action)
 
-            expect(state.list).toEqual(exerciseInitialStateMock.list)
+            expect(state.list).toEqual(trainingInitialStateMock.list)
             expect(state.query.filters).toEqual(trainingsInitialState.query.filters)
         })
     })
 
-
-    describe('setExerciseMuscleInvolvedQueryFilter action', () => {
-        it('should handle setExerciseMuscleInvolvedQueryFilter action adding new one MuscleInvolved', () => {
-            const exerciseInitialStateMock = {
+    describe('setTrainingNameQueryFilter action', () => {
+        it('should handle setTrainingNameQueryFilter action setting trainingName', () => {
+            const trainingInitialStateMock = {
                 ...trainingsInitialState,
-                list: exerciseInitialStateListMock
-            } as ExercisesState
+                list: trainingInitialStateListMock
+            } as TrainingsState
 
-            const muscleInvolvedSut = MusclesInvolved.Chest
+            const trainingNameSut = 'trainingName test'
             
-            const action = setExerciseMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
-            const state = trainingsReducer(exerciseInitialStateMock, action)
+            const action = setTrainingExerciseTemplateNameQueryFilter({ trainingExerciseTemplateName: trainingNameSut })
+            const state = trainingsReducer(trainingInitialStateMock, action)
 
-            const expectedByMuscles = [muscleInvolvedSut]
-            expect(state.query.filters.byMuscles).toEqual(expectedByMuscles)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) =>
-                exerciseListInitial.musclesInvolved.some((muscleInvolved) => expectedByMuscles.includes(muscleInvolved))))
+            expect(state.query.filters.byTemplateName).toEqual(trainingNameSut)
+            expect(state.filtered).toEqual(trainingInitialStateMock.list.filter((trainingListInitial) =>
+                trainingListInitial.trainingExercises?.map((trainingExercise) => trainingExercise.exerciseTemplate.name).includes(trainingNameSut)))
         })
+    })
 
-        
-        it('should handle setExerciseMuscleInvolvedQueryFilter action adding new MuscleInvolved to existing byMuscles filters', () => {
-            const exerciseInitialStateMock = {
+    describe('addAuthenticatedUserTrainingRequestSuccess action', () => {
+        it('should handle addAuthenticatedUserTrainingRequestSuccess action adding new training', () => {
+            const trainingInitialStateMock = {
                 ...trainingsInitialState,
-                list: exerciseInitialStateListMock,
+                list: trainingInitialStateListMock,
                 query: {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                        byMuscles: [MusclesInvolved.Abdominals]
+                        byTemplateName: '1'
                     }
                 }
-            } as ExercisesState
+            } as TrainingsState
 
-            const muscleInvolvedSut = MusclesInvolved.Chest
+            const trainingSut = { id: 'training id (add)'} as Training
 
             
-            const action = setExerciseMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
-            const state = trainingsReducer(exerciseInitialStateMock, action)
+            const action = addAuthenticatedUserTrainingRequestSuccess({ training: trainingSut })
+            const state = trainingsReducer(trainingInitialStateMock, action)
 
-            const expectedByMuscles = [...exerciseInitialStateMock.query.filters.byMuscles, muscleInvolvedSut]
-            expect(state.query.filters.byMuscles).toEqual(expectedByMuscles)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) =>             
-                exerciseListInitial.musclesInvolved.some((muscleInvolved) => expectedByMuscles.includes(muscleInvolved))))
-
+            expect(state.list).toEqual([...trainingInitialStateMock.list, trainingSut])
+            
         })
     })
 
-    describe('setExerciseNameQueryFilter action', () => {
-        it('should handle setExerciseNameQueryFilter action setting exerciseName', () => {
-            const exerciseInitialStateMock = {
+    describe('addAnonymousUserTrainingRequestSuccess action', () => {
+        it('should handle addAnonymousUserTrainingRequestSuccess action adding new training', () => {
+            const trainingInitialStateMock = {
                 ...trainingsInitialState,
-                list: exerciseInitialStateListMock
-            } as ExercisesState
-
-            const exerciseNameSut = 'exerciseName test'
-            
-            const action = setExerciseNameQueryFilter({ exerciseName: exerciseNameSut })
-            const state = trainingsReducer(exerciseInitialStateMock, action)
-
-            expect(state.query.filters.byName).toEqual(exerciseNameSut)
-            expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) =>
-                exerciseListInitial.name.includes(exerciseNameSut)))
-        })
-    })
-
-    describe('addAuthenticatedUserExerciseRequestSuccess action', () => {
-        it('should handle addAuthenticatedUserExerciseRequestSuccess action adding new exercise', () => {
-            const exerciseInitialStateMock = {
-                ...trainingsInitialState,
-                list: exerciseInitialStateListMock,
+                list: trainingInitialStateListMock,
                 query: {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                        byMuscles: [MusclesInvolved.Abdominals]
+                        byTemplateName: '1'
                     }
                 }
-            } as ExercisesState
+            } as TrainingsState
 
-            const exerciseSut = { name: 'exercise name (add)'} as Exercise
-
-            
-            const action = addAuthenticatedUserExerciseRequestSuccess({ exercise: exerciseSut })
-            const state = trainingsReducer(exerciseInitialStateMock, action)
-
-            expect(state.list).toEqual([...exerciseInitialStateMock.list, exerciseSut])
-            
-        })
-    })
-
-    describe('addAnonymousUserExerciseRequestSuccess action', () => {
-        it('should handle addAnonymousUserExerciseRequestSuccess action adding new exercise', () => {
-            const exerciseInitialStateMock = {
-                ...trainingsInitialState,
-                list: exerciseInitialStateListMock,
-                query: {
-                    ...trainingsInitialState.query,
-                    filters: {
-                        ...trainingsInitialState.query.filters,
-                        byMuscles: [MusclesInvolved.Abdominals]
-                    }
-                }
-            } as ExercisesState
-
-            const exerciseSut = { name: 'exercise name (add)'} as Exercise
+            const trainingSut = { id: 'training id (add)'} as Training
 
             
-            const action = addAnonymousUserExerciseRequestSuccess({ exercise: exerciseSut })
-            const state = trainingsReducer(exerciseInitialStateMock, action)
+            const action = addAnonymousUserTrainingRequestSuccess({ training: trainingSut })
+            const state = trainingsReducer(trainingInitialStateMock, action)
 
-            expect(state.list).toEqual([...exerciseInitialStateMock.list, exerciseSut])
+            expect(state.list).toEqual([...trainingInitialStateMock.list, trainingSut])
             
         })
     })

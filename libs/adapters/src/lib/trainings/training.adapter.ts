@@ -36,7 +36,6 @@ export class TrainingExerciseAdapter {
     static toDto(trainingExercise: TrainingExercise, exerciseTemplateId: DocumentReference): TrainingExerciseDto {
         return {
             exerciseTemplateId: exerciseTemplateId,
-            series: []
         }
     }
 }

@@ -5,7 +5,7 @@ export const trainingsInitialState: TrainingsState =  {
     filtered: [],
     query: {
         filters: {
-            byName: '',
+            byTemplateName: '',
         }
     }
 }

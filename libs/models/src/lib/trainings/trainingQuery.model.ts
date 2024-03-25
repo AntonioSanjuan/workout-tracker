@@ -3,5 +3,5 @@ export interface TrainingQuery {
 }
 
 export interface TrainingQueryFilters {
-    byName: string
+    byTemplateName: string
 }

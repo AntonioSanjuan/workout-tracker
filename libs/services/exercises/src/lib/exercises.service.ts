@@ -45,6 +45,7 @@ export class ExercisesService {
     }
 
     public updateExercise(userId: string, exercise: Exercise): Observable<Exercise> {
+        exercise.lastModification = new Date()
         const exerciseInput = ExerciseAdapter.toDto(exercise);
 
         return from(this.getExerciseDocRef(userId, exercise.id).update(exerciseInput)).pipe(

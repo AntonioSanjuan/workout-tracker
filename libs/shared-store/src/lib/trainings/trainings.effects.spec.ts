@@ -6,23 +6,28 @@ import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
-import { Exercise, MusclesInvolved } from '@workout-tracker/models';
+import { Exercise, Training, TrainingExercise } from '@workout-tracker/models';
 import { getUser } from '../user';
-import { ExercisesService, exercisesServiceMock } from '@workout-tracker/services/exercises';
-import { ExercisesEffects } from './trainings.effects'
-import { getExercisesList } from './trainings.selectors';
-import { addAnonymousUserExerciseRequest, addAnonymousUserExerciseRequestSuccess, addAuthenticatedUserExerciseRequest, addAuthenticatedUserExerciseRequestError, addAuthenticatedUserExerciseRequestSuccess, addUserExerciseRequest, getAnonymousUserExercisesRequest, getAnonymousUserExercisesRequestSuccess, getAuthenticatedUserExercisesRequest, getAuthenticatedUserExercisesRequestError, getAuthenticatedUserExercisesRequestSuccess, getUserExercisesRequest } from './exercises.actions';
+import { TrainingsEffects } from './trainings.effects'
+import { getTrainingsList } from './trainings.selectors';
 import { AppInit, loadedApp } from '../ui';
+import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
+import { addAnonymousUserTrainingRequest, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequest, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, addUserTrainingRequest, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest } from './trainings.actions';
 
-const exerciseSut = {
-  name: 'exercise test name',
-  musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Adductors]
-} as Exercise
+const trainingSut = {
+  id: 'trainingIdTest',
+  observations: undefined,
+  creationDate: new Date(),
+  finishDate: undefined,
+  trainingExercises: [
+    { exerciseTemplate: { name: ''} as Exercise} as TrainingExercise
+  ]
+} as Training
 
-describe('ExercisesEffects', () => {
+describe('TrainingsEffects', () => {
   let actions: Observable<Action>;
-  let effects: ExercisesEffects
-  let exerciseService: ExercisesService
+  let effects: TrainingsEffects
+  let trainingService: TrainingsService
   let store: MockStore
 
   beforeEach(() => {
@@ -30,8 +35,8 @@ describe('ExercisesEffects', () => {
       imports: [
       ],
       providers: [ 
-        { provide: ExercisesService, useValue: exercisesServiceMock },
-        ExercisesEffects,
+        { provide: TrainingsService, useValue: trainingsServiceMock },
+        TrainingsEffects,
         provideMockStore({
           initialState: userStateMock
         }),
@@ -39,14 +44,14 @@ describe('ExercisesEffects', () => {
       ],
     });
 
-    effects = TestBed.inject(ExercisesEffects);
+    effects = TestBed.inject(TrainingsEffects);
     actions = TestBed.inject(Actions)
     store = TestBed.inject(MockStore)
-    exerciseService = TestBed.inject(ExercisesService)
+    trainingService = TestBed.inject(TrainingsService)
   });
 
-  describe('getUserExercisesRequest$', () => {    
-    describe('when getUserExercisesRequest is dispatched', () => {
+  describe('getUserTrainingsRequest$', () => {    
+    describe('when getUserTrainingsRequest is dispatched', () => {
       beforeEach(() => {
         store.resetSelectors()
       })
@@ -58,11 +63,11 @@ describe('ExercisesEffects', () => {
           store.overrideSelector(getUser, user);
           store.refreshState()
 
-          actions = of(getUserExercisesRequest())
+          actions = of(getUserTrainingsRequest())
         })
-        it('should return getAuthenticatedUserExercisesRequest', async () => {
-          const result = await firstValueFrom(effects.getUserExercisesRequest$)
-          expect(result).toEqual(getAuthenticatedUserExercisesRequest())
+        it('should return getAuthenticatedUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingsRequest())
         })
       })
 
@@ -71,135 +76,133 @@ describe('ExercisesEffects', () => {
           store.overrideSelector(getUser, undefined);
           store.refreshState()
 
-          actions = of(getUserExercisesRequest())
+          actions = of(getUserTrainingsRequest())
         })
-        it('should return getAnonymousUserExercisesRequest', async () => {
-          const result = await firstValueFrom(effects.getUserExercisesRequest$)
-          expect(result).toEqual(getAnonymousUserExercisesRequest())
+        it('should return getAnonymousUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getAnonymousUserTrainingsRequest())
         })
       })
 
     })
   });
 
-  describe('getAuthenticatedUserExercisesRequest$', () => {
-    const exercisesSut = [{ name: 'exerciseNameTest0' }, { name: 'exerciseNameTest1' }] as Exercise[]
+  describe('getAuthenticatedUserTrainingsRequest$', () => {
+    const trainingSut = [{ id: 'trainingIdTest0' }, { id: 'trainingIdTest1' }] as Training[]
 
     const user =  { uid: 'testUID'} as firebase.User
 
-    describe('when getAuthenticatedUserExercisesRequest is dispatched', () => {
+    describe('when getAuthenticatedUserTrainingsRequest is dispatched', () => {
       beforeEach(() => {
-        jest.spyOn(exerciseService, 'getExercises').mockClear()
+        jest.spyOn(trainingService, 'getTrainings').mockClear()
 
         store.resetSelectors()
         
         store.overrideSelector(getUser, user);
         store.refreshState()
       })
-      describe('when exerciseService.getExercises throws error', () => {
+      describe('when trainingService.getTrainings throws error', () => {
         const errorCodeMock = 'testing error code'
         const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
         const errorResp = throwError(() => errorMock )
 
         beforeEach(() => {
-          jest.spyOn(exerciseService, 'getExercises').mockReturnValue(errorResp)
-          actions = of(getAuthenticatedUserExercisesRequest())
+          jest.spyOn(trainingService, 'getTrainings').mockReturnValue(errorResp)
+          actions = of(getAuthenticatedUserTrainingsRequest())
         })
 
-        it('should request getExercises', async () => {
-          const getExercisesSpy = jest.spyOn(exerciseService, 'getExercises')
-          await firstValueFrom(effects.getAuthenticatedUserExercisesRequest$)
-          expect(getExercisesSpy).toHaveBeenCalledWith(user.uid)
+        it('should request getTrainings', async () => {
+          const getTrainingsSpy = jest.spyOn(trainingService, 'getTrainings')
+          await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
+          expect(getTrainingsSpy).toHaveBeenCalledWith(user.uid)
         })
-        it('should return getAuthenticatedUserExercisesRequestError', async () => {
-          const result = await firstValueFrom(effects.getAuthenticatedUserExercisesRequest$)
-          expect(result).toEqual(getAuthenticatedUserExercisesRequestError({ error: errorMock}))
+        it('should return getAuthenticatedUserTrainingsRequestError', async () => {
+          const result = await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingsRequestError({ error: errorMock}))
         })
       })
 
-      describe('when exerciseService.getExercises success', () => {
+      describe('when trainingService.getTrainings success', () => {
         beforeEach(() => {
-          jest.spyOn(exerciseService, 'getExercises').mockReturnValue(of(exercisesSut))
-          actions = of(getAuthenticatedUserExercisesRequest())
+          jest.spyOn(trainingService, 'getTrainings').mockReturnValue(of(trainingSut))
+          actions = of(getAuthenticatedUserTrainingsRequest())
         })
-        it('should request getExercises', async () => {
-          const getExercisesSpy = jest.spyOn(exerciseService, 'getExercises')
-          await firstValueFrom(effects.getAuthenticatedUserExercisesRequest$)
-          expect(getExercisesSpy).toHaveBeenCalledWith(user.uid)
+        it('should request getTrainings', async () => {
+          const getTrainingsSpy = jest.spyOn(trainingService, 'getTrainings')
+          await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
+          expect(getTrainingsSpy).toHaveBeenCalledWith(user.uid)
         })
-        it('should return getAuthenticatedUserExercisesRequestSuccess', async () => {
-          const result = await firstValueFrom(effects.getAuthenticatedUserExercisesRequest$)
-          expect(result).toEqual(getAuthenticatedUserExercisesRequestSuccess({ exercises: exercisesSut}))
+        it('should return getAuthenticatedUserTrainingsRequestSuccess', async () => {
+          const result = await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingsRequestSuccess({ trainings: trainingSut}))
         })
       })
 
     })
   });
 
-  describe('getAnonymousUserExercisesRequest$', () => {
-    describe('when getAnonymousUserExercisesRequest is dispatched', () => {
-      const exercisesSut = [{ name: 'exerciseNameTest0' }, { name: 'exerciseNameTest1' }] as Exercise[]
+  describe('getAnonymousUserTrainingsRequest$', () => {
+    describe('when getAnonymousUserTrainingsRequest is dispatched', () => {
+      const trainingSut = [{ id: 'trainingIdTest0' }, { id: 'trainingIdTest1' }] as Training[]
 
   
       beforeEach(() => { 
         store.resetSelectors()
         
-        store.overrideSelector(getExercisesList, exercisesSut);
+        store.overrideSelector(getTrainingsList, trainingSut);
         store.refreshState()
       
-        actions = of(getAnonymousUserExercisesRequest())
+        actions = of(getAnonymousUserTrainingsRequest())
 
       })
-      it('should return getAnonymousUserExercisesRequestSuccess', async () => {
-        const result = await firstValueFrom(effects.getAnonymousUserExercisesRequest$)
-        expect(result).toEqual(getAnonymousUserExercisesRequestSuccess({ exercises: exercisesSut}))
+      it('should return getAnonymousUserTrainingsRequestSuccess', async () => {
+        const result = await firstValueFrom(effects.getAnonymousUserTrainingsRequest$)
+        expect(result).toEqual(getAnonymousUserTrainingsRequestSuccess({ trainings: trainingSut}))
       })
     })
   })
   
-  describe('getUserExercisesSuccess$$', () => {
-    describe('when getAuthenticatedUserExercisesRequestSuccess is dispatched', () => {
+  describe('getUserTrainingsSuccess$', () => {
+    describe('when getAuthenticatedUserTrainingsRequestSuccess is dispatched', () => {
       beforeEach(() => { 
-        actions = of(getAuthenticatedUserExercisesRequestSuccess({ exercises: []}))
+        actions = of(getAuthenticatedUserTrainingsRequestSuccess({ trainings: []}))
       })
 
       it('should return loadedApp', async () => {
-        const result = await firstValueFrom(effects.getUserExercisesSuccess$)
-        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES}))
+        const result = await firstValueFrom(effects.getUserTrainingsSuccess$)
+        expect(result).toEqual(loadedApp({initialized: AppInit.TRAININGS}))
       })
     })
 
-    describe('when getAnonymousUserExercisesRequestSuccess is dispatched', () => {
+    describe('when getAnonymousUserTrainingsRequestSuccess is dispatched', () => {
       beforeEach(() => { 
-        actions = of(getAnonymousUserExercisesRequestSuccess({ exercises: []}))
+        actions = of(getAnonymousUserTrainingsRequestSuccess({ trainings: []}))
       })
 
       it('should return loadedApp', async () => {
-        const result = await firstValueFrom(effects.getUserExercisesSuccess$)
-        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES}))
+        const result = await firstValueFrom(effects.getUserTrainingsSuccess$)
+        expect(result).toEqual(loadedApp({initialized: AppInit.TRAININGS}))
       })
     })
   });
 
-  describe('addUserExerciseRequest$', () => {
-    describe('when addUserExerciseRequest is dispatched', () => {
+  describe('addUserTrainingRequest$', () => {
+    describe('when addUserTrainingRequest is dispatched', () => {
       const user =  { uid: 'testUID'} as firebase.User
   
       describe('if user', () => {
 
         beforeEach(() => { 
-          // jest.spyOn(exerciseService, 'setExercises').mockReset()
           store.overrideSelector(getUser, user);
-          // jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
-          actions = of(addUserExerciseRequest({
-            exercise: exerciseSut
+          actions = of(addUserTrainingRequest({
+            training: trainingSut
           }))
           
         })
 
-        it('should return addAuthenticatedUserExerciseRequest', async () => {
-          const result = await firstValueFrom(effects.addUserExerciseRequest$)
-          expect(result).toEqual(addAuthenticatedUserExerciseRequest({ exercise: exerciseSut}))
+        it('should return addAuthenticatedUserTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.addUserTrainingRequest$)
+          expect(result).toEqual(addAuthenticatedUserTrainingRequest({ training: trainingSut}))
         })
 
 
@@ -207,92 +210,85 @@ describe('ExercisesEffects', () => {
   
       describe('if its not user stored', () => {
         beforeEach(() => { 
-          // jest.spyOn(exerciseService, 'setExercises').mockReset()
           store.overrideSelector(getUser, undefined);
-          // jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
-          actions = of(addUserExerciseRequest({
-            exercise: exerciseSut
+          actions = of(addUserTrainingRequest({
+            training: trainingSut
           }))
         })
-        // it('should not request setExercises', async () => {
-        //   const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-        //   await firstValueFrom(effects.addUserExerciseRequest$)
-        //   expect(setExerciseSpy).not.toHaveBeenCalled()
-        // })
-        it('should return addAnonymousUserExerciseRequest', async () => {
-          const result = await firstValueFrom(effects.addUserExerciseRequest$)
-          expect(result).toEqual(addAnonymousUserExerciseRequest({ exercise: exerciseSut}))
+        it('should return addAnonymousUserTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.addUserTrainingRequest$)
+          expect(result).toEqual(addAnonymousUserTrainingRequest({ training: trainingSut}))
         })
       })
     })
   })
-  describe('addAuthenticatedUserExerciseRequest$', () => {
+  describe('addAuthenticatedUserTrainingRequest$', () => {
     const user =  { uid: 'testUID'} as firebase.User
     
     beforeEach(() => { 
-      jest.spyOn(exerciseService, 'setExercises').mockReset()
+      jest.spyOn(trainingService, 'setTraining').mockReset()
       store.overrideSelector(getUser, user);
-      jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
-      actions = of(addAuthenticatedUserExerciseRequest({
-        exercise: exerciseSut
+      jest.spyOn(trainingService, 'setTraining').mockReturnValue(of(trainingSut))
+      actions = of(addAuthenticatedUserTrainingRequest({
+        training: trainingSut
       }))
       
     })
-    describe('when exerciseService.setExercises success', () => {
+    describe('when trainingService.setTraining success', () => {
       beforeEach(() => {
-        jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
+        jest.spyOn(trainingService, 'setTraining').mockReturnValue(of(trainingSut))
       })
       it('should request setExercises', async () => {
-        const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-        await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
-        expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseSut)
+        const setExerciseSpy = jest.spyOn(trainingService, 'setTraining')
+        await firstValueFrom(effects.addAuthenticatedUserTrainingRequest$)
+        expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, trainingSut)
       })
-      it('should return addAuthenticatedUserExerciseRequestSuccess', async () => {
-        const result = await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
-        expect(result).toEqual(addAuthenticatedUserExerciseRequestSuccess({ exercise: exerciseSut}))
+      it('should return addAuthenticatedUserTrainingRequestSuccess', async () => {
+        const result = await firstValueFrom(effects.addAuthenticatedUserTrainingRequest$)
+        expect(result).toEqual(addAuthenticatedUserTrainingRequestSuccess({ training: trainingSut}))
       })
     })
 
-    describe('when exerciseService.setExercises throws error', () => {
+    describe('when trainingService.setTraining throws error', () => {
       const errorCodeMock = 'testing error code'
       const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
       const errorResp = throwError(() => errorMock )
 
       beforeEach(() => {
-        jest.spyOn(exerciseService, 'setExercises').mockReturnValue(errorResp)
+        jest.spyOn(trainingService, 'setTraining').mockReturnValue(errorResp)
       })
 
-      it('should request setExercises', async () => {
-        const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-        await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
-        expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseSut)
+      it('should request setTraining', async () => {
+        const setExerciseSpy = jest.spyOn(trainingService, 'setTraining')
+        await firstValueFrom(effects.addAuthenticatedUserTrainingRequest$)
+        expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, trainingSut)
       })
       
-      it('should return addAuthenticatedUserExerciseRequestError', async () => {
-        const result = await firstValueFrom(effects.addAuthenticatedUserExerciseRequest$)
-        expect(result).toEqual(addAuthenticatedUserExerciseRequestError({ error: errorMock}))
+      it('should return addAuthenticatedUserTrainingRequestError', async () => {
+        const result = await firstValueFrom(effects.addAuthenticatedUserTrainingRequest$)
+        expect(result).toEqual(addAuthenticatedUserTrainingRequestError({ error: errorMock}))
       })
     })
   })
 
-  describe('addAnonymousUserExerciseRequest$', () => {
+  describe('addAnonymousUserTrainingRequest$', () => {
     const exerciseListSut = [{}, {}, {}]
     beforeEach(() => { 
-      jest.spyOn(exerciseService, 'setExercises').mockReset()
-      store.overrideSelector(getExercisesList, exerciseListSut as Exercise[]);
-      jest.spyOn(exerciseService, 'setExercises').mockReturnValue(of(exerciseSut))
-      actions = of(addAnonymousUserExerciseRequest({
-        exercise: exerciseSut
+      jest.spyOn(trainingService, 'setTraining').mockReset()
+      store.overrideSelector(getTrainingsList, exerciseListSut as Exercise[]);
+      jest.spyOn(trainingService, 'setTraining').mockReturnValue(of(trainingSut))
+      actions = of(addAnonymousUserTrainingRequest({
+        training: trainingSut
       }))
     })
-    it('should not request setExercises', async () => {
-      const setExerciseSpy = jest.spyOn(exerciseService, 'setExercises')
-      await firstValueFrom(effects.addAnonymousUserExerciseRequest$)
+    it('should not request setTraining', async () => {
+      const setExerciseSpy = jest.spyOn(trainingService, 'setTraining')
+      await firstValueFrom(effects.addAnonymousUserTrainingRequest$)
       expect(setExerciseSpy).not.toHaveBeenCalled()
     })
-    it('should return addAnonymousUserExerciseRequestSuccess', async () => {
-      const result = await firstValueFrom(effects.addAnonymousUserExerciseRequest$)
-      expect(result).toEqual(addAnonymousUserExerciseRequestSuccess({ exercise: {...exerciseSut, id: (exerciseListSut.length + 1).toString()}}))
+    it('should return addAnonymousUserTrainingRequestSuccess', async () => {
+      const result = await firstValueFrom(effects.addAnonymousUserTrainingRequest$)
+      expect(result).toEqual(addAnonymousUserTrainingRequestSuccess({ training: {...trainingSut, id: (exerciseListSut.length + 1).toString()}}))
     })
   })
 });
