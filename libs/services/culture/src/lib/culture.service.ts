@@ -1,20 +1,21 @@
+import { registerLocaleData } from "@angular/common";
 import { Injectable, inject } from "@angular/core";
 import { TranslateService } from '@ngx-translate/core'
-// import { Store } from '@ngrx/store'
 import { Observable, first } from "rxjs";
-// import { AppInit, loadedApp } from "@workout-tracker/shared-store";
+
+import localeEs from '@angular/common/locales/es';
+import localeEn from '@angular/common/locales/en';
 
 @Injectable()
 export class CultureService {
     private readonly defaultLangCode: string = "ES-ES"
     private translateService: TranslateService = inject(TranslateService)
-    // private store: Store = inject(Store)
-
     private readonly acceptedLanguages: string[] = [ 'EN-GB', 'ES-ES' ];
-      
+
 
 
     public initialize(): void {
+        this.registerLocales()
         this.translateService.setDefaultLang(this.defaultLangCode);
         this.translateService.addLangs(this.acceptedLanguages);
     }
@@ -35,13 +36,20 @@ export class CultureService {
         return false
     }
 
+    private registerLocales() {
+        registerLocaleData(localeEn);
+        registerLocaleData(localeEs);
+    }
+
     private getLangCode(cultureCode: string): string {
         const langCode = this.acceptedLanguages.find(lang => lang === cultureCode.toUpperCase());
         return langCode || this.defaultLangCode;
     }
 
     private setCulture(cultureName: string): Observable<void> {
+        registerLocaleData(this.getLangCode(cultureName));
         return this.translateService.use(this.getLangCode(cultureName)).pipe(first())
+
     }
 
     private setDarkMode(darkMode: boolean) {

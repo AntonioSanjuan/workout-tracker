@@ -8,5 +8,7 @@ export const getTrainingsList = createSelector(getTrainingsState, (state: Traini
 export const getTrainingsFiltered = createSelector(getTrainingsState, (state: TrainingsState) => state.filtered)
 export const getTrainingsFilters = createSelector(getTrainingsState, (state: TrainingsState) => state.query.filters)
 
+export const getTrainingOngoing = createSelector(getTrainingsState, (state: TrainingsState) => state.list.find((training) => !training.finishDate))
+
 //exerciseDetails
 export const getTrainingById = (trainingId: string) => createSelector(getTrainingsState, (state: TrainingsState) => state.list.find((training) => training.id === trainingId));

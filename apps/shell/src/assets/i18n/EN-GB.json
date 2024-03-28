@@ -1,11 +1,41 @@
 {
     "common": {
-        "exerciseType": {
+        "muscleGroups": {
             "Legs": "Legs",
             "Arms": "Arms",
             "Shoulder": "Shoulder",
             "Back": "Back",
-            "Chest": "Chest"
+            "Chest": "Chest",
+            "Core": "Core"
+        },
+        "muscles": {
+            "Abdominals": "Abdominals",
+            "Abductors": "Abductors",
+            "Adductors": "Adductors",
+            "Biceps": "Biceps",
+            "Calves": "Calves",
+            "Chest": "Chest",
+            "Forearms": "Forearms",
+            "Glutes": "Glutes",
+            "Hamstrings": "Hamstrings",
+            "Lats": "Lats",
+            "Lower_back": "Lower back",
+            "Middle_back": "Middle back",
+            "Neck": "Neck",
+            "Quadriceps": "Quadriceps",
+            "Traps": "Traps",
+            "Triceps": "Triceps",
+            "Anterior_deltoid": "Anterior deltoid",
+            "Medial_deltoid": "Medial deltoid",
+            "Posterior_deltoid": "Posterior deltoid"
+        },
+        "actions": {
+            "cancel": "Cancel",
+            "create": "Create",
+            "next": "Next",
+            "previous": "Previous",
+            "yes": "Yes",
+            "no": "No"
         }
     },
     "apps": {
@@ -24,6 +54,7 @@
                 },
                 "menuNav": {
                     "home": "Home",
+                    "trainings": "Trainings",
                     "exercises": "Exercises",
                     "news": "News"
                 }
@@ -37,16 +68,21 @@
         },
         "account": {
             "login": {
-                "title": "Access with your account",
+                "title": "Log in to your account",
                 "form": {
                     "fields": {
                         "userEmail": "Email",
                         "userPass": "Password"
                     },
+                    "errors": {
+                        "userEmailRequired": "Email field required",
+                        "userEmailFormat": "Invalid email format",
+                        "passwordRequired": "Password field required"
+                    },
                     "actions": {
-                        "submit": "Access",
-                        "googleLogin": "Access with Google",
-                        "signUp": "You do not have an account? Register now!"
+                        "submit": "Log in",
+                        "googleLogin": "Log in with Google",
+                        "signUp": "Don't have an account? Sign up now!"
                     }
                 }
             },
@@ -57,37 +93,131 @@
                         "userEmail": "Email",
                         "userPass": "Password"
                     },
+                    "errors": {
+                        "userEmailRequired": "Email field required",
+                        "userEmailFormat": "Invalid email format",
+                        "passwordRequired": "Password field required"
+                    },
                     "actions": {
-                        "submit": "Sign In",
-                        "googleLogin": "Sign In with Google",
-                        "login": "Do you already have an account? Access with it!"
-
+                        "submit": "Sign up",
+                        "googleLogin": "Sign up with Google",
+                        "login": "Already have an account? Log in!"
                     }
                 }
             },
             "settings": {
-                "title": "Set up your account",
+                "title": "Configure your account",
                 "form": {
                     "fields": {
                         "language": "Language",
-                        "darkMode": "Dark mode"
+                        "darkMode": "Dark Mode"
                     }
                 }
             }
         },
-        "workout-exercises": {
+        "workout-trainings": {
+            "errors": {
+                "trainingNotFound": "Training {{trainingId}} not found"
+            },
             "list": {
+                "title": "List of Trainings",
                 "filter": {
-                    "byNameLabel": "Search exercises by name",
-                    "byNamePlaceholder": "Exercise name...",
-                    "byMuscleLabel": "Search exercise by type",
+                    "banner": {
+                        "title": "",
+                        "content": "You can search for a training by exercise name"
+                    },
+                    "byNameLabel": "Search for training by name",
+                    "byNamePlaceholder": "Training name...",
+                    "byMuscleLabel": "Search for training by muscles",
+                    "byMusclePlaceholder": "Muscles...",
                     "filteredByMuscles": "Filtered by..."
                 },
-                "title": "List of exercises"
+                "addTraining": {
+                    "title": "Add training",
+                    "step": {
+                        "additionalInfo": {
+                            "title": "Additional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observations"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewTraining": "New training",
+                    "continueTraining": "Continue training"
+                }
+            },
+            "details": {
+                "title": "Training Details"
+            }
+        },
+        "workout-exercises": {
+            "errors": {
+                "exerciseNotFound": "Exercise {{exerciseId}} not found"
+            },
+            "list": {
+                "title": "List of exercises",
+                "filter": {
+                    "banner": {
+                        "title": "",
+                        "content": "You can search for an exercise by its name or filter it by its type"
+                    },
+                    "byNameLabel": "Search for exercise by name",
+                    "byNamePlaceholder": "Exercise name...",
+                    "byMuscleLabel": "Search for exercise by muscles",
+                    "filteredByMuscles": "Filtered by..."
+                },
+                "addExercise": {
+                    "title": "Add exercise",
+                    "step": {
+                        "basicInfo": {
+                            "title": "Description",
+                            "form": {
+                                "fields": {
+                                    "name": "Name",
+                                    "type": "Type",
+                                    "musclesInvolved": "Muscles involved"
+                                },
+                                "errors": {
+                                    "nameRequired": "Name field required",
+                                    "typeRequired": "You must select at least one type",
+                                    "muscleRequired": "You must select at least one muscle"
+                                }
+                            }
+                        },
+                        "image": {
+                            "title": "Image",
+                            "form": {
+                                "actions": {
+                                    "capture": "Capture image",
+                                    "clear": "Clear image"
+                                }
+                            },
+                            "errors": {
+                                "cameraError": "Your camera is not available"
+                            }
+                        },
+                        "additionalInfo": {
+                            "title": "Additional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observations"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewExercise": "New exercise"
+                }
+            },
+            "details": {
+                "title": "Exercise Details"
             }
         }
     },
-    "libs": {
-        
-    }
+    "libs": {}
 }

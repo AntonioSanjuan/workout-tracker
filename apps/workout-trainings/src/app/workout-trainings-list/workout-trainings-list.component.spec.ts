@@ -10,11 +10,11 @@ import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes, Exercise } from '@workout-tracker/models';
-import { WorkoutTrainingsComponent } from './workout-trainings.component';
-import { workoutTrainingsAppStateMock } from './../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
+import { WorkoutTrainingsListComponent } from './workout-trainings-list.component';
+import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
 describe('WorkoutTrainingsComponent', () => {
-  let component: WorkoutTrainingsComponent;
-  let fixture: ComponentFixture<WorkoutTrainingsComponent>;
+  let component: WorkoutTrainingsListComponent;
+  let fixture: ComponentFixture<WorkoutTrainingsListComponent>;
   let dialogService: DialogService
   let store: MockStore;
   let actions: Observable<Action>;
@@ -36,7 +36,7 @@ describe('WorkoutTrainingsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         LibsServicesDialogModule,
-        WorkoutTrainingsComponent,
+        WorkoutTrainingsListComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
@@ -44,7 +44,7 @@ describe('WorkoutTrainingsComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WorkoutTrainingsComponent);
+    fixture = TestBed.createComponent(WorkoutTrainingsListComponent);
     store = TestBed.inject(MockStore)
     router = TestBed.inject(Router);
     dialogService = TestBed.inject(DialogService)

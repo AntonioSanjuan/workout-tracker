@@ -116,6 +116,44 @@
                 }
             }
         },
+        "workout-trainings": {
+            "errors": {
+                "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado"
+            },
+            "list": {
+                "title": "Lista de Entrenamientos",
+                "filter": {
+                    "banner": {
+                        "title": "",
+                        "content": "Puedes buscar un entrenamineto por el nombre del ejercicio"
+                    },
+                    "byNameLabel": "Busca el entrenamineto por nombre",
+                    "byNamePlaceholder": "Nombre del entrenamiento...",
+                    "byMuscleLabel": "Busca  el entrenamiento por músculos",
+                    "filteredByMuscles": "Filtrado por..."
+                },
+                "addTraining": {
+                    "title": "Añadir entrenamiento",
+                    "step": {
+                        "aditionalInfo": {
+                            "title": "Adicional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observaciones"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewTraining": "Nuevo entrenamiento",
+                    "continueTraining": "Continuar entrenamiento"
+                }
+            },
+            "details": {
+                "title": "Detalles de entrenamiento"
+            }
+        },
         "workout-exercises": {
             "errors": {
                 "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado"
@@ -129,7 +167,8 @@
                     },
                     "byNameLabel": "Busca el ejercicio por nombre",
                     "byNamePlaceholder": "Nombre del ejercicio...",
-                    "byMuscleLabel": "Busca  el ejercicio por músculos",
+                    "byMuscleLabel": "Busca el ejercicio por músculos",
+                    "byMusclePlaceholder": "Músculos...",
                     "filteredByMuscles": "Filtrado por..."
                 },
                 "addExercise": {
@@ -182,6 +221,14 @@
         }
     },
     "libs": {
-        
+        "components": {
+            "training-card": {
+                "title": "Día: {{date}}",
+                "state": {
+                    "finished": "Entrenamiento finalizado",
+                    "onGoing": "Entrenamiento en curso"
+                }
+            }
+        }
     }
 }

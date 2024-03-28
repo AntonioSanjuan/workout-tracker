@@ -1,0 +1,33 @@
+@use "css/main.scss" as shellStyles;
+
+:host {
+    height: 100%;
+}
+
+.WorkoutTrainingsList__MainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+
+    button {
+        background-color: shellStyles.$mainColor;
+    }
+    h2 {
+        margin-top: 0;
+    }
+
+    .WorkoutTrainingsList_ListContainer {
+        display: flex;
+        flex-direction: column;
+
+        width: 80%;
+    }
+}
+
+@media (max-width: 960px) {
+    .WorkoutTrainingsList__MainContainer {
+    }
+}

@@ -1,0 +1,61 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-exercise-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .TrainingCard_MainContainer {
+        width: 100%;
+        box-shadow: shellStyles.$mainColor 0px 5px 15px;
+        mat-card {
+
+            mat-card-content {
+                .TrainingCard_ContentContainer {
+                    display: flex;
+                    flex-direction: row;
+                    gap:20px;
+                    img {
+                        border-radius: 10px;
+                    }
+                    .TrainingCard_InfoContainer {
+                        display: flex;
+                        flex-direction: column;
+
+                        h3 {
+                            margin-top: 0;
+                        }
+
+                        .TrainingCard_TypesContainer {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    workout-tracker-exercise-card  {
+    .TrainingCard_MainContainer {
+        mat-card {
+
+            mat-card-content {
+                .TrainingCard_ContentContainer {
+                    img {
+                    
+                    }
+                    .TrainingCard_InfoContainer {
+                        .TrainingCard_TypesContainer {
+                            flex-direction: column;   
+                            gap: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    }
+}

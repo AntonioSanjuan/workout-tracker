@@ -24,7 +24,7 @@ export const appRoutes: Route[] = [
           )
         ],    
         loadComponent: () =>
-          import('./workout-trainings/workout-trainings.component').then((m) => m.WorkoutTrainingsComponent),
+          import('./workout-trainings-list/workout-trainings-list.component').then((m) => m.WorkoutTrainingsListComponent),
       },
     ]
 

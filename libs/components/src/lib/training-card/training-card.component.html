@@ -1,0 +1,26 @@
+<div class="TrainingCard_MainContainer">
+    <mat-card>
+        <mat-card-content>
+            <div class="TrainingCard_ContentContainer">
+                {{ 'libs.components.training-card.title' | translate: { date: training.creationDate | localizedDate } }}
+
+                <div class="TrainingCard_InfoContainer">
+                    <p *ngIf="training.finishDate">
+                        {{ 'libs.components.training-card.state.finished' | translate }}
+                    </p>
+                    <p *ngIf="!training.finishDate">
+                        {{ 'libs.components.training-card.state.onGoing' | translate }}
+                    </p>
+                    
+                    <!-- <h3>{{training.name}}</h3>
+                    <div class="TrainingCard_TypesContainer">
+                        <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exercise.musclesInvolved"
+                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                            [specificMuscle]="mucleInvolved"
+                    ></workout-tracker-muscle-pill>
+                    </div> -->
+                </div>
+            </div>
+        </mat-card-content>
+      </mat-card>
+</div>

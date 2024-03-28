@@ -1,0 +1,25 @@
+<div
+    *ngrxLet="{ 
+        filteredTrainings: filteredTrainings$,
+        trainingOngoing: trainingOngoing$ 
+    } as vm"
+    class="WorkoutTrainingsList__MainContainer">
+
+    <button mat-flat-button color="primary" (click)="newTraining()">
+        {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
+    </button>
+
+    <button [disabled]="!vm.trainingOngoing" mat-flat-button color="primary" (click)="newTraining()">
+        {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
+    </button>
+    
+    <h2>
+        {{ 'apps.workout-trainings.list.title' | translate }}
+    </h2>
+
+    <div class="WorkoutTrainingsList_ListContainer"
+        *ngFor="let filteredTraining of vm.filteredTrainings"
+        (click)="openTrainingDetails(filteredTraining)">
+        <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
+    </div>
+</div>
