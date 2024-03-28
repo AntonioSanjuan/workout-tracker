@@ -107,7 +107,6 @@ export class UserEffects {
         )
     ))
 
-    //TO-DO
     setAuthenticatedUserSettings$ = createEffect(() => this.actions$.pipe(
         ofType(setAuthenticatedUser),
         switchMap(() =>

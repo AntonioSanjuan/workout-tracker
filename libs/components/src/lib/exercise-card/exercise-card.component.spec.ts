@@ -4,7 +4,7 @@ import { Exercise, MusclesInvolved } from '@workout-tracker/models';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ExerciseCard', () => {
-  let dummyExercise = { 
+  const dummyExercise = { 
     name: "exercise name test", 
     musclesInvolved: [ MusclesInvolved.Calves],
     image: undefined, 

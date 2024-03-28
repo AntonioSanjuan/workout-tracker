@@ -1,6 +1,6 @@
 @use "css/main.scss" as shellStyles;
 
-workout-tracker-exercise-card {
+workout-tracker-training-card {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -13,22 +13,47 @@ workout-tracker-exercise-card {
                 .TrainingCard_ContentContainer {
                     display: flex;
                     flex-direction: row;
+                    justify-content: space-between;
+                    
                     gap:20px;
-                    img {
-                        border-radius: 10px;
-                    }
                     .TrainingCard_InfoContainer {
                         display: flex;
-                        flex-direction: column;
+                        flex-direction: row;
+                        gap: 10px;
 
+                        .TrainingCard_InfoLabels {
+                            .TrainingCard_InfoLabel {
+                                p {
+                                    margin: 0;
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+
+                        .TrainingCard_InfoValues {
+                            .TrainingCard_InfoValue {
+                                p{ 
+                                    margin: 0;
+                                    font-style: oblique;
+                                }
+                            }
+                        }
+                    }
+
+                    .TrainingCard_MuscleGroupsContainer {
+                        display: flex;
+                        flex-direction: column;
+                        
                         h3 {
                             margin-top: 0;
                         }
 
-                        .TrainingCard_TypesContainer {
+                        .TrainingCard_MuscleGroup {
                             display: flex;
                             flex-direction: row;
-                            gap: 10px;
+                            align-items: center;
+
+                            gap: 5px;
                         }
                     }
                 }
@@ -38,20 +63,14 @@ workout-tracker-exercise-card {
 }
 
 @media (max-width: 960px) {
-    workout-tracker-exercise-card  {
+    workout-tracker-training-card  {
     .TrainingCard_MainContainer {
         mat-card {
 
             mat-card-content {
                 .TrainingCard_ContentContainer {
-                    img {
-                    
-                    }
+                    flex-direction: column;
                     .TrainingCard_InfoContainer {
-                        .TrainingCard_TypesContainer {
-                            flex-direction: column;   
-                            gap: 5px;
-                        }
                     }
                 }
             }

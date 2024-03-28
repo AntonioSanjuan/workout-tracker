@@ -224,9 +224,19 @@
         "components": {
             "training-card": {
                 "title": "Día: {{date}}",
+                "info": {
+                    "labels": {
+                        "date": "Fecha",
+                        "status": "Estado",
+                        "observations": "Observaciones"
+                    }
+                },
+                "exercises": {
+                    "title": "Ejercicios por grupo"
+                },
                 "state": {
-                    "finished": "Entrenamiento finalizado",
-                    "onGoing": "Entrenamiento en curso"
+                    "finished": "Finalizado",
+                    "onGoing": "En curso"
                 }
             }
         }

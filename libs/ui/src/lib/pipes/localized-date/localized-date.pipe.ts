@@ -11,7 +11,6 @@ import { TranslateService } from "@ngx-translate/core";
     private translateService: TranslateService = inject(TranslateService)
   
     transform(value: Date, pattern = 'shortDate'): string | null {
-        console.log('this.translateService.currentLang', 'this.translateService.currentLang')
       const datePipe: DatePipe = new DatePipe(this.translateService.currentLang);
       return datePipe.transform(value, pattern);
     }
