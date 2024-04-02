@@ -125,16 +125,28 @@
                 "filter": {
                     "banner": {
                         "title": "",
-                        "content": "Puedes buscar un entrenamineto por el nombre del ejercicio"
+                        "content": "Puedes buscar un entrenamineto por la fecha de creación o por el grupo muscular ejercitado"
                     },
-                    "byNameLabel": "Busca el entrenamineto por nombre",
-                    "byNamePlaceholder": "Nombre del entrenamiento...",
-                    "byMuscleLabel": "Busca  el entrenamiento por músculos",
+                    "byDateLabel": "Busca el entrenamiento por fecha",
+                    "byDatePlaceholder": "Fecha del entrenamiento...",
+                    "byMuscleGroupLabel": "Busca el entrenamiento por grupo muscular",
+                    "byMuscleGroupPlaceholder": "Grupo muscular...",
                     "filteredByMuscles": "Filtrado por..."
                 },
                 "addTraining": {
                     "title": "Añadir entrenamiento",
                     "step": {
+                        "basicInfo": {
+                            "title": "Descripción",
+                            "form": {
+                                "fields": {
+                                    "muscleGroup": "Grupo muscular"
+                                },
+                                "errors": {
+                                    "muscleGroupRequired": "Debes de seleccionar al menos un grupo muscular"
+                                }
+                            }
+                        },
                         "aditionalInfo": {
                             "title": "Adicional",
                             "form": {

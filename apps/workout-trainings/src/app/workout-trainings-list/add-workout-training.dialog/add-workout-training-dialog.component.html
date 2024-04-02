@@ -1,0 +1,40 @@
+<div class="AddTrainingDialog_MainContainer">
+    <h2 mat-dialog-title>{{ 'apps.workout-trainings.list.addTraining.title' | translate }}</h2>
+    <mat-dialog-content class="mat-typography">
+        <mat-stepper orientation="vertical" linear #stepper animationDuration="700">
+            <mat-step [stepControl]="form" [label]="'apps.workout-trainings.list.addTraining.step.basicInfo.title' | translate">
+                <form [formGroup]="form">
+                    <workout-tracker-muscle-groups-selector
+                        [label]="'apps.workout-trainings.list.addTraining.step.basicInfo.form.fields.muscleGroup' | translate"
+                        [errorLabel]="(form.controls.muscleGroups.hasError('required') || form.controls.muscleGroups.hasError('minLength')) ?
+                            ('apps.workout-trainings.list.addTraining.step.basicInfo.form.errors.muscleGroupRequired' | translate) :
+                            null"
+                        [formGroup]="form"
+                        [formControlName]="'muscleGroups'">
+                    </workout-tracker-muscle-groups-selector>
+                </form>
+            </mat-step>
+            <mat-step [label]="'apps.workout-trainings.list.addTraining.step.aditionalInfo.title' | translate">
+                <form [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>
+                            {{ 'apps.workout-trainings.list.addTraining.step.aditionalInfo.form.fields.observations' | translate }}
+                        </mat-label>
+                        <input matInput id="observations" name="observations" formControlName="observations"/>
+                    </mat-form-field>
+                </form>
+            </mat-step>
+        </mat-stepper>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>
+            {{ 'common.actions.cancel' | translate }}
+        </button>
+        <button *ngIf="stepper.selectedIndex !== 1" mat-button (click)="stepper.next()" [disabled]="!form.valid">
+            {{ 'common.actions.next' | translate }}
+        </button>
+        <button *ngIf="stepper.selectedIndex === 1" mat-button [mat-dialog-close]="false" (click)="createTraining()" [disabled]="!form.valid">
+            {{ 'common.actions.create' | translate }}
+        </button>
+    </mat-dialog-actions>
+</div>
