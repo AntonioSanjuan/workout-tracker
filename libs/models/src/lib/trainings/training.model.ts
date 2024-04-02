@@ -1,8 +1,9 @@
-import { Exercise } from "../exercises"
+import { Exercise, MuscleGroups } from "../exercises"
 
 export interface Training {
     id: string
-    observations?: string
+    observations?: string,
+    muscleGroups: MuscleGroups[]
 
     trainingExercises?: TrainingExercise[]
     creationDate: Date

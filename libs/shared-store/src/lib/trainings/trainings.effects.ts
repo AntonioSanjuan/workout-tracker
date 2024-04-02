@@ -7,8 +7,9 @@ import firebase from 'firebase/compat/app';
 import { Training } from "@workout-tracker/models";
 import { AppInit, loadedApp } from "../ui";
 import { TrainingsService } from "@workout-tracker/services/trainings"
-import { addAnonymousUserTrainingRequestError, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestError, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest } from "./trainings.actions";
-import { addAnonymousUserTrainingRequest, addAuthenticatedUserTrainingRequest, addUserTrainingRequest, getTrainingsList } from "../trainings";
+import { addAnonymousUserTrainingRequestError, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestError, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest, setTrainingQueryFilter } from "./trainings.actions";
+import { addAnonymousUserTrainingRequest, addAuthenticatedUserTrainingRequest, addUserTrainingRequest, getTrainingsList, getTrainingsPagination, getTrainingsQuery } from "../trainings";
+import { getExercisesList } from "../exercises";
 
 @Injectable()
 export class TrainingsEffects {
@@ -17,7 +18,7 @@ export class TrainingsEffects {
     private actions$ = inject(Actions);
 
     getUserTrainingsRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getUserTrainingsRequest),
+        ofType(getUserTrainingsRequest,setTrainingQueryFilter),
         concatLatestFrom(() => this.store.select(getUser)),
         switchMap(([_, user]) =>
             iif(
@@ -29,9 +30,9 @@ export class TrainingsEffects {
     
     getAuthenticatedUserTrainingsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserTrainingsRequest),
-        concatLatestFrom(() => this.store.select(getUser)),
-        switchMap(([_, user]) =>
-            this.trainingsService.getTrainings(user?.uid as string).pipe(
+        concatLatestFrom(() => [this.store.select(getUser), this.store.select(getTrainingsQuery)]),
+        switchMap(([_, user, query]) =>
+            this.trainingsService.getTrainings(user?.uid as string, query).pipe(
             map((trainings: Training[]) => 
                 getAuthenticatedUserTrainingsRequestSuccess({ trainings: trainings})
             ),

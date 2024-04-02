@@ -5,7 +5,13 @@ export const trainingsInitialState: TrainingsState =  {
     filtered: [],
     query: {
         filters: {
-            byTemplateName: '',
+            betweenDates: undefined,
+            muscleGroups: []
+        },
+        pagination: {
+            pageElements: 10,
+            moreElements: true,
+            lastElement: undefined
         }
     }
 }

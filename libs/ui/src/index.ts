@@ -1,5 +1,6 @@
 export * from './lib/ui.module';
 export * from './lib/directives/muscle-group-pill/muscle-group-pill.directive'
+export * from './lib/directives/intersection-observer/intersection-observer.directive'
 export * from './lib/pipes/muscle-involved-group/muscle-involved-group.pipe'
 export * from './lib/pipes/localized-date/localized-date.pipe'
 export * from './lib/animations/accordion/accordion.animation'

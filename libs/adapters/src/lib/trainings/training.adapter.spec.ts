@@ -1,4 +1,4 @@
-import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
+import { Exercise, MuscleGroups, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "./training.adapter";
 import { DocumentReference } from "@angular/fire/compat/firestore";
@@ -10,7 +10,10 @@ describe('TrainingAdapter', () => {
 
     it('should convert not finished Training model into TrainingDto model', () => {
       const inputTrainingIdSut = 'trainingIdTest';
+      const muscleGroupsSut = [ MuscleGroups.Core ];
+
       const inputTrainingSut: TrainingDto = {
+        muscleGroups: muscleGroupsSut,
         observations: 'trainingObservationTest',
         creationDate: inputTrainingCreationDateSut,
         finishDate: undefined
@@ -20,6 +23,7 @@ describe('TrainingAdapter', () => {
       const trainingState = TrainingAdapter.toState(inputTrainingSut, inputTrainingIdSut, inputTrainingExercisesSut)
 
       expect(trainingState.id).toEqual(inputTrainingIdSut)
+      expect(trainingState.muscleGroups).toEqual(muscleGroupsSut)
       expect(trainingState.observations).toEqual(inputTrainingSut.observations)
       expect(trainingState.trainingExercises).toEqual(inputTrainingExercisesSut)
       expect(trainingState.creationDate).toEqual(creationDateSut)     
@@ -29,9 +33,10 @@ describe('TrainingAdapter', () => {
     it('should convert finished Training model into TrainingDto model', () => {
       const finishDateDateSut: Date = new Date()
       const inputTrainingFinishDateSut: Timestamp = Timestamp.fromDate(finishDateDateSut)
-
+      const muscleGroupsSut = [ MuscleGroups.Arms]
       const inputTrainingIdSut = 'trainingIdTest';
       const inputTrainingSut: TrainingDto = {
+        muscleGroups: muscleGroupsSut,
         observations: 'trainingObservationTest',
         creationDate: inputTrainingCreationDateSut,
         finishDate: inputTrainingFinishDateSut
@@ -42,6 +47,7 @@ describe('TrainingAdapter', () => {
 
       expect(trainingState.id).toEqual(inputTrainingIdSut)
       expect(trainingState.observations).toEqual(inputTrainingSut.observations)
+      expect(trainingState.muscleGroups).toEqual(muscleGroupsSut)
       expect(trainingState.trainingExercises).toEqual(inputTrainingExercisesSut)
       expect(trainingState.creationDate).toEqual(creationDateSut)     
       expect(trainingState.finishDate).toEqual(finishDateDateSut)      
@@ -52,9 +58,11 @@ describe('TrainingAdapter', () => {
     const creationDateSut: Date = new Date()
     const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
     it('should convert not finished Training model into TrainingDto model', () => {
+      const muscleGroupsSut = [ MuscleGroups.Chest ]
       const inputTrainingSut: Training = {
         id: 'trainingIdTest',
         creationDate: creationDateSut,
+        muscleGroups: muscleGroupsSut,
         trainingExercises: [],
         observations: 'observations2',
         finishDate: undefined
@@ -62,6 +70,7 @@ describe('TrainingAdapter', () => {
 
       const trainingDto = TrainingAdapter.toDto(inputTrainingSut)
 
+      expect(trainingDto.muscleGroups).toEqual(muscleGroupsSut)
       expect(trainingDto.observations).toEqual(inputTrainingSut.observations)
       expect(trainingDto.creationDate).toEqual(inputTrainingCreationDateSut)  
       expect(trainingDto.finishDate).toEqual(inputTrainingSut.finishDate)    
@@ -70,10 +79,11 @@ describe('TrainingAdapter', () => {
     it('should convert finished Training model into TrainingDto model', () => {
       const modifiedDateSut: Date = new Date()
       const inputTrainingModifiedDateSut: Timestamp = Timestamp.fromDate(modifiedDateSut)
-      
+      const muscleGroupsSut = [] as MuscleGroups[]
       const inputTrainingSut: Training = {
         id: 'trainingIdTest',
         creationDate: creationDateSut,
+        muscleGroups: muscleGroupsSut,
         trainingExercises: [],
         observations: 'observations2',
         finishDate: modifiedDateSut
@@ -82,6 +92,7 @@ describe('TrainingAdapter', () => {
       const trainingDto = TrainingAdapter.toDto(inputTrainingSut)
 
       expect(trainingDto.observations).toEqual(inputTrainingSut.observations)
+      expect(trainingDto.muscleGroups).toEqual(muscleGroupsSut)
       expect(trainingDto.creationDate).toEqual(inputTrainingCreationDateSut)  
       expect(trainingDto.finishDate).toEqual(inputTrainingModifiedDateSut)      
     });

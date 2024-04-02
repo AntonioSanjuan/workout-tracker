@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -16,6 +16,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatButtonToggleModule,
     MatButtonModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDatepickerModule
   ],
   exports: [
     CommonModule,
@@ -52,7 +56,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatButtonToggleModule,
     MatButtonModule,
-    MatStepperModule
-  ]
+    MatStepperModule,
+    MatDatepickerModule
+  ],
+  providers: [
+    provideNativeDateAdapter(),
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'}
+  ],
+
 })
 export class UiModule {}

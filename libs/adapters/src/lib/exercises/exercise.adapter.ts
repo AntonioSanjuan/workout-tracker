@@ -1,13 +1,14 @@
 import { Exercise, ExerciseDto } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
+import { DateAdapter } from "../date/date.adapter";
 
 export class ExerciseAdapter {
     static toState(exercise: ExerciseDto, exerciseId: string): Exercise {
         return {
             ...exercise,
             id: exerciseId,
-            creationDate: exercise.creationDate.toDate(),
-            lastModification: exercise.lastModification?.toDate()
+            creationDate: DateAdapter.toState(exercise.creationDate),
+            lastModification: exercise.lastModification ? DateAdapter.toState(exercise.lastModification) : undefined 
         }
     }
 
@@ -17,8 +18,8 @@ export class ExerciseAdapter {
             musclesInvolved: exercise.musclesInvolved,
             image: exercise.image,
             observations: exercise.observations,
-            creationDate: Timestamp.fromDate(exercise.creationDate),
-            lastModification: exercise.lastModification ? Timestamp.fromDate(exercise.lastModification) : undefined
+            creationDate: DateAdapter.toDto(exercise.creationDate),
+            lastModification: exercise.lastModification ? DateAdapter.toDto(exercise.lastModification) : undefined
         }
     }
 }

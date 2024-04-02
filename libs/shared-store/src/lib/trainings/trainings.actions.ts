@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store"
-import { Training } from "@workout-tracker/models"
+import { Training, TrainingQueryFilters } from "@workout-tracker/models"
 import firebase from 'firebase/compat/app';
 
 export const GET_USER_TRAININGS_REQUEST = 'GET USER TRAININGS'
@@ -32,7 +32,7 @@ export const addAnonymousUserTrainingRequestSuccess = createAction(ADD_ANONYMOUS
 export const ADD_ANONYMOUS_USER_TRAINING_ERROR = 'ADD ANONYMOUS USER TRAINING Error'
 export const addAnonymousUserTrainingRequestError = createAction(ADD_ANONYMOUS_USER_TRAINING_ERROR, props<{ error: firebase.FirebaseError }>())
 
-export const SET_TRAINING_EXERCISE_TEMPLATE_NAME_QUERY_FILTER = 'SET TRAINING EXERCISE TEMPLATE NAME QUERY FILTER'
-export const setTrainingExerciseTemplateNameQueryFilter = createAction(SET_TRAINING_EXERCISE_TEMPLATE_NAME_QUERY_FILTER, props<{ trainingExerciseTemplateName: string}>())
+export const SET_TRAINING_QUERY_FILTER = 'SET TRAINING QUERY FILTER'
+export const setTrainingQueryFilter = createAction(SET_TRAINING_QUERY_FILTER, props<{ filters: TrainingQueryFilters}>())
 export const CLEAR_TRAINING_QUERY_FILTER = 'CLEAR TRAINING QUERY FILTER'
 export const clearTrainingQueryFilter = createAction(CLEAR_TRAINING_QUERY_FILTER)

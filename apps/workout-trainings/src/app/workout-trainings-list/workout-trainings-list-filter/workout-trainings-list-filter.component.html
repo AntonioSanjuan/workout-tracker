@@ -1,0 +1,67 @@
+<div class="TrainingsFilter_MainContainer"
+    *ngrxLet="{ trainingsFilters: trainingsFilters$ } as vm">
+
+    <div class="TrainingsFilter_NameFilterContainer">
+        <mat-form-field *ngIf="trainingsListFilterForm">
+            <mat-label>Filter by dates</mat-label>
+            <mat-date-range-input
+              [formGroup]="trainingsListFilterForm"
+              [rangePicker]="campaignOnePicker"
+              [comparisonStart]="trainingsListFilterForm.value.fromDate"
+              [comparisonEnd]="trainingsListFilterForm.value.toDate">
+              <input matStartDate placeholder="Start date" formControlName="fromDate">
+              <input matEndDate placeholder="End date" formControlName="toDate">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+        </mat-form-field>
+        <button mat-mini-fab color="warn" 
+            attr.aria-label="{{'apps.workout-exercises.list.filter.byNameLabel' | translate }}"  
+            [disabled]="!trainingsListFilterForm?.value?.fromDate || !trainingsListFilterForm?.value?.toDate" 
+            (click)="search()">
+            <mat-icon>search</mat-icon>
+        </button>
+        <div class="TrainingsFilter_NameFilterBanner">
+            <workout-tracker-banner 
+                [content]="'hi! add your content'">
+            </workout-tracker-banner>
+        </div>
+    </div>
+    <div class="TrainingsFilter_MuscleFilterContainer" [@accordion]="collapsed">
+        <div class="TrainingsFilter_MuscleFilter">
+            <div class="TrainingsFilter_MuscleFilterHeader">
+                <h2>{{'apps.workout-exercises.list.filter.byMuscleLabel' | translate}}</h2>
+            </div>
+            <div class="TrainingsFilter_MuscleFilterContent" *ngIf="trainingsListFilterForm" [formGroup]="trainingsListFilterForm">
+                <workout-tracker-muscle-groups-selector
+                    [label]="'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.musclesInvolved' | translate"
+                    [errorLabel]="(trainingsListFilterForm.controls.muscleGroups.hasError('required') || trainingsListFilterForm.controls.muscleGroups.hasError('minLength')) ?
+                        ('apps.workout-exercises.list.addExercise.step.basicInfo.form.errors.muscleRequired' | translate) :
+                        null"
+                    [formGroup]="trainingsListFilterForm"
+                    [formControlName]="'muscleGroups'"
+                    (muscleGroupSelection)="search()">
+                </workout-tracker-muscle-groups-selector>
+            </div>
+        </div>
+    </div>
+    <div class="TrainingsFilter_MuscleFilterActionsContainer">
+        
+        <div class="TrainingsFilter_MuscleFiltersActive" *ngIf="vm.trainingsFilters.muscleGroups.length">
+            <h2>{{'apps.workout-exercises.list.filter.filteredByMuscles' | translate}}</h2>
+            <div>
+                  <workout-tracker-muscle-pill *ngFor="let muscleInvolvedByGroup of vm.trainingsFilters.muscleGroups"
+                    [muscleGroup]="muscleInvolvedByGroup"
+                  ></workout-tracker-muscle-pill>
+            </div>
+        </div>
+        <button 
+            [@rotate]="!collapsed"
+            (click)="toggle()"
+            mat-mini-fab 
+            color="primary" 
+            attr.aria-label="{{'pokemon.list.filter.openFilter' | translate }}">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </div>
+</div>

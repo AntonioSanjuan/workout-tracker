@@ -2,8 +2,7 @@ import { createReducer, on } from "@ngrx/store"
 import { trainingsInitialState } from "./models/trainingsState.initialState";
 import { TrainingsState } from "./models/trainingsState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
-import { Training, TrainingQueryFilters } from "@workout-tracker/models";
-import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingExerciseTemplateNameQueryFilter } from "./trainings.actions";
+import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter } from "./trainings.actions";
 
 export const TRAININGS_FEATURE_KEY = 'trainings'; 
 
@@ -23,22 +22,34 @@ export const trainingsReducer = createReducer(
         getAuthenticatedUserTrainingsRequestSuccess, (state: TrainingsState, { trainings }) => {
         return {
             ...state, 
-            list: trainings,
-            filtered: trainings
-        }
-    }),
-    on(setTrainingExerciseTemplateNameQueryFilter, (state: TrainingsState, { trainingExerciseTemplateName: trainingName }) => {
-        const newFilters = {
-            ...state.query.filters,
-            byTemplateName: trainingName
-        }
-        return {
-            ...state, 
+            list: [...state.list, ...trainings ],
+            filtered: [...state.list, ...trainings ],
             query: {
                 ...state.query,
-                filters: {...newFilters}
-            },
-            filtered: filterTrainings(state.list, newFilters)
+                pagination: {
+                    ...state.query.pagination,
+                    moreElements: trainings.length === state.query.pagination.pageElements,
+                    lastElement: trainings[trainings.length - 1]
+                }
+            }
+        }
+    }),
+    on(
+        setTrainingQueryFilter, (state: TrainingsState, { filters }) => {
+        return {
+            ...state, 
+            list: [],
+            filtered: [],
+            query: {
+                ...state.query,
+                pagination: {
+                    ...trainingsInitialState.query.pagination
+                },
+                filters: {
+                    ...state.query.filters,
+                    ...filters
+                }
+            }
         }
     }),
     on(
@@ -46,8 +57,8 @@ export const trainingsReducer = createReducer(
         addAnonymousUserTrainingRequestSuccess, (state: TrainingsState, { training }) => {
         return {
             ...state, 
-            list: [...state.list, training],
-            filtered: filterTrainings([...state.list, training], trainingsInitialState.query.filters)
+            list: [training, ...state.list ],
+            filtered: [training, ...state.filtered ]
         }
     }),
 
@@ -58,16 +69,7 @@ export const trainingsReducer = createReducer(
                 ...state.query,
                 filters: trainingsInitialState.query.filters
             },
-            filtered: filterTrainings(state.list, trainingsInitialState.query.filters)
+            filtered: [...state.list]
         }
     }),
 )
-
-const filterTrainings = (trainings: Training[], filters: TrainingQueryFilters): Training[] => {
-    let filteredTrainings: Training[] = []
-
-    // filter by template name
-    filteredTrainings =  trainings.filter((exercise) => exercise.trainingExercises?.map((trainingExercise) => trainingExercise.exerciseTemplate.name).includes(filters.byTemplateName))
-
-    return [...filteredTrainings];
-}

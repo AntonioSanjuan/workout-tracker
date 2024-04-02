@@ -1,7 +1,18 @@
+import { MuscleGroups } from "../exercises"
+import { Pagination } from "../pagination/pagination.model"
+import { Training } from "./training.model"
+
 export interface TrainingQuery {
-    filters: TrainingQueryFilters
+    filters: TrainingQueryFilters,
+    pagination: Pagination<Training>
 }
 
 export interface TrainingQueryFilters {
-    byTemplateName: string
+    betweenDates?: TrainingQueryFilterBetweenDates
+    muscleGroups: MuscleGroups[]
+}
+
+export interface TrainingQueryFilterBetweenDates {
+    fromDate: Date,
+    toDate: Date
 }

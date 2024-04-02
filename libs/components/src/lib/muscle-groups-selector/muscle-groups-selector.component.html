@@ -1,0 +1,17 @@
+<div class="MuscleGroupsSelector_MainContainer" [formGroup]="formGroup">
+    <mat-form-field>
+        <mat-label>
+            {{ label }}
+        </mat-label>
+        <mat-select [formControlName]="formControlName" multiple>
+            <mat-option
+                appMuscleGroupPill [muscleGroup]="muscleGroup.key"
+                *ngFor="let muscleGroup of muscleGroups | keyvalue" 
+                (click)="selectMuscle(muscleGroup.value)"
+                [value]="muscleGroup.value">
+                {{'common.muscleGroups.' + muscleGroup.value| translate}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="errorLabel">{{ errorLabel }}</mat-error>
+    </mat-form-field>
+</div>

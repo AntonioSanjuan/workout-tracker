@@ -5,14 +5,14 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { userStateMock } from '@workout-tracker/test';
-import { Exercise, Training, TrainingExercise } from '@workout-tracker/models';
+import { userStateMock, trainingsStateMock } from '@workout-tracker/test';
+import { Exercise, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { TrainingsEffects } from './trainings.effects'
 import { getTrainingsList } from './trainings.selectors';
 import { AppInit, loadedApp } from '../ui';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { addAnonymousUserTrainingRequest, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequest, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, addUserTrainingRequest, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest } from './trainings.actions';
+import { addAnonymousUserTrainingRequest, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequest, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, addUserTrainingRequest, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest, setTrainingQueryFilter } from './trainings.actions';
 
 const trainingSut = {
   id: 'trainingIdTest',
@@ -38,7 +38,10 @@ describe('TrainingsEffects', () => {
         { provide: TrainingsService, useValue: trainingsServiceMock },
         TrainingsEffects,
         provideMockStore({
-          initialState: userStateMock
+          initialState: {
+            ...userStateMock,
+            ...trainingsStateMock
+          }
         }),
         provideMockActions(() => actions),
       ],
@@ -85,6 +88,48 @@ describe('TrainingsEffects', () => {
       })
 
     })
+
+    //
+    describe('when setTrainingQueryFilter is dispatched', () => {
+      const filters = {
+        betweenDates: {
+          fromDate: new Date(),
+          toDate: new Date()
+        }
+      } as TrainingQueryFilters
+      beforeEach(() => {
+        store.resetSelectors()
+      })
+
+      describe('if user', () => {
+        const user =  { uid: 'testUID'} as firebase.User
+
+        beforeEach(() => {
+          store.overrideSelector(getUser, user);
+          store.refreshState()
+
+          actions = of(setTrainingQueryFilter({ filters: filters}))
+        })
+        it('should return getAuthenticatedUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingsRequest())
+        })
+      })
+
+      describe('if non user', () => {
+        beforeEach(() => {
+          store.overrideSelector(getUser, undefined);
+          store.refreshState()
+
+          actions = of(setTrainingQueryFilter({ filters: filters}))
+        })
+        it('should return getAnonymousUserTrainingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserTrainingsRequest$)
+          expect(result).toEqual(getAnonymousUserTrainingsRequest())
+        })
+      })
+
+    })
   });
 
   describe('getAuthenticatedUserTrainingsRequest$', () => {
@@ -114,7 +159,7 @@ describe('TrainingsEffects', () => {
         it('should request getTrainings', async () => {
           const getTrainingsSpy = jest.spyOn(trainingService, 'getTrainings')
           await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
-          expect(getTrainingsSpy).toHaveBeenCalledWith(user.uid)
+          expect(getTrainingsSpy).toHaveBeenCalledWith(user.uid, expect.anything())
         })
         it('should return getAuthenticatedUserTrainingsRequestError', async () => {
           const result = await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
@@ -130,7 +175,7 @@ describe('TrainingsEffects', () => {
         it('should request getTrainings', async () => {
           const getTrainingsSpy = jest.spyOn(trainingService, 'getTrainings')
           await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
-          expect(getTrainingsSpy).toHaveBeenCalledWith(user.uid)
+          expect(getTrainingsSpy).toHaveBeenCalledWith(user.uid, expect.anything())
         })
         it('should return getAuthenticatedUserTrainingsRequestSuccess', async () => {
           const result = await firstValueFrom(effects.getAuthenticatedUserTrainingsRequest$)
@@ -275,7 +320,7 @@ describe('TrainingsEffects', () => {
     const exerciseListSut = [{}, {}, {}]
     beforeEach(() => { 
       jest.spyOn(trainingService, 'setTraining').mockReset()
-      store.overrideSelector(getTrainingsList, exerciseListSut as Exercise[]);
+      store.overrideSelector(getTrainingsList, exerciseListSut as Training[]);
       jest.spyOn(trainingService, 'setTraining').mockReturnValue(of(trainingSut))
       actions = of(addAnonymousUserTrainingRequest({
         training: trainingSut

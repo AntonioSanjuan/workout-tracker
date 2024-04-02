@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { CultureService } from './culture.service';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { DateAdapter } from '@angular/material/core';
 // import { AppInit, loadedApp } from '@workout-tracker/shared-store';
 
 describe('CultureService', () => {
@@ -21,7 +22,8 @@ describe('CultureService', () => {
         CultureService,
         provideMockStore({
           initialState: {}
-        })
+        }),
+        DateAdapter
       ]
     });
     translateService = TestBed.inject(TranslateService)

@@ -5,13 +5,14 @@ import { Observable, first } from "rxjs";
 
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
+import { DateAdapter } from "@angular/material/core";
 
 @Injectable()
 export class CultureService {
     private readonly defaultLangCode: string = "ES-ES"
     private translateService: TranslateService = inject(TranslateService)
+    private dateAdapter: DateAdapter<any> = inject(DateAdapter)
     private readonly acceptedLanguages: string[] = [ 'EN-GB', 'ES-ES' ];
-
 
 
     public initialize(): void {
@@ -48,6 +49,7 @@ export class CultureService {
 
     private setCulture(cultureName: string): Observable<void> {
         registerLocaleData(this.getLangCode(cultureName));
+        this.dateAdapter.setLocale(cultureName)
         return this.translateService.use(this.getLangCode(cultureName)).pipe(first())
 
     }

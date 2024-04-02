@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { AppRoutes, Exercise } from '@workout-tracker/models';
 import { WorkoutTrainingsListComponent } from './workout-trainings-list.component';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
+import { getUserTrainingsRequest } from '@workout-tracker/shared-store';
 describe('WorkoutTrainingsComponent', () => {
   let component: WorkoutTrainingsListComponent;
   let fixture: ComponentFixture<WorkoutTrainingsListComponent>;
@@ -59,5 +60,22 @@ describe('WorkoutTrainingsComponent', () => {
   })
 
   describe('Integration tests', () => {
+    describe('isIntersecting expected behaviour', () => {
+      it('isIntersecting request with true prop value should dispatch getUserTrainingsRequest', () => {
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+  
+        component.isIntersecting(true)
+  
+        expect(dispatchSpy).toHaveBeenCalledWith(getUserTrainingsRequest())
+      });
+
+      it('isIntersecting request with false prop value should dispatch getUserTrainingsRequest', () => {
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+  
+        component.isIntersecting(false)
+  
+        expect(dispatchSpy).not.toHaveBeenCalledWith(getUserTrainingsRequest())
+      });
+    })
   })
 });

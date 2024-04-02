@@ -1,6 +1,7 @@
 import { DocumentReference } from "@angular/fire/compat/firestore";
 import {Exercise, Training, TrainingDto, TrainingExerciseSerie, TrainingExerciseDto, TrainingExerciseSerieDto, TrainingExercise } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
+import { DateAdapter } from "../date/date.adapter";
 
 export class TrainingAdapter {
     static toState(training: TrainingDto, id: string, trainingExercises: TrainingExercise[]): Training {
@@ -9,8 +10,8 @@ export class TrainingAdapter {
             id: id,
             trainingExercises: trainingExercises,
             
-            creationDate: training.creationDate.toDate(),
-            finishDate: training.finishDate?.toDate()
+            creationDate: DateAdapter.toState(training.creationDate),
+            finishDate: training.finishDate ? DateAdapter.toState(training.finishDate) : undefined
         }
     }
 
@@ -18,8 +19,9 @@ export class TrainingAdapter {
         return {
             observations: training.observations,
 
-            creationDate: Timestamp.fromDate(training.creationDate),
-            finishDate: training.finishDate ? Timestamp.fromDate(training.finishDate) : undefined
+            muscleGroups: training.muscleGroups,
+            creationDate:  DateAdapter.toDto(training.creationDate),
+            finishDate: training.finishDate ? DateAdapter.toDto(training.finishDate) : undefined
         }
     }
 }

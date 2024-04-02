@@ -8,6 +8,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService
 import { UserSettings } from '@workout-tracker/models';
 import firebase from 'firebase/compat/app/';
 import { of } from 'rxjs';
+import { DateAdapter } from '@angular/material/core';
 
 const mock = {
   collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>)
@@ -33,7 +34,8 @@ describe('UserSettingsService', () => {
         UserSettingsService,
         provideMockStore({
           initialState: {}
-        })
+        }),
+        DateAdapter
       ]
     });
     service = TestBed.inject(UserSettingsService);

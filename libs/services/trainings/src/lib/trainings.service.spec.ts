@@ -6,7 +6,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import firebase from 'firebase/compat/app/';
-import { Exercise, Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
+import { Exercise, Training, TrainingExercise, TrainingExerciseSerie, TrainingQuery } from '@workout-tracker/models';
 import { ExerciseAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from '@workout-tracker/adapters';
 import { TrainingsService } from './trainings.service';
 import { ExercisesService } from '@workout-tracker/services/exercises';
@@ -93,12 +93,12 @@ describe('TrainingsService', () => {
 
     describe('getTrainings', () => {
       beforeEach(() => {
-        jest.spyOn(TrainingsService.prototype as any, 'getTrainingsCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingData.map(data => ({ id: data.id, data: () => TrainingAdapter.toDto(data) }))}))});
+        jest.spyOn(TrainingsService.prototype as any, 'getTrainingsPaginatedCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingData.map(data => ({ id: data.id, data: () => TrainingAdapter.toDto(data) }))}))});
         jest.spyOn(TrainingsService.prototype as any, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => (exerciseTemplateData)})} } as any) }))}))});
         jest.spyOn(TrainingsService.prototype as any, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))});
       })
       it('getTrainings should return an array of trainings with trainingExercises', (done) => {
-        service.getTrainings(userIdSut).subscribe((result) => {
+        service.getTrainings(userIdSut, {} as TrainingQuery).subscribe((result) => {
           expect(result).toEqual(trainingData);
           done();
         });

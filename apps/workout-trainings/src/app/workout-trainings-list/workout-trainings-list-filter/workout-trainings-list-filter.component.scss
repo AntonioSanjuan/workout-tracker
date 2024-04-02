@@ -1,0 +1,133 @@
+@use "css/main.scss" as shellStyles;
+
+.TrainingsFilter_MainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    background-color: shellStyles.$grey1;
+    box-shadow: shellStyles.$mainColor 0px 15px 20px -13px;
+    .TrainingsFilter_NameFilterContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+        background: shellStyles.$grey2;
+        min-height: 200px;
+        width: 100%;
+
+        mat-form-field {
+            .mat-mdc-form-field-subscript-wrapper {
+                display: none;
+            }
+        }
+
+        > button {
+            border-radius: 5px;
+            background-color: shellStyles.$mainColor;
+            &:disabled { 
+            background-color: shellStyles.$grey3;
+                mat-icon {
+                    color: shellStyles.$white;    
+                }
+            }
+        }
+
+        .TrainingsFilter_NameFilterBanner {
+            border-radius: 5px;
+            width: 300px;
+            padding: 5px 10px;
+            margin-left: 25px;
+
+            p {
+                font-size: 20px;
+                margin: 0;
+                color: shellStyles.$white
+            }
+        }
+        
+    }
+    .TrainingsFilter_MuscleFilterContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        justify-content: flex-start;
+        overflow: hidden;
+        
+        .TrainingsFilter_MuscleFilter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+
+            .TrainingsFilter_MuscleFilterContent {
+                display: flex;
+                flex-direction: row;
+                width: 80%;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+
+                .TrainingsFilter_MuscleFilters {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .TrainingsFilter_MuscleFilterActionsContainer {
+        position: relative;
+        min-height: 25px;
+    
+        .TrainingsFilter_MuscleFiltersActive {
+            display: flex;
+            padding: 0.75em 0.675em;
+            border-radius: 10px;
+            background-color: shellStyles.$grey2;
+            flex-direction: row;
+            margin: 20px 0px;
+            align-items: center;
+            gap: 10px;
+
+            .TrainingsFilter_MuscleFiltersCurrent {
+                display: flex;
+                flex-direction: row;
+                cursor: pointer;
+            }
+        }
+        button {
+            position: absolute;
+            bottom: -20px;
+            right: calc(50% - 20px);
+            z-index: 3;
+            background-color: shellStyles.$mainColor;
+        }
+    
+    }
+}
+
+@media (max-width: 960px) {
+    .TrainingsFilter_MainContainer {
+        .TrainingsFilter_NameFilterContainer {
+            min-height: 130px;
+            mat-form-field {
+                margin: 0px 10px;
+            }
+            > button {
+                margin: 0px 10px;
+            }
+            .TrainingsFilter_NameFilterBanner {
+                display: none;
+            }
+        }
+
+        .TrainingsFilter_MuscleFilterContainer  {
+            .TrainingsFilter_MuscleFilter  {
+                .TrainingsFilter_MuscleFilterContent  {
+                    gap: 10px;
+                }
+            }
+        }
+    }
+}

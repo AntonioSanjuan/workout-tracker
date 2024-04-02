@@ -1,17 +1,50 @@
 import { Injectable, inject } from "@angular/core";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference, DocumentSnapshot } from '@angular/fire/compat/firestore'
-import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
-import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, QueryFn } from '@angular/fire/compat/firestore'
+import { DateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
+import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery, getMuscleInvolvedGroup } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
-import { Observable, combineLatest, forkJoin, from, map, switchMap } from "rxjs";
+import { Observable, catchError, combineLatest, defaultIfEmpty, forkJoin, from, map, switchMap } from "rxjs";
 import { ExercisesService } from '@workout-tracker/services/exercises'
+
 @Injectable()
 export class TrainingsService {
     private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
     private exerciseService: ExercisesService = inject(ExercisesService)
 
+    private getTrainingsPaginatedQuery(userId: string, trainingQuery: TrainingQuery): QueryFn {
+        const trainingsPaginatedQuery: QueryFn = ref => {
+            let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+
+            //filters
+            if (trainingQuery.filters.betweenDates) { 
+                query = query.where('creationDate', ">=", DateAdapter.toDto(trainingQuery.filters.betweenDates.fromDate)).where('creationDate', "<=",  DateAdapter.toDto(trainingQuery.filters.betweenDates.toDate)) 
+            }
+            if (trainingQuery.filters.muscleGroups.length) { 
+
+            }
+
+            // Aplicar ordenamiento
+            query = query
+                .limit(trainingQuery.pagination.pageElements)
+                .orderBy('creationDate', 'desc')
+
+            //pagination
+            if (trainingQuery.pagination.lastElement) { 
+                query = query.startAt(DateAdapter.toDto(trainingQuery.pagination.lastElement.creationDate)) 
+            }
+            
+            return query
+        }
+        return trainingsPaginatedQuery;
+    }
+    
     private getTrainingsCollectionRef(userId: string): AngularFirestoreCollection {
         return this.firebaseDataBase.collection(`user/${userId}/trainings`)
+    }
+
+    private getTrainingsPaginatedCollectionRef(userId: string, trainingQuery: TrainingQuery): AngularFirestoreCollection {
+        const firestoreQuery = this.getTrainingsPaginatedQuery(userId, trainingQuery)
+        return this.firebaseDataBase.collection(`user/${userId}/trainings`, firestoreQuery)
     }
 
     private getTrainingExercisesCollectionRef(userId: string, trainingId: string): AngularFirestoreCollection {
@@ -54,11 +87,10 @@ export class TrainingsService {
         );
     }
 
-    public getTrainings(userId: string): Observable<Training[]> {
-        return this.getTrainingsCollectionRef(userId).get().pipe(
+    public getTrainings(userId: string, query: TrainingQuery): Observable<Training[]> {
+        return this.getTrainingsPaginatedCollectionRef(userId, query).get().pipe(
             switchMap((trainingsQS: firebase.firestore.QuerySnapshot) => {
                 const observables: Observable<Training>[] = [];
-    
                 trainingsQS.docs.forEach((trainingDoc) => {
                     const trainingId = trainingDoc.id;
                     const trainingData = trainingDoc.data() as TrainingDto;
@@ -74,7 +106,12 @@ export class TrainingsService {
                     );
                     observables.push(trainingExercisesObservable);
                 });
-                return forkJoin(observables);
+                return forkJoin(observables).pipe(
+                    defaultIfEmpty([]),
+                )
+            }),
+            catchError((error) => {
+                console.log("error", error); throw error
             })
         );
     }
@@ -105,7 +142,9 @@ export class TrainingsService {
                     trainingExerciseObservables.push(trainingExerciseSeriesObservable);
                 });
     
-                return forkJoin(trainingExerciseObservables)
+                return forkJoin(trainingExerciseObservables).pipe(
+                    defaultIfEmpty([]),
+                )
             })
         );
     }

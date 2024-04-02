@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthPersistanceService, authPersistanceServiceMock } from '@workout-tracker/services/auth-persistance';
+import { DateAdapter } from '@angular/material/core';
 
 describe('AppComponent', () => {
   let cultureService: CultureService;
@@ -34,6 +35,7 @@ describe('AppComponent', () => {
         provideMockStore({
           initialState: {}
         }),
+        DateAdapter
       ]
     }).compileComponents();
 

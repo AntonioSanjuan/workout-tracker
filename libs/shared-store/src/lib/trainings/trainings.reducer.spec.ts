@@ -1,9 +1,9 @@
-import { Training, TrainingExercise } from "@workout-tracker/models";
+import { Training, TrainingExercise, TrainingQueryFilters } from "@workout-tracker/models";
 import { trainingsReducer } from "./trainings.reducer";
 import { trainingsInitialState } from "./models/trainingsState.initialState";
 import { setAnonymousUser } from "../user";
 import { TrainingsState } from "./models/trainingsState.model";
-import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingExerciseTemplateNameQueryFilter } from "./trainings.actions";
+import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter } from "./trainings.actions";
 
 describe('trainingsReducer', () => {
     const trainingInitialStateListMock = [ 
@@ -72,7 +72,6 @@ describe('trainingsReducer', () => {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                        byTemplateName: 'byName filter'
                     }
                 }
             } as TrainingsState
@@ -84,22 +83,33 @@ describe('trainingsReducer', () => {
             expect(state.query.filters).toEqual(trainingsInitialState.query.filters)
         })
     })
-
-    describe('setTrainingNameQueryFilter action', () => {
-        it('should handle setTrainingNameQueryFilter action setting trainingName', () => {
+    
+    describe('setTrainingQueryFilter action', () => {
+        it('should handle setTrainingQueryFilter action', () => {
+            const filtersSut: TrainingQueryFilters = {
+                betweenDates: {
+                    fromDate: new Date(),
+                    toDate: new Date()
+                },
+                muscleGroups: []
+            }
             const trainingInitialStateMock = {
                 ...trainingsInitialState,
-                list: trainingInitialStateListMock
+                list: trainingInitialStateListMock,
+                query: {
+                    ...trainingsInitialState.query,
+                    filters: {
+                        ...trainingsInitialState.query.filters,
+                    }
+                }
             } as TrainingsState
 
-            const trainingNameSut = 'trainingName test'
-            
-            const action = setTrainingExerciseTemplateNameQueryFilter({ trainingExerciseTemplateName: trainingNameSut })
+            const action = setTrainingQueryFilter({ filters: filtersSut})
             const state = trainingsReducer(trainingInitialStateMock, action)
 
-            expect(state.query.filters.byTemplateName).toEqual(trainingNameSut)
-            expect(state.filtered).toEqual(trainingInitialStateMock.list.filter((trainingListInitial) =>
-                trainingListInitial.trainingExercises?.map((trainingExercise) => trainingExercise.exerciseTemplate.name).includes(trainingNameSut)))
+            expect(state.query.filters).toEqual(filtersSut)
+            expect(state.list).toEqual([])
+            expect(state.filtered).toEqual([])
         })
     })
 
@@ -112,19 +122,16 @@ describe('trainingsReducer', () => {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                        byTemplateName: '1'
                     }
                 }
             } as TrainingsState
 
             const trainingSut = { id: 'training id (add)'} as Training
-
             
             const action = addAuthenticatedUserTrainingRequestSuccess({ training: trainingSut })
             const state = trainingsReducer(trainingInitialStateMock, action)
 
-            expect(state.list).toEqual([...trainingInitialStateMock.list, trainingSut])
-            
+            expect(state.list).toEqual([trainingSut, ...trainingInitialStateMock.list])
         })
     })
 
@@ -137,7 +144,6 @@ describe('trainingsReducer', () => {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                        byTemplateName: '1'
                     }
                 }
             } as TrainingsState
@@ -148,7 +154,7 @@ describe('trainingsReducer', () => {
             const action = addAnonymousUserTrainingRequestSuccess({ training: trainingSut })
             const state = trainingsReducer(trainingInitialStateMock, action)
 
-            expect(state.list).toEqual([...trainingInitialStateMock.list, trainingSut])
+            expect(state.list).toEqual([trainingSut, ...trainingInitialStateMock.list])
             
         })
     })

@@ -1,9 +1,13 @@
 <div
     *ngrxLet="{ 
         filteredTrainings: filteredTrainings$,
-        trainingOngoing: trainingOngoing$ 
+        trainingOngoing: trainingOngoing$,
+        trainingsPagination: trainingsPagination$
     } as vm"
     class="WorkoutTrainingsList__MainContainer">
+
+    <workout-tracker-trainings-list-filter></workout-tracker-trainings-list-filter>
+
 
     <button mat-flat-button color="primary" (click)="newTraining()">
         {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
@@ -22,4 +26,10 @@
         (click)="openTrainingDetails(filteredTraining)">
         <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
     </div>
+
+    <area 
+        appIntersectionObserver
+        (isIntersecting)="isIntersecting($event)"
+        [offset]="50"
+        [active]="vm.filteredTrainings.length > 0 && vm.trainingsPagination.moreElements" />
 </div>

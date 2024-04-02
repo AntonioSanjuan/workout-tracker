@@ -12,6 +12,10 @@
     justify-content: center;
     gap: 35px;
 
+    workout-tracker-trainings-list-filter {
+        width: 100%;
+    }
+
     button {
         background-color: shellStyles.$mainColor;
     }
