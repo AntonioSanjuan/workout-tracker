@@ -7,9 +7,8 @@ import firebase from 'firebase/compat/app';
 import { Training } from "@workout-tracker/models";
 import { AppInit, loadedApp } from "../ui";
 import { TrainingsService } from "@workout-tracker/services/trainings"
-import { updateAnonymousUserTrainingRequestError, updateAnonymousUserTrainingRequestSuccess, updateAuthenticatedUserTrainingRequestError, updateAuthenticatedUserTrainingRequestSuccess, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestError, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest, setTrainingQueryFilter, addUserTrainingRequest, addAuthenticatedUserTrainingRequest, addAnonymousUserTrainingRequest, addAuthenticatedUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestError, addAnonymousUserTrainingRequestSuccess, addAnonymousUserTrainingRequestError } from "./trainings.actions";
+import { updateAnonymousUserTrainingRequestError, updateAnonymousUserTrainingRequestSuccess, updateAuthenticatedUserTrainingRequestError, updateAuthenticatedUserTrainingRequestSuccess, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestError, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest, setTrainingQueryFilter, addUserTrainingRequest, addAuthenticatedUserTrainingRequest, addAnonymousUserTrainingRequest, addAuthenticatedUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestError, addAnonymousUserTrainingRequestSuccess, addAnonymousUserTrainingRequestError, clearTrainingQueryFilter } from "./trainings.actions";
 import { updateAnonymousUserTrainingRequest, updateAuthenticatedUserTrainingRequest, updateUserTrainingRequest, getTrainingOngoing, getTrainingsList, getTrainingsPagination, getTrainingsQuery } from "../trainings";
-import { getExercisesList } from "../exercises";
 
 @Injectable()
 export class TrainingsEffects {
@@ -18,7 +17,7 @@ export class TrainingsEffects {
     private actions$ = inject(Actions);
 
     getUserTrainingsRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getUserTrainingsRequest,setTrainingQueryFilter),
+        ofType(getUserTrainingsRequest, setTrainingQueryFilter, clearTrainingQueryFilter),
         concatLatestFrom(() => this.store.select(getUser)),
         switchMap(([_, user]) =>
             iif(

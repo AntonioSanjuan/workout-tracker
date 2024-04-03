@@ -5,7 +5,7 @@ import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, accordionAnimation, 
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
 import { MuscleGroups, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { clearExerciseQueryFilter, setExerciseNameQueryFilter, setTrainingQueryFilter, getTrainingsFilters } from '@workout-tracker/shared-store';
+import { clearExerciseQueryFilter, setExerciseNameQueryFilter, setTrainingQueryFilter, getTrainingsFilters, clearTrainingQueryFilter } from '@workout-tracker/shared-store';
 import { BannerComponent, MusclePillComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { FormGroup } from '@angular/forms';
 import { TrainingsListFilterForm, trainingsListFilterForm } from './workout-trainings-list-filter.service.form';
@@ -61,5 +61,10 @@ export class WorkoutTrainingsFilterListComponent implements OnInit {
         muscleGroups: formValues?.muscleGroups ?? []
       }
     }))
+  }
+
+  public clearFilters(){
+    this.trainingsListFilterForm = trainingsListFilterForm()
+    this.store.dispatch(clearTrainingQueryFilter())
   }
 }

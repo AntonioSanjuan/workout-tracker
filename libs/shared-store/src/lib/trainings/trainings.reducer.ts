@@ -76,10 +76,15 @@ export const trainingsReducer = createReducer(
     on(clearTrainingQueryFilter, (state: TrainingsState) => {
         return {
             ...state, 
+            list: [],
             query: {
                 ...state.query,
-                filters: trainingsInitialState.query.filters
+                filters: trainingsInitialState.query.filters,
+                pagination: {
+                    ...trainingsInitialState.query.pagination
+                },
             },
+
         }
     }),
 )

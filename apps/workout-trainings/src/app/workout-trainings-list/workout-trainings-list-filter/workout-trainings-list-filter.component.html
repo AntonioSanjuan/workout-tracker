@@ -1,26 +1,37 @@
 <div class="TrainingsFilter_MainContainer"
     *ngrxLet="{ trainingsFilters: trainingsFilters$ } as vm">
 
-    <div class="TrainingsFilter_NameFilterContainer">
-        <mat-form-field *ngIf="trainingsListFilterForm">
-            <mat-label>{{'apps.workout-trainings.list.filter.byDatePlaceholder' | translate}}</mat-label>
-            <mat-date-range-input
-              [formGroup]="trainingsListFilterForm"
-              [rangePicker]="campaignOnePicker"
-              [comparisonStart]="trainingsListFilterForm.value.fromDate"
-              [comparisonEnd]="trainingsListFilterForm.value.toDate">
-              <input matStartDate placeholder="Start date" formControlName="fromDate">
-              <input matEndDate placeholder="End date" formControlName="toDate">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
-        </mat-form-field>
-        <button mat-mini-fab color="warn" 
-            attr.aria-label="{{'apps.workout-trainings.list.filter.byDateLabel' | translate }}"  
-            [disabled]="!trainingsListFilterForm?.value?.fromDate || !trainingsListFilterForm?.value?.toDate" 
-            (click)="search()">
-            <mat-icon>search</mat-icon>
-        </button>
+    <div class="TrainingsFilter_DateFilterContainer">
+        <div class="TrainingsFilter_DateFilterFormContainer">
+            <div class="TrainingsFilter_DateFilterForm">
+                <mat-form-field *ngIf="trainingsListFilterForm">
+                    <mat-label>{{'apps.workout-trainings.list.filter.byDatePlaceholder' | translate}}</mat-label>
+                    <mat-date-range-input
+                      [formGroup]="trainingsListFilterForm"
+                      [rangePicker]="campaignOnePicker"
+                      [comparisonStart]="trainingsListFilterForm.value.fromDate"
+                      [comparisonEnd]="trainingsListFilterForm.value.toDate">
+                      <input matStartDate placeholder="Start date" formControlName="fromDate">
+                      <input matEndDate placeholder="End date" formControlName="toDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                </mat-form-field>
+                <button mat-mini-fab color="warn" 
+                    attr.aria-label="{{'apps.workout-trainings.list.filter.byDateLabel' | translate }}"  
+                    [disabled]="!trainingsListFilterForm?.value?.fromDate || !trainingsListFilterForm?.value?.toDate" 
+                    (click)="search()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+            <button mat-flat-button color="warn" 
+                attr.aria-label="{{'apps.workout-trainings.list.filter.clear' | translate }}"  
+                [disabled]="!trainingsListFilterForm?.value?.fromDate && !trainingsListFilterForm?.value?.toDate && !trainingsListFilterForm?.value?.muscleGroups?.length" 
+                (click)="clearFilters()">
+                Clear Filters
+            </button>
+
+        </div>
         <div class="TrainingsFilter_NameFilterBanner">
             <workout-tracker-banner 
                 [content]="'apps.workout-trainings.list.filter.banner.content' | translate">

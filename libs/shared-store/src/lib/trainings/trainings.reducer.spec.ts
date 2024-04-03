@@ -70,15 +70,16 @@ describe('trainingsReducer', () => {
                     ...trainingsInitialState.query,
                     filters: {
                         ...trainingsInitialState.query.filters,
-                    }
+                    },
                 }
             } as TrainingsState
 
             const action = clearTrainingQueryFilter()
             const state = trainingsReducer(trainingInitialStateMock, action)
 
-            expect(state.list).toEqual(trainingInitialStateMock.list)
+            expect(state.list).toEqual([])
             expect(state.query.filters).toEqual(trainingsInitialState.query.filters)
+            expect(state.query.pagination).toEqual(trainingsInitialState.query.pagination)
         })
     })
     
