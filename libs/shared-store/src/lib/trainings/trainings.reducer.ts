@@ -23,7 +23,6 @@ export const trainingsReducer = createReducer(
         return {
             ...state, 
             list: [...state.list, ...trainings ],
-            filtered: [...state.list, ...trainings ],
             query: {
                 ...state.query,
                 pagination: {
@@ -39,7 +38,6 @@ export const trainingsReducer = createReducer(
         return {
             ...state, 
             list: [],
-            filtered: [],
             query: {
                 ...state.query,
                 pagination: {
@@ -58,7 +56,6 @@ export const trainingsReducer = createReducer(
         return {
             ...state, 
             list: [training, ...state.list ],
-            filtered: [training, ...state.filtered ]
         }
     }),
 
@@ -67,7 +64,7 @@ export const trainingsReducer = createReducer(
         updateAnonymousUserTrainingRequestSuccess, (state: TrainingsState, { training }) => {
         const replaceElIndex = [...state.list].findIndex((trainingListEl) => trainingListEl.id === training.id)
         const newList = [...state.list];
-        
+
         if(replaceElIndex !== -1) {
             newList.splice(replaceElIndex, 1, {...training})
         }
@@ -83,7 +80,6 @@ export const trainingsReducer = createReducer(
                 ...state.query,
                 filters: trainingsInitialState.query.filters
             },
-            filtered: [...state.list]
         }
     }),
 )

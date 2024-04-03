@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
-import { EMPTY, Observable, firstValueFrom, of, throwError } from 'rxjs';
+import { Observable, firstValueFrom, of, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';

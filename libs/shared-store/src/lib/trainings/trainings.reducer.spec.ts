@@ -48,7 +48,6 @@ describe('trainingsReducer', () => {
             const state = trainingsReducer(trainingsInitialState, action)
 
             expect(state.list).toEqual(trainingSut)
-            expect(state.filtered).toEqual(trainingSut)
         })
     })
 
@@ -59,7 +58,6 @@ describe('trainingsReducer', () => {
             const state = trainingsReducer(trainingsInitialState, action)
 
             expect(state.list).toEqual(trainingSut)
-            expect(state.filtered).toEqual(trainingSut)
         })
     })
 
@@ -109,7 +107,6 @@ describe('trainingsReducer', () => {
 
             expect(state.query.filters).toEqual(filtersSut)
             expect(state.list).toEqual([])
-            expect(state.filtered).toEqual([])
         })
     })
 

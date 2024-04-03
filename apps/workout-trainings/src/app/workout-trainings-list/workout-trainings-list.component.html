@@ -1,6 +1,6 @@
 <div
     *ngrxLet="{ 
-        filteredTrainings: filteredTrainings$,
+        trainingList: trainingList$,
         trainingOngoing: trainingOngoing$,
         trainingsPagination: trainingsPagination$
     } as vm"
@@ -22,7 +22,7 @@
     </h2>
 
     <div class="WorkoutTrainingsList_ListContainer"
-        *ngFor="let filteredTraining of vm.filteredTrainings"
+        *ngFor="let filteredTraining of vm.trainingList"
         (click)="openTrainingDetails(filteredTraining)">
         <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
     </div>
@@ -31,5 +31,5 @@
         appIntersectionObserver
         (isIntersecting)="isIntersecting($event)"
         [offset]="50"
-        [active]="vm.filteredTrainings.length > 0 && vm.trainingsPagination.moreElements" />
+        [active]="vm.trainingList.length > 0 && vm.trainingsPagination.moreElements" />
 </div>
