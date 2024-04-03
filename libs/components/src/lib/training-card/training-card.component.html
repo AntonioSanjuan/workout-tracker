@@ -29,24 +29,15 @@
                         <div class="TrainingCard_InfoValue">
                             <p>{{ training.observations }}</p>
                         </div>
-                    </div>                    
-                    <!-- <h3>{{training.name}}</h3>
-                    <div class="TrainingCard_TypesContainer">
-                        <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exercise.musclesInvolved"
-                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
-                            [specificMuscle]="mucleInvolved"
-                    ></workout-tracker-muscle-pill>
-                    </div> -->
+                    </div>
                 </div>
                 <div class="TrainingCard_MuscleGroupsContainer">
-                    <h3>{{ 'libs.components.training-card.exercises.title' | translate}}</h3>
-                    <div class="TrainingCard_MuscleGroup" *ngFor="let muscleGroupExercise of muscleGroupExercises">
+                    <h3>{{ 'libs.components.training-card.muscleGroup.title' | translate}}</h3>
+                    <div class="TrainingCard_MuscleGroup" *ngFor="let muscleGroup of training.muscleGroups">
                         <workout-tracker-muscle-pill 
-                        [muscleGroup]="muscleGroupExercise.muscleGroup">
+                            [muscleGroup]="muscleGroup">
                         </workout-tracker-muscle-pill>
-                        {{muscleGroupExercise.numberOfExercises}}
                     </div>
-
                 </div>
             </div>
         </mat-card-content>

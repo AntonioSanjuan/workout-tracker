@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, QueryFn } from '@angular/fire/compat/firestore'
 import { DateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
-import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery, getMuscleInvolvedGroup } from "@workout-tracker/models";
+import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, catchError, combineLatest, defaultIfEmpty, forkJoin, from, map, switchMap } from "rxjs";
 import { ExercisesService } from '@workout-tracker/services/exercises'
@@ -17,10 +17,13 @@ export class TrainingsService {
 
             //filters
             if (trainingQuery.filters.betweenDates) { 
+                console.log("trainingQuery.filters.betweenDates", trainingQuery.filters.betweenDates)
                 query = query.where('creationDate', ">=", DateAdapter.toDto(trainingQuery.filters.betweenDates.fromDate)).where('creationDate', "<=",  DateAdapter.toDto(trainingQuery.filters.betweenDates.toDate)) 
             }
             if (trainingQuery.filters.muscleGroups.length) { 
-
+                console.log("trainingQuery.filters.muscleGroups", trainingQuery.filters.muscleGroups)
+                query = query.where('muscleGroups', "array-contains-any", trainingQuery.filters.muscleGroups) 
+                
             }
 
             // Aplicar ordenamiento

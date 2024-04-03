@@ -243,8 +243,8 @@
                         "observations": "Observaciones"
                     }
                 },
-                "exercises": {
-                    "title": "Ejercicios por grupo"
+                "muscleGroup": {
+                    "title": "Grupo muscular"
                 },
                 "state": {
                     "finished": "Finalizado",

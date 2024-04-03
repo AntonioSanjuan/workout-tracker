@@ -9,8 +9,3 @@ export const muscleInvolvedByGroups: { [key in MuscleGroups]: MusclesInvolved[] 
     [MuscleGroups.Shoulder]: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Posterior_deltoid],
     [MuscleGroups.Core]: [MusclesInvolved.Abdominals]
 };
-
-//to-do refactor (utils or something similar)
-export const getMuscleInvolvedGroup = (muscleInvolved: MusclesInvolved): MuscleGroups | undefined => {
-    return Object.keys(muscleInvolvedByGroups).find(group => muscleInvolvedByGroups[group as MuscleGroups].includes(muscleInvolved)) as MuscleGroups;
-}
