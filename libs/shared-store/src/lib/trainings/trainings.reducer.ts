@@ -2,7 +2,7 @@ import { createReducer, on } from "@ngrx/store"
 import { trainingsInitialState } from "./models/trainingsState.initialState";
 import { TrainingsState } from "./models/trainingsState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
-import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter } from "./trainings.actions";
+import { updateAnonymousUserTrainingRequestSuccess, updateAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter, addAuthenticatedUserTrainingRequestSuccess, addAnonymousUserTrainingRequestSuccess } from "./trainings.actions";
 
 export const TRAININGS_FEATURE_KEY = 'trainings'; 
 
@@ -62,6 +62,20 @@ export const trainingsReducer = createReducer(
         }
     }),
 
+    on(
+        updateAuthenticatedUserTrainingRequestSuccess,
+        updateAnonymousUserTrainingRequestSuccess, (state: TrainingsState, { training }) => {
+        const replaceElIndex = [...state.list].findIndex((trainingListEl) => trainingListEl.id === training.id)
+        const newList = [...state.list];
+        
+        if(replaceElIndex !== -1) {
+            newList.splice(replaceElIndex, 1, {...training})
+        }
+        return {
+            ...state, 
+            list: [...newList],
+        }
+    }),
     on(clearTrainingQueryFilter, (state: TrainingsState) => {
         return {
             ...state, 

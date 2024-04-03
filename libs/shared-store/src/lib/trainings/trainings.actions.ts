@@ -32,6 +32,21 @@ export const addAnonymousUserTrainingRequestSuccess = createAction(ADD_ANONYMOUS
 export const ADD_ANONYMOUS_USER_TRAINING_ERROR = 'ADD ANONYMOUS USER TRAINING Error'
 export const addAnonymousUserTrainingRequestError = createAction(ADD_ANONYMOUS_USER_TRAINING_ERROR, props<{ error: firebase.FirebaseError }>())
 
+export const UPDATE_USER_TRAINING_REQUEST = 'UPDATE USER TRAINING'
+export const updateUserTrainingRequest = createAction(UPDATE_USER_TRAINING_REQUEST, props<{ training: Training }>())
+export const UPDATE_AUTHENTICATED_USER_TRAINING_REQUEST = 'UPDATE AUTHENTICATED USER TRAINING Request'
+export const updateAuthenticatedUserTrainingRequest = createAction(UPDATE_AUTHENTICATED_USER_TRAINING_REQUEST, props<{ training: Training }>())
+export const UPDATE_AUTHENTICATED_USER_TRAINING_SUCCESS = 'UPDATE AUTHENTICATED USER TRAINING Success'
+export const updateAuthenticatedUserTrainingRequestSuccess = createAction(UPDATE_AUTHENTICATED_USER_TRAINING_SUCCESS, props<{ training: Training }>())
+export const UPDATE_AUTHENTICATED_USER_TRAINING_ERROR = 'UPDATE AUTHENTICATED USER TRAINING Error'
+export const updateAuthenticatedUserTrainingRequestError = createAction(UPDATE_AUTHENTICATED_USER_TRAINING_ERROR, props<{ error: firebase.FirebaseError }>())
+export const UPDATE_ANONYMOUS_USER_TRAINING_REQUEST = 'UPDATE ANONYMOUS USER TRAINING Request'
+export const updateAnonymousUserTrainingRequest = createAction(UPDATE_ANONYMOUS_USER_TRAINING_REQUEST, props<{ training: Training }>())
+export const UPDATE_ANONYMOUS_USER_TRAINING_SUCCESS = 'UPDATE ANONYMOUS USER TRAINING Success'
+export const updateAnonymousUserTrainingRequestSuccess = createAction(UPDATE_ANONYMOUS_USER_TRAINING_SUCCESS, props<{ training: Training }>())
+export const UPDATE_ANONYMOUS_USER_TRAINING_ERROR = 'UPDATE ANONYMOUS USER TRAINING Error'
+export const updateAnonymousUserTrainingRequestError = createAction(UPDATE_ANONYMOUS_USER_TRAINING_ERROR, props<{ error: firebase.FirebaseError }>())
+
 export const SET_TRAINING_QUERY_FILTER = 'SET TRAINING QUERY FILTER'
 export const setTrainingQueryFilter = createAction(SET_TRAINING_QUERY_FILTER, props<{ filters: TrainingQueryFilters}>())
 export const CLEAR_TRAINING_QUERY_FILTER = 'CLEAR TRAINING QUERY FILTER'

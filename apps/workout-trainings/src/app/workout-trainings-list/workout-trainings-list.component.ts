@@ -7,7 +7,7 @@ import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { Training } from '@workout-tracker/models';
 import { of } from 'rxjs';
-import { getTrainingsFiltered, getTrainingOngoing, addUserTrainingRequest, getUserTrainingsRequest, getTrainingsPagination } from '@workout-tracker/shared-store';
+import { getTrainingsFiltered, getTrainingOngoing, addUserTrainingRequest, getUserTrainingsRequest, getTrainingsPagination, getTrainingsList } from '@workout-tracker/shared-store';
 import { TrainingCardComponent } from '@workout-tracker/components'
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
 import { AddWorkoutTrainingDialogComponent } from './add-workout-training.dialog/add-workout-training-dialog.component';
@@ -33,7 +33,7 @@ export class WorkoutTrainingsListComponent {
   private router: Router = inject(Router)
   private dialogService = inject(DialogService)
 
-  public filteredTrainings$ =  this.store.select(getTrainingsFiltered)
+  public filteredTrainings$ =  this.store.select(getTrainingsList)
   public trainingsPagination$ =  this.store.select(getTrainingsPagination)
   public trainingOngoing$ = this.store.select(getTrainingOngoing)
 

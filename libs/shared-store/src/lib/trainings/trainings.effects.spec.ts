@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
-import { Observable, firstValueFrom, of, throwError } from 'rxjs';
+import { EMPTY, Observable, firstValueFrom, of, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
@@ -9,10 +9,10 @@ import { userStateMock, trainingsStateMock } from '@workout-tracker/test';
 import { Exercise, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { TrainingsEffects } from './trainings.effects'
-import { getTrainingsList } from './trainings.selectors';
+import { getTrainingOngoing, getTrainingsList } from './trainings.selectors';
 import { AppInit, loadedApp } from '../ui';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { addAnonymousUserTrainingRequest, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequest, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, addUserTrainingRequest, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest, setTrainingQueryFilter } from './trainings.actions';
+import { addAnonymousUserTrainingRequest, addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequest, addAuthenticatedUserTrainingRequestError, addAuthenticatedUserTrainingRequestSuccess, addUserTrainingRequest, getAnonymousUserTrainingsRequest, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequest, getAuthenticatedUserTrainingsRequestError, getAuthenticatedUserTrainingsRequestSuccess, getUserTrainingsRequest, setTrainingQueryFilter, updateAnonymousUserTrainingRequest, updateAnonymousUserTrainingRequestSuccess, updateAuthenticatedUserTrainingRequest, updateAuthenticatedUserTrainingRequestError, updateAuthenticatedUserTrainingRequestSuccess, updateUserTrainingRequest } from './trainings.actions';
 
 const trainingSut = {
   id: 'trainingIdTest',
@@ -231,6 +231,44 @@ describe('TrainingsEffects', () => {
     })
   });
 
+  describe('finishUserTrainingOnGoingRequest$', () => {
+    describe('when addUserTrainingRequest is dispatched', () => {
+      const trainingOnGoint =  { id: 'trainingOnGoingId', finishDate: undefined} as Training
+  
+      describe('if training on going (not finished)', () => {
+
+        beforeEach(() => { 
+          store.overrideSelector(getTrainingOngoing, trainingOnGoint);
+          actions = of(addUserTrainingRequest({
+            training: trainingSut
+          }))
+          
+        })
+
+        it('should return updateAuthenticatedUserTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.finishUserTrainingOnGoingRequest$)
+          expect(result).toEqual(updateAuthenticatedUserTrainingRequest({ training: {...trainingOnGoint, finishDate: new Date()}}))
+        })
+
+
+      })
+  
+      describe('if its not training on going (not finished)', () => {
+        beforeEach(() => { 
+          store.overrideSelector(getTrainingOngoing, undefined);
+          actions = of(addUserTrainingRequest({
+            training: trainingSut
+          }))
+        })
+        it('should return nothing', async () => {
+          effects.finishUserTrainingOnGoingRequest$.subscribe(result => {
+            expect(result).toBeUndefined();
+          });
+        })
+      })
+    })
+  })
+
   describe('addUserTrainingRequest$', () => {
     describe('when addUserTrainingRequest is dispatched', () => {
       const user =  { uid: 'testUID'} as firebase.User
@@ -334,6 +372,113 @@ describe('TrainingsEffects', () => {
     it('should return addAnonymousUserTrainingRequestSuccess', async () => {
       const result = await firstValueFrom(effects.addAnonymousUserTrainingRequest$)
       expect(result).toEqual(addAnonymousUserTrainingRequestSuccess({ training: {...trainingSut, id: (exerciseListSut.length + 1).toString()}}))
+    })
+  })
+
+  //
+  describe('updateUserTrainingRequest$', () => {
+    describe('when updateUserTrainingRequest is dispatched', () => {
+      const user =  { uid: 'testUID'} as firebase.User
+  
+      describe('if user', () => {
+
+        beforeEach(() => { 
+          store.overrideSelector(getUser, user);
+          actions = of(updateUserTrainingRequest({
+            training: trainingSut
+          }))
+          
+        })
+
+        it('should return updateAuthenticatedUserTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.updateUserTrainingRequest$)
+          expect(result).toEqual(updateAuthenticatedUserTrainingRequest({ training: trainingSut}))
+        })
+
+
+      })
+  
+      describe('if its not user stored', () => {
+        beforeEach(() => { 
+          store.overrideSelector(getUser, undefined);
+          actions = of(updateUserTrainingRequest({
+            training: trainingSut
+          }))
+        })
+        it('should return updateAnonymousUserTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.updateUserTrainingRequest$)
+          expect(result).toEqual(updateAnonymousUserTrainingRequest({ training: trainingSut}))
+        })
+      })
+    })
+  })
+  describe('updateAuthenticatedUserTrainingRequest$', () => {
+    const user =  { uid: 'testUID'} as firebase.User
+    
+    beforeEach(() => { 
+      jest.spyOn(trainingService, 'setTraining').mockReset()
+      store.overrideSelector(getUser, user);
+      jest.spyOn(trainingService, 'setTraining').mockReturnValue(of(trainingSut))
+      actions = of(updateAuthenticatedUserTrainingRequest({
+        training: trainingSut
+      }))
+      
+    })
+    describe('when trainingService.updateTraining success', () => {
+      beforeEach(() => {
+        jest.spyOn(trainingService, 'updateTraining').mockReturnValue(of(trainingSut))
+      })
+      it('should request updateTraining', async () => {
+        const updateExerciseSpy = jest.spyOn(trainingService, 'updateTraining')
+        await firstValueFrom(effects.updateAuthenticatedUserTrainingRequest$)
+        expect(updateExerciseSpy).toHaveBeenCalledWith(user.uid, trainingSut)
+      })
+      it('should return updateAuthenticatedUserTrainingRequestSuccess', async () => {
+        const result = await firstValueFrom(effects.updateAuthenticatedUserTrainingRequest$)
+        expect(result).toEqual(updateAuthenticatedUserTrainingRequestSuccess({ training: trainingSut}))
+      })
+    })
+
+    describe('when trainingService.updateTraining throws error', () => {
+      const errorCodeMock = 'testing error code'
+      const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+      const errorResp = throwError(() => errorMock )
+
+      beforeEach(() => {
+        jest.spyOn(trainingService, 'updateTraining').mockReturnValue(errorResp)
+      })
+
+      it('should request updateTraining', async () => {
+        const updateExerciseSpy = jest.spyOn(trainingService, 'updateTraining')
+        await firstValueFrom(effects.updateAuthenticatedUserTrainingRequest$)
+        expect(updateExerciseSpy).toHaveBeenCalledWith(user.uid, trainingSut)
+      })
+      
+      it('should return updateAuthenticatedUserTrainingRequestError', async () => {
+        const result = await firstValueFrom(effects.updateAuthenticatedUserTrainingRequest$)
+        expect(result).toEqual(updateAuthenticatedUserTrainingRequestError({ error: errorMock}))
+      })
+    })
+  })
+
+  describe('updateAnonymousUserTrainingRequest$', () => {
+    const exerciseListSut = [{}, {}, {}]
+    beforeEach(() => { 
+      jest.spyOn(trainingService, 'updateTraining').mockReset()
+      store.overrideSelector(getTrainingsList, exerciseListSut as Training[]);
+      jest.spyOn(trainingService, 'updateTraining').mockReturnValue(of(trainingSut))
+      actions = of(updateAnonymousUserTrainingRequest({
+        training: trainingSut
+      }))
+    })
+    it('should not request updateTraining', async () => {
+      const updateExerciseSpy = jest.spyOn(trainingService, 'updateTraining')
+      await firstValueFrom(effects.updateAnonymousUserTrainingRequest$)
+      expect(updateExerciseSpy).not.toHaveBeenCalled()
+    })
+    it('should return updateAnonymousUserTrainingRequestSuccess', async () => {
+      const result = await firstValueFrom(effects.updateAnonymousUserTrainingRequest$)
+      expect(result).toEqual(updateAnonymousUserTrainingRequestSuccess({ training: trainingSut }))
     })
   })
 });

@@ -3,7 +3,7 @@ import { trainingsReducer } from "./trainings.reducer";
 import { trainingsInitialState } from "./models/trainingsState.initialState";
 import { setAnonymousUser } from "../user";
 import { TrainingsState } from "./models/trainingsState.model";
-import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter } from "./trainings.actions";
+import { addAnonymousUserTrainingRequestSuccess, addAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter, updateAuthenticatedUserTrainingRequest } from "./trainings.actions";
 
 describe('trainingsReducer', () => {
     const trainingInitialStateListMock = [ 
@@ -156,6 +156,113 @@ describe('trainingsReducer', () => {
 
             expect(state.list).toEqual([trainingSut, ...trainingInitialStateMock.list])
             
+        })
+    })
+    
+    describe('updateAuthenticatedUserTrainingRequest action', () => {
+        describe('if updated training is listed', () => {
+            it('should handle updateAuthenticatedUserTrainingRequest action replacing training', () => {
+                const updatedTrainingIndex = 0;
+                const updatedTraining = trainingInitialStateListMock[updatedTrainingIndex]
+
+                const trainingInitialStateMock = {
+                    ...trainingsInitialState,
+                    list: trainingInitialStateListMock,
+                    query: {
+                        ...trainingsInitialState.query,
+                        filters: {
+                            ...trainingsInitialState.query.filters,
+                        }
+                    }
+                } as TrainingsState
+    
+                const trainingSut = { ...updatedTraining, finishDate: new Date() } as Training
+                const newList = [...trainingInitialStateListMock]
+                newList.splice(updatedTrainingIndex, 1, {...updatedTraining})
+
+                const action = updateAuthenticatedUserTrainingRequest({ training: trainingSut })
+                const state = trainingsReducer(trainingInitialStateMock, action)
+    
+    
+                expect(state.list).toEqual(newList)
+            })
+         })
+        describe('if updated training is not listed', () => { 
+            it('should handle updateAuthenticatedUserTrainingRequest action not modifing trainings listed', () => {
+                const updatedTraining = {id: 'not apear training into list'} as Training
+
+                const trainingInitialStateMock = {
+                    ...trainingsInitialState,
+                    list: trainingInitialStateListMock,
+                    query: {
+                        ...trainingsInitialState.query,
+                        filters: {
+                            ...trainingsInitialState.query.filters,
+                        }
+                    }
+                } as TrainingsState
+    
+                const trainingSut = { ...updatedTraining, finishDate: new Date() } as Training
+                
+                const action = updateAuthenticatedUserTrainingRequest({ training: trainingSut })
+                const state = trainingsReducer(trainingInitialStateMock, action)
+    
+    
+                expect(state.list).toEqual([...state.list])
+            })
+        })
+    })
+
+    describe('addAnonymousUserTrainingRequestSuccess action', () => {
+        describe('if updated training is listed', () => {
+            it('should handle updateAuthenticatedUserTrainingRequest action replacing training', () => {
+                const updatedTrainingIndex = 0;
+                const updatedTraining = trainingInitialStateListMock[updatedTrainingIndex]
+
+                const trainingInitialStateMock = {
+                    ...trainingsInitialState,
+                    list: trainingInitialStateListMock,
+                    query: {
+                        ...trainingsInitialState.query,
+                        filters: {
+                            ...trainingsInitialState.query.filters,
+                        }
+                    }
+                } as TrainingsState
+    
+                const trainingSut = { ...updatedTraining } as Training
+                const newList = [...trainingInitialStateListMock]
+                newList.splice(updatedTrainingIndex, 1, {...updatedTraining})
+                
+                const action = updateAuthenticatedUserTrainingRequest({ training: trainingSut })
+                const state = trainingsReducer(trainingInitialStateMock, action)
+    
+                expect(state.list).toEqual(newList)
+            })
+         })
+        describe('if updated training is not listed', () => { 
+            it('should handle updateAuthenticatedUserTrainingRequest action not modifing trainings listed', () => {
+                const updatedTraining = {id: 'not apear training into list'} as Training
+
+                const trainingInitialStateMock = {
+                    ...trainingsInitialState,
+                    list: trainingInitialStateListMock,
+                    query: {
+                        ...trainingsInitialState.query,
+                        filters: {
+                            ...trainingsInitialState.query.filters,
+                        }
+                    }
+                } as TrainingsState
+    
+                const trainingSut = { ...updatedTraining, finishDate: new Date() } as Training
+                
+                const action = updateAuthenticatedUserTrainingRequest({ training: trainingSut })
+                const state = trainingsReducer(trainingInitialStateMock, action)
+    
+    
+                expect(state.list).toEqual([...trainingInitialStateListMock])
+            })
         })
     })
 })
