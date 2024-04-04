@@ -25,10 +25,10 @@
                 </button>
             </div>
             <button mat-flat-button color="warn" 
-                attr.aria-label="{{'apps.workout-trainings.list.filter.clear' | translate }}"  
+                attr.aria-label="{{'apps.workout-trainings.list.filter.actions.clearFilters' | translate }}"  
                 [disabled]="!trainingsListFilterForm?.value?.fromDate && !trainingsListFilterForm?.value?.toDate && !trainingsListFilterForm?.value?.muscleGroups?.length" 
                 (click)="clearFilters()">
-                Clear Filters
+                {{'apps.workout-trainings.list.filter.actions.clearFilters' | translate }}
             </button>
 
         </div>
@@ -46,9 +46,6 @@
             <div class="TrainingsFilter_MuscleFilterContent" *ngIf="trainingsListFilterForm" [formGroup]="trainingsListFilterForm">
                 <workout-tracker-muscle-groups-selector
                     [label]="'apps.workout-trainings.list.addTraining.step.basicInfo.form.fields.muscleGroup' | translate"
-                    [errorLabel]="(trainingsListFilterForm.controls.muscleGroups.hasError('required') || trainingsListFilterForm.controls.muscleGroups.hasError('minLength')) ?
-                        ('apps.workout-trainings.list.addTraining.step.basicInfo.form.errors.muscleGroupRequired' | translate) :
-                        null"
                     [formGroup]="trainingsListFilterForm"
                     [formControlName]="'muscleGroups'"
                     (muscleGroupSelection)="search()">

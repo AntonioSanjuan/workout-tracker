@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
@@ -8,6 +8,8 @@ import { UiModule } from '@workout-tracker/ui';
 import { MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
 import { clearExerciseQueryFilter, getExercisesFilters, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { BannerComponent, MusclePillComponent, MusclesSelectorComponent } from '@workout-tracker/components';
+import { ExercisesListFilterForm, exerciseListFilterForm } from './workout-trainings-list-filter.service.form';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'workout-tracker-exercises-list-filter',
@@ -26,13 +28,19 @@ import { BannerComponent, MusclePillComponent, MusclesSelectorComponent } from '
   encapsulation: ViewEncapsulation.None,
   standalone: true,
 })
-export class WorkoutExercisesFilterListComponent {
+export class WorkoutExercisesFilterListComponent implements OnInit {
   private store: Store = inject(Store)
   public exercisesFilters$ = this.store.select(getExercisesFilters)
   public musclesByGroup = muscleInvolvedByGroups;
 
   //filters
   public collapsed = true;
+  public exercisesListFilterForm: FormGroup<ExercisesListFilterForm> | undefined
+
+
+  public ngOnInit(): void {
+    this.exercisesListFilterForm = exerciseListFilterForm()
+  }
 
   public toggle(): void {
     this.collapsed = !this.collapsed;
@@ -48,9 +56,17 @@ export class WorkoutExercisesFilterListComponent {
     this.store.dispatch(clearExerciseQueryFilter())
   }
 
-  public searchByName(byName: string) {
-    this.store.dispatch(setExerciseNameQueryFilter({ 
-      exerciseName: byName
-    }))
+  public searchByName() {
+    const formValues = this.exercisesListFilterForm?.getRawValue()
+    if(formValues?.byName) {
+      this.store.dispatch(setExerciseNameQueryFilter({ 
+        exerciseName: formValues?.byName
+      }))
+    }
+  }
+
+  public clearFilters() {
+    this.exercisesListFilterForm = exerciseListFilterForm()
+    this.store.dispatch(clearExerciseQueryFilter())
   }
 }

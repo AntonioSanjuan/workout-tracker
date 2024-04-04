@@ -9,10 +9,12 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { AppRoutes, Exercise } from '@workout-tracker/models';
+import { AppRoutes, Exercise, Training } from '@workout-tracker/models';
 import { WorkoutTrainingsListComponent } from './workout-trainings-list.component';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
 import { getUserTrainingsRequest } from '@workout-tracker/shared-store';
+import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
+import { AddWorkoutTrainingDialogComponent } from './add-workout-training.dialog/add-workout-training-dialog.component';
 describe('WorkoutTrainingsComponent', () => {
   let component: WorkoutTrainingsListComponent;
   let fixture: ComponentFixture<WorkoutTrainingsListComponent>;
@@ -38,6 +40,7 @@ describe('WorkoutTrainingsComponent', () => {
         BrowserAnimationsModule,
         LibsServicesDialogModule,
         WorkoutTrainingsListComponent,
+        WorkoutTrainingsFilterListComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
@@ -77,5 +80,20 @@ describe('WorkoutTrainingsComponent', () => {
         expect(dispatchSpy).not.toHaveBeenCalledWith(getUserTrainingsRequest())
       });
     })
+
+    it('newExercise should request showDialog ', () => {
+      const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+
+      component.newTraining()
+      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingDialogComponent, true)
+    });
+
+    it('openTrainingDetails should navigate to exercise details ', () => {
+      const trainingSut = { id: 'trainingId'}  as Training
+      const navigateSpy = jest.spyOn(router, 'navigate')
+
+      component.openTrainingDetails(trainingSut)
+      expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+    });
   })
 });

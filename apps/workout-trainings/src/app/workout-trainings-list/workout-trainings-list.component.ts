@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { Training } from '@workout-tracker/models';
+import { AppRoutes, Training } from '@workout-tracker/models';
 import { getTrainingOngoing, getUserTrainingsRequest, getTrainingsPagination, getTrainingsList } from '@workout-tracker/shared-store';
 import { TrainingCardComponent } from '@workout-tracker/components'
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
@@ -41,8 +41,7 @@ export class WorkoutTrainingsListComponent {
   }
 
   public openTrainingDetails(training: Training) {
-    //to-do
-    console.log("training", training)
+    this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
   }
 
   public isIntersecting(isIntersecting: boolean): void {

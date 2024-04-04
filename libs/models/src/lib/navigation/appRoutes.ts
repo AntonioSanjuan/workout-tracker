@@ -8,5 +8,5 @@ export enum AppRoutes {
     //workout-exercises
     WorkoutExercisesList = '/exercises',
     //workout-training
-    WorkoutTrainings = '/trainings',
+    WorkoutTrainingsList = '/trainings',
 }

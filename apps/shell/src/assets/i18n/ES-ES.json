@@ -123,6 +123,9 @@
             "list": {
                 "title": "Lista de Entrenamientos",
                 "filter": {
+                    "actions": {
+                        "clearFilters": "Borrar filtros"
+                    },
                     "banner": {
                         "title": "",
                         "content": "Puedes buscar un entrenamineto por la fecha de creación o por el grupo muscular ejercitado"
@@ -173,6 +176,9 @@
             "list": {
                 "title": "Lista de ejercicios",
                 "filter": {
+                    "actions": {
+                        "clearFilters": "Borrar filtros"
+                    },
                     "banner": {
                         "title": "",
                         "content": "Puedes buscar un ejercicio por su nombre, o filtrarlo por el tipo del mismo"

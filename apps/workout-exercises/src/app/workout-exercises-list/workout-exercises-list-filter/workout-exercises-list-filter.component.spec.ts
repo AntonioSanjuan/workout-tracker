@@ -10,7 +10,7 @@ import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-fi
 import { exercisesStateMock } from '@workout-tracker/test';
 import { MusclesInvolved } from '@workout-tracker/models';
 import { clearExerciseQueryFilter, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
-import { MusclesSelectorComponent } from '@workout-tracker/components';
+import { MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 
 describe('WorkoutExercisesFilterListComponent', () => {
   let actions: Observable<Action>;
@@ -23,7 +23,7 @@ describe('WorkoutExercisesFilterListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         WorkoutExercisesFilterListComponent,
-        MusclesSelectorComponent,
+        MusclesGroupsSelectorComponent,
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
       ],
@@ -82,7 +82,11 @@ describe('WorkoutExercisesFilterListComponent', () => {
       const dispatchSpy = jest.spyOn(store, 'dispatch')
       
       const searchSut = 'testing search'
-      component.searchByName(searchSut)
+      component.exercisesListFilterForm?.setValue({
+        byName: searchSut,
+        byMuscles: []
+      })
+      component.searchByName()
 
       expect(dispatchSpy).toHaveBeenCalledWith(setExerciseNameQueryFilter({
         exerciseName: searchSut

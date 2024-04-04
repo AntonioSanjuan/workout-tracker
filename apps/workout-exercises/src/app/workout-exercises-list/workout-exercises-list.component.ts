@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';

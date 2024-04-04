@@ -64,7 +64,7 @@ describe('WorkoutExercisesListComponent', () => {
 
   describe('Integration tests', () => {
     it('newExercise should request showDialog ', () => {
-      let showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+      const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
 
       component.newExercise()
       expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutExerciseDialogComponent, true)
@@ -72,7 +72,7 @@ describe('WorkoutExercisesListComponent', () => {
 
     it('openExerciseDetails should navigate to exercise details ', () => {
       const exerciseSut = { id: 'exerciseId'}  as Exercise
-      let navigateSpy = jest.spyOn(router, 'navigate')
+      const navigateSpy = jest.spyOn(router, 'navigate')
 
       component.openExerciseDetails(exerciseSut)
       expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutExercisesList}/${exerciseSut.id}`])

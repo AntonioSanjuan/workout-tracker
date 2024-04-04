@@ -17,22 +17,37 @@
         min-height: 200px;
         width: 100%;
 
-        mat-form-field {
-            .mat-mdc-form-field-subscript-wrapper {
-                display: none;
-            }
-        }
+        .ExerciseFilter_NameFilterFormContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
 
-        > button {
-            border-radius: 5px;
-            background-color: shellStyles.$mainColor;
-            &:disabled { 
-            background-color: shellStyles.$grey3;
-                mat-icon {
-                    color: shellStyles.$white;    
+            .ExerciseFilter_NameFilterForm {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                mat-form-field {
+                    .mat-mdc-form-field-subscript-wrapper {
+                        display: none;
+                    }
+                }
+        
+                > button {
+                    border-radius: 5px;
+                    background-color: shellStyles.$mainColor;
+                    &:disabled { 
+                    background-color: shellStyles.$grey3;
+                        mat-icon {
+                            color: shellStyles.$white;    
+                        }
+                    }
                 }
             }
         }
+
+
 
         .ExerciseFilter_NameFilterBanner {
             border-radius: 5px;
@@ -110,13 +125,18 @@
 @media (max-width: 960px) {
     .ExerciseFilter_MainContainer {
         .ExerciseFilter_NameFilterContainer {
-            min-height: 130px;
-            mat-form-field {
-                margin: 0px 10px;
+            .ExerciseFilter_NameFilterFormContainer {
+                .ExerciseFilter_NameFilterForm {
+                    flex-direction: column;
+                    mat-form-field {
+                        margin: 0px 10px;
+                    }
+                    > button {
+                        margin: 0px 10px;
+                    }
+                }
             }
-            > button {
-                margin: 0px 10px;
-            }
+
             .ExerciseFilter_NameFilterBanner {
                 display: none;
             }

@@ -8,8 +8,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter.component';
 import { exercisesStateMock } from '@workout-tracker/test';
-import { setTrainingQueryFilter } from '@workout-tracker/shared-store';
+import { clearTrainingQueryFilter, setTrainingQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
+import { MuscleGroups } from '@workout-tracker/models';
 
 describe('WorkoutTrainingsFilterListComponent', () => {
   let actions: Observable<Action>;
@@ -79,5 +80,40 @@ describe('WorkoutTrainingsFilterListComponent', () => {
         }
       }))
     });
+
+    describe('clearFilters', () => {
+      it('should dispatch clearTrainingQueryFilter', () => {
+        const fromDateSut: Date = new Date();
+        const toDateSut: Date = new Date(fromDateSut.getDate(), fromDateSut.getMonth(), fromDateSut.getFullYear() + 1)
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+  
+        component.trainingsListFilterForm?.setValue({
+          fromDate: fromDateSut,
+          toDate: toDateSut,
+          muscleGroups: []
+        })
+        component.clearFilters()
+  
+        expect(dispatchSpy).toHaveBeenCalledWith(clearTrainingQueryFilter())
+      });
+      it('should reset form', () => {
+        const fromDateSut: Date = new Date();
+        const toDateSut: Date = new Date(fromDateSut.getDate(), fromDateSut.getMonth(), fromDateSut.getFullYear() + 1)
+  
+        component.trainingsListFilterForm?.setValue({
+          fromDate: fromDateSut,
+          toDate: toDateSut,
+          muscleGroups: [ MuscleGroups.Arms ]
+        })
+        component.clearFilters()
+  
+        expect(component.trainingsListFilterForm?.value.fromDate).toEqual(null)
+        expect(component.trainingsListFilterForm?.value.toDate).toEqual(null)
+        expect(component.trainingsListFilterForm?.value.muscleGroups).toEqual([])
+      });
+    })
+
+
+
   })
 });
