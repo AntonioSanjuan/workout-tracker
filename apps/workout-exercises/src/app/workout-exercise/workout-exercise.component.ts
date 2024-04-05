@@ -10,6 +10,7 @@ import { NgFor } from '@angular/common';
 import { AppRoutes, Exercise } from '@workout-tracker/models';
 import { of } from 'rxjs';
 import { selectWorkoutExerciseDetailsState } from './state/workout-exercise.selectors';
+import { ViewHeaderComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-exercise',
@@ -19,7 +20,8 @@ import { selectWorkoutExerciseDetailsState } from './state/workout-exercise.sele
     LetDirective,
     TranslateModule,
     NgFor,
-    RouterModule
+    RouterModule,
+    ViewHeaderComponent
   ],
   styleUrls: ['./workout-exercise.component.scss'],
   standalone: true
@@ -27,9 +29,11 @@ import { selectWorkoutExerciseDetailsState } from './state/workout-exercise.sele
 export class WorkoutExerciseComponent {
   private store: Store = inject(Store)
   private router: Router = inject(Router)
-  public exerciseDetails$ = this.store.select(selectWorkoutExerciseDetailsState)
-
   private dialogService = inject(DialogService)
+
+  public exerciseDetails$ = this.store.select(selectWorkoutExerciseDetailsState)
+  
+  public appRoutes = AppRoutes
 
   public editExercise() {
     // this.dialogService.showDialog(EditWorkoutExerciseDetailsDialogComponent, true)
