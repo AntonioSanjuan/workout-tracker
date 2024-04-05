@@ -1,10 +1,10 @@
-import { Exercise } from "@workout-tracker/models";
+import { ExerciseTemplate } from "@workout-tracker/models";
 import { initialWorkoutExerciseDetailsState, workoutExerciseDetailsReducer } from "./workout-exercise.reducer";
 import { getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequestSuccess } from "./workout-exercise.actions";
 
 describe('workoutExerciseDetailsReducer', () => {
     describe('getAuthenticatedUserExerciseDetailsRequestSuccess action', () => {
-        const exerciseSut = { name: 'nameTest' } as Exercise;
+        const exerciseSut = { name: 'nameTest' } as ExerciseTemplate;
         it('should handle getPokemonByNameRequestSuccess action', () => {
             const action = getAuthenticatedUserExerciseDetailsRequestSuccess({ exercise: exerciseSut})
             const state = workoutExerciseDetailsReducer(initialWorkoutExerciseDetailsState, action)
@@ -14,7 +14,7 @@ describe('workoutExerciseDetailsReducer', () => {
     })
 
     describe('getAnonymousUserExerciseDetailsRequestSuccess action', () => {
-        const exerciseSut = { name: 'nameTest' } as Exercise;
+        const exerciseSut = { name: 'nameTest' } as ExerciseTemplate;
         it('should handle getPokemonByNameRequestSuccess action', () => {
             const action = getAnonymousUserExerciseDetailsRequestSuccess({ exercise: exerciseSut})
             const state = workoutExerciseDetailsReducer(initialWorkoutExerciseDetailsState, action)

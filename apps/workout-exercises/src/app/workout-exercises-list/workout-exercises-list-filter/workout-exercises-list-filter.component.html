@@ -10,7 +10,7 @@
                 </mat-form-field>
                 <button mat-mini-fab color="warn" 
                     attr.aria-label="{{'apps.workout-exercises.list.filter.byNameLabel' | translate }}"  
-                    [disabled]="!exercisesListFilterForm?.value?.byName" 
+                    [disabled]="!exercisesListFilterForm.value.byName" 
                     (click)="searchByName()">
                     <mat-icon>search</mat-icon>
                 </button>

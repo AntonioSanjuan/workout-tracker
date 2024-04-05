@@ -6,7 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { AuthService, authServiceMock } from '@workout-tracker/services/auth';
 import { logOutRequest, loginRequest, loginRequestError, loginRequestSuccess, signUpRequest, signUpRequestError, signUpRequestSuccess, setAuthenticatedUser, setAnonymousUser, setUserInfo } from './user.actions';
-import { AppInit, loadedApp, initializeLoadedApps } from '../ui';
+import { initializeLoadedApps } from '../ui';
 import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -15,7 +15,7 @@ import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } 
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
-import { getAnonymousUserExercisesRequest, getAuthenticatedUserExercisesRequest } from '../exercises';
+import { getAnonymousUserExerciseTemplatesRequest, getAuthenticatedUserExerciseTemplatesRequest } from '../exercise-templates';
 import { getUserTrainingsRequest } from '../trainings';
 
 describe('UserEffects', () => {
@@ -368,9 +368,9 @@ describe('UserEffects', () => {
         actions = of(setAuthenticatedUser({ user: user}))
       })
 
-      it('should return getAuthenticatedUserExercisesRequest', async () => {
+      it('should return getAuthenticatedUserExerciseTemplatesRequest', async () => {
         const result = await firstValueFrom(effects.setAuthenticatedUserExercises$)
-        expect(result).toEqual(getAuthenticatedUserExercisesRequest())
+        expect(result).toEqual(getAuthenticatedUserExerciseTemplatesRequest())
       })
     })
   });
@@ -380,9 +380,9 @@ describe('UserEffects', () => {
         actions = of(setAnonymousUser())
       })
 
-      it('should return getAnonymousUserExercisesRequest', async () => {
+      it('should return getAnonymousUserExerciseTemplatesRequest', async () => {
         const result = await firstValueFrom(effects.setAnonymousUserExercises$)
-        expect(result).toEqual(getAnonymousUserExercisesRequest())
+        expect(result).toEqual(getAnonymousUserExerciseTemplatesRequest())
       })
     })
   });

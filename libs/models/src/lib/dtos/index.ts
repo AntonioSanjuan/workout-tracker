@@ -1,2 +1,2 @@
-export * from './exercises';
+export * from './exercise-templates';
 export * from './trainings';

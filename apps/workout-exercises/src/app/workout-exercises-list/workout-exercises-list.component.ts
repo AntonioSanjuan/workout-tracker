@@ -6,11 +6,11 @@ import { Router, RouterModule } from '@angular/router';
 import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-filter/workout-exercises-list-filter.component';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { AddWorkoutExerciseDialogComponent } from './add-workout-exercise.dialog/add-workout-exercise-dialog.component';
-import { getExercisesFiltered } from '@workout-tracker/shared-store';
+import { getExerciseTemplatesFiltered } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { ExerciseCard } from '@workout-tracker/components';
-import { AppRoutes, Exercise } from '@workout-tracker/models';
+import { ExerciseTemplateCardComponent } from '@workout-tracker/components';
+import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 
 @Component({
   selector: 'workout-tracker-exercises-list',
@@ -19,7 +19,7 @@ import { AppRoutes, Exercise } from '@workout-tracker/models';
     UiModule,
     LetDirective,
     TranslateModule,
-    ExerciseCard,
+    ExerciseTemplateCardComponent,
     WorkoutExercisesFilterListComponent,
     NgFor,
     RouterModule
@@ -32,14 +32,14 @@ export class WorkoutExercisesListComponent {
   private router: Router = inject(Router)
   private dialogService = inject(DialogService)
 
-  public filteredExercises$ =  this.store.select(getExercisesFiltered)
+  public filteredExerciseTemplates$ =  this.store.select(getExerciseTemplatesFiltered)
 
 
   public newExercise() {
     this.dialogService.showDialog(AddWorkoutExerciseDialogComponent, true)
   }
 
-  public openExerciseDetails(exercise: Exercise) {
+  public openExerciseDetails(exercise: ExerciseTemplate) {
     this.router.navigate([`${AppRoutes.WorkoutExercisesList}/${exercise.id}`])
   }
 }

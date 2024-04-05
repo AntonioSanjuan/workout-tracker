@@ -1,5 +1,5 @@
 <div
-    *ngrxLet="{ filteredExercises: filteredExercises$ } as vm"
+    *ngrxLet="{ filteredExerciseTemplates: filteredExerciseTemplates$ } as vm"
     class="WorkoutExerciseList_MainContainer">
 
     <workout-tracker-exercises-list-filter></workout-tracker-exercises-list-filter>
@@ -13,8 +13,8 @@
     </h2>
 
     <div class="WorkoutExerciseList_ListContainer"
-        *ngFor="let filteredExercise of vm.filteredExercises"
-        (click)="openExerciseDetails(filteredExercise)">
-        <workout-tracker-exercise-card [exercise]="filteredExercise"></workout-tracker-exercise-card>
+        *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
+        (click)="openExerciseDetails(filteredExerciseTemplate)">
+        <workout-tracker-exercise-template-card [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
     </div>
 </div>

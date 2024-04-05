@@ -1,4 +1,4 @@
-import { MuscleGroups } from "../exercises"
+import { MuscleGroups } from "../exercise-templates"
 import { Pagination } from "../pagination/pagination.model"
 import { Training } from "./training.model"
 

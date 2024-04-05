@@ -29,8 +29,8 @@
         "libs/services/culture/src/index.ts"
       ],
       "@workout-tracker/services/dialog": ["libs/services/dialog/src/index.ts"],
-      "@workout-tracker/services/exercises": [
-        "libs/services/exercises/src/index.ts"
+      "@workout-tracker/services/exercise-templates": [
+        "libs/services/exercise-templates/src/index.ts"
       ],
       "@workout-tracker/services/message": [
         "libs/services/message/src/index.ts"

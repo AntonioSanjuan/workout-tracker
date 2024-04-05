@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WorkoutExercisesListComponent } from './workout-exercises-list.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { userStateMock, exercisesStateMock } from '@workout-tracker/test'
+import { userStateMock, exerciseTemplatesStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { workoutExercisesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock'
@@ -13,7 +13,7 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { AppRoutes, Exercise } from '@workout-tracker/models';
+import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 
 describe('WorkoutExercisesListComponent', () => {
   let component: WorkoutExercisesListComponent;
@@ -30,7 +30,7 @@ describe('WorkoutExercisesListComponent', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...exercisesStateMock,
+            ...exerciseTemplatesStateMock,
             ...workoutExercisesAppStateMock, 
             ...userStateMock
           }
@@ -71,7 +71,7 @@ describe('WorkoutExercisesListComponent', () => {
     });
 
     it('openExerciseDetails should navigate to exercise details ', () => {
-      const exerciseSut = { id: 'exerciseId'}  as Exercise
+      const exerciseSut = { id: 'exerciseId'}  as ExerciseTemplate
       const navigateSpy = jest.spyOn(router, 'navigate')
 
       component.openExerciseDetails(exerciseSut)

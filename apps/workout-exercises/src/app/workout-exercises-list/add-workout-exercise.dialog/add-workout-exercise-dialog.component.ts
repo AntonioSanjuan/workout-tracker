@@ -5,8 +5,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseForm, getAddWorkoutExerciseForm } from './add-workout-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
-import { Exercise, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { addUserExerciseRequest, showError } from '@workout-tracker/shared-store';
+import { ExerciseTemplate, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
+import { addUserExerciseTemplateRequest, showError } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 @Component({
@@ -49,8 +49,8 @@ export class AddWorkoutExerciseDialogComponent implements OnInit, OnDestroy {
         ...this.form.getRawValue(), 
         creationDate: new Date(),
         image: this.photo
-      } as Exercise
-      this.store.dispatch(addUserExerciseRequest({ exercise: exercise}))
+      } as ExerciseTemplate
+      this.store.dispatch(addUserExerciseTemplateRequest({ exercise: exercise}))
       this.dialogRef.close()
     }
   }

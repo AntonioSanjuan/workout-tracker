@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddWorkoutExerciseDialogComponent } from './add-workout-exercise-dialog.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
-import { userStateMock, exercisesStateMock } from '@workout-tracker/test'
+import { userStateMock, exerciseTemplatesStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Exercise, MusclesInvolved } from '@workout-tracker/models';
-import { addUserExerciseRequest } from '@workout-tracker/shared-store';
+import { ExerciseTemplate, MusclesInvolved } from '@workout-tracker/models';
+import { addUserExerciseTemplateRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 describe('WorkoutExercisesListComponent', () => {
@@ -21,7 +21,7 @@ describe('WorkoutExercisesListComponent', () => {
         { provide: MatDialogRef, useValue: { close: jest.fn()}},
         provideMockStore({
           initialState: {
-            ...exercisesStateMock,
+            ...exerciseTemplatesStateMock,
             ...userStateMock
           }
         }),
@@ -74,7 +74,7 @@ describe('WorkoutExercisesListComponent', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
           component.createExercise()
 
-          expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseRequest({exercise: {
+          expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseTemplateRequest({exercise: {
             name:inputNameSut,
             musclesInvolved: inputMusclesInvolved,
             observations: inputObservations,

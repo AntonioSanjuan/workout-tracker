@@ -1,4 +1,4 @@
-import { Exercise, MuscleGroups, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
+import { ExerciseTemplate, MuscleGroups, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "./training.adapter";
 import { DocumentReference } from "@angular/fire/compat/firestore";
@@ -106,7 +106,7 @@ describe('TrainingExerciseAdapter', () => {
       const inputTrainingExerciseSut: TrainingExerciseDto = {
         exerciseTemplateId: {} as DocumentReference
       }
-      const inputExerciseTemplateSut: Exercise = {} as Exercise
+      const inputExerciseTemplateSut: ExerciseTemplate = {} as ExerciseTemplate
       const inputTrainingExerciseSeriesSut: TrainingExerciseSerie[] = []
 
       const trainingExerciseState = TrainingExerciseAdapter.toState(inputTrainingExerciseSut, inputTrainingExerciseIdSut, inputExerciseTemplateSut, inputTrainingExerciseSeriesSut)
@@ -121,7 +121,7 @@ describe('TrainingExerciseAdapter', () => {
     it('should convert TrainingExercise model into TrainingExerciseDto model', () => {
       const inputTrainingExerciseSut: TrainingExercise = {
         id: 'trainingExerciseIdTest',
-        exerciseTemplate: {} as Exercise,
+        exerciseTemplate: {} as ExerciseTemplate,
         series: []
       }
       const inputTrainingExerciseTemplateSut = {} as DocumentReference

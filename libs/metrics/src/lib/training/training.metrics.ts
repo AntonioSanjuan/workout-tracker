@@ -1,5 +1,5 @@
 import { MuscleGroups, MusclesInvolved, Training, TrainingExercise } from "@workout-tracker/models";
-import { ExerciseMetrics } from "../exercise";
+import { ExerciseTemplateMetrics } from "../exercise-template";
 export interface MuscleGroupExercises {
     muscleGroup: MuscleGroups,
     numberOfExercises: number
@@ -14,7 +14,7 @@ export class TrainingMetrics {
         if (training.trainingExercises) {
             training.trainingExercises.forEach((trainingExercise: TrainingExercise) => {
                 trainingExercise.exerciseTemplate.musclesInvolved.forEach((muscleInvolved: MusclesInvolved) => {
-                    const muscleInvolvedGroup = ExerciseMetrics.getMuscleInvolvedGroup(muscleInvolved);
+                    const muscleInvolvedGroup = ExerciseTemplateMetrics.getMuscleInvolvedGroup(muscleInvolved);
                     if (muscleInvolvedGroup) {
                       (counter[muscleInvolvedGroup]) = (counter[muscleInvolvedGroup] || 0) + 1;
                     }

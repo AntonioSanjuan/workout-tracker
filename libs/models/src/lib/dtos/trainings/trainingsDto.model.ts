@@ -1,6 +1,6 @@
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { Timestamp } from 'firebase/firestore';
-import { MuscleGroups } from '../../exercises';
+import { MuscleGroups } from '../../exercise-templates';
 
 export interface TrainingDto {
     observations?: string

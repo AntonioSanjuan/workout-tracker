@@ -1,2 +1,2 @@
-export * from './lib/exercise';
+export * from './lib/exercise-template';
 export * from './lib/training';

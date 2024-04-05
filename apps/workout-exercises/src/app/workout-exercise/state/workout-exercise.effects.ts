@@ -3,14 +3,14 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { map, catchError, of, mergeMap, iif, take } from 'rxjs'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ExercisesService } from '@workout-tracker/services/exercises';
+import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
 import { Store } from '@ngrx/store';
-import { getExerciseById, getUser, showError } from '@workout-tracker/shared-store';
-import { AppRoutes, Exercise } from '@workout-tracker/models';
+import { getExerciseTemplateById, getUser, showError } from '@workout-tracker/shared-store';
+import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
 @Injectable()
 export class ExerciseEffects {
-    private exercisesService: ExercisesService = inject(ExercisesService)
+    private exercisesService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
     private translateService: TranslateService = inject(TranslateService)
     private actions$: Actions = inject(Actions);
     private router: Router = inject(Router)
@@ -30,8 +30,8 @@ export class ExerciseEffects {
     getAuthenticatedUserExerciseDetailsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserExerciseDetailsRequest),
         concatLatestFrom(() => this.store.select(getUser)),
-        mergeMap(([{ exerciseId }, user]) => this.exercisesService.getExercise(user?.uid as string, exerciseId).pipe(
-            map((exercise: Exercise) => getAuthenticatedUserExerciseDetailsRequestSuccess({exercise: exercise})),
+        mergeMap(([{ exerciseId }, user]) => this.exercisesService.getExerciseTemplate(user?.uid as string, exerciseId).pipe(
+            map((exercise: ExerciseTemplate) => getAuthenticatedUserExerciseDetailsRequestSuccess({exercise: exercise})),
             catchError(_ => {
                 this.router.navigate([AppRoutes.WorkoutExercisesList])
                 return of(getAuthenticatedUserExerciseDetailsRequestError({ exerciseId: exerciseId }))}
@@ -42,7 +42,7 @@ export class ExerciseEffects {
     getAnonymousUserExerciseDetailsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAnonymousUserExerciseDetailsRequest),
         mergeMap(({ exerciseId }) => 
-            this.store.select(getExerciseById(exerciseId)).pipe(
+            this.store.select(getExerciseTemplateById(exerciseId)).pipe(
             take(1),
             map((exercise) => exercise ? 
                 getAnonymousUserExerciseDetailsRequestSuccess({ exercise: exercise }) : 

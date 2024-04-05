@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { Exercise, Training } from "@workout-tracker/models";
+import { Training } from "@workout-tracker/models";
 import { Observable, of } from "rxjs";
 
 @Injectable({

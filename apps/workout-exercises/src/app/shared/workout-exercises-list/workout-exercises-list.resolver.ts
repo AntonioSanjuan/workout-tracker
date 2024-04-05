@@ -1,8 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { Exercise } from "@workout-tracker/models";
-import { getExercisesList, getUserExercisesRequest } from "@workout-tracker/shared-store";
+import { ExerciseTemplate } from "@workout-tracker/models";
+import { getExerciseTemplatesList, getUserExerciseTemplatesRequest } from "@workout-tracker/shared-store";
 import { Observable, of } from "rxjs";
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Observable, of } from "rxjs";
 export class WorkoutExercisesListResolver implements Resolve<any> {
     private store: Store = inject(Store)
 
-    resolve(route: ActivatedRouteSnapshot): Observable<Exercise[]> {
-        return this.store.select(getExercisesList)
+    resolve(route: ActivatedRouteSnapshot): Observable<ExerciseTemplate[]> {
+        return this.store.select(getExerciseTemplatesList)
     }
 }

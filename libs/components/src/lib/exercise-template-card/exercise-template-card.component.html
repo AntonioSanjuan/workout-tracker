@@ -1,0 +1,18 @@
+<div class="ExerciseTemplateCard_MainContainer">
+    <mat-card>
+        <mat-card-content>
+            <div class="ExerciseTemplateCard_ContentContainer">
+                <img mat-card-md-image [src]="exerciseTemplate.image ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
+                <div class="ExerciseTemplateCard_InfoContainer">
+                    <h3>{{exerciseTemplate.name}}</h3>
+                    <div class="ExerciseTemplateCard_TypesContainer">
+                        <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exerciseTemplate.musclesInvolved"
+                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                            [specificMuscle]="mucleInvolved"
+                    ></workout-tracker-muscle-pill>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+      </mat-card>
+</div>

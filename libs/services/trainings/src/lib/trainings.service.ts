@@ -1,15 +1,15 @@
 import { Injectable, inject } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, QueryFn } from '@angular/fire/compat/firestore'
 import { DateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
-import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
+import { ExerciseTemplate, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, catchError, combineLatest, defaultIfEmpty, forkJoin, from, map, switchMap } from "rxjs";
-import { ExercisesService } from '@workout-tracker/services/exercises'
+import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates'
 
 @Injectable()
 export class TrainingsService {
     private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
-    private exerciseService: ExercisesService = inject(ExercisesService)
+    private exerciseService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
 
     private getTrainingsPaginatedQuery(userId: string, trainingQuery: TrainingQuery): QueryFn {
         const trainingsPaginatedQuery: QueryFn = ref => {
@@ -136,7 +136,7 @@ export class TrainingsService {
                             TrainingExerciseAdapter.toState(
                                 trainingExerciseData, 
                                 trainingExerciseId, 
-                                exerciseTemplateId.data() as Exercise, 
+                                exerciseTemplateId.data() as ExerciseTemplate, 
                                 exerciseSeries
                             )
                         )
@@ -181,7 +181,7 @@ export class TrainingsService {
     public setTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise> {
         const trainingExerciseInput = TrainingExerciseAdapter.toDto(
             trainingExercise, 
-            this.exerciseService.getExerciseDocRef(userId, trainingExercise.exerciseTemplate.id).ref
+            this.exerciseService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
         return from(this.getTrainingExercisesCollectionRef(userId, trainingId).add(trainingExerciseInput)).pipe(
             map((trainingExercisesDoc) => 
@@ -222,7 +222,7 @@ export class TrainingsService {
     public updateTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise> {
         const exerciseInput = TrainingExerciseAdapter.toDto(
             trainingExercise, 
-            this.exerciseService.getExerciseDocRef(userId, trainingExercise.exerciseTemplate.id).ref
+            this.exerciseService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
 
         return from(this.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).update(exerciseInput)).pipe(

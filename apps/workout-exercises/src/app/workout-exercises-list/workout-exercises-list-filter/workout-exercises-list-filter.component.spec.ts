@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-filter.component';
-import { exercisesStateMock } from '@workout-tracker/test';
+import { exerciseTemplatesStateMock } from '@workout-tracker/test';
 import { MusclesInvolved } from '@workout-tracker/models';
-import { clearExerciseQueryFilter, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { clearExerciseTemplateQueryFilter, setExerciseTemplateNameQueryFilter, setExerciseTemplateMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 
 describe('WorkoutExercisesFilterListComponent', () => {
@@ -30,7 +30,7 @@ describe('WorkoutExercisesFilterListComponent', () => {
       providers:[
         provideMockActions(() => actions),
         provideMockStore({
-          initialState: exercisesStateMock
+          initialState: exerciseTemplatesStateMock
         }),
       ]
     }).compileComponents();
@@ -58,27 +58,27 @@ describe('WorkoutExercisesFilterListComponent', () => {
   })
 
   describe('Integration tests', () => {
-    it('filterByMuscleInvolved should dispatch setExerciseMuscleInvolvedQueryFilter', () => {
+    it('filterByMuscleInvolved should dispatch setExerciseTemplateMuscleInvolvedQueryFilter', () => {
       const dispatchSpy = jest.spyOn(store, 'dispatch')
 
       const muscleInvolvedSut = MusclesInvolved.Biceps
       component.filterByMuscleInvolved(muscleInvolvedSut)
 
-      expect(dispatchSpy).toHaveBeenCalledWith(setExerciseMuscleInvolvedQueryFilter({ 
+      expect(dispatchSpy).toHaveBeenCalledWith(setExerciseTemplateMuscleInvolvedQueryFilter({ 
         muscleInvolved: muscleInvolvedSut
       }))
     });
 
     
-    it('clearMuscleInvolvedFilter should dispatch clearExerciseQueryFilter', () => {
+    it('clearMuscleInvolvedFilter should dispatch clearExerciseTemplateQueryFilter', () => {
       const dispatchSpy = jest.spyOn(store, 'dispatch')
 
       component.clearMuscleInvolvedFilter()
 
-      expect(dispatchSpy).toHaveBeenCalledWith(clearExerciseQueryFilter())
+      expect(dispatchSpy).toHaveBeenCalledWith(clearExerciseTemplateQueryFilter())
     });
 
-    it('searchByName should dispatch setExerciseNameQueryFilter', () => {
+    it('searchByName should dispatch setExerciseTemplateNameQueryFilter', () => {
       const dispatchSpy = jest.spyOn(store, 'dispatch')
       
       const searchSut = 'testing search'
@@ -88,7 +88,7 @@ describe('WorkoutExercisesFilterListComponent', () => {
       })
       component.searchByName()
 
-      expect(dispatchSpy).toHaveBeenCalledWith(setExerciseNameQueryFilter({
+      expect(dispatchSpy).toHaveBeenCalledWith(setExerciseTemplateNameQueryFilter({
         exerciseName: searchSut
       }))
     });

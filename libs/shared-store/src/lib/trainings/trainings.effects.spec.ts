@@ -6,7 +6,7 @@ import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock, trainingsStateMock } from '@workout-tracker/test';
-import { Exercise, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
+import { ExerciseTemplate, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { TrainingsEffects } from './trainings.effects'
 import { getTrainingOngoing, getTrainingsList } from './trainings.selectors';
@@ -20,7 +20,7 @@ const trainingSut = {
   creationDate: new Date(),
   finishDate: undefined,
   trainingExercises: [
-    { exerciseTemplate: { name: ''} as Exercise} as TrainingExercise
+    { exerciseTemplate: { name: ''} as ExerciseTemplate} as TrainingExercise
   ]
 } as Training
 
@@ -321,7 +321,7 @@ describe('TrainingsEffects', () => {
       beforeEach(() => {
         jest.spyOn(trainingService, 'setTraining').mockReturnValue(of(trainingSut))
       })
-      it('should request setExercises', async () => {
+      it('should request setExerciseTemplate', async () => {
         const setExerciseSpy = jest.spyOn(trainingService, 'setTraining')
         await firstValueFrom(effects.addAuthenticatedUserTrainingRequest$)
         expect(setExerciseSpy).toHaveBeenCalledWith(user.uid, trainingSut)

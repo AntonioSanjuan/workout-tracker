@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter.component';
-import { exercisesStateMock } from '@workout-tracker/test';
+import { exerciseTemplatesStateMock } from '@workout-tracker/test';
 import { clearTrainingQueryFilter, setTrainingQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { MuscleGroups } from '@workout-tracker/models';
@@ -30,7 +30,7 @@ describe('WorkoutTrainingsFilterListComponent', () => {
       providers:[
         provideMockActions(() => actions),
         provideMockStore({
-          initialState: exercisesStateMock
+          initialState: exerciseTemplatesStateMock
         }),
       ]
     }).compileComponents();

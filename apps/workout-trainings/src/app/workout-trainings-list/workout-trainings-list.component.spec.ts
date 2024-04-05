@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { AppRoutes, Exercise, Training } from '@workout-tracker/models';
+import { AppRoutes, Training } from '@workout-tracker/models';
 import { WorkoutTrainingsListComponent } from './workout-trainings-list.component';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
 import { getUserTrainingsRequest } from '@workout-tracker/shared-store';

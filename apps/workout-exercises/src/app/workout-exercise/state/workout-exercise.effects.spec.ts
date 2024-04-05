@@ -6,18 +6,18 @@ import { Observable, firstValueFrom, of, throwError} from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ExerciseEffects } from './workout-exercise.effects';
-import { ExercisesService, exercisesServiceMock } from '@workout-tracker/services/exercises';
+import { ExerciseTemplatesService, exerciseTemplatesServiceMock } from '@workout-tracker/services/exercise-templates';
 import { initialWorkoutExercisesState } from '../../+state/models/workoutExercisesState.initialState';
 import firebase from 'firebase/compat/app';
-import { ExercisesState, getExerciseById, getExercisesState, getUser } from '@workout-tracker/shared-store';
+import { ExerciseTemplatesState, getExerciseTemplateById, getExerciseTemplatesState, getUser } from '@workout-tracker/shared-store';
 import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
-import { Exercise } from '@workout-tracker/models';
-import { exercisesStateMock } from "@workout-tracker/test"
+import { ExerciseTemplate } from '@workout-tracker/models';
+import { exerciseTemplatesStateMock } from "@workout-tracker/test"
 
 describe('ExerciseDetailsEffects', () => {
   let actions: Observable<Action>;
   let effects: ExerciseEffects;
-  let exerciseService: ExercisesService
+  let exerciseService: ExerciseTemplatesService
   let store: MockStore;
 
   beforeEach(() => {
@@ -30,19 +30,19 @@ describe('ExerciseDetailsEffects', () => {
       ],
       providers: [
         ExerciseEffects,
-        { provide: ExercisesService, useValue: exercisesServiceMock },
+        { provide: ExerciseTemplatesService, useValue: exerciseTemplatesServiceMock },
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
             ...initialWorkoutExercisesState,
-            ...exercisesStateMock
+            ...exerciseTemplatesStateMock
           }
         }),
       ],
     });
 
     effects = TestBed.inject(ExerciseEffects);
-    exerciseService = TestBed.inject(ExercisesService)
+    exerciseService = TestBed.inject(ExerciseTemplatesService)
     store = TestBed.inject(MockStore)
   });
 
@@ -75,7 +75,7 @@ describe('ExerciseDetailsEffects', () => {
 
           actions = of(getUserExerciseDetailsRequest({ exerciseId: exerciseIdSut}))
         })
-        it('should return getAnonymousUserExercisesRequest', async () => {
+        it('should return getAnonymousUserExerciseTemplatesRequest', async () => {
           const result = await firstValueFrom(effects.getExerciseDetailsRequest$)
           expect(result).toEqual(getAnonymousUserExerciseDetailsRequest({ exerciseId: exerciseIdSut }))
         })
@@ -86,31 +86,31 @@ describe('ExerciseDetailsEffects', () => {
 
   describe('getAuthenticatedUserExerciseDetailsRequest$', () => {
     const exerciseIdSut = 'exerciseId test'
-    const exerciseSut = { id: exerciseIdSut, name: 'exerciseNameTest0' } as Exercise
+    const exerciseSut = { id: exerciseIdSut, name: 'exerciseNameTest0' } as ExerciseTemplate
 
     const user =  { uid: 'testUID'} as firebase.User
 
     describe('when getAuthenticatedUserExerciseDetailsRequest is dispatched', () => {
       beforeEach(() => {
-        jest.spyOn(exerciseService, 'getExercise').mockClear()
+        jest.spyOn(exerciseService, 'getExerciseTemplate').mockClear()
 
         store.resetSelectors()
         
         store.overrideSelector(getUser, user);
         store.refreshState()
       })
-      describe('when exerciseService.getExercise throws error', () => {
+      describe('when exerciseService.getExerciseTemplate throws error', () => {
         const errorCodeMock = 'testing error code'
         const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
         const errorResp = throwError(() => errorMock )
 
         beforeEach(() => {
-          jest.spyOn(exerciseService, 'getExercise').mockReturnValue(errorResp)
+          jest.spyOn(exerciseService, 'getExerciseTemplate').mockReturnValue(errorResp)
           actions = of(getAuthenticatedUserExerciseDetailsRequest( { exerciseId: exerciseIdSut}))
         })
 
-        it('should request getExercise', async () => {
-          const getExerciseSpy = jest.spyOn(exerciseService, 'getExercise')
+        it('should request getExerciseTemplate', async () => {
+          const getExerciseSpy = jest.spyOn(exerciseService, 'getExerciseTemplate')
           await firstValueFrom(effects.getAuthenticatedUserExerciseDetailsRequest$)
           expect(getExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseIdSut)
         })
@@ -120,13 +120,13 @@ describe('ExerciseDetailsEffects', () => {
         })
       })
 
-      describe('when exercisesService.getExercise success', () => {
+      describe('when exercisesService.getExerciseTemplate success', () => {
         beforeEach(() => {
-          jest.spyOn(exerciseService, 'getExercise').mockReturnValue(of(exerciseSut))
+          jest.spyOn(exerciseService, 'getExerciseTemplate').mockReturnValue(of(exerciseSut))
           actions = of(getAuthenticatedUserExerciseDetailsRequest({exerciseId: exerciseIdSut}))
         })
-        it('should request getExercises', async () => {
-          const getExercisesSpy = jest.spyOn(exerciseService, 'getExercise')
+        it('should request getExerciseTemplates', async () => {
+          const getExercisesSpy = jest.spyOn(exerciseService, 'getExerciseTemplate')
           await firstValueFrom(effects.getAuthenticatedUserExerciseDetailsRequest$)
           expect(getExercisesSpy).toHaveBeenCalledWith(user.uid, exerciseIdSut)
         })
@@ -142,7 +142,7 @@ describe('ExerciseDetailsEffects', () => {
   describe('getAnonymousUserExerciseDetailsRequest$', () => {
     describe('when getAnonymousUserExerciseDetailsRequest is dispatched', () => {
       const exerciseIdSut = 'exerciseId test'
-      const exerciseSut = { id: exerciseIdSut, name: 'exerciseNameTest0' } as Exercise  
+      const exerciseSut = { id: exerciseIdSut, name: 'exerciseNameTest0' } as ExerciseTemplate  
       beforeEach(() => { 
         store.resetSelectors()
         store.refreshState()
@@ -151,9 +151,9 @@ describe('ExerciseDetailsEffects', () => {
 
       describe('if exercise its stored into the created exercises (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getExercisesState, {
+          store.overrideSelector(getExerciseTemplatesState, {
             list: [exerciseSut]
-          } as ExercisesState);
+          } as ExerciseTemplatesState);
           store.refreshState()
         })
 
@@ -164,9 +164,9 @@ describe('ExerciseDetailsEffects', () => {
       })
       describe('if exercise its not stored into  the created exercises (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getExercisesState, {
-            list: [] as Exercise[]
-          } as ExercisesState);
+          store.overrideSelector(getExerciseTemplatesState, {
+            list: [] as ExerciseTemplate[]
+          } as ExerciseTemplatesState);
           store.refreshState()
         })
 

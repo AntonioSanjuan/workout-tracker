@@ -1,4 +1,4 @@
-import { Exercise, MuscleGroups } from "../exercises"
+import { ExerciseTemplate, MuscleGroups } from "../exercise-templates"
 
 export interface Training {
     id: string
@@ -13,7 +13,7 @@ export interface Training {
 export interface TrainingExercise {
     id: string
 
-    exerciseTemplate: Exercise
+    exerciseTemplate: ExerciseTemplate
     series: TrainingExerciseSerie[]
 }
 

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as ExerciseDetailsActions from "./workout-exercise.actions";
-import { Exercise } from '@workout-tracker/models';
+import { ExerciseTemplate } from '@workout-tracker/models';
 
 export const WORKOUT_EXERCISE_FEATURE_KEY = 'exercise';
 
@@ -10,7 +10,7 @@ export interface WorkoutExerciseDetailsState {
 }
 
 export interface WorkoutExerciseDetails {
-  exercise?: Exercise,
+  exercise?: ExerciseTemplate,
   trainings?: any
 }
 

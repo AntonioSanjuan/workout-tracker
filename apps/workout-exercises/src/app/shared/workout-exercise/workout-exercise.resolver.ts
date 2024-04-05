@@ -1,8 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { Exercise } from "@workout-tracker/models";
-import { AppInit, getExerciseById, getIsAppLoaded } from "@workout-tracker/shared-store";
+import { ExerciseTemplate } from "@workout-tracker/models";
+import { AppInit, getExerciseTemplateById, getIsAppLoaded } from "@workout-tracker/shared-store";
 import { Observable, filter, of, take, tap } from "rxjs";
 import { getUserExerciseDetailsRequest } from "../../workout-exercise/state/workout-exercise.actions";
 
@@ -12,7 +12,7 @@ import { getUserExerciseDetailsRequest } from "../../workout-exercise/state/work
 export class WorkoutExerciseResolver implements Resolve<any> {
     private store: Store = inject(Store)
 
-    resolve(route: ActivatedRouteSnapshot): Observable<Exercise|undefined> {
+    resolve(route: ActivatedRouteSnapshot): Observable<ExerciseTemplate|undefined> {
         const exerciseId = route.paramMap.get('id');
 
         if(exerciseId) {
@@ -23,7 +23,7 @@ export class WorkoutExerciseResolver implements Resolve<any> {
                     this.store.dispatch(getUserExerciseDetailsRequest({ exerciseId: exerciseId}))
                 })
             ).subscribe()
-            return this.store.select(getExerciseById(exerciseId))
+            return this.store.select(getExerciseTemplateById(exerciseId))
         }
         return of(undefined);
 

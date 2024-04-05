@@ -6,7 +6,7 @@ import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, accordionAnimation, 
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
 import { MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { clearExerciseQueryFilter, getExercisesFilters, setExerciseNameQueryFilter, setExerciseMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { clearExerciseTemplateQueryFilter, getExerciseTemplatesFilters, setExerciseTemplateNameQueryFilter, setExerciseTemplateMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { BannerComponent, MusclePillComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { ExercisesListFilterForm, exerciseListFilterForm } from './workout-trainings-list-filter.service.form';
 import { FormGroup } from '@angular/forms';
@@ -30,7 +30,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class WorkoutExercisesFilterListComponent implements OnInit {
   private store: Store = inject(Store)
-  public exercisesFilters$ = this.store.select(getExercisesFilters)
+  public exercisesFilters$ = this.store.select(getExerciseTemplatesFilters)
   public musclesByGroup = muscleInvolvedByGroups;
 
   //filters
@@ -47,19 +47,19 @@ export class WorkoutExercisesFilterListComponent implements OnInit {
   }
 
   public filterByMuscleInvolved(muscleInvolved: MusclesInvolved): void {
-    this.store.dispatch(setExerciseMuscleInvolvedQueryFilter({ 
+    this.store.dispatch(setExerciseTemplateMuscleInvolvedQueryFilter({ 
       muscleInvolved: muscleInvolved
     }))
   }
   
   public clearMuscleInvolvedFilter(): void {
-    this.store.dispatch(clearExerciseQueryFilter())
+    this.store.dispatch(clearExerciseTemplateQueryFilter())
   }
 
   public searchByName() {
     const formValues = this.exercisesListFilterForm?.getRawValue()
     if(formValues?.byName) {
-      this.store.dispatch(setExerciseNameQueryFilter({ 
+      this.store.dispatch(setExerciseTemplateNameQueryFilter({ 
         exerciseName: formValues?.byName
       }))
     }
@@ -67,6 +67,6 @@ export class WorkoutExercisesFilterListComponent implements OnInit {
 
   public clearFilters() {
     this.exercisesListFilterForm = exerciseListFilterForm()
-    this.store.dispatch(clearExerciseQueryFilter())
+    this.store.dispatch(clearExerciseTemplateQueryFilter())
   }
 }

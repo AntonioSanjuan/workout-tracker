@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Exercise, MusclesInvolved, Training } from '@workout-tracker/models';
+import { Training } from '@workout-tracker/models';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TrainingCardComponent } from './training-card.component'
 import { LocalizedDatePipe } from '@workout-tracker/ui';

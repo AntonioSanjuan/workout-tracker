@@ -1,4 +1,3 @@
-import { Exercise, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 import { DateAdapter } from "./date.adapter";
 
