@@ -165,7 +165,7 @@ describe('ExerciseTemplatesEffects', () => {
 
       it('should return loadedApp', async () => {
         const result = await firstValueFrom(effects.getUserExercisesSuccess$)
-        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES}))
+        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES_TEMPLATES}))
       })
     })
 
@@ -176,7 +176,7 @@ describe('ExerciseTemplatesEffects', () => {
 
       it('should return loadedApp', async () => {
         const result = await firstValueFrom(effects.getUserExercisesSuccess$)
-        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES}))
+        expect(result).toEqual(loadedApp({initialized: AppInit.EXERCISES_TEMPLATES}))
       })
     })
   });

@@ -2,6 +2,6 @@ export enum AppInit {
     UI = 'UI',
     ACCOUNT = 'ACCOUNT',
 
-    EXERCISES = 'EXERCISES',
+    EXERCISES_TEMPLATES = 'EXERCISES_TEMPLATES',
     TRAININGS = 'TRAININGS',
 }

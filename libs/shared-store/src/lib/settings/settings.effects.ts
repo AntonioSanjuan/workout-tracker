@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { EMPTY, catchError, iif, map, of, switchMap } from "rxjs";
-import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestError, getAuthenticatedUserSettingsRequestSuccess, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from "./settings.actions";
+import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestError, getAuthenticatedUserSettingsRequestSuccess, getUserSettingsRequest, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from "./settings.actions";
 import { UserSettingsService } from "@workout-tracker/services/user-settings";
 import { Store } from "@ngrx/store";
 import { getIsNewUser, getUser } from "../user";
@@ -14,6 +14,18 @@ export class SettingsEffects {
     private actions$ = inject(Actions);
     private userSettingsService: UserSettingsService = inject(UserSettingsService)
     private store: Store = inject(Store)
+
+
+    getUserSettingsRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(getUserSettingsRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        switchMap(([_, user]) =>
+            iif(
+                () => !!user,
+                of(getAuthenticatedUserSettingsRequest()),
+                of(getAnonymousUserSettingsRequest())
+            )
+    )))
 
     getAuthenticatedUserSettingsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserSettingsRequest),

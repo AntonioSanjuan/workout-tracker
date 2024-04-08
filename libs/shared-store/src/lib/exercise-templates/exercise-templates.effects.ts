@@ -12,7 +12,7 @@ import { AppInit, loadedApp } from "../ui";
 
 @Injectable()
 export class ExerciseTemplatesEffects {
-private exerciseTemplatesService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
+    private exerciseTemplatesService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
     private store: Store = inject(Store)
     private actions$ = inject(Actions);
 
@@ -59,7 +59,7 @@ private exerciseTemplatesService: ExerciseTemplatesService = inject(ExerciseTemp
             getAnonymousUserExerciseTemplatesRequestSuccess,
         ),
         switchMap(({ exercises }) =>
-            of(loadedApp({initialized: AppInit.EXERCISES}))
+            of(loadedApp({initialized: AppInit.EXERCISES_TEMPLATES}))
         )
     ))
 

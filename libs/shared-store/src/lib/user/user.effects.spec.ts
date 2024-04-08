@@ -11,12 +11,10 @@ import firebase from 'firebase/compat/app';
 import { showError } from '../error-messages';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
-import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from '../settings';
+import { getUserSettingsRequest } from '../settings';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
-import { getAnonymousUserExerciseTemplatesRequest, getAuthenticatedUserExerciseTemplatesRequest } from '../exercise-templates';
-import { getUserTrainingsRequest } from '../trainings';
 
 describe('UserEffects', () => {
   let actions: Observable<Action>;
@@ -335,29 +333,27 @@ describe('UserEffects', () => {
     })
   });
 
-  describe('setAuthenticatedUserSettings$', () => {
+  describe('setUserSettings$', () => {
     describe('when setAuthenticatedUser is dispatched', () => {
       const user = { email: 'testemail@gmail.com'} as firebase.User
       beforeEach(() => { 
         actions = of(setAuthenticatedUser({ user: user}))
       })
 
-      it('should return getAuthenticatedUserSettingsRequest', async () => {
-        const result = await firstValueFrom(effects.setAuthenticatedUserSettings$)
-        expect(result).toEqual(getAuthenticatedUserSettingsRequest())
+      it('should return getUserSettingsRequest', async () => {
+        const result = await firstValueFrom(effects.setUserSettings$)
+        expect(result).toEqual(getUserSettingsRequest())
       })
     })
-  });
 
-  describe('setAnonymousUserSettings$', () => {
     describe('when setAnonymousUser is dispatched', () => {
       beforeEach(() => { 
         actions = of(setAnonymousUser())
       })
 
-      it('should return getAnonymousUserSettingsRequest', async () => {
-        const result = await firstValueFrom(effects.setAnonymousUserSettings$)
-        expect(result).toEqual(getAnonymousUserSettingsRequest())
+      it('should return getUserSettingsRequest', async () => {
+        const result = await firstValueFrom(effects.setUserSettings$)
+        expect(result).toEqual(getUserSettingsRequest())
       })
     })
   });

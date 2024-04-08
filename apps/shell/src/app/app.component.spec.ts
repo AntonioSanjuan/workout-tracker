@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Actions } from '@ngrx/effects';
-import { AuthPersistanceService, authPersistanceServiceMock } from '@workout-tracker/services/auth-persistance';
 import { DateAdapter } from '@angular/material/core';
 
 describe('AppComponent', () => {

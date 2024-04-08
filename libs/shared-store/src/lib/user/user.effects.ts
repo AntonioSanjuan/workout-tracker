@@ -7,11 +7,9 @@ import { initializeLoadedApps } from "../ui";
 import firebase from 'firebase/compat/app/';
 import { showError } from "../error-messages";
 import { Store } from "@ngrx/store";
-import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from "../settings";
+import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest, getUserSettingsRequest } from "../settings";
 import { AppRoutes } from "@workout-tracker/models";
 import { Router } from "@angular/router";
-import { getAnonymousUserExerciseTemplatesRequest, getAuthenticatedUserExerciseTemplatesRequest, getUserExerciseTemplatesRequest } from "../exercise-templates";
-import { getUserTrainingsRequest } from "../trainings";
 
 @Injectable()
 export class UserEffects {
@@ -107,17 +105,13 @@ export class UserEffects {
         )
     ))
 
-    setAuthenticatedUserSettings$ = createEffect(() => this.actions$.pipe(
-        ofType(setAuthenticatedUser),
+    setUserSettings$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            setAuthenticatedUser,
+            setAnonymousUser
+            ),
         switchMap(() =>
-            of(getAuthenticatedUserSettingsRequest())
-        )
-    ))
-
-    setAnonymousUserSettings$ = createEffect(() => this.actions$.pipe(
-        ofType(setAnonymousUser),
-        switchMap(() =>
-            of(getAnonymousUserSettingsRequest())
+            of(getUserSettingsRequest())
         )
     ))
 }

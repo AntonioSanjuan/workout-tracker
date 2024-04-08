@@ -2,8 +2,8 @@ import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { ExerciseTemplate } from "@workout-tracker/models";
-import { getExerciseTemplatesList, getUserExerciseTemplatesRequest } from "@workout-tracker/shared-store";
-import { Observable } from "rxjs";
+import { AppInit, getExerciseTemplatesList, getIsAppLoaded, getUserExerciseTemplatesRequest } from "@workout-tracker/shared-store";
+import { Observable, filter, mergeMap } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +13,9 @@ export class WorkoutExercisesListResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<ExerciseTemplate[]> {
         this.store.dispatch(getUserExerciseTemplatesRequest())
-        return this.store.select(getExerciseTemplatesList)
+        return this.store.select(getIsAppLoaded(AppInit.EXERCISES_TEMPLATES)).pipe(
+            filter((isLoaded: boolean) => isLoaded),
+            mergeMap(() => this.store.select(getExerciseTemplatesList))
+        )
     }
 }

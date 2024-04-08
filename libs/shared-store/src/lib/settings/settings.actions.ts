@@ -2,6 +2,8 @@ import { createAction, props } from "@ngrx/store"
 import { UserSettings } from "@workout-tracker/models"
 import firebase from 'firebase/compat/app';
 
+export const GET_USER_SETTINGS_REQUEST = 'GET USER SETTINGS'
+export const getUserSettingsRequest = createAction(GET_USER_SETTINGS_REQUEST)
 export const GET_AUTHENTICATED_USER_SETTINGS_REQUEST = 'GET AUTHENTICATED USER SETTINGS Request'
 export const getAuthenticatedUserSettingsRequest = createAction(GET_AUTHENTICATED_USER_SETTINGS_REQUEST)
 export const GET_AUTHENTICATED_USER_DATA_SUCCESS = 'GET AUTHENTICATED USER SETTINGS Success'

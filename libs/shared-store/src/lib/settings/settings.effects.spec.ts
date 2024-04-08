@@ -10,7 +10,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
 import { SettingsEffects } from './settings.effects';
 import { UserSettings } from '@workout-tracker/models'
-import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestError, getAuthenticatedUserSettingsRequestSuccess, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from './settings.actions';
+import { getAnonymousUserSettingsRequest, getAnonymousUserSettingsRequestSuccess, getAuthenticatedUserSettingsRequest, getAuthenticatedUserSettingsRequestError, getAuthenticatedUserSettingsRequestSuccess, getUserSettingsRequest, updateUserSettingsRequest, updateUserSettingsRequestSuccess } from './settings.actions';
 import { getIsNewUser, getUser } from '../user';
 import { AppInit, getIsUILoadedApp, loadedApp } from '../ui';
 describe('SettingsEffects', () => {
@@ -40,6 +40,43 @@ describe('SettingsEffects', () => {
     authService = TestBed.inject(AuthService)
     store = TestBed.inject(MockStore)
     userSettingsService = TestBed.inject(UserSettingsService)
+  });
+
+  describe('getUserSettingsRequest$', () => {    
+    describe('when getUserSettingsRequest is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+      })
+
+      describe('if user', () => {
+        const user =  { uid: 'testUID'} as firebase.User
+
+        beforeEach(() => {
+          store.overrideSelector(getUser, user);
+          store.refreshState()
+
+          actions = of(getUserSettingsRequest())
+        })
+        it('should return getAuthenticatedUserSettingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserSettingsRequest$)
+          expect(result).toEqual(getAuthenticatedUserSettingsRequest())
+        })
+      })
+
+      describe('if non user', () => {
+        beforeEach(() => {
+          store.overrideSelector(getUser, undefined);
+          store.refreshState()
+
+          actions = of(getUserSettingsRequest())
+        })
+        it('should return getAnonymousUserSettingsRequest', async () => {
+          const result = await firstValueFrom(effects.getUserSettingsRequest$)
+          expect(result).toEqual(getAnonymousUserSettingsRequest())
+        })
+      })
+
+    })
   });
 
   describe('getAuthenticatedUserSettingsRequest$', () => {
