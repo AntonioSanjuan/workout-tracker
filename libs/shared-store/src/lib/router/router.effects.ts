@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of, switchMap } from "rxjs";
-import { routerNavigationAction} from "@ngrx/router-store"
+import { routerNavigatedAction } from "@ngrx/router-store"
 import { setCurrentRoute } from "./router.actions";
 
 @Injectable()
@@ -11,9 +11,9 @@ export class RouterEffects {
 
     routerNavigationAction$ = createEffect(() => 
         this.actions$.pipe(
-            ofType(routerNavigationAction),
+            ofType(routerNavigatedAction),
             switchMap(({ payload }) =>
-                of(setCurrentRoute({ currentRoute: payload.event.url}))
+                of(setCurrentRoute({ currentRoute: payload.routerState.url}))
             )
         )
     );
