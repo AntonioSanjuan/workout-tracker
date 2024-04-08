@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects'
 import * as fromWorkoutTrainings from './+state/workout-trainings.reducer';
 import { WorkoutTrainingsListResolver } from './shared/workout-trainings-list/workout-trainings-list.resolver';
+import { TRAININGS_FEATURE_KEY, trainingsReducer } from '@workout-tracker/shared-store';
 
 export const appRoutes: Route[] = [
   {
@@ -12,6 +13,7 @@ export const appRoutes: Route[] = [
     component: AppComponent,
     providers: [
       importProvidersFrom(
+        StoreModule.forFeature(TRAININGS_FEATURE_KEY, trainingsReducer),
         StoreModule.forFeature(fromWorkoutTrainings.WORKOUT_TRAININGS_FEATURE_KEY, fromWorkoutTrainings.workoutTrainingsReducer),
       )
     ],
