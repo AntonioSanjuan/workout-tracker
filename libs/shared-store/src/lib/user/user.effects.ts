@@ -120,18 +120,4 @@ export class UserEffects {
             of(getAnonymousUserSettingsRequest())
         )
     ))
-
-    // getUserExerciseTemplatesRequest$ = createEffect(() => this.actions$.pipe(
-    //     ofType(setAuthenticatedUser, setAnonymousUser),
-    //     switchMap(() =>
-    //         of(getUserExerciseTemplatesRequest())
-    //     )
-    // ))
-
-    getUserTrainingsRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(setAuthenticatedUser, setAnonymousUser),
-        switchMap(() =>
-            of(getUserTrainingsRequest())
-        )
-    ))
 }

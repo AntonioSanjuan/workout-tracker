@@ -14,7 +14,6 @@ import { DateAdapter } from '@angular/material/core';
 
 describe('AppComponent', () => {
   let cultureService: CultureService;
-  let authPersistanceService: AuthPersistanceService;
   let actions: Observable<Action>;
   let router: Router;
   let store: Store;
@@ -29,7 +28,6 @@ describe('AppComponent', () => {
         RouterTestingModule.withRoutes([])
       ],
       providers: [
-        { provide: AuthPersistanceService, useValue: authPersistanceServiceMock },
         CultureService,
         provideMockActions(() => actions),
         provideMockStore({
@@ -40,7 +38,6 @@ describe('AppComponent', () => {
     }).compileComponents();
 
     cultureService = TestBed.inject(CultureService);
-    authPersistanceService = TestBed.inject(AuthPersistanceService)
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
     actions = TestBed.inject(Actions);
@@ -57,15 +54,6 @@ describe('AppComponent', () => {
   describe('Integration tests', () => {
     it('should request cultureService initialize into onInit', () => {
       const initializeSpy = jest.spyOn(cultureService, 'initialize')
-      const fixture = TestBed.createComponent(AppComponent);
-      const app = fixture.componentInstance;
-      app.ngOnInit();
-      
-      expect(initializeSpy).toHaveBeenCalled()
-    });
-
-    it('should request authPersistanceService initialize into onInit', () => {
-      const initializeSpy = jest.spyOn(authPersistanceService, 'initialize')
       const fixture = TestBed.createComponent(AppComponent);
       const app = fixture.componentInstance;
       app.ngOnInit();
