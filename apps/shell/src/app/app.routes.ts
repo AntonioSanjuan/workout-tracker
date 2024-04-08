@@ -2,15 +2,9 @@ import { Route } from '@angular/router';
 import { loadRemoteModule } from '@nx/angular/mf';
 import { HomeComponent } from './home/home.component';
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
+import { CanActivateUser } from './shared/guards/user.guard';
 
 export const appRoutes: Route[] = [
-  {
-    path: 'workout-trainings',
-    loadChildren: () =>
-      loadRemoteModule('workout-trainings', './Routes').then(
-        (m) => m.remoteRoutes
-      ),
-  },
   {
     path: 'account',
     component: BaseLayoutComponent,
@@ -21,7 +15,7 @@ export const appRoutes: Route[] = [
           loadRemoteModule('account', './routes').then((m) => m.appRoutes),
       },
     ],
-    canActivate: [],
+    canActivate: [CanActivateUser],
   },
   {
     path: 'trainings',
@@ -35,7 +29,8 @@ export const appRoutes: Route[] = [
           ),
       },
     ],
-    canActivate: [],
+    canActivate: [CanActivateUser],
+    
   },
   {
     path: 'exercises',
@@ -49,7 +44,7 @@ export const appRoutes: Route[] = [
           ),
       },
     ],
-    canActivate: [],
+    canActivate: [CanActivateUser],
   },
   {
     path: '',
@@ -60,6 +55,7 @@ export const appRoutes: Route[] = [
         component: HomeComponent,
       },
     ],
+    canActivate: [CanActivateUser],
   },
   {
     path: '**',

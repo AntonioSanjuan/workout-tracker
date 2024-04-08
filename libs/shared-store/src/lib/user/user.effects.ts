@@ -10,7 +10,7 @@ import { Store } from "@ngrx/store";
 import { getAnonymousUserSettingsRequest, getAuthenticatedUserSettingsRequest } from "../settings";
 import { AppRoutes } from "@workout-tracker/models";
 import { Router } from "@angular/router";
-import { getAnonymousUserExerciseTemplatesRequest, getAuthenticatedUserExerciseTemplatesRequest } from "../exercise-templates";
+import { getAnonymousUserExerciseTemplatesRequest, getAuthenticatedUserExerciseTemplatesRequest, getUserExerciseTemplatesRequest } from "../exercise-templates";
 import { getUserTrainingsRequest } from "../trainings";
 
 @Injectable()
@@ -121,19 +121,12 @@ export class UserEffects {
         )
     ))
 
-    setAuthenticatedUserExercises$ = createEffect(() => this.actions$.pipe(
-        ofType(setAuthenticatedUser),
-        switchMap(() =>
-            of(getAuthenticatedUserExerciseTemplatesRequest())
-        )
-    ))
-
-    setAnonymousUserExercises$ = createEffect(() => this.actions$.pipe(
-        ofType(setAnonymousUser),
-        switchMap(() =>
-            of(getAnonymousUserExerciseTemplatesRequest())
-        )
-    ))
+    // getUserExerciseTemplatesRequest$ = createEffect(() => this.actions$.pipe(
+    //     ofType(setAuthenticatedUser, setAnonymousUser),
+    //     switchMap(() =>
+    //         of(getUserExerciseTemplatesRequest())
+    //     )
+    // ))
 
     getUserTrainingsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(setAuthenticatedUser, setAnonymousUser),

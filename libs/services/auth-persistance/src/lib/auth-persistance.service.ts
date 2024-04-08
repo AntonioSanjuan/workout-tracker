@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { setAnonymousUser, setAuthenticatedUser, setUserInfo } from '@workout-tracker/shared-store';
+import { setAnonymousUser, setAuthenticatedUser } from '@workout-tracker/shared-store';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
@@ -12,6 +12,10 @@ export class AuthPersistanceService {
   private store: Store = inject(Store)
   private auth: AngularFireAuth = inject(AngularFireAuth)
   private router: Router = inject(Router)
+
+  constructor() {
+    console.log("epaaa")
+  }
 
   public initialize() {
     this.auth.authState.pipe(distinctUntilChanged()).subscribe(

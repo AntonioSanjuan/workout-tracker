@@ -4,7 +4,7 @@ import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects'
 import * as fromWorkoutTrainings from './+state/workout-trainings.reducer';
-import { WorkoutTrainingsResolver } from './shared/workout-trainings/workout-trainings.resolver';
+import { WorkoutTrainingsListResolver } from './shared/workout-trainings-list/workout-trainings-list.resolver';
 
 export const appRoutes: Route[] = [
   {
@@ -18,7 +18,7 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: '',
-        resolve: { data: WorkoutTrainingsResolver },
+        resolve: { data: WorkoutTrainingsListResolver },
         providers: [
           importProvidersFrom(
           )

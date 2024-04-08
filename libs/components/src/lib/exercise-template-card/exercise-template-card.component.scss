@@ -28,6 +28,7 @@ workout-tracker-exercise-template-card {
                         .ExerciseTemplateCard_TypesContainer {
                             display: flex;
                             flex-direction: row;
+                            flex-wrap: wrap;
                             gap: 10px;
                         }
                     }

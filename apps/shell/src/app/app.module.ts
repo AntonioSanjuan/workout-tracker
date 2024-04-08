@@ -22,6 +22,7 @@ import { LibsServicesAuthModule } from '@workout-tracker/services/auth';
 import { LibsServicesDialogModule } from '@workout-tracker/services/dialog';
 import { LibsServicesExerciseTemplatesModule } from '@workout-tracker/services/exercise-templates';
 import { LibsServicesTrainingsModule } from '@workout-tracker/services/trainings';
+import { CanActivateUser } from './shared/guards/user.guard';
 
 
 @NgModule({
@@ -65,7 +66,9 @@ import { LibsServicesTrainingsModule } from '@workout-tracker/services/trainings
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ logOnly: !isDevMode() }),
   ],
-  providers: [],
+  providers: [
+    CanActivateUser
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

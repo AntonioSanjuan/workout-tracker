@@ -9,10 +9,13 @@ import { CultureService } from '@workout-tracker/services/culture';
 })
 export class AppComponent implements OnInit {
   private cultureService: CultureService = inject(CultureService)
-  private authPersistanceService: AuthPersistanceService = inject(AuthPersistanceService)
+  // private authPersistanceService: AuthPersistanceService = inject(AuthPersistanceService)
 
+  constructor() {
+    console.log("ey")
+  }
   ngOnInit(): void {
       this.cultureService.initialize()
-      this.authPersistanceService.initialize()
+      // this.authPersistanceService.initialize()
   }
 }
