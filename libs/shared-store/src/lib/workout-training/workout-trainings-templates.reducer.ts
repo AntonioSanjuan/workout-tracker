@@ -1,0 +1,1 @@
+export const WORKOUT_TRAININGS_FEATURE_KEY = 'workout_training';

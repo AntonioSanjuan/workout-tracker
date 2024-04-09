@@ -2,6 +2,7 @@ export * from './lib/ui';
 export * from './lib/user';
 export * from './lib/settings';
 export * from './lib/workout-exercise-templates';
+export * from './lib/workout-training';
 export * from './lib/error-messages';
 export * from './lib/exercise-templates';
 export * from './lib/trainings';
