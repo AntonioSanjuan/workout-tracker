@@ -27,6 +27,7 @@ export class ExerciseEffects {
             )
         )
     ))
+
     getAuthenticatedUserExerciseDetailsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserExerciseDetailsRequest),
         concatLatestFrom(() => this.store.select(getUser)),
@@ -64,4 +65,55 @@ export class ExerciseEffects {
             )}`})
         })
     ))
+
+    //to-do
+    // getExerciseTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
+    //     ofType(getUserExerciseDetailsRequest),
+    //     concatLatestFrom(() => this.store.select(getUser)),
+    //     mergeMap(([{ exerciseId }, user]) => 
+    //         iif(
+    //             () => !!user,
+    //             of(getAuthenticatedUserExerciseTrainingsDetailsRequest({ exerciseId: exerciseId})),
+    //             of(getAnonymousUserExerciseTrainingsDetailsRequest({ exerciseId: exerciseId}))
+    //         )
+    //     )
+    // ))
+    
+    // getAuthenticatedUserExerciseTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
+    //     ofType(getAuthenticatedUserExerciseTrainingsDetailsRequest),
+    //     concatLatestFrom(() => this.store.select(getUser)),
+    //     mergeMap(([{ exerciseId }, user]) => this.exercisesService.getExerciseTemplate(user?.uid as string, exerciseId).pipe(
+    //         map((exercise: ExerciseTemplate) => getAuthenticatedUserExerciseDetailsRequestSuccess({exercise: exercise})),
+    //         catchError(_ => {
+    //             this.router.navigate([AppRoutes.WorkoutExercisesList])
+    //             return of(getAuthenticatedUserExerciseTrainingsDetailsRequestError({ exerciseId: exerciseId }))}
+    //         )
+    //     ))
+    // ))
+
+    // getAnonymousUserExerciseTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
+    //     ofType(getAnonymousUserExerciseTrainingsDetailsRequest),
+    //     mergeMap(({ exerciseId }) => 
+    //         this.store.select(getExerciseTemplateById(exerciseId)).pipe(
+    //         take(1),
+    //         map((exercise) => exercise ? 
+    //             getAnonymousUserExerciseTrainingsDetailsRequestSuccess({ exercise: exercise }) : 
+    //             getAnonymousUserExerciseTrainingsDetailsRequestError({ exerciseId: exerciseId }))
+    //         )
+    //     )
+    // ))
+
+    // getExerciseTrainingsDetailsRequestError$ = createEffect(() => this.actions$.pipe(
+    //     ofType(
+    //         getAuthenticatedUserExerciseTrainingsDetailsRequestError, 
+    //         getAnonymousUserExerciseTrainingsDetailsRequestError
+    //     ),
+    //     map(({ exerciseId }) => {
+    //         return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseNotFound', 
+    //         {
+    //             exerciseId: exerciseId.toUpperCase(),
+    //         }
+    //         )}`})
+    //     })
+    // ))
 }
