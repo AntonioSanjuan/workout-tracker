@@ -248,7 +248,8 @@
                     "labels": {
                         "date": "Fecha",
                         "status": "Estado",
-                        "observations": "Observaciones"
+                        "observations": "Observaciones",
+                        "numberOfExercises": "Nº de ejercicios"
                     }
                 },
                 "muscleGroup": {

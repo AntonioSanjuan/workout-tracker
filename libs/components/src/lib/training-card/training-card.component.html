@@ -13,6 +13,9 @@
                         <div class="TrainingCard_InfoLabel">
                             <p>{{ 'libs.components.training-card.info.labels.observations' | translate }}:</p>
                         </div>
+                        <div class="TrainingCard_InfoLabel">
+                            <p>{{ 'libs.components.training-card.info.labels.numberOfExercises' | translate }}:</p>
+                        </div>
                     </div>
                     <div class="TrainingCard_InfoValues">
                         <div class="TrainingCard_InfoValue">
@@ -28,6 +31,9 @@
                         </div>
                         <div class="TrainingCard_InfoValue">
                             <p>{{ training.observations }}</p>
+                        </div>
+                        <div class="TrainingCard_InfoValue">
+                            <p>{{ training.trainingExercises?.length }}</p>
                         </div>
                     </div>
                 </div>

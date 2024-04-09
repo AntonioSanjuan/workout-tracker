@@ -219,5 +219,26 @@
             }
         }
     },
-    "libs": {}
+    "libs": {
+        "components": {
+            "training-card": {
+                "title": "Date: {{date}}",
+                "info": {
+                    "labels": {
+                        "date": "Date",
+                        "status": "Status",
+                        "observations": "observations",
+                        "numberOfExercises": "Nº of exercises"
+                    }
+                },
+                "muscleGroup": {
+                    "title": "Muscle group"
+                },
+                "state": {
+                    "finished": "Finished",
+                    "onGoing": "On going"
+                }
+            }
+        }
+    }
 }

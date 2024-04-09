@@ -2,7 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import {
     MatDialog,
     MatDialogConfig,
-  } from '@angular/material/dialog';
+} from '@angular/material/dialog';
 import { Observable } from "rxjs";
 
 @Injectable()
