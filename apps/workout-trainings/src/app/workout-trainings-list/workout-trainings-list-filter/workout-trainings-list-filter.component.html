@@ -56,7 +56,7 @@
     <div class="TrainingsFilter_MuscleFilterActionsContainer">
         
         <div class="TrainingsFilter_MuscleFiltersActive" *ngIf="vm.trainingsFilters.muscleGroups.length">
-            <h2>{{'apps.workout-exercises.list.filter.filteredByMuscles' | translate}}</h2>
+            <h2>{{'apps.workout-trainings.list.filter.filteredByMuscles' | translate}}</h2>
             <div>
                   <workout-tracker-muscle-pill *ngFor="let muscleInvolvedByGroup of vm.trainingsFilters.muscleGroups"
                     [muscleGroup]="muscleInvolvedByGroup"
@@ -68,7 +68,7 @@
             (click)="toggle()"
             mat-mini-fab 
             color="primary" 
-            attr.aria-label="{{'pokemon.list.filter.openFilter' | translate }}">
+            attr.aria-label="{{'apps.workout-trainings.list.filter.actions.openFilter' | translate }}">
                 <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
     </div>

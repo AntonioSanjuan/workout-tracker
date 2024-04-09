@@ -1,0 +1,1 @@
+export const WORKOUT_EXERCISE_TEMPLATES_FEATURE_KEY = 'workout_exercise_templates';

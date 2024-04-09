@@ -1,9 +1,6 @@
 import { createFeatureSelector } from '@ngrx/store';
-import {
-  WORKOUT_EXERCISES_FEATURE_KEY,
-} from './workout-exercises.reducer';
 import { WorkoutExercisesState } from './models/workoutExercisesState.model';
+import { WORKOUT_EXERCISE_TEMPLATES_FEATURE_KEY } from '@workout-tracker/shared-store';
 
-// Lookup the 'Account' feature state managed by NgRx
 export const selectWorkoutExercisesState =
-  createFeatureSelector<WorkoutExercisesState>(WORKOUT_EXERCISES_FEATURE_KEY);
+  createFeatureSelector<WorkoutExercisesState>(WORKOUT_EXERCISE_TEMPLATES_FEATURE_KEY);

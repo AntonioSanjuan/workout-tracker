@@ -124,6 +124,7 @@
                 "title": "Lista de Entrenamientos",
                 "filter": {
                     "actions": {
+                        "openFilter": "Abrir filtros",
                         "clearFilters": "Borrar filtros"
                     },
                     "banner": {
@@ -177,6 +178,7 @@
                 "title": "Lista de ejercicios",
                 "filter": {
                     "actions": {
+                        "openFilter": "Abrir filtros",
                         "clearFilters": "Borrar filtros"
                     },
                     "banner": {

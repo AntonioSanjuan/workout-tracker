@@ -5,7 +5,7 @@ import { getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExer
 describe('workoutExerciseDetailsReducer', () => {
     describe('getAuthenticatedUserExerciseDetailsRequestSuccess action', () => {
         const exerciseSut = { name: 'nameTest' } as ExerciseTemplate;
-        it('should handle getPokemonByNameRequestSuccess action', () => {
+        it('should handle getAuthenticatedUserExerciseDetailsRequestSuccess action', () => {
             const action = getAuthenticatedUserExerciseDetailsRequestSuccess({ exercise: exerciseSut})
             const state = workoutExerciseDetailsReducer(initialWorkoutExerciseDetailsState, action)
 
@@ -15,7 +15,7 @@ describe('workoutExerciseDetailsReducer', () => {
 
     describe('getAnonymousUserExerciseDetailsRequestSuccess action', () => {
         const exerciseSut = { name: 'nameTest' } as ExerciseTemplate;
-        it('should handle getPokemonByNameRequestSuccess action', () => {
+        it('should handle getAnonymousUserExerciseDetailsRequestSuccess action', () => {
             const action = getAnonymousUserExerciseDetailsRequestSuccess({ exercise: exerciseSut})
             const state = workoutExerciseDetailsReducer(initialWorkoutExerciseDetailsState, action)
 
