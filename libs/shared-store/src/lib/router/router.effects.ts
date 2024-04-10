@@ -9,7 +9,7 @@ export class RouterEffects {
     private actions$ = inject(Actions);
 
 
-    routerNavigationAction$ = createEffect(() => 
+    routerNavigatedAction$ = createEffect(() => 
         this.actions$.pipe(
             ofType(routerNavigatedAction),
             switchMap(({ payload }) =>

@@ -3,7 +3,6 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock, exerciseTemplatesStateMock, routerStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { workoutExercisesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock'
 import { DialogService, LibsServicesDialogModule } from '@workout-tracker/services/dialog';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
@@ -13,6 +12,7 @@ import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
 import { WorkoutTrainingComponent } from './workout-training.component';
 import { ViewHeaderComponent } from '@workout-tracker/components';
+import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 
 describe('WorkoutTrainingComponent', () => {
   let component: WorkoutTrainingComponent;
@@ -30,7 +30,7 @@ describe('WorkoutTrainingComponent', () => {
         provideMockStore({
           initialState: {
             ...exerciseTemplatesStateMock,
-            ...workoutExercisesAppStateMock, 
+            ...workoutTrainingsAppStateMock, 
             ...userStateMock,
           }
         }),

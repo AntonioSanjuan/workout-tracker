@@ -1,5 +1,5 @@
-import { TRAININGS_FEATURE_KEY, trainingsInitialState } from "@workout-tracker/shared-store";
+import { WORKOUT_TRAININGS_FEATURE_KEY, workoutTrainingsInitialState } from "@workout-tracker/shared-store";
 
 export const trainingsStateMock = {
-    [TRAININGS_FEATURE_KEY]: trainingsInitialState
+    [WORKOUT_TRAININGS_FEATURE_KEY]: workoutTrainingsInitialState
 }

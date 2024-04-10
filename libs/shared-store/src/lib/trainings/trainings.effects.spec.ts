@@ -40,7 +40,7 @@ describe('TrainingsEffects', () => {
         provideMockStore({
           initialState: {
             ...userStateMock,
-            ...trainingsStateMock
+            ...trainingsStateMock,
           }
         }),
         provideMockActions(() => actions),

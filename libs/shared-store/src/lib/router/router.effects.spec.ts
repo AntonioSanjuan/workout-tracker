@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
 import { Observable, filter, firstValueFrom, of } from 'rxjs';
-import { RouterNavigationPayload, SerializedRouterStateSnapshot, routerNavigationAction } from '@ngrx/router-store';
+import { RouterNavigatedPayload, RouterNavigationPayload, SerializedRouterStateSnapshot, routerNavigatedAction, routerNavigationAction } from '@ngrx/router-store';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import { setCurrentRoute } from './router.actions';
@@ -29,11 +29,11 @@ describe('RouterEffects', () => {
     describe('when routerNavigationAction is dispatched', () => {
       const urlSut = 'testUrl'
       beforeEach(() => { 
-        actions = of(routerNavigationAction({ payload: { event: { url: urlSut}} as RouterNavigationPayload<SerializedRouterStateSnapshot>} ))
+        actions = of(routerNavigatedAction({ payload: { routerState: { url: urlSut}} as RouterNavigatedPayload<SerializedRouterStateSnapshot>} ))
       })
 
       it('should call setCurrentRoute', async () => {
-        const result = await firstValueFrom(effects.routerNavigationAction$)
+        const result = await firstValueFrom(effects.routerNavigatedAction$)
         expect(result).toEqual(setCurrentRoute({currentRoute: urlSut}))
       })
     });
