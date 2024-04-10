@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-filter/workout-exercises-list-filter.component';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { AddWorkoutExerciseDialogComponent } from './add-workout-exercise.dialog/add-workout-exercise-dialog.component';
-import { getExerciseTemplatesFiltered } from '@workout-tracker/shared-store';
+import { getExerciseTemplatesListFiltered } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { ExerciseTemplateCardComponent } from '@workout-tracker/components';
@@ -32,7 +32,7 @@ export class WorkoutExercisesListComponent {
   private router: Router = inject(Router)
   private dialogService = inject(DialogService)
 
-  public filteredExerciseTemplates$ =  this.store.select(getExerciseTemplatesFiltered)
+  public filteredExerciseTemplates$ =  this.store.select(getExerciseTemplatesListFiltered)
 
 
   public newExercise() {

@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers, rootInitialState } from './store/reducers';
-import { LayoutEffects,RouterEffects, RequestEffects, UiEffects, UserEffects, ErrorMessageEffects, SettingsEffects, ExerciseTemplatesEffects, TrainingsEffects } from '@workout-tracker/shared-store';
+import { LayoutEffects,RouterEffects, RequestEffects, UiEffects, UserEffects, ErrorMessageEffects, SettingsEffects, ExerciseTemplatesListEffects, TrainingsEffects } from '@workout-tracker/shared-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BaseLayoutComponent } from './layout/base-layout/base-layout.component';
 import { CoreModule } from './core/core.module';
@@ -59,7 +59,7 @@ import { CanActivateUser } from './shared/guards/user.guard';
       RouterEffects,
       UserEffects,
       SettingsEffects,
-      ExerciseTemplatesEffects,
+      ExerciseTemplatesListEffects,
       TrainingsEffects,
       ErrorMessageEffects
     ]),

@@ -8,7 +8,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import { ExerciseEffects } from './workout-exercise.effects';
 import { ExerciseTemplatesService, exerciseTemplatesServiceMock } from '@workout-tracker/services/exercise-templates';
 import firebase from 'firebase/compat/app';
-import { ExerciseTemplatesState, getExerciseTemplatesState, getUser } from '@workout-tracker/shared-store';
+import { ExerciseTemplatesListState, getExerciseTemplatesListState, getUser } from '@workout-tracker/shared-store';
 import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
 import { ExerciseTemplate } from '@workout-tracker/models';
 import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
@@ -149,9 +149,9 @@ describe('ExerciseDetailsEffects', () => {
 
       describe('if exercise its stored into the created exercises (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getExerciseTemplatesState, {
+          store.overrideSelector(getExerciseTemplatesListState, {
             list: [exerciseSut]
-          } as ExerciseTemplatesState);
+          } as ExerciseTemplatesListState);
           store.refreshState()
         })
 
@@ -162,9 +162,9 @@ describe('ExerciseDetailsEffects', () => {
       })
       describe('if exercise its not stored into  the created exercises (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getExerciseTemplatesState, {
+          store.overrideSelector(getExerciseTemplatesListState, {
             list: [] as ExerciseTemplate[]
-          } as ExerciseTemplatesState);
+          } as ExerciseTemplatesListState);
           store.refreshState()
         })
 

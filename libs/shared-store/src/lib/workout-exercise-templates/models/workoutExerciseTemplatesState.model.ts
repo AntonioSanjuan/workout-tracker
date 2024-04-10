@@ -1,5 +1,5 @@
-import { EXERCISE_TEMPLATES_FEATURE_KEY, ExerciseTemplatesState } from "../../exercise-templates";
+import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, ExerciseTemplatesListState } from "../../exercise-templates-list";
 
 export interface WorkoutExerciseTemplatesState {
-    [EXERCISE_TEMPLATES_FEATURE_KEY]: ExerciseTemplatesState
+    [EXERCISE_TEMPLATES_LIST_FEATURE_KEY]: ExerciseTemplatesListState
   }

@@ -4,7 +4,6 @@ import { UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { DialogService } from '@workout-tracker/services/dialog';
-import { getExerciseTemplatesFiltered } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';

@@ -1,8 +1,8 @@
 import { ExerciseTemplate, MusclesInvolved } from "@workout-tracker/models";
-import { addAnonymousUserExerciseTemplateRequestSuccess, addAuthenticatedUserExerciseTemplateRequestSuccess, clearExerciseTemplateQueryFilter, getAnonymousUserExerciseTemplatesRequestSuccess, getAuthenticatedUserExerciseTemplatesRequestSuccess, setExerciseTemplateNameQueryFilter, setExerciseTemplateMuscleInvolvedQueryFilter } from "./exercise-templates.actions";
-import { exerciseTemplatesReducer } from "./exercise-templates.reducer";
-import { exerciseTemplatesInitialState } from "./models/exerciseTemplatesState.initialState";
-import { ExerciseTemplatesState } from "./models/exerciseTemplatesState.model";
+import { addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequestSuccess, clearExerciseTemplateListQueryFilter, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequestSuccess, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from "./exercise-templates-list.actions";
+import { exerciseTemplatesListReducer } from "./exercise-templates-list.reducer";
+import { exerciseTemplatesListInitialState } from "./models/exerciseTemplatesListState.initialState";
+import { ExerciseTemplatesListState } from "./models/exerciseTemplatesListState.model";
 import { setAnonymousUser } from "../user";
 
 describe('exercisesReducer', () => {
@@ -16,36 +16,36 @@ describe('exercisesReducer', () => {
     describe('setAnonymousUser action', () => {
         //clear exercises if anonymous user is setted
         const exerciseInitialStateMock = {
-            ...exerciseTemplatesInitialState,
+            ...exerciseTemplatesListInitialState,
             list: exerciseInitialStateListMock
-        } as ExerciseTemplatesState
+        } as ExerciseTemplatesListState
         it('should handle setAnonymousUser action', () => {
             const action = setAnonymousUser()
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
-            expect(state).toEqual(exerciseTemplatesInitialState)
+            expect(state).toEqual(exerciseTemplatesListInitialState)
         })
     })
 
     describe('setAuthenticatedUser action', () => {
         //clear exercises if auth user is setted
         const exerciseInitialStateMock = {
-            ...exerciseTemplatesInitialState,
+            ...exerciseTemplatesListInitialState,
             list: exerciseInitialStateListMock
-        } as ExerciseTemplatesState
+        } as ExerciseTemplatesListState
         it('should handle setAuthenticatedUser action', () => {
             const action = setAnonymousUser()
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
-            expect(state).toEqual(exerciseTemplatesInitialState)
+            expect(state).toEqual(exerciseTemplatesListInitialState)
         })
     })
 
     describe('getAuthenticatedUserExerciseTemplatesRequestSuccess action', () => {
         it('should handle getAuthenticatedUserExerciseTemplatesRequestSuccess action', () => {
             const exerciseSut = [ { name: 'testName' } as ExerciseTemplate]
-            const action = getAuthenticatedUserExerciseTemplatesRequestSuccess({ exercises: exerciseSut })
-            const state = exerciseTemplatesReducer(exerciseTemplatesInitialState, action)
+            const action = getAuthenticatedUserExerciseTemplatesListRequestSuccess({ exercises: exerciseSut })
+            const state = exerciseTemplatesListReducer(exerciseTemplatesListInitialState, action)
 
             expect(state.list).toEqual(exerciseSut)
             expect(state.filtered).toEqual(exerciseSut)
@@ -55,8 +55,8 @@ describe('exercisesReducer', () => {
     describe('getAnonymousUserExerciseTemplatesRequestSuccess action', () => {
         it('should handle getAnonymousUserExerciseTemplatesRequestSuccess action', () => {
             const exerciseSut = [ { name: 'testName' } as ExerciseTemplate]
-            const action = getAnonymousUserExerciseTemplatesRequestSuccess({ exercises: exerciseSut })
-            const state = exerciseTemplatesReducer(exerciseTemplatesInitialState, action)
+            const action = getAnonymousUserExerciseTemplatesListRequestSuccess({ exercises: exerciseSut })
+            const state = exerciseTemplatesListReducer(exerciseTemplatesListInitialState, action)
 
             expect(state.list).toEqual(exerciseSut)
             expect(state.filtered).toEqual(exerciseSut)
@@ -66,22 +66,22 @@ describe('exercisesReducer', () => {
     describe('clearExerciseTemplateQueryFilter action', () => {
         it('should handle clearExerciseTemplateQueryFilter action', () => {
             const exerciseInitialStateMock = {
-                ...exerciseTemplatesInitialState,
+                ...exerciseTemplatesListInitialState,
                 list: exerciseInitialStateListMock,
                 query: {
-                    ...exerciseTemplatesInitialState.query,
+                    ...exerciseTemplatesListInitialState.query,
                     filters: {
-                        ...exerciseTemplatesInitialState.query.filters,
+                        ...exerciseTemplatesListInitialState.query.filters,
                         byMuscles: [MusclesInvolved.Abdominals]
                     }
                 }
-            } as ExerciseTemplatesState
+            } as ExerciseTemplatesListState
 
-            const action = clearExerciseTemplateQueryFilter()
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const action = clearExerciseTemplateListQueryFilter()
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             expect(state.list).toEqual(exerciseInitialStateMock.list)
-            expect(state.query.filters).toEqual(exerciseTemplatesInitialState.query.filters)
+            expect(state.query.filters).toEqual(exerciseTemplatesListInitialState.query.filters)
         })
     })
 
@@ -89,14 +89,14 @@ describe('exercisesReducer', () => {
     describe('setExerciseTemplateMuscleInvolvedQueryFilter action', () => {
         it('should handle setExerciseTemplateMuscleInvolvedQueryFilter action adding new one MuscleInvolved', () => {
             const exerciseInitialStateMock = {
-                ...exerciseTemplatesInitialState,
+                ...exerciseTemplatesListInitialState,
                 list: exerciseInitialStateListMock
-            } as ExerciseTemplatesState
+            } as ExerciseTemplatesListState
 
             const muscleInvolvedSut = MusclesInvolved.Chest
             
-            const action = setExerciseTemplateMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const action = setExerciseTemplateListMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             const expectedByMuscles = [muscleInvolvedSut]
             expect(state.query.filters.byMuscles).toEqual(expectedByMuscles)
@@ -107,22 +107,22 @@ describe('exercisesReducer', () => {
         
         it('should handle setExerciseTemplateMuscleInvolvedQueryFilter action adding new MuscleInvolved to existing byMuscles filters', () => {
             const exerciseInitialStateMock = {
-                ...exerciseTemplatesInitialState,
+                ...exerciseTemplatesListInitialState,
                 list: exerciseInitialStateListMock,
                 query: {
-                    ...exerciseTemplatesInitialState.query,
+                    ...exerciseTemplatesListInitialState.query,
                     filters: {
-                        ...exerciseTemplatesInitialState.query.filters,
+                        ...exerciseTemplatesListInitialState.query.filters,
                         byMuscles: [MusclesInvolved.Abdominals]
                     }
                 }
-            } as ExerciseTemplatesState
+            } as ExerciseTemplatesListState
 
             const muscleInvolvedSut = MusclesInvolved.Chest
 
             
-            const action = setExerciseTemplateMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const action = setExerciseTemplateListMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             const expectedByMuscles = [...exerciseInitialStateMock.query.filters.byMuscles, muscleInvolvedSut]
             expect(state.query.filters.byMuscles).toEqual(expectedByMuscles)
@@ -135,14 +135,14 @@ describe('exercisesReducer', () => {
     describe('setExerciseTemplateNameQueryFilter action', () => {
         it('should handle setExerciseTemplateNameQueryFilter action setting exerciseName', () => {
             const exerciseInitialStateMock = {
-                ...exerciseTemplatesInitialState,
+                ...exerciseTemplatesListInitialState,
                 list: exerciseInitialStateListMock
-            } as ExerciseTemplatesState
+            } as ExerciseTemplatesListState
 
             const exerciseNameSut = 'exerciseName test'
             
-            const action = setExerciseTemplateNameQueryFilter({ exerciseName: exerciseNameSut })
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const action = setExerciseTemplateListNameQueryFilter({ exerciseName: exerciseNameSut })
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             expect(state.query.filters.byName).toEqual(exerciseNameSut)
             expect(state.filtered).toEqual(exerciseInitialStateMock.list.filter((exerciseListInitial) =>
@@ -153,22 +153,22 @@ describe('exercisesReducer', () => {
     describe('addAuthenticatedUserExerciseTemplateRequestSuccess action', () => {
         it('should handle addAuthenticatedUserExerciseTemplateRequestSuccess action adding new exercise', () => {
             const exerciseInitialStateMock = {
-                ...exerciseTemplatesInitialState,
+                ...exerciseTemplatesListInitialState,
                 list: exerciseInitialStateListMock,
                 query: {
-                    ...exerciseTemplatesInitialState.query,
+                    ...exerciseTemplatesListInitialState.query,
                     filters: {
-                        ...exerciseTemplatesInitialState.query.filters,
+                        ...exerciseTemplatesListInitialState.query.filters,
                         byMuscles: [MusclesInvolved.Abdominals]
                     }
                 }
-            } as ExerciseTemplatesState
+            } as ExerciseTemplatesListState
 
             const exerciseSut = { name: 'exercise name (add)'} as ExerciseTemplate
 
             
-            const action = addAuthenticatedUserExerciseTemplateRequestSuccess({ exercise: exerciseSut })
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const action = addAuthenticatedUserExerciseTemplateListRequestSuccess({ exercise: exerciseSut })
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             expect(state.list).toEqual([...exerciseInitialStateMock.list, exerciseSut])
             
@@ -178,22 +178,22 @@ describe('exercisesReducer', () => {
     describe('addAnonymousUserExerciseTemplateRequestSuccess action', () => {
         it('should handle addAnonymousUserExerciseTemplateRequestSuccess action adding new exercise', () => {
             const exerciseInitialStateMock = {
-                ...exerciseTemplatesInitialState,
+                ...exerciseTemplatesListInitialState,
                 list: exerciseInitialStateListMock,
                 query: {
-                    ...exerciseTemplatesInitialState.query,
+                    ...exerciseTemplatesListInitialState.query,
                     filters: {
-                        ...exerciseTemplatesInitialState.query.filters,
+                        ...exerciseTemplatesListInitialState.query.filters,
                         byMuscles: [MusclesInvolved.Abdominals]
                     }
                 }
-            } as ExerciseTemplatesState
+            } as ExerciseTemplatesListState
 
             const exerciseSut = { name: 'exercise name (add)'} as ExerciseTemplate
 
             
-            const action = addAnonymousUserExerciseTemplateRequestSuccess({ exercise: exerciseSut })
-            const state = exerciseTemplatesReducer(exerciseInitialStateMock, action)
+            const action = addAnonymousUserExerciseTemplateListRequestSuccess({ exercise: exerciseSut })
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             expect(state.list).toEqual([...exerciseInitialStateMock.list, exerciseSut])
             

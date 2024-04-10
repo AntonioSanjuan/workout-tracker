@@ -6,7 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseForm, getAddWorkoutExerciseForm } from './add-workout-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
 import { ExerciseTemplate, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { addUserExerciseTemplateRequest, showError } from '@workout-tracker/shared-store';
+import { addUserExerciseTemplateListRequest, showError } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 
 @Component({
@@ -50,7 +50,7 @@ export class AddWorkoutExerciseDialogComponent implements OnInit, OnDestroy {
         creationDate: new Date(),
         image: this.photo
       } as ExerciseTemplate
-      this.store.dispatch(addUserExerciseTemplateRequest({ exercise: exercise}))
+      this.store.dispatch(addUserExerciseTemplateListRequest({ exercise: exercise}))
       this.dialogRef.close()
     }
   }

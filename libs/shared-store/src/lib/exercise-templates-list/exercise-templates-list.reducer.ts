@@ -1,33 +1,33 @@
 import { createReducer, on } from "@ngrx/store"
-import { exerciseTemplatesInitialState } from "./models/exerciseTemplatesState.initialState";
-import { addAnonymousUserExerciseTemplateRequestSuccess, addAuthenticatedUserExerciseTemplateRequestSuccess, clearExerciseTemplateQueryFilter, getAnonymousUserExerciseTemplatesRequestSuccess, getAuthenticatedUserExerciseTemplatesRequestSuccess, setExerciseTemplateNameQueryFilter, setExerciseTemplateMuscleInvolvedQueryFilter } from "./exercise-templates.actions";
-import { ExerciseTemplatesState } from "./models/exerciseTemplatesState.model";
+import { exerciseTemplatesListInitialState } from "./models/exerciseTemplatesListState.initialState";
+import { addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequestSuccess, clearExerciseTemplateListQueryFilter, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequestSuccess, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from "./exercise-templates-list.actions";
+import { ExerciseTemplatesListState } from "./models/exerciseTemplatesListState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
 import { ExerciseTemplate, ExerciseTemplateQueryFilters, MusclesInvolved } from "@workout-tracker/models";
 
-export const EXERCISE_TEMPLATES_FEATURE_KEY = 'exercise-templates'; 
+export const EXERCISE_TEMPLATES_LIST_FEATURE_KEY = 'exercise-templates-list'; 
 
-export const exerciseTemplatesReducer = createReducer(
-    exerciseTemplatesInitialState,
+export const exerciseTemplatesListReducer = createReducer(
+    exerciseTemplatesListInitialState,
     on(
         setAnonymousUser, 
         setAuthenticatedUser,
-        (state: ExerciseTemplatesState) => {
+        (state: ExerciseTemplatesListState) => {
         //clear exercises if user is setted
         return {
-            ...exerciseTemplatesInitialState
+            ...exerciseTemplatesListInitialState
         }
     }),
     on(
-        getAnonymousUserExerciseTemplatesRequestSuccess,
-        getAuthenticatedUserExerciseTemplatesRequestSuccess, (state: ExerciseTemplatesState, { exercises }) => {
+        getAnonymousUserExerciseTemplatesListRequestSuccess,
+        getAuthenticatedUserExerciseTemplatesListRequestSuccess, (state: ExerciseTemplatesListState, { exercises }) => {
         return {
             ...state, 
             list: exercises,
             filtered: exercises
         }
     }),
-    on(setExerciseTemplateMuscleInvolvedQueryFilter, (state: ExerciseTemplatesState, { muscleInvolved: muscleInvolved }) => {
+    on(setExerciseTemplateListMuscleInvolvedQueryFilter, (state: ExerciseTemplatesListState, { muscleInvolved: muscleInvolved }) => {
         const newFilters = {
             ...state.query.filters,
             byMuscles: state.query.filters.byMuscles.includes(muscleInvolved) ? state.query.filters.byMuscles.filter((byMuscles) => byMuscles !== muscleInvolved) : [...state.query.filters.byMuscles, muscleInvolved]
@@ -41,7 +41,7 @@ export const exerciseTemplatesReducer = createReducer(
             filtered: filterExercises(state.list, newFilters)
         }
     }),
-    on(setExerciseTemplateNameQueryFilter, (state: ExerciseTemplatesState, { exerciseName }) => {
+    on(setExerciseTemplateListNameQueryFilter, (state: ExerciseTemplatesListState, { exerciseName }) => {
         const newFilters = {
             ...state.query.filters,
             byName: exerciseName
@@ -56,23 +56,23 @@ export const exerciseTemplatesReducer = createReducer(
         }
     }),
     on(
-        addAuthenticatedUserExerciseTemplateRequestSuccess,
-        addAnonymousUserExerciseTemplateRequestSuccess, (state: ExerciseTemplatesState, { exercise }) => {
+        addAuthenticatedUserExerciseTemplateListRequestSuccess,
+        addAnonymousUserExerciseTemplateListRequestSuccess, (state: ExerciseTemplatesListState, { exercise }) => {
         return {
             ...state, 
             list: [...state.list, exercise],
-            filtered: filterExercises([...state.list, exercise], exerciseTemplatesInitialState.query.filters)
+            filtered: filterExercises([...state.list, exercise], exerciseTemplatesListInitialState.query.filters)
         }
     }),
 
-    on(clearExerciseTemplateQueryFilter, (state: ExerciseTemplatesState) => {
+    on(clearExerciseTemplateListQueryFilter, (state: ExerciseTemplatesListState) => {
         return {
             ...state, 
             query: {
                 ...state.query,
-                filters: exerciseTemplatesInitialState.query.filters
+                filters: exerciseTemplatesListInitialState.query.filters
             },
-            filtered: filterExercises(state.list, exerciseTemplatesInitialState.query.filters)
+            filtered: filterExercises(state.list, exerciseTemplatesListInitialState.query.filters)
         }
     }),
 )

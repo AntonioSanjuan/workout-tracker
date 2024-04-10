@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MusclesInvolved } from '@workout-tracker/models';
-import { addUserExerciseTemplateRequest } from '@workout-tracker/shared-store';
+import { addUserExerciseTemplateListRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
 
@@ -75,7 +75,7 @@ describe('WorkoutExercisesListComponent', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
           component.createExercise()
 
-          expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseTemplateRequest({exercise: {
+          expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseTemplateListRequest({exercise: {
             name:inputNameSut,
             musclesInvolved: inputMusclesInvolved,
             observations: inputObservations,
