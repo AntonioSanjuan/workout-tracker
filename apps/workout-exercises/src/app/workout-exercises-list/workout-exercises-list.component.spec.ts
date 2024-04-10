@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WorkoutExercisesListComponent } from './workout-exercises-list.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { userStateMock, exerciseTemplatesStateMock } from '@workout-tracker/test'
+import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { workoutExercisesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock'
@@ -30,7 +30,6 @@ describe('WorkoutExercisesListComponent', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...exerciseTemplatesStateMock,
             ...workoutExercisesAppStateMock, 
             ...userStateMock
           }

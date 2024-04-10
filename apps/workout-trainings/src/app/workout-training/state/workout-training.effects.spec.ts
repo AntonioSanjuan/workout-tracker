@@ -11,8 +11,7 @@ import { Training } from '@workout-tracker/models';
 import { getAnonymousUserTrainingDetailsRequest, getAnonymousUserTrainingDetailsRequestError, getAnonymousUserTrainingDetailsRequestSuccess, getAuthenticatedUserTrainingDetailsRequest, getAuthenticatedUserTrainingDetailsRequestError, getAuthenticatedUserTrainingDetailsRequestSuccess, getUserTrainingDetailsRequest } from './workout-training.actions';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
 import { TrainingsState, getTrainingsState, getUser } from '@workout-tracker/shared-store';
-import { initialWorkoutTrainingsState } from '../../+state/models/workoutTrainingsState.initialState';
-import { trainingsStateMock } from '@workout-tracker/test';
+import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 
 describe('TrainingDetailsEffects', () => {
   let actions: Observable<Action>;
@@ -34,8 +33,7 @@ describe('TrainingDetailsEffects', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...initialWorkoutTrainingsState,
-            ...trainingsStateMock
+            ...workoutTrainingsAppStateMock
           }
         }),
       ],

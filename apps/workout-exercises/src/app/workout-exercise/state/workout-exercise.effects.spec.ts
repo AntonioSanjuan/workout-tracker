@@ -7,12 +7,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ExerciseEffects } from './workout-exercise.effects';
 import { ExerciseTemplatesService, exerciseTemplatesServiceMock } from '@workout-tracker/services/exercise-templates';
-import { initialWorkoutExercisesState } from '../../+state/models/workoutExercisesState.initialState';
 import firebase from 'firebase/compat/app';
-import { ExerciseTemplatesState, getExerciseTemplateById, getExerciseTemplatesState, getUser } from '@workout-tracker/shared-store';
+import { ExerciseTemplatesState, getExerciseTemplatesState, getUser } from '@workout-tracker/shared-store';
 import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
 import { ExerciseTemplate } from '@workout-tracker/models';
-import { exerciseTemplatesStateMock } from "@workout-tracker/test"
+import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
 
 describe('ExerciseDetailsEffects', () => {
   let actions: Observable<Action>;
@@ -34,8 +33,7 @@ describe('ExerciseDetailsEffects', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...initialWorkoutExercisesState,
-            ...exerciseTemplatesStateMock
+            ...workoutExercisesAppStateMock
           }
         }),
       ],

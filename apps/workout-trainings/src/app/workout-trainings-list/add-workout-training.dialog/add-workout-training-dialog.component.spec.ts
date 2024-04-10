@@ -2,13 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddWorkoutTrainingDialogComponent } from './add-workout-training-dialog.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
-import { userStateMock, exerciseTemplatesStateMock } from '@workout-tracker/test'
+import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MuscleGroups } from '@workout-tracker/models';
 import { addUserTrainingRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
+import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 
 describe('AddWorkoutTrainingDialogComponent', () => {
   let component: AddWorkoutTrainingDialogComponent;
@@ -21,7 +22,7 @@ describe('AddWorkoutTrainingDialogComponent', () => {
         { provide: MatDialogRef, useValue: { close: jest.fn()}},
         provideMockStore({
           initialState: {
-            ...exerciseTemplatesStateMock,
+            ...workoutTrainingsAppStateMock,
             ...userStateMock
           }
         }),
