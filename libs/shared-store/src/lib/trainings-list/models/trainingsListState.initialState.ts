@@ -1,6 +1,6 @@
-import { TrainingsState } from "./trainingsState.model";
+import { TrainingsListState } from "./trainingsListState.model";
 
-export const trainingsInitialState: TrainingsState =  {
+export const trainingsListInitialState: TrainingsListState =  {
     list: [],
     query: {
         filters: {

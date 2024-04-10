@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MuscleGroups } from '@workout-tracker/models';
-import { addUserTrainingRequest } from '@workout-tracker/shared-store';
+import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 
@@ -69,11 +69,11 @@ describe('AddWorkoutTrainingDialogComponent', () => {
           jest.useRealTimers();
         })
 
-        it('should dispatch addUserTrainingRequest', () => {
+        it('should dispatch addUserTrainingListRequest', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
           component.createTraining()
 
-          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingRequest({training: {
+          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingListRequest({training: {
             muscleGroups: inputMusclesGroups,
             observations: inputObservations,
             creationDate: today
@@ -89,7 +89,7 @@ describe('AddWorkoutTrainingDialogComponent', () => {
             })
           })
   
-          it('should not dispatch addUserTrainingRequest', () => {
+          it('should not dispatch addUserTrainingListRequest', () => {
             const dispatchSpy = jest.spyOn(store, 'dispatch')
             component.createTraining()
   
@@ -105,7 +105,7 @@ describe('AddWorkoutTrainingDialogComponent', () => {
             })
           })
   
-          it('should not dispatch addUserTrainingRequest', () => {
+          it('should not dispatch addUserTrainingListRequest', () => {
             const dispatchSpy = jest.spyOn(store, 'dispatch')
             component.createTraining()
   
@@ -121,7 +121,7 @@ describe('AddWorkoutTrainingDialogComponent', () => {
             })
           })
   
-          it('should not dispatch addUserTrainingRequest', () => {
+          it('should not dispatch addUserTrainingListRequest', () => {
             const dispatchSpy = jest.spyOn(store, 'dispatch')
             component.createTraining()
   

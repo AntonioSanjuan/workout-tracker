@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, Training } from '@workout-tracker/models';
-import { getTrainingOngoing, getUserTrainingsRequest, getTrainingsPagination, getTrainingsList } from '@workout-tracker/shared-store';
+import { getTrainingListOngoing, getUserTrainingsListRequest, getTrainingsListPagination, getTrainingsList } from '@workout-tracker/shared-store';
 import { TrainingCardComponent } from '@workout-tracker/components'
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
 import { AddWorkoutTrainingDialogComponent } from './add-workout-training.dialog/add-workout-training-dialog.component';
@@ -33,8 +33,8 @@ export class WorkoutTrainingsListComponent {
   private dialogService = inject(DialogService)
 
   public trainingList$ =  this.store.select(getTrainingsList)
-  public trainingsPagination$ =  this.store.select(getTrainingsPagination)
-  public trainingOngoing$ = this.store.select(getTrainingOngoing)
+  public trainingsPagination$ =  this.store.select(getTrainingsListPagination)
+  public trainingOngoing$ = this.store.select(getTrainingListOngoing)
 
   public newTraining() {
     this.dialogService.showDialog(AddWorkoutTrainingDialogComponent, true)
@@ -47,7 +47,7 @@ export class WorkoutTrainingsListComponent {
   public isIntersecting(isIntersecting: boolean): void {
     if (isIntersecting) {
       // Load more data, update the UI, etc.
-      this.store.dispatch(getUserTrainingsRequest())
+      this.store.dispatch(getUserTrainingsListRequest())
     }
   }
 }

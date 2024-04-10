@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { AppRoutes, Training } from '@workout-tracker/models';
 import { WorkoutTrainingsListComponent } from './workout-trainings-list.component';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
-import { getUserTrainingsRequest } from '@workout-tracker/shared-store';
+import { getUserTrainingsListRequest } from '@workout-tracker/shared-store';
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
 import { AddWorkoutTrainingDialogComponent } from './add-workout-training.dialog/add-workout-training-dialog.component';
 describe('WorkoutTrainingsComponent', () => {
@@ -63,20 +63,20 @@ describe('WorkoutTrainingsComponent', () => {
 
   describe('Integration tests', () => {
     describe('isIntersecting expected behaviour', () => {
-      it('isIntersecting request with true prop value should dispatch getUserTrainingsRequest', () => {
+      it('isIntersecting request with true prop value should dispatch getUserTrainingsListRequest', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
   
         component.isIntersecting(true)
   
-        expect(dispatchSpy).toHaveBeenCalledWith(getUserTrainingsRequest())
+        expect(dispatchSpy).toHaveBeenCalledWith(getUserTrainingsListRequest())
       });
 
-      it('isIntersecting request with false prop value should dispatch getUserTrainingsRequest', () => {
+      it('isIntersecting request with false prop value should dispatch getUserTrainingsListRequest', () => {
         const dispatchSpy = jest.spyOn(store, 'dispatch')
   
         component.isIntersecting(false)
   
-        expect(dispatchSpy).not.toHaveBeenCalledWith(getUserTrainingsRequest())
+        expect(dispatchSpy).not.toHaveBeenCalledWith(getUserTrainingsListRequest())
       });
     })
 

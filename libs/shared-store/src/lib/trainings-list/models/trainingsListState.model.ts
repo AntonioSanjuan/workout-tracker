@@ -1,6 +1,6 @@
 import { Training, TrainingQuery } from "@workout-tracker/models";
 
-export interface TrainingsState {
+export interface TrainingsListState {
     list: Training[],
     query: TrainingQuery,
 }

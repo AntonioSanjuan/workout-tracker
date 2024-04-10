@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter.component';
-import { clearTrainingQueryFilter, setTrainingQueryFilter } from '@workout-tracker/shared-store';
+import { clearTrainingListQueryFilter, setTrainingListQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { MuscleGroups } from '@workout-tracker/models';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
@@ -60,7 +60,7 @@ describe('WorkoutTrainingsFilterListComponent', () => {
   })
 
   describe('Integration tests', () => {
-    it('search should dispatch setTrainingQueryFilter', () => {
+    it('search should dispatch setTrainingListQueryFilter', () => {
       const fromDateSut: Date = new Date();
       const toDateSut: Date = new Date(fromDateSut.getDate(), fromDateSut.getMonth(), fromDateSut.getFullYear() + 1)
       const dispatchSpy = jest.spyOn(store, 'dispatch')
@@ -72,7 +72,7 @@ describe('WorkoutTrainingsFilterListComponent', () => {
       })
       component.search()
 
-      expect(dispatchSpy).toHaveBeenCalledWith(setTrainingQueryFilter({ 
+      expect(dispatchSpy).toHaveBeenCalledWith(setTrainingListQueryFilter({ 
         filters: {
           betweenDates: {
             fromDate: fromDateSut,
@@ -84,7 +84,7 @@ describe('WorkoutTrainingsFilterListComponent', () => {
     });
 
     describe('clearFilters', () => {
-      it('should dispatch clearTrainingQueryFilter', () => {
+      it('should dispatch clearTrainingListQueryFilter', () => {
         const fromDateSut: Date = new Date();
         const toDateSut: Date = new Date(fromDateSut.getDate(), fromDateSut.getMonth(), fromDateSut.getFullYear() + 1)
         const dispatchSpy = jest.spyOn(store, 'dispatch')
@@ -96,7 +96,7 @@ describe('WorkoutTrainingsFilterListComponent', () => {
         })
         component.clearFilters()
   
-        expect(dispatchSpy).toHaveBeenCalledWith(clearTrainingQueryFilter())
+        expect(dispatchSpy).toHaveBeenCalledWith(clearTrainingListQueryFilter())
       });
       it('should reset form', () => {
         const fromDateSut: Date = new Date();

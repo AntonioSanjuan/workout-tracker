@@ -6,7 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutTrainingForm, getAddWorkoutTrainingForm } from './add-workout-training-dialog.form';
 import { FormGroup } from '@angular/forms';
 import { MuscleGroups, Training } from '@workout-tracker/models';
-import { addUserTrainingRequest } from '@workout-tracker/shared-store';
+import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { MusclesGroupsSelectorComponent } from '@workout-tracker/components';
 
 @Component({
@@ -39,7 +39,7 @@ export class AddWorkoutTrainingDialogComponent implements OnInit {
         ...this.form.getRawValue(), 
         creationDate: new Date(),
       } as Training
-      this.store.dispatch(addUserTrainingRequest({ training: training}))
+      this.store.dispatch(addUserTrainingListRequest({ training: training}))
       this.dialogRef.close()
     }
   }

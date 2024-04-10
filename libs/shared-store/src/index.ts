@@ -5,7 +5,7 @@ export * from './lib/workout-exercise-templates';
 export * from './lib/workout-training';
 export * from './lib/error-messages';
 export * from './lib/exercise-templates-list';
-export * from './lib/trainings';
+export * from './lib/trainings-list';
 export * from './lib/layout';
 export * from './lib/router';
 export * from './lib/request';

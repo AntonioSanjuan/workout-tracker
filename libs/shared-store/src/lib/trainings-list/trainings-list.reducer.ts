@@ -1,25 +1,25 @@
 import { createReducer, on } from "@ngrx/store"
-import { trainingsInitialState } from "./models/trainingsState.initialState";
-import { TrainingsState } from "./models/trainingsState.model";
+import { trainingsListInitialState } from "./models/trainingsListState.initialState";
+import { TrainingsListState } from "./models/trainingsListState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
-import { updateAnonymousUserTrainingRequestSuccess, updateAuthenticatedUserTrainingRequestSuccess, clearTrainingQueryFilter, getAnonymousUserTrainingsRequestSuccess, getAuthenticatedUserTrainingsRequestSuccess, setTrainingQueryFilter, addAuthenticatedUserTrainingRequestSuccess, addAnonymousUserTrainingRequestSuccess } from "./trainings.actions";
+import { updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequestSuccess, clearTrainingListQueryFilter, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequestSuccess, setTrainingListQueryFilter, addAuthenticatedUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestSuccess } from "./trainings-list.actions";
 
-export const TRAININGS_FEATURE_KEY = 'trainings'; 
+export const TRAININGS_LIST_FEATURE_KEY = 'trainings-list'; 
 
-export const trainingsReducer = createReducer(
-    trainingsInitialState,
+export const trainingsListReducer = createReducer(
+    trainingsListInitialState,
     on(
         setAnonymousUser, 
         setAuthenticatedUser,
-        (state: TrainingsState) => {
+        (state: TrainingsListState) => {
         //clear exercises if user is setted
         return {
-            ...trainingsInitialState
+            ...trainingsListInitialState
         }
     }),
     on(
-        getAnonymousUserTrainingsRequestSuccess,
-        getAuthenticatedUserTrainingsRequestSuccess, (state: TrainingsState, { trainings }) => {
+        getAnonymousUserTrainingsListRequestSuccess,
+        getAuthenticatedUserTrainingsListRequestSuccess, (state: TrainingsListState, { trainings }) => {
         return {
             ...state, 
             list: [...state.list, ...trainings ],
@@ -34,14 +34,14 @@ export const trainingsReducer = createReducer(
         }
     }),
     on(
-        setTrainingQueryFilter, (state: TrainingsState, { filters }) => {
+        setTrainingListQueryFilter, (state: TrainingsListState, { filters }) => {
         return {
             ...state, 
             list: [],
             query: {
                 ...state.query,
                 pagination: {
-                    ...trainingsInitialState.query.pagination
+                    ...trainingsListInitialState.query.pagination
                 },
                 filters: {
                     ...state.query.filters,
@@ -51,8 +51,8 @@ export const trainingsReducer = createReducer(
         }
     }),
     on(
-        addAuthenticatedUserTrainingRequestSuccess,
-        addAnonymousUserTrainingRequestSuccess, (state: TrainingsState, { training }) => {
+        addAuthenticatedUserTrainingListRequestSuccess,
+        addAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
         return {
             ...state, 
             list: [training, ...state.list ],
@@ -60,8 +60,8 @@ export const trainingsReducer = createReducer(
     }),
 
     on(
-        updateAuthenticatedUserTrainingRequestSuccess,
-        updateAnonymousUserTrainingRequestSuccess, (state: TrainingsState, { training }) => {
+        updateAuthenticatedUserTrainingListRequestSuccess,
+        updateAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
         const replaceElIndex = [...state.list].findIndex((trainingListEl) => trainingListEl.id === training.id)
         const newList = [...state.list];
 
@@ -73,15 +73,15 @@ export const trainingsReducer = createReducer(
             list: [...newList],
         }
     }),
-    on(clearTrainingQueryFilter, (state: TrainingsState) => {
+    on(clearTrainingListQueryFilter, (state: TrainingsListState) => {
         return {
             ...state, 
             list: [],
             query: {
                 ...state.query,
-                filters: trainingsInitialState.query.filters,
+                filters: trainingsListInitialState.query.filters,
                 pagination: {
-                    ...trainingsInitialState.query.pagination
+                    ...trainingsListInitialState.query.pagination
                 },
             },
 

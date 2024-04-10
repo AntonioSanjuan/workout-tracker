@@ -10,7 +10,7 @@ import firebase from 'firebase/compat/app';
 import { Training } from '@workout-tracker/models';
 import { getAnonymousUserTrainingDetailsRequest, getAnonymousUserTrainingDetailsRequestError, getAnonymousUserTrainingDetailsRequestSuccess, getAuthenticatedUserTrainingDetailsRequest, getAuthenticatedUserTrainingDetailsRequestError, getAuthenticatedUserTrainingDetailsRequestSuccess, getUserTrainingDetailsRequest } from './workout-training.actions';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { TrainingsState, getTrainingsState, getUser } from '@workout-tracker/shared-store';
+import { TrainingsListState, getTrainingsListState, getUser } from '@workout-tracker/shared-store';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 
 describe('TrainingDetailsEffects', () => {
@@ -149,9 +149,9 @@ describe('TrainingDetailsEffects', () => {
 
       describe('if training its stored into the created trainings (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getTrainingsState, {
+          store.overrideSelector(getTrainingsListState, {
             list: [trainingSut]
-          } as TrainingsState);
+          } as TrainingsListState);
           store.refreshState()
         })
 
@@ -162,9 +162,9 @@ describe('TrainingDetailsEffects', () => {
       })
       describe('if training its not stored into  the created trainings (list)', () => {
         beforeEach(() => { 
-          store.overrideSelector(getTrainingsState, {
+          store.overrideSelector(getTrainingsListState, {
             list: [] as Training[]
-          } as TrainingsState);
+          } as TrainingsListState);
           store.refreshState()
         })
 

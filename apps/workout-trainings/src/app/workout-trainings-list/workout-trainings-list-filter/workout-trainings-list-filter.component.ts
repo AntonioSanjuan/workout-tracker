@@ -5,7 +5,7 @@ import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, accordionAnimation, 
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
 import { MuscleGroups } from '@workout-tracker/models';
-import { setTrainingQueryFilter, getTrainingsFilters, clearTrainingQueryFilter } from '@workout-tracker/shared-store';
+import { setTrainingListQueryFilter, getTrainingsListFilters, clearTrainingListQueryFilter } from '@workout-tracker/shared-store';
 import { BannerComponent, MusclePillComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { FormGroup } from '@angular/forms';
 import { TrainingsListFilterForm, trainingsListFilterForm } from './workout-trainings-list-filter.service.form';
@@ -31,7 +31,7 @@ import { TrainingsListFilterForm, trainingsListFilterForm } from './workout-trai
 })
 export class WorkoutTrainingsFilterListComponent implements OnInit {
   private store: Store = inject(Store)
-  public trainingsFilters$ = this.store.select(getTrainingsFilters)
+  public trainingsFilters$ = this.store.select(getTrainingsListFilters)
   public muscleGroups = MuscleGroups;
 
   //filters
@@ -49,7 +49,7 @@ export class WorkoutTrainingsFilterListComponent implements OnInit {
 
   public search() {
     const formValues = this.trainingsListFilterForm?.getRawValue()
-    this.store.dispatch(setTrainingQueryFilter({ 
+    this.store.dispatch(setTrainingListQueryFilter({ 
       filters: {
         betweenDates: 
           (formValues?.fromDate && formValues?.toDate) ? 
@@ -65,6 +65,6 @@ export class WorkoutTrainingsFilterListComponent implements OnInit {
 
   public clearFilters(){
     this.trainingsListFilterForm = trainingsListFilterForm()
-    this.store.dispatch(clearTrainingQueryFilter())
+    this.store.dispatch(clearTrainingListQueryFilter())
   }
 }

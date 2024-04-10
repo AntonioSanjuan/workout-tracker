@@ -1,5 +1,5 @@
-import { TRAININGS_FEATURE_KEY, TrainingsState } from "../../trainings";
+import { TRAININGS_LIST_FEATURE_KEY, TrainingsListState } from "../../trainings-list";
 
 export interface WorkoutTrainingState {
-    [TRAININGS_FEATURE_KEY]: TrainingsState
+    [TRAININGS_LIST_FEATURE_KEY]: TrainingsListState
   }
