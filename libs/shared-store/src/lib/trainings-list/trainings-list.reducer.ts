@@ -18,7 +18,6 @@ export const trainingsListReducer = createReducer(
         }
     }),
     on(
-        getAnonymousUserTrainingsListRequestSuccess,
         getAuthenticatedUserTrainingsListRequestSuccess, (state: TrainingsListState, { trainings }) => {
         return {
             ...state, 
@@ -29,6 +28,21 @@ export const trainingsListReducer = createReducer(
                     ...state.query.pagination,
                     moreElements: trainings.length === state.query.pagination.pageElements,
                     lastElement: trainings[trainings.length - 1]
+                }
+            }
+        }
+    }),
+    on(
+        getAnonymousUserTrainingsListRequestSuccess, (state: TrainingsListState, { trainings }) => {
+        return {
+            ...state, 
+            list: [...trainings ],
+            query: {
+                ...state.query,
+                pagination: {
+                    ...state.query.pagination,
+                    moreElements: false,
+                    lastElement: undefined
                 }
             }
         }
