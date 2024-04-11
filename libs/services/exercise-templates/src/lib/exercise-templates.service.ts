@@ -4,21 +4,14 @@ import { ExerciseTemplateAdapter } from "@workout-tracker/adapters";
 import { ExerciseTemplate, ExerciseTemplateDto } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, from, map } from "rxjs";
+import { ExerciseTemplatesRefService } from "./exercise-templates-ref.service";
 
 @Injectable()
 export class ExerciseTemplatesService {
-    private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
-
-    private getExerciseTemplatesCollectionRef(userId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/exercises`)
-    }
-
-    public getExerciseTemplateDocRef(userId: string, exerciseId: string): AngularFirestoreDocument {
-        return this.firebaseDataBase.doc(`user/${userId}/exercises/${exerciseId}`)
-    }
+    private exerciseTemplatesRefService: ExerciseTemplatesRefService = inject(ExerciseTemplatesRefService)
 
     public getExerciseTemplate(userId: string, exerciseId: string): Observable<ExerciseTemplate> {
-        return from(this.getExerciseTemplateDocRef(userId, exerciseId).get()).pipe(
+        return from(this.exerciseTemplatesRefService.getExerciseTemplateDocRef(userId, exerciseId).get()).pipe(
             map((doc: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>) => {
                 return ExerciseTemplateAdapter.toState({...doc.data() as ExerciseTemplateDto}, doc.id);
             })
@@ -26,7 +19,7 @@ export class ExerciseTemplatesService {
     }
 
     public getExerciseTemplates(userId: string): Observable<ExerciseTemplate[]> {
-        return this.getExerciseTemplatesCollectionRef(userId).get().pipe(
+        return this.exerciseTemplatesRefService.getExerciseTemplatesCollectionRef(userId).get().pipe(
             map((querySnapshot: firebase.firestore.QuerySnapshot) => {
                 return querySnapshot.docs.map((doc) => {
                     return ExerciseTemplateAdapter.toState({...doc.data() as ExerciseTemplateDto}, doc.id);
@@ -37,7 +30,7 @@ export class ExerciseTemplatesService {
 
     public setExerciseTemplate(userId: string, exercise: ExerciseTemplate): Observable<ExerciseTemplate> {
         const exerciseInput = ExerciseTemplateAdapter.toDto(exercise);
-        return from(this.getExerciseTemplatesCollectionRef(userId).add(exerciseInput)).pipe(
+        return from(this.exerciseTemplatesRefService.getExerciseTemplatesCollectionRef(userId).add(exerciseInput)).pipe(
             map((doc: DocumentReference<firebase.firestore.DocumentData>) => {
                 return ExerciseTemplateAdapter.toState({...exerciseInput as ExerciseTemplateDto}, doc.id);
             })
@@ -48,7 +41,7 @@ export class ExerciseTemplatesService {
         exercise.lastModification = new Date()
         const exerciseInput = ExerciseTemplateAdapter.toDto(exercise);
 
-        return from(this.getExerciseTemplateDocRef(userId, exercise.id).update(exerciseInput)).pipe(
+        return from(this.exerciseTemplatesRefService.getExerciseTemplateDocRef(userId, exercise.id).update(exerciseInput)).pipe(
             map(() => {
                 return {...exercise}
             })
@@ -56,7 +49,7 @@ export class ExerciseTemplatesService {
     }
 
     public deleteExerciseTemplate(userId: string, exercise: ExerciseTemplate): Observable<boolean> {
-        return from(this.getExerciseTemplateDocRef(userId, exercise.id).delete()).pipe(
+        return from(this.exerciseTemplatesRefService.getExerciseTemplateDocRef(userId, exercise.id).delete()).pipe(
             map(() => true)
         )
     }

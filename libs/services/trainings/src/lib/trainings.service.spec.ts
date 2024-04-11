@@ -9,7 +9,7 @@ import firebase from 'firebase/compat/app/';
 import { ExerciseTemplate, Training, TrainingExercise, TrainingExerciseSerie, TrainingQuery } from '@workout-tracker/models';
 import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from '@workout-tracker/adapters';
 import { TrainingsService } from './trainings.service';
-import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
+import { ExerciseTemplatesRefService, exerciseTemplatesRefServiceMock } from '@workout-tracker/services/exercise-templates';
 
 const mock = {
   collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>),
@@ -19,7 +19,7 @@ const mock = {
 
 describe('TrainingsService', () => {
   let service: TrainingsService;
-  let exerciseTemplatesService: ExerciseTemplatesService
+  let exerciseTemplatesRefService: ExerciseTemplatesRefService
   let store: Store;
   let translateService: TranslateService;
 
@@ -33,15 +33,15 @@ describe('TrainingsService', () => {
       ],
       providers: [
         { provide: AngularFirestore, useValue: mock },
+        { provide: ExerciseTemplatesRefService, useValue: exerciseTemplatesRefServiceMock },
         TrainingsService,
-        ExerciseTemplatesService,
         provideMockStore({
           initialState: {}
         })
       ]
     });
     service = TestBed.inject(TrainingsService);
-    exerciseTemplatesService = TestBed.inject(ExerciseTemplatesService)
+    exerciseTemplatesRefService = TestBed.inject(ExerciseTemplatesRefService)
     store = TestBed.inject(Store)
     translateService = TestBed.inject(TranslateService);
 
@@ -135,7 +135,7 @@ describe('TrainingsService', () => {
 
       beforeEach(() => {
         jest.spyOn(TrainingsService.prototype as any, 'getTrainingExercisesCollectionRef').mockReturnValue({ add: addSpy.mockResolvedValue({ id: trainingExerciseSut.id }) })
-        jest.spyOn(exerciseTemplatesService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
       });
 
       it('setTrainingExercise should request collection add',  (done) => {
@@ -146,7 +146,7 @@ describe('TrainingsService', () => {
       })
 
       it('setTrainingExercise should request exerciseService getExerciseTemplateDocRef',  (done) => {
-        const getExerciseDocRefSpy = jest.spyOn(exerciseTemplatesService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        const getExerciseDocRefSpy = jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
         service.setTrainingExercise(userIdSut, trainingExerciseSut.id, trainingExerciseSut).subscribe(() => {
           expect(getExerciseDocRefSpy).toHaveBeenCalledWith(userIdSut, trainingExerciseSut.exerciseTemplate.id)
           done()
@@ -214,7 +214,7 @@ describe('TrainingsService', () => {
 
       beforeEach(() => {
         jest.spyOn(TrainingsService.prototype as any, 'getTrainingExerciseDocRef').mockReturnValue({ update: updateSpy.mockResolvedValue({ }) })
-        jest.spyOn(exerciseTemplatesService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
       });
 
       it('updateTrainingExercise should request collection update',  (done) => {
@@ -225,7 +225,7 @@ describe('TrainingsService', () => {
       })
 
       it('setTrainingExercise should request exerciseService getExerciseTemplateDocRef',  (done) => {
-        const getExerciseDocRefSpy = jest.spyOn(exerciseTemplatesService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        const getExerciseDocRefSpy = jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
         service.updateTrainingExercise(userIdSut, trainingExerciseSut.id, trainingExerciseSut).subscribe(() => {
           expect(getExerciseDocRefSpy).toHaveBeenCalledWith(userIdSut, trainingExerciseSut.exerciseTemplate.id)
           done()

@@ -4,12 +4,12 @@ import { DateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExercise
 import { ExerciseTemplate, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, catchError, combineLatest, defaultIfEmpty, forkJoin, from, map, switchMap } from "rxjs";
-import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates'
+import { ExerciseTemplatesRefService, ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates'
 
 @Injectable()
 export class TrainingsService {
     private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
-    private exerciseService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
+    private exerciseRefService: ExerciseTemplatesRefService = inject(ExerciseTemplatesRefService)
 
     private getTrainingsPaginatedQuery(userId: string, trainingQuery: TrainingQuery): QueryFn {
         const trainingsPaginatedQuery: QueryFn = ref => {
@@ -181,7 +181,7 @@ export class TrainingsService {
     public setTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise> {
         const trainingExerciseInput = TrainingExerciseAdapter.toDto(
             trainingExercise, 
-            this.exerciseService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
+            this.exerciseRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
         return from(this.getTrainingExercisesCollectionRef(userId, trainingId).add(trainingExerciseInput)).pipe(
             map((trainingExercisesDoc) => 
@@ -222,7 +222,7 @@ export class TrainingsService {
     public updateTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise> {
         const exerciseInput = TrainingExerciseAdapter.toDto(
             trainingExercise, 
-            this.exerciseService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
+            this.exerciseRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
 
         return from(this.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).update(exerciseInput)).pipe(

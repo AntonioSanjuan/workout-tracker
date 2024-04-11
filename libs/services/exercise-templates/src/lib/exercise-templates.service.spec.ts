@@ -2,22 +2,18 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { ExerciseTemplatesService } from './exercise-templates.service';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import firebase from 'firebase/compat/app/';
 import { ExerciseTemplate } from '@workout-tracker/models';
 import { ExerciseTemplateAdapter } from '@workout-tracker/adapters';
-
-const mock = {
-  collection: jest.fn().mockReturnValue({}  as AngularFirestoreCollection<unknown>),
-  doc: jest.fn().mockReturnValue({}  as AngularFirestoreDocument<unknown>)
-};
-
+import { ExerciseTemplatesRefService } from './exercise-templates-ref.service';
+import { exerciseTemplatesRefServiceMock } from './exercise-templates-ref.service.mock';
 
 describe('ExerciseTemplatesService', () => {
   let service: ExerciseTemplatesService;
+  let exerciseTemplatesRefService: ExerciseTemplatesRefService;
   let store: Store;
   let translateService: TranslateService;
 
@@ -30,7 +26,7 @@ describe('ExerciseTemplatesService', () => {
         }),
       ],
       providers: [
-        { provide: AngularFirestore, useValue: mock },
+        { provide: ExerciseTemplatesRefService, useValue: exerciseTemplatesRefServiceMock },
         ExerciseTemplatesService,
         provideMockStore({
           initialState: {}
@@ -38,6 +34,7 @@ describe('ExerciseTemplatesService', () => {
       ]
     });
     service = TestBed.inject(ExerciseTemplatesService);
+    exerciseTemplatesRefService = TestBed.inject(ExerciseTemplatesRefService)
     store = TestBed.inject(Store)
     translateService = TestBed.inject(TranslateService);
 
@@ -69,7 +66,7 @@ describe('ExerciseTemplatesService', () => {
       ]
 
       beforeEach(() => {
-        mock.collection.mockReturnValue({
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplatesCollectionRef').mockReturnValue({
           get: jest.fn().mockReturnValue(of(
             {
               docs: storedExercises.map((exercise: ExerciseTemplate) => {
@@ -78,8 +75,8 @@ describe('ExerciseTemplatesService', () => {
                 }
               })
             }
-          ))
-        })
+          ))        
+        } as any)
       })
 
       it('getExerciseTemplates should return exercises stored into Firebase collection',  (done) => {
@@ -102,14 +99,14 @@ describe('ExerciseTemplatesService', () => {
 
 
       beforeEach(() => {
-        mock.doc.mockReturnValue({
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({
           get: jest.fn().mockReturnValue(of(
             {
               id: exerciseIdSut,
               data: jest.fn().mockReturnValue(exerciseDtoSut)
             }
           ))
-        })
+        } as any)
       })
 
       it('getExerciseTemplate should return exercise stored into Firebase collection',  (done) => {
@@ -131,9 +128,9 @@ describe('ExerciseTemplatesService', () => {
       const addSpy = jest.fn()
       beforeEach(() => {
         addSpy.mockReset()
-        mock.collection.mockReturnValue({
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplatesCollectionRef').mockReturnValue({
           add: addSpy.mockResolvedValue(ExerciseTemplateAdapter.toDto(exerciseSut))
-        })
+        } as any)
       })
 
       it('setExerciseTemplate should request collection add',  (done) => {
@@ -162,9 +159,9 @@ describe('ExerciseTemplatesService', () => {
       const updateSpy = jest.fn()
       beforeEach(() => {
         updateSpy.mockReset()
-        mock.doc.mockReturnValue({
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({
           update: updateSpy.mockResolvedValue(ExerciseTemplateAdapter.toDto(exerciseSut))
-        })
+        } as any)
       })
 
       it('updateExercises should request doc update',  (done) => {
@@ -192,9 +189,9 @@ describe('ExerciseTemplatesService', () => {
       const deleteExerciseSpy = jest.fn()
       beforeEach(() => {
         deleteExerciseSpy.mockReset()
-        mock.doc.mockReturnValue({
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({
           delete: deleteExerciseSpy.mockResolvedValue(true)
-        })
+        } as any)
       })
 
       it('deleteExerciseTemplate should request doc update',  (done) => {
