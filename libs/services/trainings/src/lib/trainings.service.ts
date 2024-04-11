@@ -1,77 +1,18 @@
 import { Injectable, inject } from "@angular/core";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, QueryFn } from '@angular/fire/compat/firestore'
-import { DateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
+import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
 import { ExerciseTemplate, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, catchError, combineLatest, defaultIfEmpty, forkJoin, from, map, switchMap } from "rxjs";
-import { ExerciseTemplatesRefService, ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates'
+import { ExerciseTemplatesRefService } from '@workout-tracker/services/exercise-templates'
+import { TrainingsRefService } from "./trainings-ref.service";
 
 @Injectable()
 export class TrainingsService {
-    private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
     private exerciseRefService: ExerciseTemplatesRefService = inject(ExerciseTemplatesRefService)
-
-    private getTrainingsPaginatedQuery(userId: string, trainingQuery: TrainingQuery): QueryFn {
-        const trainingsPaginatedQuery: QueryFn = ref => {
-            let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-
-            //filters
-            if (trainingQuery.filters.betweenDates) { 
-                console.log("trainingQuery.filters.betweenDates", trainingQuery.filters.betweenDates)
-                query = query.where('creationDate', ">=", DateAdapter.toDto(trainingQuery.filters.betweenDates.fromDate)).where('creationDate', "<=",  DateAdapter.toDto(trainingQuery.filters.betweenDates.toDate)) 
-            }
-            if (trainingQuery.filters.muscleGroups.length) { 
-                console.log("trainingQuery.filters.muscleGroups", trainingQuery.filters.muscleGroups)
-                query = query.where('muscleGroups', "array-contains-any", trainingQuery.filters.muscleGroups) 
-                
-            }
-
-            // Aplicar ordenamiento
-            query = query
-                .limit(trainingQuery.pagination.pageElements)
-                .orderBy('creationDate', 'desc')
-
-            //pagination
-            if (trainingQuery.pagination.lastElement) { 
-                query = query.startAt(DateAdapter.toDto(trainingQuery.pagination.lastElement.creationDate)) 
-            }
-            
-            return query
-        }
-        return trainingsPaginatedQuery;
-    }
-    
-    private getTrainingsCollectionRef(userId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/trainings`)
-    }
-
-    private getTrainingsPaginatedCollectionRef(userId: string, trainingQuery: TrainingQuery): AngularFirestoreCollection {
-        const firestoreQuery = this.getTrainingsPaginatedQuery(userId, trainingQuery)
-        return this.firebaseDataBase.collection(`user/${userId}/trainings`, firestoreQuery)
-    }
-
-    private getTrainingExercisesCollectionRef(userId: string, trainingId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/trainings/${trainingId}/exercises`)
-    }
-
-    private getTrainingExerciseSeriesCollectionRef(userId: string, trainingId: string, trainingExerciseId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}/series`)
-    }
-
-    private getTrainingDocRef(userId: string, trainingId: string): AngularFirestoreDocument {
-        return this.firebaseDataBase.doc(`user/${userId}/trainings/${trainingId}`)
-    }
-
-    private getTrainingExerciseDocRef(userId: string, trainingId: string, trainingExerciseId: string): AngularFirestoreDocument {
-        return this.firebaseDataBase.doc(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}`)
-    }
-
-    private getTrainingExerciseSerieDocRef(userId: string, trainingId: string, trainingExerciseId: string, trainingExerciseSerieId: string): AngularFirestoreDocument {
-        return this.firebaseDataBase.doc(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}/series/${trainingExerciseSerieId}`)
-    }
+    private trainingsRefService: TrainingsRefService = inject(TrainingsRefService)
 
     public getTraining(userId: string, trainingId: string): Observable<Training> {
-        return this.getTrainingDocRef(userId, trainingId).get().pipe(
+        return this.trainingsRefService.getTrainingDocRef(userId, trainingId).get().pipe(
             switchMap((trainingDoc: firebase.firestore.DocumentSnapshot) => {  
                 const trainingId = trainingDoc.id;
                 const trainingData = trainingDoc.data() as TrainingDto;
@@ -91,7 +32,7 @@ export class TrainingsService {
     }
 
     public getTrainings(userId: string, query: TrainingQuery): Observable<Training[]> {
-        return this.getTrainingsPaginatedCollectionRef(userId, query).get().pipe(
+        return this.trainingsRefService.getTrainingsPaginatedCollectionRef(userId, query).get().pipe(
             switchMap((trainingsQS: firebase.firestore.QuerySnapshot) => {
                 const observables: Observable<Training>[] = [];
                 trainingsQS.docs.forEach((trainingDoc) => {
@@ -120,7 +61,7 @@ export class TrainingsService {
     }
     
     private getTrainingExercises(userId: string, trainingId: string): Observable<TrainingExercise[]> {
-        return this.getTrainingExercisesCollectionRef(userId, trainingId).get().pipe(
+        return this.trainingsRefService.getTrainingExercisesCollectionRef(userId, trainingId).get().pipe(
             switchMap((trainingExercisesQS: firebase.firestore.QuerySnapshot) => {
                 const trainingExerciseObservables: Observable<TrainingExercise>[] = [];
     
@@ -153,7 +94,7 @@ export class TrainingsService {
     }
     
     private getTrainingExerciseSeries(userId: string, trainingId: string, trainingExerciseId: string): Observable<TrainingExerciseSerie[]> {
-        return this.getTrainingExerciseSeriesCollectionRef(userId, trainingId, trainingExerciseId).get().pipe(
+        return this.trainingsRefService.getTrainingExerciseSeriesCollectionRef(userId, trainingId, trainingExerciseId).get().pipe(
             map((exerciseSeriesQS: firebase.firestore.QuerySnapshot) => 
                 exerciseSeriesQS.docs.map((exerciseSeriesDoc) => 
                     TrainingExerciseSerieAdapter.toState(
@@ -167,7 +108,7 @@ export class TrainingsService {
 
     public setTraining(userId: string, training: Training): Observable<Training> {
         const trainingInput = TrainingAdapter.toDto(training);
-        return from(this.getTrainingsCollectionRef(userId).add(trainingInput)).pipe(
+        return from(this.trainingsRefService.getTrainingsCollectionRef(userId).add(trainingInput)).pipe(
             map((trainingExercisesDoc) => 
                 TrainingAdapter.toState(
                     trainingInput, 
@@ -183,7 +124,7 @@ export class TrainingsService {
             trainingExercise, 
             this.exerciseRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
-        return from(this.getTrainingExercisesCollectionRef(userId, trainingId).add(trainingExerciseInput)).pipe(
+        return from(this.trainingsRefService.getTrainingExercisesCollectionRef(userId, trainingId).add(trainingExerciseInput)).pipe(
             map((trainingExercisesDoc) => 
                 TrainingExerciseAdapter.toState(
                     trainingExerciseInput, 
@@ -199,7 +140,7 @@ export class TrainingsService {
         const trainingExerciseSerieInput = TrainingExerciseSerieAdapter.toDto(
             trainingExerciseSerie
         );
-        return from(this.getTrainingExerciseSeriesCollectionRef(userId, trainingId, trainingExerciseId).add(trainingExerciseSerieInput)).pipe(
+        return from(this.trainingsRefService.getTrainingExerciseSeriesCollectionRef(userId, trainingId, trainingExerciseId).add(trainingExerciseSerieInput)).pipe(
             map((trainingExercisesSerieDoc) => 
                 TrainingExerciseSerieAdapter.toState(
                     trainingExerciseSerieInput, 
@@ -212,7 +153,7 @@ export class TrainingsService {
     public updateTraining(userId: string, training: Training): Observable<Training> {
         const exerciseInput = TrainingAdapter.toDto(training);
 
-        return from(this.getTrainingDocRef(userId, training.id).update(exerciseInput)).pipe(
+        return from(this.trainingsRefService.getTrainingDocRef(userId, training.id).update(exerciseInput)).pipe(
             map(() => {
                 return {...training}
             })
@@ -225,7 +166,7 @@ export class TrainingsService {
             this.exerciseRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
 
-        return from(this.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).update(exerciseInput)).pipe(
+        return from(this.trainingsRefService.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).update(exerciseInput)).pipe(
             map(() => {
                 return {...trainingExercise}
             })
@@ -237,7 +178,7 @@ export class TrainingsService {
             trainingExerciseSerie
         );
 
-        return from(this.getTrainingExerciseSerieDocRef(userId, trainingId, trainingExerciseId, trainingExerciseSerie.id).update(exerciseInput)).pipe(
+        return from(this.trainingsRefService.getTrainingExerciseSerieDocRef(userId, trainingId, trainingExerciseId, trainingExerciseSerie.id).update(exerciseInput)).pipe(
             map(() => {
                 return {...trainingExerciseSerie}
             })
@@ -245,19 +186,19 @@ export class TrainingsService {
     }
 
     public deleteTraining(userId: string, training: Training): Observable<boolean> {
-        return from(this.getTrainingDocRef(userId, training.id).delete()).pipe(
+        return from(this.trainingsRefService.getTrainingDocRef(userId, training.id).delete()).pipe(
             map(() => true)
         )
     }
 
     public deleteTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<boolean> {
-        return from(this.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).delete()).pipe(
+        return from(this.trainingsRefService.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).delete()).pipe(
             map(() => true)
         )
     }
 
     public deleteTrainingExerciseSerie(userId: string, trainingId: string, trainingExerciseId: string, trainingExerciseSerie: TrainingExerciseSerie): Observable<boolean> {
-        return from(this.getTrainingExerciseSerieDocRef(userId, trainingId, trainingExerciseId, trainingExerciseSerie.id).delete()).pipe(
+        return from(this.trainingsRefService.getTrainingExerciseSerieDocRef(userId, trainingId, trainingExerciseId, trainingExerciseSerie.id).delete()).pipe(
             map(() => true)
         )
     }
