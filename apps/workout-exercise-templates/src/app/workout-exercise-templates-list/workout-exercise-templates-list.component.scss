@@ -1,0 +1,40 @@
+@use "css/main.scss" as shellStyles;
+
+:host {
+    height: 100%;
+}
+
+.WorkoutExerciseTemplatesList_MainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+
+    workout-tracker-exercise-templates-list-filter {
+        width: 100%;
+    }
+
+    button {
+        background-color: shellStyles.$mainColor;
+    }
+    h2 {
+        margin-top: 0;
+    }
+
+    .WorkoutExerciseTemplatesList_ListContainer {
+        display: flex;
+        flex-direction: column;
+
+        width: 80%;
+    }
+}
+
+@media (max-width: 960px) {
+    .WorkoutExerciseTemplatesList_MainContainer {
+        .WorkoutExerciseTemplatesList_ListContainer {
+            width: 90%;
+        }
+    }
+}

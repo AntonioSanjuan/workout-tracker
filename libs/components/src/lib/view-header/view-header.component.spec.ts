@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 describe('ViewHeaderComponent', () => {
   const titleSut = 'title test'
-  const goBackUrlSut = `${AppRoutes.WorkoutExercisesList}/idTest` 
+  const goBackUrlSut = `${AppRoutes.WorkoutExerciseTemplatesList}/idTest` 
 
   let component: ViewHeaderComponent;
   let fixture: ComponentFixture<ViewHeaderComponent>;

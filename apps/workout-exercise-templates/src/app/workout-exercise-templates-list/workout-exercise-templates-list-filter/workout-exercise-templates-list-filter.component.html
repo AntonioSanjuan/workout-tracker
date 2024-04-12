@@ -1,0 +1,67 @@
+<div class="ExerciseTemplateFilter_MainContainer"
+    *ngrxLet="{ exerciseTemplatesFilters: exerciseTemplatesFilters$ } as vm">
+
+    <div class="ExerciseTemplateFilter_NameFilterContainer">
+        <div class="ExerciseTemplateFilter_NameFilterFormContainer">
+            <div class="ExerciseTemplateFilter_NameFilterForm" *ngIf="exerciseTemplatesListFilterForm"  [formGroup]="exerciseTemplatesListFilterForm">
+                <mat-form-field >
+                    <mat-label>{{'apps.workout-exercises.list.filter.byNamePlaceholder' | translate}}</mat-label>
+                    <input  matInput id="byName" name="byName" formControlName="byName" type="text">
+                </mat-form-field>
+                <button mat-mini-fab color="warn" 
+                    attr.aria-label="{{'apps.workout-exercises.list.filter.byNameLabel' | translate }}"  
+                    [disabled]="!exerciseTemplatesListFilterForm.value.byName" 
+                    (click)="searchByName()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+            <button mat-flat-button color="warn" 
+            attr.aria-label="{{'apps.workout-trainings.list.filter.actions.clearFilters' | translate }}"  
+            [disabled]="!vm.exerciseTemplatesFilters.byName && !vm.exerciseTemplatesFilters.byMuscles.length" 
+            (click)="clearFilters()">
+            {{'apps.workout-exercises.list.filter.actions.clearFilters' | translate }}
+        </button>
+        </div>
+
+        <div class="ExerciseTemplateFilter_NameFilterBanner">
+            <workout-tracker-banner 
+                [content]="'apps.workout-exercises.list.filter.banner.content' | translate">
+            </workout-tracker-banner>
+        </div>
+    </div>
+    <div class="ExerciseTemplateFilter_MuscleFilterContainer" [@accordion]="collapsed">
+        <div class="ExerciseTemplateFilter_MuscleFilter">
+            <div class="ExerciseTemplateFilter_MuscleFilterHeader">
+                <h2>{{'apps.workout-exercises.list.filter.byMuscleLabel' | translate}}</h2>
+            </div>
+            <div class="ExerciseTemplateFilter_MuscleFilterContent" *ngIf="exerciseTemplatesListFilterForm" [formGroup]="exerciseTemplatesListFilterForm">
+                <workout-tracker-muscles-selector 
+                    [label]="'apps.workout-exercises.list.filter.byMusclePlaceholder' | translate"
+                    [formGroup]="exerciseTemplatesListFilterForm"
+                    [formControlName]="'byMuscles'"
+                    (muscleSelection)="filterByMuscleInvolved($event)">
+                </workout-tracker-muscles-selector>
+            </div>
+        </div>
+    </div>
+    <div class="ExerciseTemplateFilter_MuscleFilterActionsContainer">
+        
+        <div class="ExerciseTemplateFilter_MuscleFiltersActive" *ngIf="vm.exerciseTemplatesFilters.byMuscles.length">
+            <h2>{{'apps.workout-exercises.list.filter.filteredByMuscles' | translate}}</h2>
+            <div>
+                  <workout-tracker-muscle-pill *ngFor="let mucleInvolved of vm.exerciseTemplatesFilters.byMuscles"
+                    [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                    [specificMuscle]="mucleInvolved"
+                  ></workout-tracker-muscle-pill>
+            </div>
+        </div>
+        <button 
+            [@rotate]="!collapsed"
+            (click)="toggle()"
+            mat-mini-fab 
+            color="primary" 
+            attr.aria-label="{{'apps.workout-exercises.list.filter.actions.openFilter' | translate }}">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </div>
+</div>

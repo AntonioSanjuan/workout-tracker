@@ -1,23 +1,26 @@
 {
-  "name": "workout-trainings",
+  "name": "workout-exercise-templates",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "workout-tracker",
-  "sourceRoot": "apps/workout-trainings/src",
+  "sourceRoot": "apps/workout-exercise-templates/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/workout-tracker/workout-trainings",
-        "index": "apps/workout-trainings/src/index.html",
-        "main": "apps/workout-trainings/src/main.ts",
+        "outputPath": "dist/workout-tracker/workout-exercise-templates",
+        "index": "apps/workout-exercise-templates/src/index.html",
+        "main": "apps/workout-exercise-templates/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/workout-trainings/tsconfig.app.json",
+        "tsConfig": "apps/workout-exercise-templates/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/workout-trainings/src/favicon.ico","apps/workout-trainings/src/assets"],
-        "styles": ["apps/workout-trainings/src/styles.scss"],
+        "assets": [
+          "apps/workout-exercise-templates/src/favicon.ico",
+          "apps/workout-exercise-templates/src/assets"
+        ],
+        "styles": ["apps/workout-exercise-templates/src/styles.scss"],
         "stylePreprocessorOptions": {
           "includePaths": [
             "apps/shell/src/assets"
@@ -25,7 +28,7 @@
         },
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/workout-trainings/webpack.config.ts"
+          "path": "apps/workout-exercise-templates/webpack.config.ts"
         }
       },
       "configurations": {
@@ -44,7 +47,7 @@
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/workout-trainings/webpack.prod.config.ts"
+            "path": "apps/workout-exercise-templates/webpack.prod.config.ts"
           }
         },
         "development": {
@@ -61,15 +64,15 @@
     "serve": {
       "executor": "@nx/angular:dev-server",
       "options": {
-        "port": 4203,
-        "publicHost": "http://localhost:4203"
+        "port": 4202,
+        "publicHost": "http://localhost:4202"
       },
       "configurations": {
         "production": {
-          "buildTarget": "workout-trainings:build:production"
+          "buildTarget": "workout-exercise-templates:build:production"
         },
         "development": {
-          "buildTarget": "workout-trainings:build:development"
+          "buildTarget": "workout-exercise-templates:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -77,7 +80,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "workout-trainings:build"
+        "buildTarget": "workout-exercise-templates:build"
       }
     },
     "lint": {
@@ -87,23 +90,23 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/workout-trainings/jest.config.ts"
+        "jestConfig": "apps/workout-exercise-templates/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "defaultConfiguration": "production",
       "options": {
-        "buildTarget": "workout-trainings:build",
-        "port": 4203,
+        "buildTarget": "workout-exercise-templates:build",
+        "port": 4202,
         "watch": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "workout-trainings:build:development"
+          "buildTarget": "workout-exercise-templates:build:development"
         },
         "production": {
-          "buildTarget": "workout-trainings:build:production"
+          "buildTarget": "workout-exercise-templates:build:production"
         }
       }
     }

@@ -33,13 +33,13 @@ export const appRoutes: Route[] = [
     
   },
   {
-    path: 'exercises',
+    path: 'exercise-templates',
     component: BaseLayoutComponent,
     children: [
       {
         path: '',
         loadChildren: () =>
-          loadRemoteModule('workout-exercises', './routes').then(
+          loadRemoteModule('workout-exercise-templates', './routes').then(
             (m) => m.appRoutes
           ),
       },

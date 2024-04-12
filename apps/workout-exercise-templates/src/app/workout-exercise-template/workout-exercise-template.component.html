@@ -1,0 +1,6 @@
+<div
+    *ngrxLet="{ exerciseTemplateDetails: exerciseTemplateDetails$ } as vm"
+    class="WorkoutExerciseTemplate_MainContainer">
+    <workout-tracker-view-header [title]="'asd'" [goBackUrl]="appRoutes.WorkoutExerciseTemplatesList"></workout-tracker-view-header>
+    {{vm.exerciseTemplateDetails.exercise?.name}}
+</div>

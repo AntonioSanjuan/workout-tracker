@@ -1,0 +1,153 @@
+@use "css/main.scss" as shellStyles;
+
+.ExerciseTemplateFilter_MainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    background-color: shellStyles.$grey1;
+    box-shadow: shellStyles.$mainColor 0px 15px 20px -13px;
+    .ExerciseTemplateFilter_NameFilterContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+        background: shellStyles.$grey2;
+        min-height: 200px;
+        width: 100%;
+
+        .ExerciseTemplateFilter_NameFilterFormContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+
+            .ExerciseTemplateFilter_NameFilterForm {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                mat-form-field {
+                    .mat-mdc-form-field-subscript-wrapper {
+                        display: none;
+                    }
+                }
+        
+                > button {
+                    border-radius: 5px;
+                    background-color: shellStyles.$mainColor;
+                    &:disabled { 
+                    background-color: shellStyles.$grey3;
+                        mat-icon {
+                            color: shellStyles.$white;    
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        .ExerciseTemplateFilter_NameFilterBanner {
+            border-radius: 5px;
+            width: 300px;
+            padding: 5px 10px;
+            margin-left: 25px;
+
+            p {
+                font-size: 20px;
+                margin: 0;
+                color: shellStyles.$white
+            }
+        }
+        
+    }
+    .ExerciseTemplateFilter_MuscleFilterContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        justify-content: flex-start;
+        overflow: hidden;
+        
+        .ExerciseTemplateFilter_MuscleFilter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+
+            .ExerciseTemplateFilter_MuscleFilterContent {
+                display: flex;
+                flex-direction: row;
+                width: 80%;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+
+                .ExerciseTemplateFilter_MuscleFilters {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .ExerciseTemplateFilter_MuscleFilterActionsContainer {
+        position: relative;
+        min-height: 25px;
+    
+        .ExerciseTemplateFilter_MuscleFiltersActive {
+            display: flex;
+            padding: 0.75em 0.675em;
+            border-radius: 10px;
+            background-color: shellStyles.$grey2;
+            flex-direction: row;
+            margin: 20px 0px;
+            align-items: center;
+            gap: 10px;
+
+            .ExerciseTemplateFilter_MuscleFiltersCurrent {
+                display: flex;
+                flex-direction: row;
+                cursor: pointer;
+            }
+        }
+        button {
+            position: absolute;
+            bottom: -20px;
+            right: calc(50% - 20px);
+            z-index: 3;
+            background-color: shellStyles.$mainColor;
+        }
+    
+    }
+}
+
+@media (max-width: 960px) {
+    .ExerciseTemplateFilter_MainContainer {
+        .ExerciseTemplateFilter_NameFilterContainer {
+            .ExerciseTemplateFilter_NameFilterFormContainer {
+                .ExerciseTemplateFilter_NameFilterForm {
+                    flex-direction: column;
+                    mat-form-field {
+                        margin: 0px 10px;
+                    }
+                    > button {
+                        margin: 0px 10px;
+                    }
+                }
+            }
+
+            .ExerciseTemplateFilter_NameFilterBanner {
+                display: none;
+            }
+        }
+
+        .ExerciseTemplateFilter_MuscleFilterContainer  {
+            .ExerciseTemplateFilter_MuscleFilter  {
+                .ExerciseTemplateFilter_MuscleFilterContent  {
+                    gap: 10px;
+                }
+            }
+        }
+    }
+}
