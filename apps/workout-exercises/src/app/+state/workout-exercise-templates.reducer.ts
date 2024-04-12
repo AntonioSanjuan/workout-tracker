@@ -5,7 +5,7 @@ import { initialWorkoutExercisesState } from './models/workoutExercisesState.ini
 import { WORKOUT_EXERCISE_FEATURE_KEY, workoutExerciseDetailsReducer } from '../workout-exercise/state/workout-exercise.reducer';
 import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, exerciseTemplatesListReducer } from '@workout-tracker/shared-store';
 
-export const workoutExercisesReducer = (state: WorkoutExercisesState = initialWorkoutExercisesState, action: Action) => 
+export const workoutExerciseTemplatesReducer = (state: WorkoutExercisesState = initialWorkoutExercisesState, action: Action) => 
   combineReducers({
     [EXERCISE_TEMPLATES_LIST_FEATURE_KEY]: exerciseTemplatesListReducer,
     [WORKOUT_EXERCISE_FEATURE_KEY]: workoutExerciseDetailsReducer

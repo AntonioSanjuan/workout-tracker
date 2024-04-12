@@ -1,12 +1,12 @@
 import { createSelector } from '@ngrx/store'
 import { ExerciseTemplatesListState } from './models/exerciseTemplatesListState.model'
-import { selectWorkoutExerciseTemplatesFeature } from '../workout-exercise-templates/workout-exercise-templates.selectors'
-import { WorkoutExerciseTemplatesState } from '../workout-exercise-templates'
+import { selectExerciseTemplatesHubFeature } from '../exercise-templates-hub/exercise-templates-hub.selectors'
+import { ExerciseTemplatesHubState } from '../exercise-templates-hub'
 import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY } from './exercise-templates-list.reducer'
 
 export const getExerciseTemplatesListState = createSelector(
-    selectWorkoutExerciseTemplatesFeature,
-    (state: WorkoutExerciseTemplatesState) => state[EXERCISE_TEMPLATES_LIST_FEATURE_KEY]
+    selectExerciseTemplatesHubFeature,
+    (state: ExerciseTemplatesHubState) => state[EXERCISE_TEMPLATES_LIST_FEATURE_KEY]
 )
 // export const getExerciseTemplatesState = createFeatureSelector<ExerciseTemplatesState>(EXERCISE_TEMPLATES_FEATURE_KEY)
 export const getExerciseTemplatesList = createSelector(getExerciseTemplatesListState, (state: ExerciseTemplatesListState) => state.list)

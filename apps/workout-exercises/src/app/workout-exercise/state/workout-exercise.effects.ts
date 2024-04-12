@@ -7,7 +7,7 @@ import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-tem
 import { Store } from '@ngrx/store';
 import { getExerciseTemplateById, getUser, showError } from '@workout-tracker/shared-store';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
-import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExerciseTemplateDetailsRequestError, getAnonymousUserExerciseTemplateDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequestError, getAuthenticatedUserExerciseTemplateDetailsRequestSuccess, getUserExerciseTemplateDetailsRequest } from './workout-exercise.actions';
+import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExerciseTemplateDetailsRequestError, getAnonymousUserExerciseTemplateDetailsRequestSuccess, getAnonymousUserExerciseTemplateTrainingsDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequestError, getAuthenticatedUserExerciseTemplateDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest, getUserExerciseTemplateDetailsRequest } from './workout-exercise.actions';
 @Injectable()
 export class ExerciseEffects {
     private exercisesService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
@@ -73,8 +73,8 @@ export class ExerciseEffects {
         mergeMap(([{ exerciseId }, user]) => 
             iif(
                 () => !!user,
-                of(getAuthenticatedUserExerciseTrainingsDetailsRequest({ exerciseId: exerciseId})),
-                of(getAnonymousUserExerciseTrainingsDetailsRequest({ exerciseId: exerciseId}))
+                of(getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest({ exerciseTemplateId: exerciseId})),
+                of(getAnonymousUserExerciseTemplateTrainingsDetailsRequest({ exerciseTemplateId: exerciseId}))
             )
         )
     ))

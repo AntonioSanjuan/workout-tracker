@@ -5,7 +5,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { userStateMock, sharedStoreTrainingsStateMock } from '@workout-tracker/test';
+import { userStateMock, trainingsHubStateMock } from '@workout-tracker/test';
 import { ExerciseTemplate, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { TrainingsListEffects } from './trainings-list.effects'
@@ -40,7 +40,7 @@ describe('TrainingsListEffects', () => {
         provideMockStore({
           initialState: {
             ...userStateMock,
-            ...sharedStoreTrainingsStateMock,
+            ...trainingsHubStateMock,
           }
         }),
         provideMockActions(() => actions),

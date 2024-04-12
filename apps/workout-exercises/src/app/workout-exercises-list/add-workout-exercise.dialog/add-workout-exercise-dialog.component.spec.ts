@@ -9,7 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MusclesInvolved } from '@workout-tracker/models';
 import { addUserExerciseTemplateListRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
-import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
+import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
 
 describe('WorkoutExercisesListComponent', () => {
   let component: AddWorkoutExerciseDialogComponent;
@@ -22,7 +22,7 @@ describe('WorkoutExercisesListComponent', () => {
         { provide: MatDialogRef, useValue: { close: jest.fn()}},
         provideMockStore({
           initialState: {
-            ...workoutExercisesAppStateMock,
+            ...workoutExerciseTemplatesAppStateMock,
             ...userStateMock
           }
         }),

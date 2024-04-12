@@ -1,10 +1,10 @@
 import { createSelector } from '@ngrx/store';
 import { WORKOUT_EXERCISE_FEATURE_KEY, WorkoutExerciseDetails, WorkoutExerciseDetailsState } from './workout-exercise.reducer';
-import { selectWorkoutExercisesState } from '../../+state/workout-exercises.selectors';
+import { selectWorkoutExerciseTemplatesState } from '../../+state/workout-exercise-templates.selectors';
 import { WorkoutExercisesState } from '../../+state/models/workoutExercisesState.model';
 
 export const selectWorkoutExerciseState = createSelector(
-  selectWorkoutExercisesState,
+  selectWorkoutExerciseTemplatesState,
   (state: WorkoutExercisesState) => state[WORKOUT_EXERCISE_FEATURE_KEY]
 );
 

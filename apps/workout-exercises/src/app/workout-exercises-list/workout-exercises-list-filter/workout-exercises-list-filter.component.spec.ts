@@ -10,7 +10,7 @@ import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-fi
 import { MusclesInvolved } from '@workout-tracker/models';
 import { clearExerciseTemplateListQueryFilter, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesGroupsSelectorComponent } from '@workout-tracker/components';
-import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
+import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
 
 describe('WorkoutExercisesFilterListComponent', () => {
   let actions: Observable<Action>;
@@ -31,7 +31,7 @@ describe('WorkoutExercisesFilterListComponent', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...workoutExercisesAppStateMock
+            ...workoutExerciseTemplatesAppStateMock
           }
         }),
       ]

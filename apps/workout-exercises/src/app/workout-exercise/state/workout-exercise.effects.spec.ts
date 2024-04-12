@@ -11,7 +11,7 @@ import firebase from 'firebase/compat/app';
 import { ExerciseTemplatesListState, getExerciseTemplatesListState, getUser } from '@workout-tracker/shared-store';
 import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExerciseTemplateDetailsRequestError, getAnonymousUserExerciseTemplateDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequestError, getAuthenticatedUserExerciseTemplateDetailsRequestSuccess, getUserExerciseTemplateDetailsRequest } from './workout-exercise.actions';
 import { ExerciseTemplate } from '@workout-tracker/models';
-import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
+import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
 
 describe('ExerciseDetailsEffects', () => {
   let actions: Observable<Action>;
@@ -33,7 +33,7 @@ describe('ExerciseDetailsEffects', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...workoutExercisesAppStateMock
+            ...workoutExerciseTemplatesAppStateMock
           }
         }),
       ],

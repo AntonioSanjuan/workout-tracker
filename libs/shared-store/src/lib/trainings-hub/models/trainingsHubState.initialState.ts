@@ -1,6 +1,6 @@
 import { TRAININGS_LIST_FEATURE_KEY, trainingsListInitialState } from "../../trainings-list";
-import { WorkoutTrainingState } from "./workoutTrainingsState.model";
+import { TrainingsHubState } from "./trainingsHubState.model";
 
-export const workoutTrainingsInitialState: WorkoutTrainingState = {
+export const trainingsHubInitialState: TrainingsHubState = {
     [TRAININGS_LIST_FEATURE_KEY]: trainingsListInitialState
   }

@@ -8,7 +8,7 @@ import { Observable, filter, mergeMap } from "rxjs";
 @Injectable({
     providedIn: 'root'
 })
-export class WorkoutExercisesListResolver implements Resolve<any> {
+export class WorkoutExerciseTemplatesListResolver implements Resolve<any> {
     private store: Store = inject(Store)
 
     resolve(route: ActivatedRouteSnapshot): Observable<ExerciseTemplate[]> {

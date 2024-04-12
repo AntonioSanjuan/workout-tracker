@@ -9,7 +9,7 @@ import { selectWorkoutExerciseDetails } from "../../workout-exercise/state/worko
 @Injectable({
     providedIn: 'root'
 })
-export class WorkoutExerciseResolver implements Resolve<any> {
+export class WorkoutExerciseTemplateResolver implements Resolve<any> {
     private store: Store = inject(Store)
 
     resolve(route: ActivatedRouteSnapshot): Observable<ExerciseTemplate|undefined> {

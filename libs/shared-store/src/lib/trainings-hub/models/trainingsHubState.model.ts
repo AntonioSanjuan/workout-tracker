@@ -1,5 +1,5 @@
 import { TRAININGS_LIST_FEATURE_KEY, TrainingsListState } from "../../trainings-list";
 
-export interface WorkoutTrainingState {
+export interface TrainingsHubState {
     [TRAININGS_LIST_FEATURE_KEY]: TrainingsListState
   }

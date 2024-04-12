@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
 import { TRAININGS_LIST_FEATURE_KEY } from './trainings-list.reducer'
 import { TrainingsListState } from './models/trainingsListState.model'
-import { WorkoutTrainingState, selectWorkoutTrainingFeature } from '../workout-training'
+import { TrainingsHubState, selectTrainingsHubFeature } from '../trainings-hub'
 
 export const getTrainingsListState = createSelector(
-    selectWorkoutTrainingFeature,
-    (state: WorkoutTrainingState) => state[TRAININGS_LIST_FEATURE_KEY]
+    selectTrainingsHubFeature,
+    (state: TrainingsHubState) => state[TRAININGS_LIST_FEATURE_KEY]
 )
 // export const getTrainingsState = createFeatureSelector<TrainingsState>(TRAININGS_FEATURE_KEY)
 export const getTrainingsList = createSelector(getTrainingsListState, (state: TrainingsListState) => state.list)

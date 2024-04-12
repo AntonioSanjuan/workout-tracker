@@ -4,7 +4,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { workoutExercisesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock'
+import { workoutExerciseTemplatesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock'
 import { WorkoutExercisesFilterListComponent } from './workout-exercises-list-filter/workout-exercises-list-filter.component';
 import { DialogService, LibsServicesDialogModule } from '@workout-tracker/services/dialog';
 import { AddWorkoutExerciseDialogComponent } from './add-workout-exercise.dialog/add-workout-exercise-dialog.component';
@@ -30,7 +30,7 @@ describe('WorkoutExercisesListComponent', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...workoutExercisesAppStateMock, 
+            ...workoutExerciseTemplatesAppStateMock, 
             ...userStateMock
           }
         }),

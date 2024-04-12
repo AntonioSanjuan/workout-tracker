@@ -1,6 +1,6 @@
 import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, exerciseTemplatesListInitialState } from "../../exercise-templates-list";
-import { WorkoutExerciseTemplatesState } from "./workoutExerciseTemplatesState.model";
+import { ExerciseTemplatesHubState } from "./exerciseTemplatesHubState.model";
 
-export const workoutExerciseTemplatesInitialState: WorkoutExerciseTemplatesState = {
+export const exerciseTemplatesHubInitialState: ExerciseTemplatesHubState = {
     [EXERCISE_TEMPLATES_LIST_FEATURE_KEY]: exerciseTemplatesListInitialState
   }
