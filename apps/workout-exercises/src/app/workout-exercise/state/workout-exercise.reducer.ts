@@ -25,8 +25,8 @@ export const initialWorkoutExerciseDetailsState: WorkoutExerciseDetailsState = {
 export const workoutExerciseDetailsReducer = createReducer(
   initialWorkoutExerciseDetailsState,
     on(
-      ExerciseDetailsActions.getAuthenticatedUserExerciseDetailsRequestSuccess,
-      ExerciseDetailsActions.getAnonymousUserExerciseDetailsRequestSuccess,
+      ExerciseDetailsActions.getAuthenticatedUserExerciseTemplateDetailsRequestSuccess,
+      ExerciseDetailsActions.getAnonymousUserExerciseTemplateDetailsRequestSuccess,
       (state: WorkoutExerciseDetailsState, { exercise }) => ({
       ...state,
       details: {

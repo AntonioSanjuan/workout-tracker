@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { ExerciseTemplate } from "@workout-tracker/models";
 import { Observable, of } from "rxjs";
-import { getUserExerciseDetailsRequest } from "../../workout-exercise/state/workout-exercise.actions";
+import { getUserExerciseTemplateDetailsRequest } from "../../workout-exercise/state/workout-exercise.actions";
 import { selectWorkoutExerciseDetails } from "../../workout-exercise/state/workout-exercise.selectors";
 
 @Injectable({
@@ -16,7 +16,7 @@ export class WorkoutExerciseResolver implements Resolve<any> {
         const exerciseId = route.paramMap.get('id');
 
         if(exerciseId) {
-            this.store.dispatch(getUserExerciseDetailsRequest({ exerciseId: exerciseId}))
+            this.store.dispatch(getUserExerciseTemplateDetailsRequest({ exerciseId: exerciseId}))
             return this.store.select(selectWorkoutExerciseDetails)
         }
         return of(undefined);

@@ -9,7 +9,7 @@ import { ExerciseEffects } from './workout-exercise.effects';
 import { ExerciseTemplatesService, exerciseTemplatesServiceMock } from '@workout-tracker/services/exercise-templates';
 import firebase from 'firebase/compat/app';
 import { ExerciseTemplatesListState, getExerciseTemplatesListState, getUser } from '@workout-tracker/shared-store';
-import { getAnonymousUserExerciseDetailsRequest, getAnonymousUserExerciseDetailsRequestError, getAnonymousUserExerciseDetailsRequestSuccess, getAuthenticatedUserExerciseDetailsRequest, getAuthenticatedUserExerciseDetailsRequestError, getAuthenticatedUserExerciseDetailsRequestSuccess, getUserExerciseDetailsRequest } from './workout-exercise.actions';
+import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExerciseTemplateDetailsRequestError, getAnonymousUserExerciseTemplateDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequestError, getAuthenticatedUserExerciseTemplateDetailsRequestSuccess, getUserExerciseTemplateDetailsRequest } from './workout-exercise.actions';
 import { ExerciseTemplate } from '@workout-tracker/models';
 import { workoutExercisesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExercisesStateMock.mock';
 
@@ -58,11 +58,11 @@ describe('ExerciseDetailsEffects', () => {
           store.overrideSelector(getUser, user);
           store.refreshState()
 
-          actions = of(getUserExerciseDetailsRequest({ exerciseId: exerciseIdSut}))
+          actions = of(getUserExerciseTemplateDetailsRequest({ exerciseId: exerciseIdSut}))
         })
         it('should return getAuthenticatedUserExerciseDetailsRequest', async () => {
           const result = await firstValueFrom(effects.getExerciseDetailsRequest$)
-          expect(result).toEqual(getAuthenticatedUserExerciseDetailsRequest({ exerciseId: exerciseIdSut}))
+          expect(result).toEqual(getAuthenticatedUserExerciseTemplateDetailsRequest({ exerciseId: exerciseIdSut}))
         })
       })
 
@@ -71,11 +71,11 @@ describe('ExerciseDetailsEffects', () => {
           store.overrideSelector(getUser, undefined);
           store.refreshState()
 
-          actions = of(getUserExerciseDetailsRequest({ exerciseId: exerciseIdSut}))
+          actions = of(getUserExerciseTemplateDetailsRequest({ exerciseId: exerciseIdSut}))
         })
         it('should return getAnonymousUserExerciseTemplatesRequest', async () => {
           const result = await firstValueFrom(effects.getExerciseDetailsRequest$)
-          expect(result).toEqual(getAnonymousUserExerciseDetailsRequest({ exerciseId: exerciseIdSut }))
+          expect(result).toEqual(getAnonymousUserExerciseTemplateDetailsRequest({ exerciseId: exerciseIdSut }))
         })
       })
 
@@ -104,7 +104,7 @@ describe('ExerciseDetailsEffects', () => {
 
         beforeEach(() => {
           jest.spyOn(exerciseService, 'getExerciseTemplate').mockReturnValue(errorResp)
-          actions = of(getAuthenticatedUserExerciseDetailsRequest( { exerciseId: exerciseIdSut}))
+          actions = of(getAuthenticatedUserExerciseTemplateDetailsRequest( { exerciseId: exerciseIdSut}))
         })
 
         it('should request getExerciseTemplate', async () => {
@@ -114,14 +114,14 @@ describe('ExerciseDetailsEffects', () => {
         })
         it('should return getAuthenticatedUserExerciseDetailsRequestError', async () => {
           const result = await firstValueFrom(effects.getAuthenticatedUserExerciseDetailsRequest$)
-          expect(result).toEqual(getAuthenticatedUserExerciseDetailsRequestError({ exerciseId: exerciseIdSut}))
+          expect(result).toEqual(getAuthenticatedUserExerciseTemplateDetailsRequestError({ exerciseId: exerciseIdSut}))
         })
       })
 
       describe('when exercisesService.getExerciseTemplate success', () => {
         beforeEach(() => {
           jest.spyOn(exerciseService, 'getExerciseTemplate').mockReturnValue(of(exerciseSut))
-          actions = of(getAuthenticatedUserExerciseDetailsRequest({exerciseId: exerciseIdSut}))
+          actions = of(getAuthenticatedUserExerciseTemplateDetailsRequest({exerciseId: exerciseIdSut}))
         })
         it('should request getExerciseTemplates', async () => {
           const getExercisesSpy = jest.spyOn(exerciseService, 'getExerciseTemplate')
@@ -130,7 +130,7 @@ describe('ExerciseDetailsEffects', () => {
         })
         it('should return getAuthenticatedUserExerciseDetailsRequestSuccess', async () => {
           const result = await firstValueFrom(effects.getAuthenticatedUserExerciseDetailsRequest$)
-          expect(result).toEqual(getAuthenticatedUserExerciseDetailsRequestSuccess({ exercise: exerciseSut}))
+          expect(result).toEqual(getAuthenticatedUserExerciseTemplateDetailsRequestSuccess({ exercise: exerciseSut}))
         })
       })
 
@@ -144,7 +144,7 @@ describe('ExerciseDetailsEffects', () => {
       beforeEach(() => { 
         store.resetSelectors()
         store.refreshState()
-        actions = of(getAnonymousUserExerciseDetailsRequest({ exerciseId: exerciseIdSut}))
+        actions = of(getAnonymousUserExerciseTemplateDetailsRequest({ exerciseId: exerciseIdSut}))
       })
 
       describe('if exercise its stored into the created exercises (list)', () => {
@@ -157,7 +157,7 @@ describe('ExerciseDetailsEffects', () => {
 
         it('should return getAnonymousUserExerciseDetailsRequestSuccess', async () => {
           const result = await firstValueFrom(effects.getAnonymousUserExerciseDetailsRequest$)
-          expect(result).toEqual(getAnonymousUserExerciseDetailsRequestSuccess({ exercise: exerciseSut}))
+          expect(result).toEqual(getAnonymousUserExerciseTemplateDetailsRequestSuccess({ exercise: exerciseSut}))
         })
       })
       describe('if exercise its not stored into  the created exercises (list)', () => {
@@ -170,7 +170,7 @@ describe('ExerciseDetailsEffects', () => {
 
         it('should return getAnonymousUserExerciseDetailsRequestError', async () => {
           const result = await firstValueFrom(effects.getAnonymousUserExerciseDetailsRequest$)
-          expect(result).toEqual(getAnonymousUserExerciseDetailsRequestError({ exerciseId: exerciseIdSut}))
+          expect(result).toEqual(getAnonymousUserExerciseTemplateDetailsRequestError({ exerciseId: exerciseIdSut}))
         })
       })
     })
