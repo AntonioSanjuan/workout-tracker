@@ -31,7 +31,11 @@
         },
         "actions": {
             "cancel": "Cancelar",
-            "create": "Crear"
+            "create": "Crear",
+            "next": "Siguiente",
+            "previous": "Anterior",
+            "yes": "Si",
+            "no": "No"
         }
     },
     "apps": {
@@ -50,6 +54,7 @@
                 },
                 "menuNav": {
                     "home": "Inicio",
+                    "trainings": "Entrenamientos",
                     "exercises": "Ejercicios",
                     "news": "Novedades"
                 }
@@ -111,6 +116,60 @@
                 }
             }
         },
+        "workout-trainings": {
+            "errors": {
+                "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado"
+            },
+            "list": {
+                "title": "Lista de Entrenamientos",
+                "filter": {
+                    "actions": {
+                        "openFilter": "Abrir filtros",
+                        "clearFilters": "Borrar filtros"
+                    },
+                    "banner": {
+                        "title": "",
+                        "content": "Puedes buscar un entrenamineto por la fecha de creación o por el grupo muscular ejercitado"
+                    },
+                    "byDateLabel": "Busca el entrenamiento por fecha",
+                    "byDatePlaceholder": "Fecha del entrenamiento...",
+                    "byMuscleGroupLabel": "Busca el entrenamiento por grupo muscular",
+                    "byMuscleGroupPlaceholder": "Grupo muscular...",
+                    "filteredByMuscles": "Filtrado por..."
+                },
+                "addTraining": {
+                    "title": "Añadir entrenamiento",
+                    "step": {
+                        "basicInfo": {
+                            "title": "Descripción",
+                            "form": {
+                                "fields": {
+                                    "muscleGroup": "Grupo muscular"
+                                },
+                                "errors": {
+                                    "muscleGroupRequired": "Debes de seleccionar al menos un grupo muscular"
+                                }
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Adicional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observaciones"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewTraining": "Nuevo entrenamiento",
+                    "continueTraining": "Continuar entrenamiento"
+                }
+            },
+            "details": {
+                "title": "Detalles de entrenamiento"
+            }
+        },
         "workout-exercises": {
             "errors": {
                 "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado"
@@ -118,27 +177,57 @@
             "list": {
                 "title": "Lista de ejercicios",
                 "filter": {
+                    "actions": {
+                        "openFilter": "Abrir filtros",
+                        "clearFilters": "Borrar filtros"
+                    },
                     "banner": {
                         "title": "",
                         "content": "Puedes buscar un ejercicio por su nombre, o filtrarlo por el tipo del mismo"
                     },
                     "byNameLabel": "Busca el ejercicio por nombre",
                     "byNamePlaceholder": "Nombre del ejercicio...",
-                    "byMuscleLabel": "Busca  el ejercicio por músculos",
+                    "byMuscleLabel": "Busca el ejercicio por músculos",
+                    "byMusclePlaceholder": "Músculos...",
                     "filteredByMuscles": "Filtrado por..."
                 },
                 "addExercise": {
                     "title": "Añadir ejercicio",
-                    "form": {
-                        "fields": {
-                            "name": "Nombre",
-                            "type": "Tipo",
-                            "musclesInvolved": "Músculos involucrados"
+                    "step": {
+                        "basicInfo": {
+                            "title": "Descripción",
+                            "form": {
+                                "fields": {
+                                    "name": "Nombre",
+                                    "type": "Tipo",
+                                    "musclesInvolved": "Músculos involucrados"
+                                },
+                                "errors": {
+                                    "nameRequired": "Campo nombre requerido",
+                                    "typeRequired": "Debes de seleccionar al menos un tipo",
+                                    "muscleRequired": "Debes de seleccionar al menos un músculo"
+                                }
+                            }
                         },
-                        "errors": {
-                            "nameRequired": "Campo nombre requerido",
-                            "typeRequired": "Debes de seleccionar al menos un tipo",
-                            "muscleRequired": "Debes de seleccionar al menos un músculo"
+                        "image": {
+                            "title": "Imagen",
+                            "form": {
+                                "actions": {
+                                    "capture": "Capturar imagen",
+                                    "clear": "Borrar imagen"
+                                }
+                            },
+                            "errors": {
+                                "cameraError": "Tu camara no esta disponible"
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Adicional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observaciones"
+                                }
+                            }
                         }
                     }
                 },
@@ -152,6 +241,25 @@
         }
     },
     "libs": {
-        
+        "components": {
+            "training-card": {
+                "title": "Día: {{date}}",
+                "info": {
+                    "labels": {
+                        "date": "Fecha",
+                        "status": "Estado",
+                        "observations": "Observaciones",
+                        "numberOfExercises": "Nº de ejercicios"
+                    }
+                },
+                "muscleGroup": {
+                    "title": "Grupo muscular"
+                },
+                "state": {
+                    "finished": "Finalizado",
+                    "onGoing": "En curso"
+                }
+            }
+        }
     }
 }
