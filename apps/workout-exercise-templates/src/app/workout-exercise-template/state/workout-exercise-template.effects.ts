@@ -5,12 +5,14 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
 import { Store } from '@ngrx/store';
-import { getExerciseTemplateById, getUser, showError } from '@workout-tracker/shared-store';
-import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
-import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExerciseTemplateDetailsRequestError, getAnonymousUserExerciseTemplateDetailsRequestSuccess, getAnonymousUserExerciseTemplateTrainingsDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequestError, getAuthenticatedUserExerciseTemplateDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest, getUserExerciseTemplateDetailsRequest } from './workout-exercise-template.actions';
+import { getExerciseTemplateById, getTrainingsByExerciseTemplateId, getUser, showError } from '@workout-tracker/shared-store';
+import { AppRoutes, ExerciseTemplate, Training, TrainingExercise } from '@workout-tracker/models';
+import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExerciseTemplateDetailsRequestError, getAnonymousUserExerciseTemplateDetailsRequestSuccess, getAnonymousUserExerciseTemplateTrainingsDetailsRequest, getAnonymousUserExerciseTemplateTrainingsDetailsRequestError, getAnonymousUserExerciseTemplateTrainingsDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateDetailsRequest, getAuthenticatedUserExerciseTemplateDetailsRequestError, getAuthenticatedUserExerciseTemplateDetailsRequestSuccess, getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest, getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestError, getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestSuccess, getUserExerciseTemplateDetailsRequest } from './workout-exercise-template.actions';
+import { TrainingsService } from '@workout-tracker/services/trainings';
 @Injectable()
 export class WorkoutExerciseTemplatesEffects {
     private exerciseTemplatesService: ExerciseTemplatesService = inject(ExerciseTemplatesService)
+    private trainingService: TrainingsService = inject(TrainingsService)
     private translateService: TranslateService = inject(TranslateService)
     private actions$: Actions = inject(Actions);
     private router: Router = inject(Router)
@@ -78,42 +80,42 @@ export class WorkoutExerciseTemplatesEffects {
             )
         )
     ))
+
+    getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        mergeMap(([{ exerciseTemplateId }, user]) => this.trainingService.getExerciseTemplateTrainingExercises(user?.uid as string, exerciseTemplateId).pipe(
+            map((trainings: Training[]) => getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestSuccess({trainings: trainings})),
+            catchError(_ => {
+                this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])
+                return of(getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestError({ exerciseTemplateId: exerciseTemplateId }))}
+            )
+        ))
+    ))
     
-    // getAuthenticatedUserExerciseTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
-    //     ofType(getAuthenticatedUserExerciseTrainingsDetailsRequest),
-    //     concatLatestFrom(() => this.store.select(getUser)),
-    //     mergeMap(([{ exerciseId }, user]) => this.exercisesService.getExerciseTemplate(user?.uid as string, exerciseId).pipe(
-    //         map((exercise: ExerciseTemplate) => getAuthenticatedUserExerciseDetailsRequestSuccess({exercise: exercise})),
-    //         catchError(_ => {
-    //             this.router.navigate([AppRoutes.WorkoutExercisesList])
-    //             return of(getAuthenticatedUserExerciseTrainingsDetailsRequestError({ exerciseId: exerciseId }))}
-    //         )
-    //     ))
-    // ))
+    getAnonymousUserExerciseTemplateTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(getAnonymousUserExerciseTemplateTrainingsDetailsRequest),
+        mergeMap(({ exerciseTemplateId }) => 
+            this.store.select(getTrainingsByExerciseTemplateId(exerciseTemplateId)).pipe(
+            take(1),
+            map((trainings) => trainings ? 
+                getAnonymousUserExerciseTemplateTrainingsDetailsRequestSuccess({ trainings: trainings }) : 
+                getAnonymousUserExerciseTemplateTrainingsDetailsRequestError({ exerciseTemplateId: exerciseTemplateId }))
+            )
+        )
+    ))
 
-    // getAnonymousUserExerciseTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
-    //     ofType(getAnonymousUserExerciseTrainingsDetailsRequest),
-    //     mergeMap(({ exerciseId }) => 
-    //         this.store.select(getExerciseTemplateById(exerciseId)).pipe(
-    //         take(1),
-    //         map((exercise) => exercise ? 
-    //             getAnonymousUserExerciseTrainingsDetailsRequestSuccess({ exercise: exercise }) : 
-    //             getAnonymousUserExerciseTrainingsDetailsRequestError({ exerciseId: exerciseId }))
-    //         )
-    //     )
-    // ))
-
-    // getExerciseTrainingsDetailsRequestError$ = createEffect(() => this.actions$.pipe(
-    //     ofType(
-    //         getAuthenticatedUserExerciseTrainingsDetailsRequestError, 
-    //         getAnonymousUserExerciseTrainingsDetailsRequestError
-    //     ),
-    //     map(({ exerciseId }) => {
-    //         return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseNotFound', 
-    //         {
-    //             exerciseId: exerciseId.toUpperCase(),
-    //         }
-    //         )}`})
-    //     })
-    // ))
+    getUserExerciseTemplateTrainingsDetailsRequestError$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestError, 
+            getAnonymousUserExerciseTemplateTrainingsDetailsRequestError
+        ),
+        map(({ exerciseTemplateId }) => {
+            return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseTrainingsNotFound', 
+            {
+                exerciseTemplateId: exerciseTemplateId.toUpperCase(),
+            }
+            )}`})
+        })
+    ))
 }

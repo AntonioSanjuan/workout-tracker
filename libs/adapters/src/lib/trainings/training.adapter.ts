@@ -27,6 +27,9 @@ export class TrainingAdapter {
 
 export class TrainingExerciseAdapter {
     static toState(trainingExercise: TrainingExerciseDto, id: string, exerciseTemplate: ExerciseTemplate, exerciseSeries: TrainingExerciseSerie[]): TrainingExercise {
+        console.log("id", id)
+        console.log("exerciseTemplate", exerciseTemplate)
+        console.log("exerciseSeries", exerciseSeries)
         return {
             id: id,
             exerciseTemplate: exerciseTemplate,

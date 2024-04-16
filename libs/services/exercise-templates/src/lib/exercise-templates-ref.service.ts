@@ -6,10 +6,10 @@ export class ExerciseTemplatesRefService {
     private firebaseDataBase: AngularFirestore = inject(AngularFirestore)
 
     public getExerciseTemplatesCollectionRef(userId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/exercises`)
+        return this.firebaseDataBase.collection(`user/${userId}/exerciseTemplates`)
     }
 
     public getExerciseTemplateDocRef(userId: string, exerciseId: string): AngularFirestoreDocument {
-        return this.firebaseDataBase.doc(`user/${userId}/exercises/${exerciseId}`)
+        return this.firebaseDataBase.doc(`user/${userId}/exerciseTemplates/${exerciseId}`)
     }
 }

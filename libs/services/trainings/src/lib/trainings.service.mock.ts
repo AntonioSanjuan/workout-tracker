@@ -5,6 +5,7 @@ import { Training, TrainingExercise, TrainingExerciseSerie } from '@workout-trac
 export const trainingsServiceMock: Partial<TrainingsService> = {
   getTraining: () => of({} as Training),
   getTrainings: () => of([] as Training[]),
+  getExerciseTemplateTrainingExercises: () => of([] as Training[]),
   setTraining: () => of({} as Training),
   setTrainingExercise: () => of({} as TrainingExercise),
   setTrainingExerciseSerie: () => of({} as TrainingExerciseSerie),

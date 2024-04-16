@@ -236,13 +236,19 @@ describe('TrainingsListEffects', () => {
       const trainingOnGoint =  { id: 'trainingOnGoingId', finishDate: undefined} as Training
   
       describe('if training on going (not finished)', () => {
-
+        const today = new Date()
         beforeEach(() => { 
           store.overrideSelector(getTrainingListOngoing, trainingOnGoint);
           actions = of(addUserTrainingListRequest({
             training: trainingSut
           }))
           
+          jest.useFakeTimers();
+          jest.setSystemTime(today);
+        })        
+
+        afterEach(() => {
+          jest.useRealTimers();
         })
 
         it('should return updateAuthenticatedUserTrainingListRequest', async () => {

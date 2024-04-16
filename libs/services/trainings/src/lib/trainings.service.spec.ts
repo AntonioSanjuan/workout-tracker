@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import firebase from 'firebase/compat/app/';
 import { ExerciseTemplate, Training, TrainingExercise, TrainingExerciseSerie, TrainingQuery } from '@workout-tracker/models';
-import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from '@workout-tracker/adapters';
+import { ExerciseTemplateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from '@workout-tracker/adapters';
 import { TrainingsService } from './trainings.service';
 import { ExerciseTemplatesRefService, exerciseTemplatesRefServiceMock } from '@workout-tracker/services/exercise-templates';
 import { TrainingsRefService } from './trainings-ref.service';
@@ -59,7 +59,7 @@ describe('TrainingsService', () => {
       repetitions: 10,
       observations: 'observations'
     } as TrainingExerciseSerie] as TrainingExerciseSerie[]
-    const exerciseTemplateData = { id: 'exerciseTemplateId'} as ExerciseTemplate
+    const exerciseTemplateData = { id: 'exerciseTemplateId', creationDate: new Date()} as ExerciseTemplate
     const trainingExercisesData = [{
       id: 'trainingExerciseId',
       exerciseTemplate: exerciseTemplateData,
@@ -74,17 +74,17 @@ describe('TrainingsService', () => {
 
 
     describe('getTraining', () => {
-      const exerciseSut = trainingData[0]
+      const trainingSut = trainingData[0]
 
       beforeEach(() => {
-        jest.spyOn(trainingsRefService, 'getTrainingDocRef').mockReturnValue({ get: jest.fn(() => of({ id: exerciseSut.id, data: () => TrainingAdapter.toDto(exerciseSut)}))} as any);
-        jest.spyOn(trainingsRefService, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => (exerciseTemplateData)})} } as any) }))}))} as any);
+        jest.spyOn(trainingsRefService, 'getTrainingDocRef').mockReturnValue({ get: jest.fn(() => of({ id: trainingSut.id, data: () => TrainingAdapter.toDto(trainingSut)}))} as any);
+        jest.spyOn(trainingsRefService, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => ExerciseTemplateAdapter.toDto(exerciseTemplateData), id: exerciseTemplateData.id })} } as any) }))}))} as any);
         jest.spyOn(trainingsRefService, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))} as any);
       })
 
       it('getTraining should return training stored into Firebase collection',  (done) => {
-        service.getTraining(userIdSut, exerciseSut.id).subscribe((training) => {
-          expect(training).toEqual(exerciseSut)
+        service.getTraining(userIdSut, trainingSut.id).subscribe((training) => {
+          expect(training).toEqual(trainingSut)
           done()
         })
       })
@@ -93,7 +93,7 @@ describe('TrainingsService', () => {
     describe('getTrainings', () => {
       beforeEach(() => {
         jest.spyOn(trainingsRefService, 'getTrainingsPaginatedCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingData.map(data => ({ id: data.id, data: () => TrainingAdapter.toDto(data) }))}))} as any);
-        jest.spyOn(trainingsRefService, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => (exerciseTemplateData)})} } as any) }))}))} as any);
+        jest.spyOn(trainingsRefService, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => ExerciseTemplateAdapter.toDto(exerciseTemplateData), id: exerciseTemplateData.id})} } as any) }))}))} as any);
         jest.spyOn(trainingsRefService, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))} as any);
       })
       it('getTrainings should return an array of trainings with trainingExercises', (done) => {

@@ -1,6 +1,24 @@
 <div
-    *ngrxLet="{ exerciseTemplateDetails: exerciseTemplateDetails$ } as vm"
+    *ngrxLet="{ 
+        exerciseTemplateDetails: exerciseTemplateDetails$, 
+        exerciseTemplateTrainingsDetails: exerciseTemplateTrainingsDetails$    
+    } as vm"
     class="WorkoutExerciseTemplate_MainContainer">
     <workout-tracker-view-header [title]="'asd'" [goBackUrl]="appRoutes.WorkoutExerciseTemplatesList"></workout-tracker-view-header>
     {{vm.exerciseTemplateDetails.exercise?.name}}
+    
+    <div
+    *ngFor="let exerciseTemplateTrainingsDetail of vm.exerciseTemplateTrainingsDetails">
+        {{exerciseTemplateTrainingsDetail.creationDate}}
+        {{exerciseTemplateTrainingsDetail.trainingExercises?.length}}
+        <div *ngFor="let trainingExercise of exerciseTemplateTrainingsDetail.trainingExercises">
+            {{trainingExercise.id}}
+            <div *ngFor="let serie of trainingExercise.series">
+                {{serie.repetitions}}
+                {{serie.weight}}
+            </div>
+        </div>
+
+    </div>
+
 </div>

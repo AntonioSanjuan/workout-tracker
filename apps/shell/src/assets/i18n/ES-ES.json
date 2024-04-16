@@ -172,7 +172,8 @@
         },
         "workout-exercises": {
             "errors": {
-                "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado"
+                "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado",
+                "exerciseTrainingsNotFound": "Entrenamientos del ejercicio {{exerciseTemplateId}} no encontrado"
             },
             "list": {
                 "title": "Lista de ejercicios",

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as ExerciseDetailsActions from "./workout-exercise-template.actions";
-import { ExerciseTemplate } from '@workout-tracker/models';
+import { ExerciseTemplate, Training } from '@workout-tracker/models';
 
 export const WORKOUT_EXERCISE_TEMPLATE_FEATURE_KEY = 'exercise-template';
 
@@ -11,7 +11,7 @@ export interface WorkoutExerciseTemplateDetailsState {
 
 export interface WorkoutExerciseTemplateDetails {
   exercise?: ExerciseTemplate,
-  trainings?: any
+  trainings?: Training[]
 }
 
 export const initialWorkoutExerciseTemplateDetailsState: WorkoutExerciseTemplateDetailsState = {
@@ -24,6 +24,14 @@ export const initialWorkoutExerciseTemplateDetailsState: WorkoutExerciseTemplate
 
 export const workoutExerciseTemplateDetailsReducer = createReducer(
   initialWorkoutExerciseTemplateDetailsState,
+  on(
+    ExerciseDetailsActions.getUserExerciseTemplateDetailsRequest,
+    (state: WorkoutExerciseTemplateDetailsState
+      
+    ) => ({
+    ...state,
+    details: initialWorkoutExerciseTemplateDetailsState.details
+  })),
     on(
       ExerciseDetailsActions.getAuthenticatedUserExerciseTemplateDetailsRequestSuccess,
       ExerciseDetailsActions.getAnonymousUserExerciseTemplateDetailsRequestSuccess,
@@ -32,6 +40,16 @@ export const workoutExerciseTemplateDetailsReducer = createReducer(
       details: {
         ...state.details,
         exercise: exercise
+      }
+    })),
+    on(
+      ExerciseDetailsActions.getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestSuccess,
+      ExerciseDetailsActions.getAnonymousUserExerciseTemplateTrainingsDetailsRequestSuccess,
+      (state: WorkoutExerciseTemplateDetailsState, { trainings }) => ({
+      ...state,
+      details: {
+        ...state.details,
+        trainings: trainings
       }
     })),
 );

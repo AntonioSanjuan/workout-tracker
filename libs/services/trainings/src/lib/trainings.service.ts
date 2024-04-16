@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
-import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
-import { ExerciseTemplate, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
+import { ExerciseTemplateAdapter, TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "@workout-tracker/adapters";
+import { ExerciseTemplate, ExerciseTemplateDto, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto, TrainingQuery } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
 import { Observable, catchError, combineLatest, defaultIfEmpty, forkJoin, from, map, switchMap } from "rxjs";
 import { ExerciseTemplatesRefService } from '@workout-tracker/services/exercise-templates'
@@ -8,12 +8,12 @@ import { TrainingsRefService } from "./trainings-ref.service";
 
 @Injectable()
 export class TrainingsService {
-    private exerciseRefService: ExerciseTemplatesRefService = inject(ExerciseTemplatesRefService)
+    private exerciseTemplateRefService: ExerciseTemplatesRefService = inject(ExerciseTemplatesRefService)
     private trainingsRefService: TrainingsRefService = inject(TrainingsRefService)
 
     public getTraining(userId: string, trainingId: string): Observable<Training> {
         return this.trainingsRefService.getTrainingDocRef(userId, trainingId).get().pipe(
-            switchMap((trainingDoc: firebase.firestore.DocumentSnapshot) => {  
+            switchMap((trainingDoc: firebase.firestore.DocumentSnapshot) => {
                 const trainingId = trainingDoc.id;
                 const trainingData = trainingDoc.data() as TrainingDto;
 
@@ -60,6 +60,31 @@ export class TrainingsService {
         );
     }
     
+    public getExerciseTemplateTrainingExercises(userId: string, exerciseTemplateId: string): Observable<Training[]> {
+        return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(userId, exerciseTemplateId, this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, exerciseTemplateId)).get().pipe(
+            switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
+                const trainingExerciseObservables: Observable<Training>[] = [];
+    
+                collectionGroupQS.docs.forEach((trainingExerciseDoc) => {
+                    const trainingId = trainingExerciseDoc.ref.parent?.parent?.id
+                    if(trainingId) {
+                        const trainingExerciseSeriesObservable = this.getTraining(userId, trainingId)
+    
+                        trainingExerciseObservables.push(trainingExerciseSeriesObservable);
+                    }
+
+                });
+    
+                return forkJoin(trainingExerciseObservables).pipe(
+                    defaultIfEmpty([]),
+                )
+            }),
+            catchError((error) => {
+                console.log("error", error); throw error
+            })
+        )
+    }
+    
     private getTrainingExercises(userId: string, trainingId: string): Observable<TrainingExercise[]> {
         return this.trainingsRefService.getTrainingExercisesCollectionRef(userId, trainingId).get().pipe(
             switchMap((trainingExercisesQS: firebase.firestore.QuerySnapshot) => {
@@ -68,16 +93,15 @@ export class TrainingsService {
                 trainingExercisesQS.docs.forEach((trainingExerciseDoc) => {
                     const trainingExerciseId = trainingExerciseDoc.id;
                     const trainingExerciseData = trainingExerciseDoc.data() as TrainingExerciseDto;
-    
                     const trainingExerciseSeriesObservable = combineLatest(
                         trainingExerciseData.exerciseTemplateId.get(), 
                         this.getTrainingExerciseSeries(userId, trainingId, trainingExerciseId)
                     ).pipe(
-                        map(([exerciseTemplateId, exerciseSeries]: [firebase.firestore.DocumentSnapshot, TrainingExerciseSerie[]]) => 
+                        map(([exerciseTemplate, exerciseSeries]: [firebase.firestore.DocumentSnapshot, TrainingExerciseSerie[]]) => 
                             TrainingExerciseAdapter.toState(
                                 trainingExerciseData, 
                                 trainingExerciseId, 
-                                exerciseTemplateId.data() as ExerciseTemplate, 
+                                ExerciseTemplateAdapter.toState(exerciseTemplate.data() as ExerciseTemplateDto, exerciseTemplate.id),
                                 exerciseSeries
                             )
                         )
@@ -122,7 +146,7 @@ export class TrainingsService {
     public setTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise> {
         const trainingExerciseInput = TrainingExerciseAdapter.toDto(
             trainingExercise, 
-            this.exerciseRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
+            this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
         return from(this.trainingsRefService.getTrainingExercisesCollectionRef(userId, trainingId).add(trainingExerciseInput)).pipe(
             map((trainingExercisesDoc) => 
@@ -163,7 +187,7 @@ export class TrainingsService {
     public updateTrainingExercise(userId: string, trainingId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise> {
         const exerciseInput = TrainingExerciseAdapter.toDto(
             trainingExercise, 
-            this.exerciseRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
+            this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id).ref
         );
 
         return from(this.trainingsRefService.getTrainingExerciseDocRef(userId, trainingId, trainingExercise.id).update(exerciseInput)).pipe(

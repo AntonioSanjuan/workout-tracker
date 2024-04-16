@@ -8,7 +8,7 @@ import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 import { of } from 'rxjs';
-import { selectWorkoutExerciseTemplateDetailsState } from './state/workout-exercise-template.selectors';
+import { getWorkoutExerciseTemplateTrainingsDetailsFilteredByTemplateById, selectWorkoutExerciseTemplateDetailsState, selectWorkoutExerciseTemplateTrainingsDetails } from './state/workout-exercise-template.selectors';
 import { ViewHeaderComponent } from '@workout-tracker/components';
 
 @Component({
@@ -31,6 +31,7 @@ export class WorkoutExerciseTemplateComponent {
   private dialogService = inject(DialogService)
 
   public exerciseTemplateDetails$ = this.store.select(selectWorkoutExerciseTemplateDetailsState)
+  public exerciseTemplateTrainingsDetails$ = this.store.select(getWorkoutExerciseTemplateTrainingsDetailsFilteredByTemplateById)
   
   public appRoutes = AppRoutes
 

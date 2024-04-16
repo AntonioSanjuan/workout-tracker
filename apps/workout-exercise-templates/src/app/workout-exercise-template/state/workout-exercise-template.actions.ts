@@ -16,7 +16,6 @@ export const getAnonymousUserExerciseTemplateDetailsRequestSuccess = createActio
 export const GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_DETAILS_ERROR   = 'GET ANONYMOUS USER EXERCISE TEMPLATE DETAILS Error'
 export const getAnonymousUserExerciseTemplateDetailsRequestError = createAction(GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_DETAILS_ERROR, props<{ exerciseId: string}>())
 
-//
 export const GET_AUTHENTICATED_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_REQUEST = 'GET AUTHENTICATED USER EXERCISE TEMPLATE TRAININGS DETAILS Request'
 export const getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest = createAction(GET_AUTHENTICATED_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_REQUEST, props<{ exerciseTemplateId: string}>())
 export const GET_AUTHENTICATED_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_SUCCESS = 'GET AUTHENTICATED USER EXERCISE TEMPLATE TRAININGS DETAILS Success'
@@ -28,4 +27,4 @@ export const getAnonymousUserExerciseTemplateTrainingsDetailsRequest = createAct
 export const GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_SUCCESS = 'GET ANONYMOUS USER EXERCISE TEMPLATE TRAININGS DETAILS Success'
 export const getAnonymousUserExerciseTemplateTrainingsDetailsRequestSuccess = createAction(GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_SUCCESS, props<{ trainings: Training[]}>())
 export const GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_ERROR   = 'GET ANONYMOUS USER EXERCISE TEMPLATE TRAININGS DETAILS Error'
-export const getAnonymousUserExerciseTemplateTrainingsDetailsRequestError = createAction(GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_ERROR, props<{ exerciseId: string}>())
+export const getAnonymousUserExerciseTemplateTrainingsDetailsRequestError = createAction(GET_ANONYMOUS_USER_EXERCISE_TEMPLATE_TRAININGS_DETAILS_ERROR, props<{ exerciseTemplateId: string}>())

@@ -55,7 +55,7 @@ describe('ExerciseTemplatesRefService', () => {
 
       it('getExerciseTemplatesCollectionRef should return firebaseDataBase collection ref',  () => {
         service.getExerciseTemplatesCollectionRef(userIdSut)
-        expect(mock.collection).toHaveBeenCalledWith(`user/${userIdSut}/exercises`)
+        expect(mock.collection).toHaveBeenCalledWith(`user/${userIdSut}/exerciseTemplates`)
       })
     });
 
@@ -65,7 +65,7 @@ describe('ExerciseTemplatesRefService', () => {
 
       it('getExerciseTemplateDocRef should return firebaseDataBase doc ref',  () => {
         service.getExerciseTemplateDocRef(userIdSut, exerciseIdSut)
-        expect(mock.doc).toHaveBeenCalledWith(`user/${userIdSut}/exercises/${exerciseIdSut}`)
+        expect(mock.doc).toHaveBeenCalledWith(`user/${userIdSut}/exerciseTemplates/${exerciseIdSut}`)
       })
     });
   })

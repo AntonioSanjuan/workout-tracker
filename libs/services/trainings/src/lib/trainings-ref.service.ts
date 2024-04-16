@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, QueryFn } from '@angular/fire/compat/firestore'
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup, AngularFirestoreDocument, DocumentData, QueryFn, QueryGroupFn } from '@angular/fire/compat/firestore'
 import { DateAdapter } from "@workout-tracker/adapters";
 import { TrainingQuery } from "@workout-tracker/models";
 import firebase from 'firebase/compat/app/';
@@ -66,5 +66,16 @@ export class TrainingsRefService {
     public getTrainingExerciseSerieDocRef(userId: string, trainingId: string, trainingExerciseId: string, trainingExerciseSerieId: string): AngularFirestoreDocument {
         return this.firebaseDataBase.doc(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}/series/${trainingExerciseSerieId}`)
     }
+
+    public getExerciseTemplateTrainingExercisesDocRefs(userId: string, exerciseTemplateId: string, exerciseTemplateRef: AngularFirestoreDocument): AngularFirestoreCollectionGroup {
+        console.log("ref",`/user/${userId}/exerciseTemplates/${exerciseTemplateId}`)
+        const exerciseTemplateTrainingExercisesQuery: QueryGroupFn<DocumentData> = ref => {
+            let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref
+            query = query.where('exerciseTemplateId', "==", exerciseTemplateRef.ref) 
+            query = query.limit(5)
+
+            return query;
+        }
+        return this.firebaseDataBase.collectionGroup('exercises', exerciseTemplateTrainingExercisesQuery)}
 
 }
