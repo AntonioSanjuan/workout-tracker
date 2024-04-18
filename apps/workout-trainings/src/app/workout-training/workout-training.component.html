@@ -3,4 +3,8 @@
     class="WorkoutTraining_MainContainer">
     <workout-tracker-view-header [title]="'asd'" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
     {{vm.trainingDetails.training?.id}}
+
+    <button mat-flat-button color="primary" (click)="newTrainingExercise()">
+        {{ 'apps.workout-trainings.details.actions.addNewTrainingExercise' | translate }}
+    </button>
 </div>

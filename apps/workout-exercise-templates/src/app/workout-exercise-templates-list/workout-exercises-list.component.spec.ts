@@ -7,7 +7,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import { workoutExerciseTemplatesAppStateMock } from '../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock'
 import { WorkoutExerciseTemplatesFilterListComponent } from './workout-exercise-templates-list-filter/workout-exercise-templates-list-filter.component';
 import { DialogService, LibsServicesDialogModule } from '@workout-tracker/services/dialog';
-import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercise-template.dialog/add-workout-exercise-template-dialog.component';
+import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercise-template-dialog/add-workout-exercise-template-dialog.component';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';

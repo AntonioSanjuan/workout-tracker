@@ -14,7 +14,7 @@ import { WorkoutTrainingsListComponent } from './workout-trainings-list.componen
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock'
 import { getUserTrainingsListRequest } from '@workout-tracker/shared-store';
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
-import { AddWorkoutTrainingDialogComponent } from './add-workout-training.dialog/add-workout-training-dialog.component';
+import { AddWorkoutTrainingDialogComponent } from './add-workout-training-dialog/add-workout-training-dialog.component';
 describe('WorkoutTrainingsComponent', () => {
   let component: WorkoutTrainingsListComponent;
   let fixture: ComponentFixture<WorkoutTrainingsListComponent>;

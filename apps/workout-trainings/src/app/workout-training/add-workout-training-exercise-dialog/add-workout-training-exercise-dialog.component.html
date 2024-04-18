@@ -1,0 +1,31 @@
+<div 
+    *ngrxLet="{ filteredExerciseTemplates: filteredExerciseTemplates$ } as vm"
+    class="AddTrainingExerciseDialog_MainContainer">
+    <h2 mat-dialog-title>{{ 'apps.workout-trainings.details.addTrainingExercise.title' | translate }}</h2>
+    <mat-dialog-content class="mat-typography">
+        <mat-stepper orientation="vertical" linear #stepper animationDuration="700">
+            <mat-step [stepControl]="form" [label]="'apps.workout-trainings.list.addTraining.step.basicInfo.title' | translate">
+                <form [formGroup]="form">
+                    <workout-tracker-muscles-selector 
+                        [label]="'apps.workout-exercises.list.filter.byMusclePlaceholder' | translate"
+                        (muscleSelection)="filterByMuscleInvolved($event)">
+                    </workout-tracker-muscles-selector>
+
+                    <div class="AddTrainingExerciseDialog_ListContainer"
+                    *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
+                    (click)="setExerciseTemplate(filteredExerciseTemplate)">
+                    <workout-tracker-exercise-template-card [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
+                </div>
+                </form>
+            </mat-step>
+        </mat-stepper>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>
+            {{ 'common.actions.cancel' | translate }}
+        </button>
+        <button *ngIf="stepper.selectedIndex === 1" mat-button [mat-dialog-close]="false" (click)="createTrainingExercise()" [disabled]="!form.valid">
+            {{ 'common.actions.create' | translate }}
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -9,7 +9,7 @@ import { AppRoutes, Training } from '@workout-tracker/models';
 import { getTrainingListOngoing, getUserTrainingsListRequest, getTrainingsListPagination, getTrainingsList } from '@workout-tracker/shared-store';
 import { TrainingCardComponent } from '@workout-tracker/components'
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
-import { AddWorkoutTrainingDialogComponent } from './add-workout-training.dialog/add-workout-training-dialog.component';
+import { AddWorkoutTrainingDialogComponent } from './add-workout-training-dialog/add-workout-training-dialog.component';
 import { DialogService } from '@workout-tracker/services/dialog';
 @Component({
   selector: 'workout-tracker-trainings-list',
@@ -41,7 +41,9 @@ export class WorkoutTrainingsListComponent {
   }
 
   public openTrainingDetails(training: Training) {
-    this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
+    if(training) {
+      this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
+    }
   }
 
   public isIntersecting(isIntersecting: boolean): void {

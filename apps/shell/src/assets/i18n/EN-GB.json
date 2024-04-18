@@ -55,7 +55,7 @@
                 "menuNav": {
                     "home": "Home",
                     "trainings": "Trainings",
-                    "exercises": "Exercises",
+                    "exercises": "Exercises templates",
                     "news": "News"
                 }
             },
@@ -159,7 +159,7 @@
                 "exerciseNotFound": "Exercise {{exerciseId}} not found"
             },
             "list": {
-                "title": "List of exercises",
+                "title": "List of exercise templates",
                 "filter": {
                     "banner": {
                         "title": "",

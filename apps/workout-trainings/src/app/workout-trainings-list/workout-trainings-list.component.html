@@ -13,7 +13,7 @@
         {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
     </button>
 
-    <button [disabled]="!vm.trainingOngoing" mat-flat-button color="primary" (click)="newTraining()">
+    <button *ngIf="vm.trainingOngoing" mat-flat-button color="primary" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
         {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
     </button>
     

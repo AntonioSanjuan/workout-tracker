@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Training } from '@workout-tracker/models';
+import { Training, TrainingExercise } from '@workout-tracker/models';
 
 export const GET_USER_TRAINING_DETAILS_REQUEST = 'GET USER TRAINING DETAILS'
 export const getUserTrainingDetailsRequest = createAction(GET_USER_TRAINING_DETAILS_REQUEST, props<{ trainingId: string}>())
@@ -15,3 +15,18 @@ export const GET_ANONYMOUS_USER_TRAINING_DETAILS_SUCCESS = 'GET ANONYMOUS USER T
 export const getAnonymousUserTrainingDetailsRequestSuccess = createAction(GET_ANONYMOUS_USER_TRAINING_DETAILS_SUCCESS, props<{ training: Training}>())
 export const GET_ANONYMOUS_USER_TRAINING_DETAILS_ERROR   = 'GET ANONYMOUS USER TRAINING DETAILS Error'
 export const getAnonymousUserTrainingDetailsRequestError = createAction(GET_ANONYMOUS_USER_TRAINING_DETAILS_ERROR, props<{ trainingId: string}>())
+
+export const ADD_USER_TRAINING_EXERCISE_REQUEST = 'ADD USER TRAINING EXERCISE'
+export const addUserTrainingExerciseRequest = createAction(ADD_USER_TRAINING_EXERCISE_REQUEST, props<{ trainingExercise: TrainingExercise }>())
+export const ADD_AUTHENTICATED_USER_TRAINING_EXERCISE_REQUEST = 'ADD AUTHENTICATED USER TRAINING EXERCISE Request'
+export const addAuthenticatedUserTrainingExerciseRequest = createAction(ADD_AUTHENTICATED_USER_TRAINING_EXERCISE_REQUEST, props<{ trainingExercise: TrainingExercise }>())
+export const ADD_AUTHENTICATED_USER_TRAINING_EXERCISE_SUCCESS = 'ADD AUTHENTICATED USER TRAINING EXERCISE Success'
+export const addAuthenticatedUserTrainingExerciseRequestSuccess = createAction(ADD_AUTHENTICATED_USER_TRAINING_EXERCISE_SUCCESS, props<{ trainingExercise: TrainingExercise }>())
+export const ADD_AUTHENTICATED_USER_TRAINING_EXERCISE_ERROR   = 'ADD AUTHENTICATED USER TRAINING EXERCISE Error'
+export const addAuthenticatedUserTrainingExerciseRequestError = createAction(ADD_AUTHENTICATED_USER_TRAINING_EXERCISE_ERROR)
+export const ADD_ANONYMOUS_USER_TRAINING_EXERCISE_REQUEST = 'ADD ANONYMOUS USER TRAINING EXERCISE Request'
+export const addAnonymousUserTrainingExerciseRequest = createAction(ADD_ANONYMOUS_USER_TRAINING_EXERCISE_REQUEST, props<{ trainingExercise: TrainingExercise }>())
+export const ADD_ANONYMOUS_USER_TRAINING_EXERCISE_SUCCESS = 'ADD ANONYMOUS USER TRAINING EXERCISE Success'
+export const addAnonymousUserTrainingExerciseRequestSuccess = createAction(ADD_ANONYMOUS_USER_TRAINING_EXERCISE_SUCCESS, props<{ trainingExercise: TrainingExercise }>())
+export const ADD_ANONYMOUS_USER_TRAINING_EXERCISE_ERROR   = 'ADD ANONYMOUS USER TRAINING EXERCISE Error'
+export const addAnonymousUserTrainingExerciseRequestError = createAction(ADD_ANONYMOUS_USER_TRAINING_EXERCISE_ERROR)

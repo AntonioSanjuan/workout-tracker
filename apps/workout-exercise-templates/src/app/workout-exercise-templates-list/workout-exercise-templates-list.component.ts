@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { WorkoutExerciseTemplatesFilterListComponent } from './workout-exercise-templates-list-filter/workout-exercise-templates-list-filter.component';
 import { DialogService } from '@workout-tracker/services/dialog';
-import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercise-template.dialog/add-workout-exercise-template-dialog.component';
+import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercise-template-dialog/add-workout-exercise-template-dialog.component';
 import { getExerciseTemplatesListFiltered } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
