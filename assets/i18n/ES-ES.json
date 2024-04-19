@@ -55,7 +55,7 @@
                 "menuNav": {
                     "home": "Inicio",
                     "trainings": "Entrenamientos",
-                    "exercises": "Ejercicios",
+                    "exercises": "Plantilla de ejercicios",
                     "news": "Novedades"
                 }
             },
@@ -167,15 +167,43 @@
                 }
             },
             "details": {
-                "title": "Detalles de entrenamiento"
+                "title": "Detalles de entrenamiento",
+                "addTrainingExercise": {
+                    "title": "Añadir ejercicio de entrenamiento",
+                    "step": {
+                        "basicInfo": {
+                            "title": "¿Que ejercicio vas a realizar?",
+                            "form": {
+                                "fields": {
+                                    "exerciseTemplate": "Ejercicio de plantilla"
+                                },
+                                "errors": {
+                                    "exerciseTemplateRequired": "Debes de seleccionar al menos un ejercicio de plantilla"
+                                }
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Adicional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observaciones"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewTrainingExercise": "Añadir un ejercicio de entrenamiento"
+                }
             }
         },
         "workout-exercises": {
             "errors": {
-                "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado"
+                "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado",
+                "exerciseTrainingsNotFound": "Entrenamientos del ejercicio {{exerciseTemplateId}} no encontrado"
             },
             "list": {
-                "title": "Lista de ejercicios",
+                "title": "Lista de plantillas de ejercicios",
                 "filter": {
                     "actions": {
                         "openFilter": "Abrir filtros",
