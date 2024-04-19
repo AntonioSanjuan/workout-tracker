@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { userStateMock } from '@workout-tracker/test'
+import { trainingsListStateMock, userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { DialogService, LibsServicesDialogModule } from '@workout-tracker/services/dialog';
@@ -31,6 +31,7 @@ describe('WorkoutTrainingsComponent', () => {
         provideMockStore({
           initialState: {
             ...workoutTrainingsAppStateMock, 
+            ...trainingsListStateMock,
             ...userStateMock
           }
         }),

@@ -5,10 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutTrainingExerciseForm, getAddWorkoutTrainingExerciseForm } from './add-workout-training-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
-import { ExerciseTemplate, MuscleGroups, MusclesInvolved, TrainingExercise, TrainingExerciseSerie, muscleInvolvedByGroups } from '@workout-tracker/models';
+import { ExerciseTemplate, MusclesInvolved, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { ExerciseTemplateCardComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { addUserTrainingExerciseRequest } from '../state/workout-training.actions';
-import { getExerciseTemplatesListFiltered, getExerciseTemplatesListFilters, getUserExerciseTemplatesListRequest, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { getExerciseTemplatesListFiltered, getUserExerciseTemplatesListRequest, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 
 @Component({
   selector: 'workout-tracker-add-training-exercise-dialog',

@@ -1,6 +1,6 @@
 import { createFeatureSelector } from '@ngrx/store';
 import { WorkoutTrainingsState } from './models/workoutTrainingsState.model';
-import { TRAININGS_HUB_FEATURE_KEY } from '@workout-tracker/shared-store';
+import { WORKOUT_TRAININGS_FEATURE_KEY } from './workout-trainings.reducer';
 
 export const selectWorkoutTrainingsState =
-  createFeatureSelector<WorkoutTrainingsState>(TRAININGS_HUB_FEATURE_KEY);
+  createFeatureSelector<WorkoutTrainingsState>(WORKOUT_TRAININGS_FEATURE_KEY);

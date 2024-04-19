@@ -59,8 +59,6 @@ import { CanActivateUser } from './shared/guards/user.guard';
       RouterEffects,
       UserEffects,
       SettingsEffects,
-      ExerciseTemplatesListEffects,
-      TrainingsListEffects,
       ErrorMessageEffects
     ]),
     StoreRouterConnectingModule.forRoot(),

@@ -1,6 +1,6 @@
-import { EXERCISE_TEMPLATES_HUB_FEATURE_KEY } from "@workout-tracker/shared-store";
 import { initialWorkoutExerciseTemplatesState } from "../../models/workoutExerciseTemplatesState.initialState";
+import { WORKOUT_EXERCISE_TEMPLATES_FEATURE_KEY } from "../../workout-exercise-templates.reducer";
 
 export const workoutExerciseTemplatesAppStateMock = {
-    [EXERCISE_TEMPLATES_HUB_FEATURE_KEY]: initialWorkoutExerciseTemplatesState
+    [WORKOUT_EXERCISE_TEMPLATES_FEATURE_KEY]: initialWorkoutExerciseTemplatesState
 }

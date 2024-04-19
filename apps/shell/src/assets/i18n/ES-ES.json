@@ -172,7 +172,7 @@
                     "title": "Añadir ejercicio de entrenamiento",
                     "step": {
                         "basicInfo": {
-                            "title": "Descripción",
+                            "title": "¿Que ejercicio vas a realizar?",
                             "form": {
                                 "fields": {
                                     "exerciseTemplate": "Ejercicio de plantilla"

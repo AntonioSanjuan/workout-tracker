@@ -1,1 +1,0 @@
-export const EXERCISE_TEMPLATES_HUB_FEATURE_KEY = 'workout_exercise_templates';

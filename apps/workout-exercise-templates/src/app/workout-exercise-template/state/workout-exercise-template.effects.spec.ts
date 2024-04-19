@@ -13,7 +13,7 @@ import { getAnonymousUserExerciseTemplateDetailsRequest, getAnonymousUserExercis
 import { ExerciseTemplate, Training, TrainingExercise } from '@workout-tracker/models';
 import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { trainingsHubStateMock } from '@workout-tracker/test';
+import { trainingsListStateMock } from '@workout-tracker/test';
 
 describe('WorkoutExerciseTemplatesEffects', () => {
   let actions: Observable<Action>;
@@ -38,7 +38,7 @@ describe('WorkoutExerciseTemplatesEffects', () => {
         provideMockStore({
           initialState: {
             ...workoutExerciseTemplatesAppStateMock,
-            ...trainingsHubStateMock
+            ...trainingsListStateMock
           }
         }),
       ],

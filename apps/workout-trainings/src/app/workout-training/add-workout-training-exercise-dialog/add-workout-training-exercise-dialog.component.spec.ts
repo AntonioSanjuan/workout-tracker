@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AddWorkoutTrainingDialogComponent } from './add-workout-training-exercise-dialog.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
-import { userStateMock } from '@workout-tracker/test'
+import { exerciseTemplatesListStateMock, userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MuscleGroups } from '@workout-tracker/models';
+import { ExerciseTemplate, MuscleGroups, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
+import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog.component';
+import { addUserTrainingExerciseRequest } from '../state/workout-training.actions';
 
-describe('AddWorkoutTrainingDialogComponent', () => {
-  let component: AddWorkoutTrainingDialogComponent;
-  let fixture: ComponentFixture<AddWorkoutTrainingDialogComponent>;
+describe('AddWorkoutTrainingExerciseDialogComponent', () => {
+  let component: AddWorkoutTrainingExerciseDialogComponent;
+  let fixture: ComponentFixture<AddWorkoutTrainingExerciseDialogComponent>;
   let store: Store;
 
   beforeEach(async () => {
@@ -23,13 +24,14 @@ describe('AddWorkoutTrainingDialogComponent', () => {
         provideMockStore({
           initialState: {
             ...workoutTrainingsAppStateMock,
+            ...exerciseTemplatesListStateMock,
             ...userStateMock
           }
         }),
       ],
       imports: [
         BrowserAnimationsModule,
-        AddWorkoutTrainingDialogComponent,
+        AddWorkoutTrainingExerciseDialogComponent,
         MusclesSelectorComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
@@ -37,7 +39,7 @@ describe('AddWorkoutTrainingDialogComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddWorkoutTrainingDialogComponent);
+    fixture = TestBed.createComponent(AddWorkoutTrainingExerciseDialogComponent);
     store = TestBed.inject(Store)
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -51,14 +53,12 @@ describe('AddWorkoutTrainingDialogComponent', () => {
 
   describe('Integration tests', () => {
     describe('createTraining', () => {
-      const inputMusclesGroups = [MuscleGroups.Chest, MuscleGroups.Back]
-      const inputObservations = null
+      const exerciseTemplateSut = {id: 'exerciseTemplateIdTest'} as ExerciseTemplate
       describe('if form its valid', () => {
         const today = new Date(2020, 3, 1)
         beforeEach(() => {
           component.form.setValue({
-            muscleGroups: inputMusclesGroups,
-            observations: inputObservations
+            exerciseTemplate: exerciseTemplateSut
           })
 
           jest.useFakeTimers();
@@ -71,12 +71,11 @@ describe('AddWorkoutTrainingDialogComponent', () => {
 
         it('should dispatch addUserTrainingListRequest', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
-          component.createTraining()
+          component.createTrainingExercise()
 
-          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingListRequest({training: {
-            muscleGroups: inputMusclesGroups,
-            observations: inputObservations,
-            creationDate: today
+          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingExerciseRequest({trainingExercise: {
+            exerciseTemplate: exerciseTemplateSut,
+            series: [] as TrainingExerciseSerie[]
           } as any}))
         });
       })
@@ -84,48 +83,15 @@ describe('AddWorkoutTrainingDialogComponent', () => {
         describe('all fields null', () => {
           beforeEach(() => {
             component.form.setValue({
-              muscleGroups: null,
-              observations: null
+              exerciseTemplate: null
             })
           })
   
           it('should not dispatch addUserTrainingListRequest', () => {
             const dispatchSpy = jest.spyOn(store, 'dispatch')
-            component.createTraining()
+            component.createTrainingExercise()
   
             expect(dispatchSpy).not.toHaveBeenCalled()
-          });
-        })
-
-        describe('muscleGroups are null', () => {
-          beforeEach(() => {
-            component.form.setValue({
-              muscleGroups: null,
-              observations:''
-            })
-          })
-  
-          it('should not dispatch addUserTrainingListRequest', () => {
-            const dispatchSpy = jest.spyOn(store, 'dispatch')
-            component.createTraining()
-  
-            expect(dispatchSpy).not.toHaveBeenCalled()
-          });
-        })
-
-        describe('muscleGroups length zero', () => {
-          beforeEach(() => {
-            component.form.setValue({
-              muscleGroups: [],
-              observations: null
-            })
-          })
-  
-          it('should not dispatch addUserTrainingListRequest', () => {
-            const dispatchSpy = jest.spyOn(store, 'dispatch')
-            component.createTraining()
-  
-            expect(dispatchSpy).not.toHaveBeenCalled()  
           });
         })
       })
