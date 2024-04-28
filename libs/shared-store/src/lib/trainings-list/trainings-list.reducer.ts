@@ -27,7 +27,7 @@ export const trainingsListReducer = createReducer(
                 pagination: {
                     ...state.query.pagination,
                     moreElements: trainings.length === state.query.pagination.pageElements,
-                    lastElement: trainings[trainings.length - 1]
+                    lastElement: trainings.length ? trainings[trainings.length - 1] : state.query.pagination.lastElement
                 }
             }
         }

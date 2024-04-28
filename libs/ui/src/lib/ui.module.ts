@@ -17,6 +17,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatButtonToggleModule,
     MatButtonModule,
     MatStepperModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDividerModule
   ],
   exports: [
     CommonModule,
@@ -57,7 +59,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatButtonToggleModule,
     MatButtonModule,
     MatStepperModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDividerModule
   ],
   providers: [
     provideNativeDateAdapter(),

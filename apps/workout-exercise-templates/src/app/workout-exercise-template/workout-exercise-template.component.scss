@@ -1,14 +1,76 @@
 @use "css/main.scss" as shellStyles;
 
-:host {
-    height: 100%;
+workout-tracker-exercise-template {
+    .WorkoutExerciseTemplate_MainContainer {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    
+        .WorkoutExerciseTemplate_ContentContainer {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 80%;
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+
+            .WorkoutExerciseTemplate_Info {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+
+                p { 
+                    margin: 0 
+                }
+            }
+
+            .WorkoutExerciseTemplate_TrainingContainer {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+    
+                gap: 15px;
+    
+                .WorkoutExerciseTemplate_TrainingInfo {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    flex-direction: column;
+
+                    p {
+                        margin: 0;
+                    }
+
+                    .WorkoutExerciseTemplate_TrainingMuscles {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+
+                    }
+                }
+            }
+        }
+
+    }
 }
 
-.WorkoutExerciseTemplate_MainContainer {
-
-}
 
 @media (max-width: 960px) {
-    .WorkoutExerciseTemplate_MainContainer {
+    workout-tracker-exercise-template {
+        .WorkoutExerciseTemplate_MainContainer {
+            .WorkoutExerciseTemplate_ContentContainer {
+
+                .WorkoutExerciseTemplate_Info {
+
+                }
+                .WorkoutExerciseTemplate_TrainingContainer {
+
+                }
+            }
+
+        }
     }
 }

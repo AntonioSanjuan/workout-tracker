@@ -1,15 +1,14 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { UiModule } from '@workout-tracker/ui';
+import { LocalizedDatePipe, UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
-import { of } from 'rxjs';
-import { getWorkoutExerciseTemplateTrainingsDetailsFilteredByTemplateById, selectWorkoutExerciseTemplateDetailsState, selectWorkoutExerciseTemplateTrainingsDetails } from './state/workout-exercise-template.selectors';
-import { ViewHeaderComponent } from '@workout-tracker/components';
+import { AppRoutes } from '@workout-tracker/models';
+import { getWorkoutExerciseTemplateTrainingsDetailsFilteredByTemplateById, selectWorkoutExerciseTemplateDetailsState } from './state/workout-exercise-template.selectors';
+import { MusclePillComponent, TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-exercise-template',
@@ -18,11 +17,15 @@ import { ViewHeaderComponent } from '@workout-tracker/components';
     UiModule,
     LetDirective,
     TranslateModule,
+    LocalizedDatePipe,
     NgFor,
     RouterModule,
-    ViewHeaderComponent
+    ViewHeaderComponent,
+    MusclePillComponent,
+    TrainingExerciseCardComponent
   ],
   styleUrls: ['./workout-exercise-template.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true
 })
 export class WorkoutExerciseTemplateComponent {

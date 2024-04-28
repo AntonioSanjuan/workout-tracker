@@ -65,15 +65,13 @@ export class TrainingsService {
             switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
                 const trainingExerciseObservables: Observable<Training>[] = [];
     
-                collectionGroupQS.docs.forEach((trainingExerciseDoc) => {
-                    const trainingId = trainingExerciseDoc.ref.parent?.parent?.id
+                [...new Set(collectionGroupQS.docs.map((doc) => doc.ref.parent.parent?.id))].map((trainingId) => {
                     if(trainingId) {
                         const trainingExerciseSeriesObservable = this.getTraining(userId, trainingId)
     
                         trainingExerciseObservables.push(trainingExerciseSeriesObservable);
                     }
-
-                });
+                })
     
                 return forkJoin(trainingExerciseObservables).pipe(
                     defaultIfEmpty([]),

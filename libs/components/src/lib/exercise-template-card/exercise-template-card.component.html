@@ -8,8 +8,8 @@
                     <div class="ExerciseTemplateCard_TypesContainer">
                         <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exerciseTemplate.musclesInvolved"
                             [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
-                            [specificMuscle]="mucleInvolved"
-                    ></workout-tracker-muscle-pill>
+                            [specificMuscle]="mucleInvolved">
+                        </workout-tracker-muscle-pill>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,16 @@
 <div
     *ngrxLet="{ trainingDetails: trainingDetails$ } as vm"
     class="WorkoutTraining_MainContainer">
-    <workout-tracker-view-header [title]="'asd'" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
-    {{vm.trainingDetails.training?.id}}
+    <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
 
     <button mat-flat-button color="primary" (click)="newTrainingExercise()">
         {{ 'apps.workout-trainings.details.actions.addNewTrainingExercise' | translate }}
     </button>
+
+
+    <div class="WorkoutTraining_TrainingExercise" *ngFor="let trainingExercise of vm.trainingDetails.training?.trainingExercises">
+        <workout-tracker-training-exercise-card
+            [trainingExercise]="trainingExercise">
+        </workout-tracker-training-exercise-card>
+    </div>
 </div>

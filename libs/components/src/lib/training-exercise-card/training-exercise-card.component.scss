@@ -1,0 +1,75 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-training-exercise-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .TrainingExerciseCard_MainContainer {
+        width: 100%;
+        box-shadow: shellStyles.$mainColor 0px 5px 15px;
+        mat-card {
+
+            mat-card-content {
+                mat-divider {
+                    margin: 10px;
+                }
+
+                .TrainingExerciseCard_ExerciseTemplateContainer {
+                    display: flex;
+                    flex-direction: row;
+                    gap:20px;
+
+                    img {
+                        border-radius: 10px;
+                    }
+                    .TrainingExerciseCard_InfoContainer {
+                        display: flex;
+                        flex-direction: column;
+
+                        h3 {
+                            margin-top: 0;
+                        }
+
+                        .TrainingExerciseCard_TypesContainer {
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                        }
+                    }
+                }
+
+                .TrainingExerciseCard_SeriesContainer {
+
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    workout-tracker-training-exercise-card  {
+    .TrainingExerciseCard_MainContainer {
+        mat-card {
+
+            mat-card-content {
+                .TrainingExerciseCard_ExerciseTemplateContainer {
+                    img {
+                    
+                    }
+                    .TrainingExerciseCard_InfoContainer {
+                        .TrainingExerciseCard_TypesContainer {
+                            flex-direction: column;   
+                            gap: 5px;
+                        }
+                    }
+                }
+
+                .TrainingExerciseCard_SeriesContainer {
+
+                }
+            }
+        }
+    }
+    }
+}

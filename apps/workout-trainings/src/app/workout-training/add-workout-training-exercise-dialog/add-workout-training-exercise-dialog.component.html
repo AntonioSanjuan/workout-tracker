@@ -24,7 +24,7 @@
         <button mat-button mat-dialog-close>
             {{ 'common.actions.cancel' | translate }}
         </button>
-        <button *ngIf="stepper.selectedIndex === 1" mat-button [mat-dialog-close]="false" (click)="createTrainingExercise()" [disabled]="!form.valid">
+        <button *ngIf="stepper.selectedIndex === 0" mat-button [mat-dialog-close]="false" (click)="createTrainingExercise()" [disabled]="!form.valid">
             {{ 'common.actions.create' | translate }}
         </button>
     </mat-dialog-actions>

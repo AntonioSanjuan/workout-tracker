@@ -30,7 +30,7 @@ export class TrainingsRefService {
 
             //pagination
             if (trainingQuery.pagination.lastElement) { 
-                query = query.startAt(DateAdapter.toDto(trainingQuery.pagination.lastElement.creationDate)) 
+                query = query.startAfter(DateAdapter.toDto(trainingQuery.pagination.lastElement.creationDate)) 
             }
             
             return query
