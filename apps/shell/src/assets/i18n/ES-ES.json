@@ -270,7 +270,7 @@
                     "name": "Nombre de la plantilla"
                 },
                 "exerciseTrainings": {
-                    "title": "Entrenamientos en los que se empleo esta plantilla",
+                    "title": "Últimos entrenamientos en los que se empleo esta plantilla",
                     "info": {
                         "date": "Fecha del entrenamiento",
                         "muscle": "Grupos musculares del entrenamiento"
