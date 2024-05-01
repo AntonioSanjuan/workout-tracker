@@ -305,9 +305,6 @@
                         "numberOfExercises": "Nº de ejercicios"
                     }
                 },
-                "muscleGroup": {
-                    "title": "Grupo muscular"
-                },
                 "state": {
                     "finished": "Finalizado",
                     "onGoing": "En curso"
