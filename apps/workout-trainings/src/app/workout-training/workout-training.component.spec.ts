@@ -9,10 +9,11 @@ import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { AppRoutes } from '@workout-tracker/models';
+import { AppRoutes, Training, TrainingExercise } from '@workout-tracker/models';
 import { WorkoutTrainingComponent } from './workout-training.component';
 import { ViewHeaderComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
+import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 
 describe('WorkoutTrainingComponent', () => {
   let component: WorkoutTrainingComponent;
@@ -62,11 +63,20 @@ describe('WorkoutTrainingComponent', () => {
 
   describe('Integration tests', () => {
 
-    it('openTrainingList should navigate to exercise details ', () => {
+    it('openTrainingExercise should navigate to exercise details ', () => {
+      const trainingSut = {id: 'trainingId test'} as Training
+      const trainingExerciseSut = {id: 'trainingExerciseId test'} as TrainingExercise
       const navigateSpy = jest.spyOn(router, 'navigate')
 
-      component.openTrainingList()
-      expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.WorkoutTrainingsList])
+      component.openTrainingExercise(trainingSut, trainingExerciseSut)
+      expect(navigateSpy).toHaveBeenCalledWith([`/trainings/${trainingSut.id}/exercise/${trainingExerciseSut.id}`])
+    });
+
+    it('newTrainingExercise should show dialog ', () => {
+      const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+
+      component.newTrainingExercise()
+      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingExerciseDialogComponent, true)
     });
   })
 });

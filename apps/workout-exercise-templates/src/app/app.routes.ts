@@ -17,7 +17,6 @@ export const appRoutes: Route[] = [
       importProvidersFrom(
         StoreModule.forFeature(EXERCISE_TEMPLATES_LIST_FEATURE_KEY, exerciseTemplatesListReducer),
         EffectsModule.forFeature([ExerciseTemplatesListEffects])
-
       )
     ],
     children: [
