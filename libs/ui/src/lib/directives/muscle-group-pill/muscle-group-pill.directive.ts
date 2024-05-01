@@ -15,7 +15,7 @@ const MuscleGroupBackgroundColor: { [key in MuscleGroups]: string} = {
   [MuscleGroups.Chest] : '#33b44a',
   [MuscleGroups.Legs] : '#ff6921',
   [MuscleGroups.Shoulder] : '#ffc20e',
-  [MuscleGroups.Core] : '#ff6921'
+  [MuscleGroups.Core] : '#21ffad'
 }
 
 @Directive({

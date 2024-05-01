@@ -1,1 +1,16 @@
-@import 'base/base.scss'
+@import 'base/base.scss';
+
+.view-body {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 80%;
+}
+
+.view-padding-top {
+    padding-top: 30px;
+}

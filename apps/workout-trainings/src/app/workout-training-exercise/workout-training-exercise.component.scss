@@ -7,18 +7,15 @@
 .WorkoutTrainingExercise_MainContainer {
     display: flex;
     flex-direction: column;
-    height: 100%;
     align-items: center;
-    justify-content: center;
-    gap: 35px;
-    .WorkoutTrainingExercise_TrainingExercise {
-        width: 80%;
+
+    .WorkoutTrainingExercise_ContentContainer {
     }
 }
 
 @media (max-width: 960px) {
     .WorkoutTrainingExercise_MainContainer {
-        .WorkoutTrainingExercise_TrainingExercise {
+        .WorkoutTrainingExercise_ContentContainer {
 
         }
     }

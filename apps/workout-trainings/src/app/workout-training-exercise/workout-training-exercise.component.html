@@ -3,13 +3,16 @@
     class="WorkoutTrainingExercise_MainContainer">
     <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList+'/'+vm.trainingExerciseParentId"></workout-tracker-view-header>
 
-    <button mat-flat-button color="primary" (click)="newTrainingExerciseSerie()">
-        {{ 'apps.workout-trainings.trainingExercise.actions.addNewTrainingExerciseSerie' | translate }}
-    </button>
+    <div class="WorkoutTrainingExercise_ContentContainer view-body">
+        <button mat-flat-button color="primary" (click)="newTrainingExerciseSerie()">
+            {{ 'apps.workout-trainings.trainingExercise.actions.addNewTrainingExerciseSerie' | translate }}
+        </button>
+    
+        <h2>{{ 'apps.workout-trainings.trainingExercise.title' | translate }}</h2>
+    
+        <workout-tracker-series-table
+            [series]="vm.trainingExercise?.series">
+        </workout-tracker-series-table>    
+    </div>
 
-    <h2>{{ 'apps.workout-trainings.trainingExercise.title' | translate }}</h2>
-
-    <workout-tracker-series-table
-        [series]="vm.trainingExercise?.series">
-    </workout-tracker-series-table>
 </div>

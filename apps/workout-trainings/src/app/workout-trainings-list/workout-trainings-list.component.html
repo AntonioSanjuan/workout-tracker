@@ -8,25 +8,28 @@
 
     <workout-tracker-trainings-list-filter></workout-tracker-trainings-list-filter>
 
-    <div class="WorkoutTrainingsList_ActionContainer">
-        <button mat-flat-button color="primary" (click)="newTraining()">
-            {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
-        </button>
+    <div class="WorkoutTrainingsList_ContentContainer view-body view-padding-top">
+        <div class="WorkoutTrainingsList_ActionContainer">
+            <button mat-flat-button color="primary" (click)="newTraining()">
+                {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
+            </button>
+        
+            <button *ngIf="vm.trainingOngoing" mat-flat-button color="primary" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
+                {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
+            </button>
+        </div>
+        
+        <h2>
+            {{ 'apps.workout-trainings.list.title' | translate }}
+        </h2>
     
-        <button *ngIf="vm.trainingOngoing" mat-flat-button color="primary" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
-            {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
-        </button>
+        <div class="WorkoutTrainingsList_ListContainer"
+            *ngFor="let filteredTraining of vm.trainingList"
+            (click)="openTrainingDetails(filteredTraining)">
+            <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
+        </div>
     </div>
-    
-    <h2>
-        {{ 'apps.workout-trainings.list.title' | translate }}
-    </h2>
 
-    <div class="WorkoutTrainingsList_ListContainer"
-        *ngFor="let filteredTraining of vm.trainingList"
-        (click)="openTrainingDetails(filteredTraining)">
-        <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
-    </div>
 
     <area 
         appIntersectionObserver

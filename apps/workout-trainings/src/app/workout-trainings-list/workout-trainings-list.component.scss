@@ -10,29 +10,32 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    gap: 35px;
 
     workout-tracker-trainings-list-filter {
         width: 100%;
     }
 
-    h2 {
-        margin-top: 0;
-    }
-
-    .WorkoutTrainingsList_ActionContainer {
-        display: flex;
-        gap: 10px;
-        button {
-            background-color: shellStyles.$mainColor;
+    .WorkoutTrainingsList_ContentContainer {
+        h2 {
+            margin-top: 0;
+        }
+    
+        .WorkoutTrainingsList_ActionContainer {
+            display: flex;
+            gap: 10px;
+            button {
+                background-color: shellStyles.$mainColor;
+            }
+        }
+        .WorkoutTrainingsList_ListContainer {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+    
         }
     }
-    .WorkoutTrainingsList_ListContainer {
-        display: flex;
-        flex-direction: column;
 
-        width: 80%;
-    }
+
 }
 
 @media (max-width: 960px) {

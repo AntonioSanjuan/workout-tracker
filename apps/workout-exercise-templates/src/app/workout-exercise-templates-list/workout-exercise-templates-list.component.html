@@ -4,17 +4,19 @@
 
     <workout-tracker-exercise-templates-list-filter></workout-tracker-exercise-templates-list-filter>
     
-    <button mat-flat-button color="primary" (click)="newExerciseTemplate()">
-        {{ 'apps.workout-exercises.list.actions.addNewExercise' | translate }}
-    </button>
+    <div class="WorkoutExerciseTemplatesList_ContentContainer view-body view-padding-top">
+        <button mat-flat-button color="primary" (click)="newExerciseTemplate()">
+            {{ 'apps.workout-exercises.list.actions.addNewExercise' | translate }}
+        </button>
+        
+        <h2>
+            {{ 'apps.workout-exercises.list.title' | translate }}
+        </h2>
     
-    <h2>
-        {{ 'apps.workout-exercises.list.title' | translate }}
-    </h2>
-
-    <div class="WorkoutExerciseTemplatesList_ListContainer"
-        *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
-        (click)="openExerciseTemplateDetails(filteredExerciseTemplate)">
-        <workout-tracker-exercise-template-card [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
+        <div class="WorkoutExerciseTemplatesList_ListContainer"
+            *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
+            (click)="openExerciseTemplateDetails(filteredExerciseTemplate)">
+            <workout-tracker-exercise-template-card [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
+        </div>
     </div>
 </div>
