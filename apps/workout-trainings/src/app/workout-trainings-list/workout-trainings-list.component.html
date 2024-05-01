@@ -4,17 +4,19 @@
         trainingOngoing: trainingOngoing$,
         trainingsPagination: trainingsPagination$
     } as vm"
-    class="WorkoutTrainingsList__MainContainer">
+    class="WorkoutTrainingsList_MainContainer">
 
     <workout-tracker-trainings-list-filter></workout-tracker-trainings-list-filter>
 
-    <button mat-flat-button color="primary" (click)="newTraining()">
-        {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
-    </button>
-
-    <button *ngIf="vm.trainingOngoing" mat-flat-button color="primary" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
-        {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
-    </button>
+    <div class="WorkoutTrainingsList_ActionContainer">
+        <button mat-flat-button color="primary" (click)="newTraining()">
+            {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
+        </button>
+    
+        <button *ngIf="vm.trainingOngoing" mat-flat-button color="primary" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
+            {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
+        </button>
+    </div>
     
     <h2>
         {{ 'apps.workout-trainings.list.title' | translate }}

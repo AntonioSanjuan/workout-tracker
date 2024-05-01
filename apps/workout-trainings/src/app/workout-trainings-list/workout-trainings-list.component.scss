@@ -4,7 +4,7 @@
     height: 100%;
 }
 
-.WorkoutTrainingsList__MainContainer {
+.WorkoutTrainingsList_MainContainer {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -16,13 +16,17 @@
         width: 100%;
     }
 
-    button {
-        background-color: shellStyles.$mainColor;
-    }
     h2 {
         margin-top: 0;
     }
 
+    .WorkoutTrainingsList_ActionContainer {
+        display: flex;
+        gap: 10px;
+        button {
+            background-color: shellStyles.$mainColor;
+        }
+    }
     .WorkoutTrainingsList_ListContainer {
         display: flex;
         flex-direction: column;
@@ -32,6 +36,9 @@
 }
 
 @media (max-width: 960px) {
-    .WorkoutTrainingsList__MainContainer {
+    .WorkoutTrainingsList_MainContainer {
+        .WorkoutTrainingsList_ActionContainer {
+            flex-direction: column;
+        }
     }
 }
