@@ -1,0 +1,30 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-training-info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .TrainingInfo_MainContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        .TrainingInfo_InfoLabels {
+            .TrainingInfo_InfoLabel {
+                p {
+                    margin: 0;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .TrainingInfo_InfoValues {
+            .TrainingInfo_InfoValue {
+                p{ 
+                    margin: 0;
+                    font-style: oblique;
+                }
+            }
+        }
+    }
+}

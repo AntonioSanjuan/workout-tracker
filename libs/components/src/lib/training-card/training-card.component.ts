@@ -1,10 +1,10 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LetDirective } from '@ngrx/component';
-import { LocalizedDatePipe, MuscleInvolvedGroupPipe, UiModule } from '@workout-tracker/ui';
+import { MuscleInvolvedGroupPipe, UiModule } from '@workout-tracker/ui';
 import { Training } from '@workout-tracker/models';
-import { TranslateModule } from '@ngx-translate/core';
 import { MusclePillComponent } from '../muscle-pill/muscle-pill.component';
+import { TrainingInfoComponent } from '../training-info/training-info.component';
 
 
 
@@ -13,10 +13,9 @@ import { MusclePillComponent } from '../muscle-pill/muscle-pill.component';
   imports: [
     MusclePillComponent,
     MuscleInvolvedGroupPipe,
-    LocalizedDatePipe,
+    TrainingInfoComponent,
     CommonModule,
     LetDirective,
-    TranslateModule,
     UiModule
   ],
   templateUrl: './training-card.component.html',

@@ -296,14 +296,14 @@
     "libs": {
         "components": {
             "training-card": {
-                "title": "Día: {{date}}",
-                "info": {
-                    "labels": {
-                        "date": "Fecha",
-                        "status": "Estado",
-                        "observations": "Observaciones",
-                        "numberOfExercises": "Nº de ejercicios"
-                    }
+                "title": "Día: {{date}}"
+            },
+            "training-info": {
+                "labels": {
+                    "date": "Fecha",
+                    "status": "Estado",
+                    "observations": "Observaciones",
+                    "numberOfExercises": "Nº de ejercicios"
                 },
                 "state": {
                     "finished": "Finalizado",

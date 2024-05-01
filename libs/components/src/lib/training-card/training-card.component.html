@@ -2,41 +2,9 @@
     <mat-card>
         <mat-card-content>
             <div class="TrainingCard_ContentContainer">
-                <div class="TrainingCard_InfoContainer">
-                    <div class="TrainingCard_InfoLabels">
-                        <div class="TrainingCard_InfoLabel">
-                            <p>{{ 'libs.components.training-card.info.labels.date' | translate }}:</p>   
-                        </div>
-                        <div class="TrainingCard_InfoLabel">
-                            <p>{{ 'libs.components.training-card.info.labels.status' | translate }}:</p>
-                        </div>
-                        <div class="TrainingCard_InfoLabel">
-                            <p>{{ 'libs.components.training-card.info.labels.observations' | translate }}:</p>
-                        </div>
-                        <div class="TrainingCard_InfoLabel">
-                            <p>{{ 'libs.components.training-card.info.labels.numberOfExercises' | translate }}:</p>
-                        </div>
-                    </div>
-                    <div class="TrainingCard_InfoValues">
-                        <div class="TrainingCard_InfoValue">
-                            <p>{{ training.creationDate | localizedDate }}</p>
-                        </div>
-                        <div class="TrainingCard_InfoValue">
-                            <p *ngIf="training.finishDate">
-                                {{ 'libs.components.training-card.state.finished' | translate }}
-                            </p>
-                            <p *ngIf="!training.finishDate">
-                                {{ 'libs.components.training-card.state.onGoing' | translate }}
-                            </p>                        
-                        </div>
-                        <div class="TrainingCard_InfoValue">
-                            <p>{{ training.observations || 'nA' }}</p>
-                        </div>
-                        <div class="TrainingCard_InfoValue">
-                            <p>{{ training.trainingExercises?.length }}</p>
-                        </div>
-                    </div>
-                </div>
+                <workout-tracker-training-info 
+                    [training]="training">
+                </workout-tracker-training-info>
                 <div class="TrainingCard_MuscleGroupsContainer">
                     <div class="TrainingCard_MuscleGroup" *ngFor="let muscleGroup of training.muscleGroups">
                         <workout-tracker-muscle-pill 

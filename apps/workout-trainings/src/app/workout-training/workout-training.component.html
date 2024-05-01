@@ -11,6 +11,9 @@
         {{ 'apps.workout-trainings.training.title' | translate }}
     </h2>
 
+    <workout-tracker-training-info 
+        [training]="vm.training!">
+    </workout-tracker-training-info>
     <h2>
         {{ 'apps.workout-trainings.training.training-exercises.list.title' | translate }}
     </h2>

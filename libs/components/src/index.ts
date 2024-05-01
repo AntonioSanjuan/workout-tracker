@@ -5,6 +5,7 @@ export * from './lib/exercise-template-card/exercise-template-card.component';
 export * from './lib/training-card/training-card.component';
 export * from './lib/training-exercise-card/training-exercise-card.component';
 export * from './lib/banner/banner.component';
+export * from './lib/training-info/training-info.component';
 export * from './lib/series-table/series-table.component';
 export * from './lib/view-header/view-header.component';
 

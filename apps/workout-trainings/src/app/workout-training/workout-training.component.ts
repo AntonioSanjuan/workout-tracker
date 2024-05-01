@@ -8,7 +8,7 @@ import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, Training, TrainingExercise } from '@workout-tracker/models';
 import { selectWorkoutTraining } from './state/workout-training.selectors';
-import { TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 
 @Component({
@@ -21,6 +21,7 @@ import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-trainin
     NgFor,
     RouterModule,
     ViewHeaderComponent,
+    TrainingInfoComponent,
     TrainingExerciseCardComponent
   ],
   styleUrls: ['./workout-training.component.scss'],
