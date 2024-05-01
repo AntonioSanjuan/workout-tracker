@@ -16,6 +16,11 @@ export const initialWorkoutTrainingState: WorkoutTrainingState = {
 
 export const workoutTrainingReducer = createReducer(
   initialWorkoutTrainingState,
+  on(
+    TrainingDetailsActions.getUserTrainingRequest,
+    (state: WorkoutTrainingState) => ({
+    ...initialWorkoutTrainingState
+  })),
     on(
       TrainingDetailsActions.getAuthenticatedUserTrainingRequestSuccess,
       TrainingDetailsActions.getAnonymousUserTrainingRequestSuccess,

@@ -2,7 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TrainingExercise } from "@workout-tracker/models";
-import { Observable, of } from "rxjs";
+import { Observable, filter, of } from "rxjs";
 import { getUserTrainingExerciseRequest } from "../../workout-training-exercise/state/workout-training-exercise.actions";
 import { selectWorkoutTrainingExercise } from "../../workout-training-exercise/state/workout-training-exercise.selectors";
 
@@ -18,7 +18,9 @@ export class WorkoutTrainingExerciseResolver implements Resolve<any> {
 
         if(trainingId && trainingExerciseId) {
             this.store.dispatch(getUserTrainingExerciseRequest({ trainingId: trainingId, trainingExerciseId: trainingExerciseId}))
-            return this.store.select(selectWorkoutTrainingExercise)
+            return this.store.select(selectWorkoutTrainingExercise).pipe(
+                filter((trainingExercise: TrainingExercise | undefined) => !!trainingExercise)
+            )
         }
         return of(undefined);
 
