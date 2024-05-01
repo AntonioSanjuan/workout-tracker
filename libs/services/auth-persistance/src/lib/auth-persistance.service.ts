@@ -13,10 +13,6 @@ export class AuthPersistanceService {
   private auth: AngularFireAuth = inject(AngularFireAuth)
   private router: Router = inject(Router)
 
-  constructor() {
-    console.log("epaaa")
-  }
-
   public initialize() {
     this.auth.authState.pipe(distinctUntilChanged()).subscribe(
       (user) => {

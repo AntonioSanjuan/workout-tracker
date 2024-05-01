@@ -8,6 +8,7 @@ import { WorkoutTrainingsListResolver } from './shared/workout-trainings-list/wo
 import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, ExerciseTemplatesListEffects, TRAININGS_LIST_FEATURE_KEY, TrainingsListEffects, exerciseTemplatesListReducer, trainingsListReducer } from '@workout-tracker/shared-store';
 import { TrainingEffects } from './workout-training/state/workout-training.effects';
 import { WorkoutTrainingResolver } from './shared/workout-training/workout-training.resolver';
+import { WorkoutTrainingExerciseResolver } from './shared/workout-training-exercises/workout-training-exercises.resolver';
 
 export const appRoutes: Route[] = [
   {
@@ -38,9 +39,20 @@ export const appRoutes: Route[] = [
             StoreModule.forFeature(fromWorkoutTrainings.WORKOUT_TRAININGS_FEATURE_KEY, fromWorkoutTrainings.workoutTrainingsReducer),
             EffectsModule.forFeature([ExerciseTemplatesListEffects, TrainingEffects])
           )
-        ],    
+        ],
         loadComponent: () =>
           import('./workout-training/workout-training.component').then((m) => m.WorkoutTrainingComponent),
+      },
+      {
+        path: ':id/exercise/:exerciseId',
+        resolve: { data: WorkoutTrainingExerciseResolver },
+        providers: [
+          importProvidersFrom(
+
+          )
+        ],
+        loadComponent: () =>
+          import('./workout-training-exercise/workout-training-exercise.component').then((m) => m.WorkoutTrainingExerciseComponent),
       }
     ]
 

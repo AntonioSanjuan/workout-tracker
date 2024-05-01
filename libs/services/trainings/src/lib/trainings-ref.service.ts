@@ -14,11 +14,9 @@ export class TrainingsRefService {
 
             //filters
             if (trainingQuery.filters.betweenDates) { 
-                console.log("trainingQuery.filters.betweenDates", trainingQuery.filters.betweenDates)
                 query = query.where('creationDate', ">=", DateAdapter.toDto(trainingQuery.filters.betweenDates.fromDate)).where('creationDate', "<=",  DateAdapter.toDto(trainingQuery.filters.betweenDates.toDate)) 
             }
             if (trainingQuery.filters.muscleGroups.length) { 
-                console.log("trainingQuery.filters.muscleGroups", trainingQuery.filters.muscleGroups)
                 query = query.where('muscleGroups', "array-contains-any", trainingQuery.filters.muscleGroups) 
                 
             }
@@ -68,7 +66,6 @@ export class TrainingsRefService {
     }
 
     public getExerciseTemplateTrainingExercisesDocRefs(userId: string, exerciseTemplateId: string, exerciseTemplateRef: AngularFirestoreDocument): AngularFirestoreCollectionGroup {
-        console.log("ref",`/user/${userId}/exerciseTemplates/${exerciseTemplateId}`)
         const exerciseTemplateTrainingExercisesQuery: QueryGroupFn<DocumentData> = ref => {
             let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref
             query = query.where('exerciseTemplateId', "==", exerciseTemplateRef.ref) 

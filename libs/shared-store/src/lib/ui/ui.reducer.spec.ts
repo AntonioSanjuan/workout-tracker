@@ -54,7 +54,6 @@ describe('uiReducer', () => {
                     ...uiInitialState, 
                     loadedApps: [prevLoadedApp]
                 }
-                console.log("initStateMock", initStateMock)
                 const action = unloadedApp({ uninitialized: uninitializedApp})
                 const state = uiReducer(initStateMock, action)
     

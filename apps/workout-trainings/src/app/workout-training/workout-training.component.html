@@ -4,13 +4,23 @@
     <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
 
     <button mat-flat-button color="primary" (click)="newTrainingExercise()">
-        {{ 'apps.workout-trainings.details.actions.addNewTrainingExercise' | translate }}
+        {{ 'apps.workout-trainings.training.actions.addNewTrainingExercise' | translate }}
     </button>
 
+    <h2>
+        {{ 'apps.workout-trainings.training.title' | translate }}
+    </h2>
 
-    <div class="WorkoutTraining_TrainingExercise" *ngFor="let trainingExercise of vm.trainingDetails.training?.trainingExercises">
+    <h2>
+        {{ 'apps.workout-trainings.training.training-exercises.list.title' | translate }}
+    </h2>
+    
+    <div class="WorkoutTraining_TrainingExercise" 
+        *ngFor="let trainingExercise of vm.trainingDetails.training?.trainingExercises"
+        (click)="openTrainingExercise(trainingExercise)">
         <workout-tracker-training-exercise-card
             [trainingExercise]="trainingExercise">
         </workout-tracker-training-exercise-card>
     </div>
 </div>
+

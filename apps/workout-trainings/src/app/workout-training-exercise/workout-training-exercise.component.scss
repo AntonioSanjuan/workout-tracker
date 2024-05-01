@@ -1,0 +1,25 @@
+@use "css/main.scss" as shellStyles;
+
+:host {
+    height: 100%;
+}
+
+.WorkoutTrainingExercise_MainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    .WorkoutTrainingExercise_TrainingExercise {
+        width: 80%;
+    }
+}
+
+@media (max-width: 960px) {
+    .WorkoutTrainingExercise_MainContainer {
+        .WorkoutTrainingExercise_TrainingExercise {
+
+        }
+    }
+}

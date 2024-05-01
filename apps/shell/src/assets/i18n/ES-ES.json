@@ -167,8 +167,13 @@
                     "continueTraining": "Continuar entrenamiento"
                 }
             },
-            "details": {
+            "training": {
                 "title": "Detalles de entrenamiento",
+                "training-exercises": {
+                    "list": {
+                        "title": "Lista de ejercicios del entrenamientos"
+                    }
+                },
                 "addTrainingExercise": {
                     "title": "Añadir ejercicio de entrenamiento",
                     "step": {
@@ -195,6 +200,12 @@
                 },
                 "actions": {
                     "addNewTrainingExercise": "Añadir un ejercicio de entrenamiento"
+                }
+            },
+            "trainingExercise": {
+                "title": "Detalles de ejercicio de entrenamiento",
+                "actions": {
+                    "addNewTrainingExerciseSerie": "Añadir una serie"
                 }
             }
         },

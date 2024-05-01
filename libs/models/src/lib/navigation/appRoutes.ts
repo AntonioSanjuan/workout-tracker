@@ -9,4 +9,6 @@ export enum AppRoutes {
     WorkoutExerciseTemplatesList = '/exercise-templates',
     //workout-training
     WorkoutTrainingsList = '/trainings',
+    //workout-training-series
+    WorkoutTrainingExercise = '/exercise',
 }

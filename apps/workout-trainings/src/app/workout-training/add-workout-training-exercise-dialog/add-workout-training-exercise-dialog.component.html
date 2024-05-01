@@ -1,10 +1,10 @@
 <div 
     *ngrxLet="{ filteredExerciseTemplates: filteredExerciseTemplates$ } as vm"
     class="AddTrainingExerciseDialog_MainContainer">
-    <h2 mat-dialog-title>{{ 'apps.workout-trainings.details.addTrainingExercise.title' | translate }}</h2>
+    <h2 mat-dialog-title>{{ 'apps.workout-trainings.training.addTrainingExercise.title' | translate }}</h2>
     <mat-dialog-content class="mat-typography">
         <mat-stepper orientation="vertical" linear #stepper animationDuration="700">
-            <mat-step [stepControl]="form" [label]="'apps.workout-trainings.details.addTrainingExercise.step.basicInfo.title' | translate">
+            <mat-step [stepControl]="form" [label]="'apps.workout-trainings.training.addTrainingExercise.step.basicInfo.title' | translate">
                 <form [formGroup]="form">
                     <workout-tracker-muscles-selector 
                         [label]="'apps.workout-exercises.list.filter.byMusclePlaceholder' | translate"
