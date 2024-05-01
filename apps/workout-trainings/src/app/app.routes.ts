@@ -8,7 +8,8 @@ import { WorkoutTrainingsListResolver } from './shared/workout-trainings-list/wo
 import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, ExerciseTemplatesListEffects, TRAININGS_LIST_FEATURE_KEY, TrainingsListEffects, exerciseTemplatesListReducer, trainingsListReducer } from '@workout-tracker/shared-store';
 import { TrainingEffects } from './workout-training/state/workout-training.effects';
 import { WorkoutTrainingResolver } from './shared/workout-training/workout-training.resolver';
-import { WorkoutTrainingExerciseResolver } from './shared/workout-training-exercises/workout-training-exercises.resolver';
+import { WorkoutTrainingExerciseResolver } from './shared/workout-training-exercise/workout-training-exercise.resolver';
+import { TrainingExerciseEffects } from './workout-training-exercise/state/workout-training-exercise.effects';
 
 export const appRoutes: Route[] = [
   {
@@ -48,7 +49,8 @@ export const appRoutes: Route[] = [
         resolve: { data: WorkoutTrainingExerciseResolver },
         providers: [
           importProvidersFrom(
-
+            StoreModule.forFeature(fromWorkoutTrainings.WORKOUT_TRAININGS_FEATURE_KEY, fromWorkoutTrainings.workoutTrainingsReducer),
+            EffectsModule.forFeature([TrainingExerciseEffects])
           )
         ],
         loadComponent: () =>

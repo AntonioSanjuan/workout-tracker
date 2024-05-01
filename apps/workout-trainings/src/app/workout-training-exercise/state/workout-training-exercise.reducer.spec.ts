@@ -1,13 +1,13 @@
 import { Training } from "@workout-tracker/models";
-import { initialWorkoutTrainingState, workoutTrainingReducer } from "./workout-training.reducer";
-import { getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequestSuccess } from "./workout-training.actions";
+import { initialWorkoutTrainingDetailsState, workoutTrainingDetailsReducer } from "./workout-training-exercise.reducer";
+import { getAnonymousUserTrainingDetailsRequestSuccess, getAuthenticatedUserTrainingDetailsRequestSuccess } from "./workout-training-exercise.actions";
 
 describe('workoutTrainingDetailsReducer', () => {
     describe('getAuthenticatedUserTrainingDetailsRequestSuccess action', () => {
         const trainingSut = { id: 'idTest' } as Training;
         it('should handle getAuthenticatedUserTrainingDetailsRequestSuccess action', () => {
-            const action = getAuthenticatedUserTrainingRequestSuccess({ training: trainingSut})
-            const state = workoutTrainingReducer(initialWorkoutTrainingState, action)
+            const action = getAuthenticatedUserTrainingDetailsRequestSuccess({ training: trainingSut})
+            const state = workoutTrainingDetailsReducer(initialWorkoutTrainingDetailsState, action)
 
             expect(state.details.training).toEqual(trainingSut)
         })
@@ -16,8 +16,8 @@ describe('workoutTrainingDetailsReducer', () => {
     describe('getAnonymousUserTrainingDetailsRequestSuccess action', () => {
         const trainingSut = { id: 'idTest' } as Training;
         it('should handle getAnonymousUserTrainingDetailsRequestSuccess action', () => {
-            const action = getAnonymousUserTrainingRequestSuccess({ training: trainingSut})
-            const state = workoutTrainingReducer(initialWorkoutTrainingState, action)
+            const action = getAnonymousUserTrainingDetailsRequestSuccess({ training: trainingSut})
+            const state = workoutTrainingDetailsReducer(initialWorkoutTrainingDetailsState, action)
 
             expect(state.details.training).toEqual(trainingSut)
         })

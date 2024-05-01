@@ -18,5 +18,5 @@ export class SeriesTableComponent {
   displayedColumns: string[] = ['weight', 'repetitions'];
 
 
-  @Input() public series!: TrainingExerciseSerie[]
+  @Input() public series?: TrainingExerciseSerie[]
 }

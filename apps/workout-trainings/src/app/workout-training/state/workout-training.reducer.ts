@@ -2,47 +2,36 @@ import { createReducer, on } from '@ngrx/store';
 import * as TrainingDetailsActions from "./workout-training.actions";
 import { Training } from '@workout-tracker/models';
 
-export const WORKOUT_TRAINING_FEATURE_KEY = 'training';
+export const WORKOUT_TRAINING_FEATURE_KEY = 'workout-training';
 
 
-export interface WorkoutTrainingDetailsState {
-  details: WorkoutTrainingDetails
-}
-
-export interface WorkoutTrainingDetails {
+export interface WorkoutTrainingState {
   training?: Training,
 }
 
-export const initialWorkoutTrainingDetailsState: WorkoutTrainingDetailsState = {
-  details: {
+export const initialWorkoutTrainingState: WorkoutTrainingState = {
     training: undefined
-  }
 
 }
 
-export const workoutTrainingDetailsReducer = createReducer(
-  initialWorkoutTrainingDetailsState,
+export const workoutTrainingReducer = createReducer(
+  initialWorkoutTrainingState,
     on(
-      TrainingDetailsActions.getAuthenticatedUserTrainingDetailsRequestSuccess,
-      TrainingDetailsActions.getAnonymousUserTrainingDetailsRequestSuccess,
-      (state: WorkoutTrainingDetailsState, { training }) => ({
+      TrainingDetailsActions.getAuthenticatedUserTrainingRequestSuccess,
+      TrainingDetailsActions.getAnonymousUserTrainingRequestSuccess,
+      (state: WorkoutTrainingState, { training }) => ({
       ...state,
-      details: {
-        ...state.details,
-        training: training
-      }
+      training: training
     })),
     on(
       TrainingDetailsActions.addAuthenticatedUserTrainingExerciseRequestSuccess,
       TrainingDetailsActions.addAnonymousUserTrainingExerciseRequestSuccess,
-      (state: WorkoutTrainingDetailsState, { trainingExercise }) => ({
+      (state: WorkoutTrainingState, { trainingExercise }) => ({
       ...state,
-      details: {
-        ...state.details,
-        training: { 
-          ...state.details.training as Training,
-          trainingExercises: [ ...state.details.training?.trainingExercises || [], trainingExercise ]
-         }
-      }
+      training: { 
+        ...state.training as Training,
+        trainingExercises: [ ...state.training?.trainingExercises || [], trainingExercise ]
+        }
+      
     })),
 );

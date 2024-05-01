@@ -83,6 +83,29 @@ export class TrainingsService {
         )
     }
     
+    public getTrainingExercise(userId: string, trainingId: string, trainingExerciseId: string): Observable<TrainingExercise> {
+        return this.trainingsRefService.getTrainingExerciseDocRef(userId, trainingId, trainingExerciseId).get().pipe(
+            switchMap((trainingExerciseDoc: firebase.firestore.DocumentSnapshot) => {
+    
+                const trainingExerciseId = trainingExerciseDoc.id;
+                const trainingExerciseData = trainingExerciseDoc.data() as TrainingExerciseDto;
+                return combineLatest(
+                    trainingExerciseData.exerciseTemplateId.get(), 
+                    this.getTrainingExerciseSeries(userId, trainingId, trainingExerciseId)
+                ).pipe(
+                    map(([exerciseTemplate, exerciseSeries]: [firebase.firestore.DocumentSnapshot, TrainingExerciseSerie[]]) => 
+                        TrainingExerciseAdapter.toState(
+                            trainingExerciseData, 
+                            trainingExerciseId, 
+                            ExerciseTemplateAdapter.toState(exerciseTemplate.data() as ExerciseTemplateDto, exerciseTemplate.id),
+                            exerciseSeries
+                        )
+                    )
+                );
+            })
+        );
+    }
+
     private getTrainingExercises(userId: string, trainingId: string): Observable<TrainingExercise[]> {
         return this.trainingsRefService.getTrainingExercisesCollectionRef(userId, trainingId).get().pipe(
             switchMap((trainingExercisesQS: firebase.firestore.QuerySnapshot) => {

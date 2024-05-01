@@ -1,5 +1,5 @@
 <div class="SeriesTable_MainContainer">
-    <table mat-table [dataSource]="series">
+    <table mat-table [dataSource]="series || []">
       
         <!-- Name Column -->
         <ng-container matColumnDef="weight">

@@ -119,7 +119,10 @@
         },
         "workout-trainings": {
             "errors": {
-                "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado"
+                "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado",
+                "trainingExerciseNotFound": "Ejercicio de entrenamiento {{trainingExerciseId}} no encontrado",
+                "trainingExerciseCouldntBeCreated": "No se pudo crear el ejercicio de entrenamiento",
+                "trainingExerciseSerieCouldntBeCreated": "No se pudo crear la serie para el ejercicio de entrenamiento"
             },
             "list": {
                 "title": "Lista de Entrenamientos",

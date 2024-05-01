@@ -1,5 +1,5 @@
 <div
-    *ngrxLet="{ trainingDetails: trainingDetails$ } as vm"
+    *ngrxLet="{ training: training$ } as vm"
     class="WorkoutTraining_MainContainer">
     <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
 
@@ -16,8 +16,8 @@
     </h2>
     
     <div class="WorkoutTraining_TrainingExercise" 
-        *ngFor="let trainingExercise of vm.trainingDetails.training?.trainingExercises"
-        (click)="openTrainingExercise(trainingExercise)">
+        *ngFor="let trainingExercise of vm.training?.trainingExercises"
+        (click)="openTrainingExercise(vm.training!, trainingExercise)">
         <workout-tracker-training-exercise-card
             [trainingExercise]="trainingExercise">
         </workout-tracker-training-exercise-card>

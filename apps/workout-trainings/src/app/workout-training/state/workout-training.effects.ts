@@ -7,9 +7,9 @@ import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-tem
 import { Store } from '@ngrx/store';
 import { getExerciseTemplateById, getTrainingById, getUser, showError } from '@workout-tracker/shared-store';
 import { AppRoutes, ExerciseTemplate, Training, TrainingExercise } from '@workout-tracker/models';
-import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestError, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingDetailsRequest, getAnonymousUserTrainingDetailsRequestError, getAnonymousUserTrainingDetailsRequestSuccess, getAuthenticatedUserTrainingDetailsRequest, getAuthenticatedUserTrainingDetailsRequestError, getAuthenticatedUserTrainingDetailsRequestSuccess, getUserTrainingDetailsRequest } from './workout-training.actions';
+import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestError, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
 import { TrainingsService } from '@workout-tracker/services/trainings';
-import { selectWorkoutTrainingDetails } from './workout-training.selectors';
+import { selectWorkoutTraining } from './workout-training.selectors';
 @Injectable()
 export class TrainingEffects {
     private exercisesService: TrainingsService = inject(TrainingsService)
@@ -19,44 +19,44 @@ export class TrainingEffects {
     private store: Store = inject(Store)
 
     getUserTrainingDetailsRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getUserTrainingDetailsRequest),
+        ofType(getUserTrainingRequest),
         concatLatestFrom(() => this.store.select(getUser)),
         mergeMap(([{ trainingId }, user]) => 
             iif(
                 () => !!user,
-                of(getAuthenticatedUserTrainingDetailsRequest({ trainingId: trainingId })),
-                of(getAnonymousUserTrainingDetailsRequest({ trainingId: trainingId }))
+                of(getAuthenticatedUserTrainingRequest({ trainingId: trainingId })),
+                of(getAnonymousUserTrainingRequest({ trainingId: trainingId }))
             )
         )
     ))
     getAuthenticatedUserTrainingDetailsRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getAuthenticatedUserTrainingDetailsRequest),
+        ofType(getAuthenticatedUserTrainingRequest),
         concatLatestFrom(() => this.store.select(getUser)),
         mergeMap(([{ trainingId }, user]) => this.exercisesService.getTraining(user?.uid as string, trainingId).pipe(
-            map((training: Training) => getAuthenticatedUserTrainingDetailsRequestSuccess({training: training})),
+            map((training: Training) => getAuthenticatedUserTrainingRequestSuccess({training: training})),
             catchError(_ => {
                 this.router.navigate([AppRoutes.WorkoutTrainingsList])
-                return of(getAuthenticatedUserTrainingDetailsRequestError({ trainingId: trainingId }))}
+                return of(getAuthenticatedUserTrainingRequestError({ trainingId: trainingId }))}
             )
         ))
     ))
 
     getAnonymousUserTrainingDetailsRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(getAnonymousUserTrainingDetailsRequest),
+        ofType(getAnonymousUserTrainingRequest),
         mergeMap(({ trainingId }) => 
             this.store.select(getTrainingById(trainingId)).pipe(
             take(1),
             map((training) => training ? 
-                getAnonymousUserTrainingDetailsRequestSuccess({ training: training }) : 
-                getAnonymousUserTrainingDetailsRequestError({ trainingId: trainingId }))
+                getAnonymousUserTrainingRequestSuccess({ training: training }) : 
+                getAnonymousUserTrainingRequestError({ trainingId: trainingId }))
             )
         )
     ))
 
     getTrainingDetailsRequestError$ = createEffect(() => this.actions$.pipe(
         ofType(
-            getAnonymousUserTrainingDetailsRequestError, 
-            getAuthenticatedUserTrainingDetailsRequestError
+            getAnonymousUserTrainingRequestError, 
+            getAuthenticatedUserTrainingRequestError
         ),
         map(({ trainingId }) => {
             return showError({errorMessage: `${this.translateService.instant('apps.workout-trainings.errors.trainingNotFound', 
@@ -81,7 +81,7 @@ export class TrainingEffects {
     ))
     addAuthenticatedUserTrainingExerciseRequest$ = createEffect(() => this.actions$.pipe(
         ofType(addAuthenticatedUserTrainingExerciseRequest),
-        concatLatestFrom(() => [this.store.select(getUser), this.store.select(selectWorkoutTrainingDetails)]),
+        concatLatestFrom(() => [this.store.select(getUser), this.store.select(selectWorkoutTraining)]),
         switchMap(([{trainingExercise}, user, training]) => this.exercisesService.setTrainingExercise(user?.uid as string, training?.id as string, trainingExercise).pipe(
             map((trainingExercise: TrainingExercise) => addAuthenticatedUserTrainingExerciseRequestSuccess({trainingExercise: trainingExercise})),
             catchError(_ => {

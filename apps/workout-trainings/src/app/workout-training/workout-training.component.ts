@@ -7,7 +7,7 @@ import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, Training, TrainingExercise } from '@workout-tracker/models';
-import { selectWorkoutTrainingDetailsState } from './state/workout-training.selectors';
+import { selectWorkoutTraining } from './state/workout-training.selectors';
 import { TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 
@@ -32,7 +32,7 @@ export class WorkoutTrainingComponent {
   private dialogService = inject(DialogService)
   private route = inject(ActivatedRoute)
 
-  public trainingDetails$ = this.store.select(selectWorkoutTrainingDetailsState)
+  public training$ = this.store.select(selectWorkoutTraining)
   
   public appRoutes = AppRoutes
 
@@ -45,8 +45,7 @@ export class WorkoutTrainingComponent {
 
   }
 
-  public openTrainingExercise(trainingExercise: TrainingExercise) {
-    console.log("trainingExercise", trainingExercise)
-    this.router.navigate([`/trainings/mjlojwGsP5yIgLA9d7L0/exercise/${trainingExercise.id}`])
+  public openTrainingExercise(training: Training, trainingExercise: TrainingExercise) {
+    this.router.navigate([`/trainings/${training.id}/exercise/${trainingExercise.id}`])
   }
 }
