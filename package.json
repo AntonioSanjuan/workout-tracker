@@ -18,7 +18,7 @@
     "test:lib:service:message": "nx run-many -t test --p libs/services/message --watch --no-cache --coverage=true",
     "test:lib:service:user-settings": "nx run-many -t test --p libs/services/user-settings --watch --no-cache --coverage=true",
     "test:lib:service:exercises": "nx run-many -t test --p libs/services/exercise-templates --watch --no-cache --coverage=true",
-    "predeploy": "npm run build:all -- --prod --baseHref=/workout-tracker/",
+    "predeploy": "npm run build:all -- --prod",
     "deploy": "gh-pages -d dist/workout-tracker"
   },
   "private": true,
