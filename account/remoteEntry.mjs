@@ -112,7 +112,7 @@ __webpack_require__.d(exports, {
 /******/ 	// This function allow to reference async chunks
 /******/ 	__webpack_require__.u = (chunkId) => {
 /******/ 		// return url for filenames based on template
-/******/ 		return "" + (chunkId === 8592 ? "common" : chunkId) + "." + {"130":"75b0f1c227dee9c9","470":"b34f91d28178d334","534":"757b4d68a2198c71","617":"43e0bf5ee50eeae0","652":"199c6b99c7a2e379","1012":"8ded2914c56e04a0","1476":"f1f81b21e3da6251","1545":"52dcffa478ae0224","1705":"c23b919112f20965","1758":"dce5ca698ed8fb56","2032":"b2765656175855cc","2210":"8f1acd76f7f46fcf","2263":"0f20d79d9a1f7d7d","2296":"2a1dcc63c0f48881","2596":"bdbf98420129a3fc","2599":"1ca90666daccacb6","2939":"073e91a6c846f836","3006":"f6784e6a50872309","3114":"ff6c3e1a21d46933","3122":"cf2d9d7c49642c07","3163":"2e5295bbfb29a036","3274":"8794c90dedda5904","3423":"5680629780edc606","3496":"53e0379f05567ed6","3635":"9f4c79bcfe1c838d","3680":"ce1409ac497d3859","3690":"4d2cea9f6bff47f4","3731":"8935fb7b28fdebb9","3894":"823370021e685a2c","4170":"5406616523c5423e","4232":"eee54ad2524640b8","4300":"ebc7a6c58bdc984d","5004":"deb838407c9dd180","5077":"64b9cb47898848b7","5187":"8326efefb89b1d78","5189":"0ff9f3cd40f86c16","5195":"46ac9207e8f197b4","5313":"5ce2efe68b2f4ba7","5416":"a36b9b4bebf813ab","5793":"5d05abf12a5d9929","5893":"486f5379c471c31d","5986":"01367d3ee54fac47","6223":"9cbdf4f72809d25a","6349":"d06551437f8411fd","6369":"170dc45ef9a87e5c","6571":"ee61666f4795dc22","6593":"635504714e11c965","6672":"6949fe5aea1e9a5d","6751":"41b389dc40138f7b","6814":"98d08b4db3eb662a","6825":"12004d232a788228","7141":"7f2cbff4e29078a5","7185":"8bc2b8767d783d79","7666":"c844351cf22d58ed","7700":"760cb464676b5e2a","8012":"a6f2e6a2eb8b35e5","8034":"b39379647a900588","8154":"6876e713102607cd","8251":"5ab13c9c9cd51b6f","8279":"094d03af220e44b8","8467":"8911cb017b6ffb23","8484":"c1e1845d17be7478","8525":"a3b50739ac843b57","8592":"9e590d74d90e4352","8978":"0924d893a3b6612b","9212":"2f0ccfc604e55277","9488":"54f0dc4ec7f067e7","9502":"b83bdc578e1824aa","9515":"f973c3c3e84b9ad8","9594":"3183d56439cd6ae2","9862":"25ff886045ea00d5","9960":"64d3e6a7b68ac17b","9964":"0fdb2ee72bba2b10"}[chunkId] + ".js";
+/******/ 		return "" + (chunkId === 8592 ? "common" : chunkId) + "." + {"130":"75b0f1c227dee9c9","470":"b34f91d28178d334","534":"757b4d68a2198c71","617":"43e0bf5ee50eeae0","652":"199c6b99c7a2e379","1476":"f1f81b21e3da6251","1545":"52dcffa478ae0224","1705":"c23b919112f20965","1758":"dce5ca698ed8fb56","2032":"dc692fd7d3d3d5aa","2210":"8f1acd76f7f46fcf","2263":"0f20d79d9a1f7d7d","2296":"2a1dcc63c0f48881","2495":"510167df4e574361","2596":"bdbf98420129a3fc","2599":"1ca90666daccacb6","2605":"6913c56aa42dfcd6","2939":"073e91a6c846f836","3006":"f6784e6a50872309","3114":"ff6c3e1a21d46933","3122":"cf2d9d7c49642c07","3163":"5ce954e2f31a4fe3","3274":"114b6770c5932c39","3423":"5680629780edc606","3496":"53e0379f05567ed6","3635":"9f4c79bcfe1c838d","3680":"ce1409ac497d3859","3690":"4d2cea9f6bff47f4","3731":"8935fb7b28fdebb9","3894":"823370021e685a2c","4170":"5406616523c5423e","4232":"eee54ad2524640b8","4300":"ebc7a6c58bdc984d","5004":"deb838407c9dd180","5077":"64b9cb47898848b7","5187":"8326efefb89b1d78","5189":"0ff9f3cd40f86c16","5195":"46ac9207e8f197b4","5313":"184bc951387d975b","5416":"a36b9b4bebf813ab","5760":"655a9648228cf94d","5793":"5d05abf12a5d9929","5893":"486f5379c471c31d","5986":"01367d3ee54fac47","6223":"9cbdf4f72809d25a","6349":"d06551437f8411fd","6369":"170dc45ef9a87e5c","6571":"ee61666f4795dc22","6593":"635504714e11c965","6672":"6949fe5aea1e9a5d","6751":"41b389dc40138f7b","6814":"98d08b4db3eb662a","6825":"12004d232a788228","7141":"7f2cbff4e29078a5","7185":"49dedd587d3c1d8d","7666":"c844351cf22d58ed","7700":"760cb464676b5e2a","8012":"a6f2e6a2eb8b35e5","8034":"b39379647a900588","8154":"6876e713102607cd","8251":"5ab13c9c9cd51b6f","8279":"094d03af220e44b8","8467":"8911cb017b6ffb23","8484":"c1e1845d17be7478","8525":"a3b50739ac843b57","8592":"c495a2745f19538f","8978":"0924d893a3b6612b","9212":"2f0ccfc604e55277","9488":"54f0dc4ec7f067e7","9502":"a207d01f993db7d8","9515":"f973c3c3e84b9ad8","9594":"3183d56439cd6ae2","9862":"25ff886045ea00d5","9960":"64d3e6a7b68ac17b","9964":"0fdb2ee72bba2b10"}[chunkId] + ".js";
 /******/ 	};
 /******/ })();
 /******/ 
@@ -247,6 +247,7 @@ __webpack_require__.d(exports, {
 /******/ 				register("@angular/material/core", "17.1.2", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(3680)]).then(() => (() => (__webpack_require__(3680))))));
 /******/ 				register("@angular/material/datepicker", "17.1.2", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(8012), __webpack_require__.e(6672), __webpack_require__.e(8484), __webpack_require__.e(6751), __webpack_require__.e(9594), __webpack_require__.e(5077), __webpack_require__.e(470), __webpack_require__.e(8279), __webpack_require__.e(8034)]).then(() => (() => (__webpack_require__(8034))))));
 /******/ 				register("@angular/material/dialog", "17.1.2", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(8012), __webpack_require__.e(6672), __webpack_require__.e(8484), __webpack_require__.e(9594), __webpack_require__.e(7700)]).then(() => (() => (__webpack_require__(7700))))));
+/******/ 				register("@angular/material/divider", "17.1.2", () => (Promise.all([__webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(8592), __webpack_require__.e(2495)]).then(() => (() => (__webpack_require__(6385))))));
 /******/ 				register("@angular/material/form-field", "17.1.2", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(3274), __webpack_require__.e(8012), __webpack_require__.e(4170)]).then(() => (() => (__webpack_require__(4170))))));
 /******/ 				register("@angular/material/icon", "17.1.2", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(652), __webpack_require__.e(2210), __webpack_require__.e(617)]).then(() => (() => (__webpack_require__(617))))));
 /******/ 				register("@angular/material/input", "17.1.2", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(6751), __webpack_require__.e(5077), __webpack_require__.e(2032)]).then(() => (() => (__webpack_require__(2032))))));
@@ -273,7 +274,7 @@ __webpack_require__.d(exports, {
 /******/ 				register("@workout-tracker/services/trainings", "0.0.6", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(534), __webpack_require__.e(8251), __webpack_require__.e(3894), __webpack_require__.e(3114), __webpack_require__.e(6369), __webpack_require__.e(8154), __webpack_require__.e(8467), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(1759))))));
 /******/ 				register("@workout-tracker/services/user-settings", "0.0.6", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(534), __webpack_require__.e(8251), __webpack_require__.e(3894), __webpack_require__.e(6369), __webpack_require__.e(3690), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(7185))))));
 /******/ 				register("@workout-tracker/shared-store", "0.0.6", () => (Promise.all([__webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3114), __webpack_require__.e(5793), __webpack_require__.e(9964), __webpack_require__.e(8467), __webpack_require__.e(1705), __webpack_require__.e(3163)]).then(() => (() => (__webpack_require__(3163))))));
-/******/ 				register("@workout-tracker/ui", "0.0.6", () => (Promise.all([__webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(8012), __webpack_require__.e(6751), __webpack_require__.e(5077), __webpack_require__.e(470), __webpack_require__.e(3114), __webpack_require__.e(5004), __webpack_require__.e(8279), __webpack_require__.e(5416), __webpack_require__.e(3496), __webpack_require__.e(5189), __webpack_require__.e(7666), __webpack_require__.e(7141), __webpack_require__.e(1012), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(5211))))));
+/******/ 				register("@workout-tracker/ui", "0.0.6", () => (Promise.all([__webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3731), __webpack_require__.e(3122), __webpack_require__.e(8012), __webpack_require__.e(6751), __webpack_require__.e(5077), __webpack_require__.e(470), __webpack_require__.e(3114), __webpack_require__.e(5004), __webpack_require__.e(8279), __webpack_require__.e(5416), __webpack_require__.e(3496), __webpack_require__.e(5189), __webpack_require__.e(7666), __webpack_require__.e(7141), __webpack_require__.e(5760), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(5211))))));
 /******/ 				register("rxjs/operators", "7.8.1", () => (Promise.all([__webpack_require__.e(2263), __webpack_require__.e(3006)]).then(() => (() => (__webpack_require__(3006))))));
 /******/ 				register("rxjs", "7.8.1", () => (Promise.all([__webpack_require__.e(2263), __webpack_require__.e(6349)]).then(() => (() => (__webpack_require__(6349))))));
 /******/ 			}
@@ -477,7 +478,7 @@ __webpack_require__.d(exports, {
 /******/ 		5777: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/fire", [1,17,0,1], () => (__webpack_require__.e(8592).then(() => (() => (__webpack_require__(6682))))))),
 /******/ 		5004: () => (loadStrictSingletonVersionCheckFallback("default", "@ngx-translate/core", [1,15,0,0], () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3635), __webpack_require__.e(9515)]).then(() => (() => (__webpack_require__(9515))))))),
 /******/ 		8154: () => (loadFallback("default", "@workout-tracker/adapters", () => (__webpack_require__.e(8592).then(() => (() => (__webpack_require__(5304))))))),
-/******/ 		8978: () => (loadFallback("default", "@workout-tracker/ui", () => (Promise.all([__webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3122), __webpack_require__.e(8012), __webpack_require__.e(6751), __webpack_require__.e(5077), __webpack_require__.e(470), __webpack_require__.e(3114), __webpack_require__.e(5004), __webpack_require__.e(8279), __webpack_require__.e(5416), __webpack_require__.e(3496), __webpack_require__.e(5189), __webpack_require__.e(7666), __webpack_require__.e(7141), __webpack_require__.e(1012), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(5211))))))),
+/******/ 		8978: () => (loadFallback("default", "@workout-tracker/ui", () => (Promise.all([__webpack_require__.e(3635), __webpack_require__.e(6571), __webpack_require__.e(3122), __webpack_require__.e(8012), __webpack_require__.e(6751), __webpack_require__.e(5077), __webpack_require__.e(470), __webpack_require__.e(3114), __webpack_require__.e(5004), __webpack_require__.e(8279), __webpack_require__.e(5416), __webpack_require__.e(3496), __webpack_require__.e(5189), __webpack_require__.e(7666), __webpack_require__.e(7141), __webpack_require__.e(5760), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(5211))))))),
 /******/ 		3496: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/snack-bar", [1,17,1,2], () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3122), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(8012), __webpack_require__.e(6672), __webpack_require__.e(8484), __webpack_require__.e(9594), __webpack_require__.e(470), __webpack_require__.e(2939)]).then(() => (() => (__webpack_require__(2939))))))),
 /******/ 		3114: () => (loadFallback("default", "@workout-tracker/models", () => (Promise.all([__webpack_require__.e(6571), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(7906))))))),
 /******/ 		8467: () => (loadFallback("default", "@workout-tracker/services/exercise-templates", () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(534), __webpack_require__.e(8251), __webpack_require__.e(3894), __webpack_require__.e(6369), __webpack_require__.e(8154), __webpack_require__.e(8592)]).then(() => (() => (__webpack_require__(6992))))))),
@@ -493,6 +494,7 @@ __webpack_require__.d(exports, {
 /******/ 		6278: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/checkbox", [1,17,1,2], () => (__webpack_require__.e(5986).then(() => (() => (__webpack_require__(5986))))))),
 /******/ 		5692: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/datepicker", [1,17,1,2], () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(6672), __webpack_require__.e(8484), __webpack_require__.e(9594), __webpack_require__.e(8034)]).then(() => (() => (__webpack_require__(8034))))))),
 /******/ 		9576: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/dialog", [1,17,1,2], () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(6672), __webpack_require__.e(8484), __webpack_require__.e(9594), __webpack_require__.e(7700)]).then(() => (() => (__webpack_require__(7700))))))),
+/******/ 		5239: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/divider", [1,17,1,2], () => (Promise.all([__webpack_require__.e(8592), __webpack_require__.e(2605)]).then(() => (() => (__webpack_require__(6385))))))),
 /******/ 		4168: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/paginator", [1,17,1,2], () => (__webpack_require__.e(1476).then(() => (() => (__webpack_require__(1476))))))),
 /******/ 		9698: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/progress-spinner", [1,17,1,2], () => (__webpack_require__.e(8592).then(() => (() => (__webpack_require__(5940))))))),
 /******/ 		4503: () => (loadStrictSingletonVersionCheckFallback("default", "@angular/material/stepper", [1,17,1,2], () => (Promise.all([__webpack_require__.e(5893), __webpack_require__.e(3274), __webpack_require__.e(4300), __webpack_require__.e(8484), __webpack_require__.e(1545)]).then(() => (() => (__webpack_require__(1545))))))),
@@ -506,16 +508,6 @@ __webpack_require__.d(exports, {
 /******/ 		],
 /******/ 		"652": [
 /******/ 			652
-/******/ 		],
-/******/ 		"1012": [
-/******/ 			5388,
-/******/ 			6278,
-/******/ 			5692,
-/******/ 			9576,
-/******/ 			4168,
-/******/ 			9698,
-/******/ 			4503,
-/******/ 			5160
 /******/ 		],
 /******/ 		"1476": [
 /******/ 			9565
@@ -568,6 +560,17 @@ __webpack_require__.d(exports, {
 /******/ 		],
 /******/ 		"5416": [
 /******/ 			5416
+/******/ 		],
+/******/ 		"5760": [
+/******/ 			5388,
+/******/ 			6278,
+/******/ 			5692,
+/******/ 			9576,
+/******/ 			5239,
+/******/ 			4168,
+/******/ 			9698,
+/******/ 			4503,
+/******/ 			5160
 /******/ 		],
 /******/ 		"5793": [
 /******/ 			5793
@@ -662,7 +665,7 @@ __webpack_require__.d(exports, {
 /******/ 				if(installedChunkData) {
 /******/ 					promises.push(installedChunkData[2]);
 /******/ 				} else {
-/******/ 					if(!/^(3(114|122|496|635|690|731)|5([78]93|004|077|189|416)|6(52|571|751)|8(012|154|279|467|978)|1012|1705|2210|4232|470|7141|7666|9964)$/.test(chunkId)) {
+/******/ 					if(!/^(3(114|122|496|635|690|731)|5([78]93|004|077|189|416|760)|6(52|571|751)|8(012|154|279|467|978)|1705|2210|4232|470|7141|7666|9964)$/.test(chunkId)) {
 /******/ 						// setup Promise in chunk cache
 /******/ 						var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
 /******/ 						promises.push(installedChunkData[2] = promise);

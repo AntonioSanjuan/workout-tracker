@@ -30,6 +30,7 @@
             "Posterior_deltoid": "Deltoides posterior"
         },
         "actions": {
+            "goBack": "Volver",
             "cancel": "Cancelar",
             "create": "Crear",
             "next": "Siguiente",
@@ -118,7 +119,10 @@
         },
         "workout-trainings": {
             "errors": {
-                "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado"
+                "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado",
+                "trainingExerciseNotFound": "Ejercicio de entrenamiento {{trainingExerciseId}} no encontrado",
+                "trainingExerciseCouldntBeCreated": "No se pudo crear el ejercicio de entrenamiento",
+                "trainingExerciseSerieCouldntBeCreated": "No se pudo crear la serie para el ejercicio de entrenamiento"
             },
             "list": {
                 "title": "Lista de Entrenamientos",
@@ -166,8 +170,13 @@
                     "continueTraining": "Continuar entrenamiento"
                 }
             },
-            "details": {
+            "training": {
                 "title": "Detalles de entrenamiento",
+                "training-exercises": {
+                    "list": {
+                        "title": "Lista de ejercicios del entrenamientos"
+                    }
+                },
                 "addTrainingExercise": {
                     "title": "Añadir ejercicio de entrenamiento",
                     "step": {
@@ -194,6 +203,12 @@
                 },
                 "actions": {
                     "addNewTrainingExercise": "Añadir un ejercicio de entrenamiento"
+                }
+            },
+            "trainingExercise": {
+                "title": "Detalles de ejercicio de entrenamiento",
+                "actions": {
+                    "addNewTrainingExerciseSerie": "Añadir una serie"
                 }
             }
         },
@@ -264,24 +279,31 @@
                 }
             },
             "details": {
-                "title": "Detalles de ejercicio"
+                "title": "Detalles de plantilla de ejercicio",
+                "info": {
+                    "name": "Nombre de la plantilla"
+                },
+                "exerciseTrainings": {
+                    "title": "Últimos entrenamientos en los que se empleo esta plantilla",
+                    "info": {
+                        "date": "Fecha del entrenamiento",
+                        "muscle": "Grupos musculares del entrenamiento"
+                    }
+                }
             }
         }
     },
     "libs": {
         "components": {
             "training-card": {
-                "title": "Día: {{date}}",
-                "info": {
-                    "labels": {
-                        "date": "Fecha",
-                        "status": "Estado",
-                        "observations": "Observaciones",
-                        "numberOfExercises": "Nº de ejercicios"
-                    }
-                },
-                "muscleGroup": {
-                    "title": "Grupo muscular"
+                "title": "Día: {{date}}"
+            },
+            "training-info": {
+                "labels": {
+                    "date": "Fecha",
+                    "status": "Estado",
+                    "observations": "Observaciones",
+                    "numberOfExercises": "Nº de ejercicios"
                 },
                 "state": {
                     "finished": "Finalizado",
