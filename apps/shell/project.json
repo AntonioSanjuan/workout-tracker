@@ -30,7 +30,7 @@
         "customWebpackConfig": {
           "path": "apps/shell/webpack.config.ts"
         },
-        "deployUrl": "/workout-tracker/"
+        "baseHref": "/workout-tracker/"
       },
       "configurations": {
         "production": {
@@ -64,7 +64,7 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true,
-          "deployUrl": "/workout-tracker/"
+          "baseHref": "/workout-tracker/"
         }
       },
       "defaultConfiguration": "production"
