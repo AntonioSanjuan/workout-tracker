@@ -40,8 +40,11 @@ workout-tracker-training-card {
 
                     .TrainingCard_MuscleGroupsContainer {
                         display: flex;
-                        flex-direction: column;
-                        
+                        flex-direction: row;
+                        gap: 5px;
+                        justify-content: flex-end;
+                        flex-wrap: wrap;
+                    
                         h3 {
                             margin-top: 0;
                         }
@@ -69,6 +72,14 @@ workout-tracker-training-card {
                 .TrainingCard_ContentContainer {
                     flex-direction: column;
                     .TrainingCard_InfoContainer {
+                    }
+
+                    .TrainingCard_MuscleGroupsContainer {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                        justify-content: center;
                     }
                 }
             }
