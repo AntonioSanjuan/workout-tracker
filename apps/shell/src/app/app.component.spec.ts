@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Actions } from '@ngrx/effects';
 import { DateAdapter } from '@angular/material/core';
+import { appRoutes } from './app.routes';
 
 describe('AppComponent', () => {
   let cultureService: CultureService;
@@ -24,7 +25,7 @@ describe('AppComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
         }),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes(appRoutes)
       ],
       providers: [
         CultureService,

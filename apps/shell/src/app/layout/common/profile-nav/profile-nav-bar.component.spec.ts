@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { logOutRequest } from '@workout-tracker/shared-store';
 import { Actions } from '@ngrx/effects';
+import { appRoutes } from '../../../app.routes';
 
 
 describe('ProfileNavBarComponent', () => {
@@ -27,7 +28,7 @@ describe('ProfileNavBarComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
         }),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes(appRoutes)
 
       ],
       providers: [

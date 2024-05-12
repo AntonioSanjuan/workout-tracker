@@ -5,8 +5,8 @@ import { exerciseTemplatesListStateMock, userStateMock } from '@workout-tracker/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ExerciseTemplate, MuscleGroups, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
-import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { ExerciseTemplate, MuscleGroups, MusclesInvolved, TrainingExercise, TrainingExerciseSerie, muscleInvolvedByGroups } from '@workout-tracker/models';
+import { addUserTrainingListRequest, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog.component';
@@ -52,6 +52,25 @@ describe('AddWorkoutTrainingExerciseDialogComponent', () => {
   })
 
   describe('Integration tests', () => {
+    describe('isSelected', () => {
+      const exerciseTemplateIdSut = 'exerciseTemplateIdSut test'
+      const exerciseTemplateSut = {id: exerciseTemplateIdSut} as ExerciseTemplate
+      it('should return true if form has requested exerciseTemplate', () => {
+        component.form.setValue({
+          exerciseTemplate: exerciseTemplateSut
+        })
+        
+
+        expect(component.isSelected(exerciseTemplateSut)).toBeTruthy()
+      })
+      it('should return false if form has not requested exerciseTemplate', () => {
+        component.form.setValue({
+          exerciseTemplate: null
+        })
+        expect(component.isSelected(exerciseTemplateSut)).toBeFalsy()
+
+      })
+    })
     describe('createTraining', () => {
       const exerciseTemplateSut = {id: 'exerciseTemplateIdTest'} as ExerciseTemplate
       describe('if form its valid', () => {
@@ -94,6 +113,17 @@ describe('AddWorkoutTrainingExerciseDialogComponent', () => {
             expect(dispatchSpy).not.toHaveBeenCalled()
           });
         })
+      })
+    })
+
+    describe('filterByMuscleInvolved', () => {
+      it('should dispatch setExerciseTemplateListMuscleInvolvedQueryFilter action', () => {
+        const mulscleInvolvedSut = MusclesInvolved.Glutes
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+        component.filterByMuscleInvolved(mulscleInvolvedSut)
+
+        expect(dispatchSpy).toHaveBeenCalledWith(setExerciseTemplateListMuscleInvolvedQueryFilter({ muscleInvolved: mulscleInvolvedSut }))
       })
     })
   })

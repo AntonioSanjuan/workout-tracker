@@ -10,10 +10,7 @@ export class CanActivateUser implements CanActivate {
   private store: Store = inject(Store)
   private authPersistanceService: AuthPersistanceService = inject(AuthPersistanceService)
 
-  canActivate( 
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(): Observable<boolean> {
 
     return this.store.select(getIsAppLoaded(AppInit.ACCOUNT)).pipe(
       tap((isLoaded: boolean) => {

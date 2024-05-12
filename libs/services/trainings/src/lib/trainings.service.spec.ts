@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestoreDocument, DocumentData, DocumentReference } from '@angular/fire/compat/firestore';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -99,6 +99,44 @@ describe('TrainingsService', () => {
       it('getTrainings should return an array of trainings with trainingExercises', (done) => {
         service.getTrainings(userIdSut, {} as TrainingQuery).subscribe((result) => {
           expect(result).toEqual(trainingData);
+          done();
+        });
+      });
+    });
+
+    describe('getTrainingExercise', () => {
+      const exerciseTemplateIdSut = 'exerciseTemplateIdSut'
+      const trainingExerciseSut = {...trainingExercisesData[0] } as TrainingExercise
+      const getExerciseTemplateRef = { id: 'documentReferenceId'} as DocumentReference
+
+      beforeEach(() => {
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        jest.spyOn(trainingsRefService, 'getTrainingExerciseDocRef').mockReturnValue({ get: jest.fn(() => of({ id: trainingExerciseSut.id, data: () => TrainingExerciseAdapter.toDto(trainingExerciseSut, { get: () => { return of({ data: () => ExerciseTemplateAdapter.toDto(exerciseTemplateData), id: exerciseTemplateData.id })} } as any) }))} as any)
+        jest.spyOn(trainingsRefService, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))} as any);
+      })
+      it('getTrainingExercise should return trainingExercise', (done) => {
+        service.getTrainingExercise(userIdSut, '', exerciseTemplateIdSut).subscribe((result) => {
+          expect(result).toEqual(trainingExerciseSut);
+          done();
+        });
+      });
+    });
+
+    describe('getExerciseTemplateTrainingExercises', () => {
+      const exerciseTemplateIdSut = 'exerciseTemplateIdSut'
+      const getExerciseTemplateRef = { id: 'documentReferenceId'} as DocumentReference
+      const trainingSut = {...trainingData[0] } as Training
+
+      beforeEach(() => {
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        jest.spyOn(trainingsRefService, 'getExerciseTemplateTrainingExercisesDocRefs').mockReturnValue({ get: jest.fn(() => of({ docs: [ { ref: { parent: { parent: { id: trainingSut.id } }}} ] }))} as any)
+        jest.spyOn(trainingsRefService, 'getTrainingDocRef').mockReturnValue({ get: jest.fn(() => of({ id: trainingSut.id, data: () => TrainingAdapter.toDto(trainingSut)}))} as any);
+        jest.spyOn(trainingsRefService, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => ExerciseTemplateAdapter.toDto(exerciseTemplateData), id: exerciseTemplateData.id })} } as any) }))}))} as any);
+        jest.spyOn(trainingsRefService, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))} as any);
+      })
+      it('getExerciseTemplateTrainingExercises should return an array of trainings with trainingExercises', (done) => {
+        service.getExerciseTemplateTrainingExercises(userIdSut, exerciseTemplateIdSut).subscribe((result) => {
+          expect(result).toEqual([trainingSut]);
           done();
         });
       });

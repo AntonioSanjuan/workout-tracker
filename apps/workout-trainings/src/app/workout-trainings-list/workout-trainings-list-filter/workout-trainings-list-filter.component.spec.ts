@@ -11,6 +11,7 @@ import { clearTrainingListQueryFilter, setTrainingListQueryFilter } from '@worko
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { MuscleGroups } from '@workout-tracker/models';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
+import { appRoutes } from '../../app.routes';
 
 describe('WorkoutTrainingsFilterListComponent', () => {
   let actions: Observable<Action>;
@@ -24,7 +25,7 @@ describe('WorkoutTrainingsFilterListComponent', () => {
       imports: [
         WorkoutTrainingsFilterListComponent,
         MusclesSelectorComponent,
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes(appRoutes),
         BrowserAnimationsModule,
       ],
       providers:[

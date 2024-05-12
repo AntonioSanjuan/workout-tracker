@@ -60,9 +60,9 @@ export class WorkoutExerciseTemplatesEffects {
             getAuthenticatedUserExerciseTemplateDetailsRequestError
         ),
         map(({ exerciseId }) => {
-            return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseNotFound', 
+            return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseTemplateNotFound', 
             {
-                exerciseId: exerciseId.toUpperCase(),
+                exerciseTemplateId: exerciseId.toUpperCase(),
             }
             )}`})
         })
@@ -111,7 +111,7 @@ export class WorkoutExerciseTemplatesEffects {
             getAnonymousUserExerciseTemplateTrainingsDetailsRequestError
         ),
         map(({ exerciseTemplateId }) => {
-            return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseTrainingsNotFound', 
+            return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseTemplateTrainingsNotFound', 
             {
                 exerciseTemplateId: exerciseTemplateId.toUpperCase(),
             }

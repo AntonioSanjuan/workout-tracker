@@ -9,8 +9,13 @@ body {
 }
 
 .dialogClass {
-    min-width: 350px;
-    width: 25%;
+    min-width: 350px !important;
+    width: 50% !important;
+}
+
+.cardClass {
+    box-shadow: $mainColor 0px 5px 15px !important;
+    border: 1px solid $grey5 !important;
 }
 
 @media (max-width: 960px) {

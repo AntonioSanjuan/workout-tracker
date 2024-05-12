@@ -1,10 +1,10 @@
 <div
-    *ngrxLet="{ training: training$ } as vm"
+    *ngrxLet="{ training: training$, exerciseTemplates: exerciseTemplates$ } as vm"
     class="WorkoutTraining_MainContainer">
     <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
 
     <div class="WorkoutTraining_ContentContainer view-body">
-        <button mat-flat-button color="primary" (click)="newTrainingExercise()">
+        <button [disabled]="!vm.exerciseTemplates || !vm.exerciseTemplates.length" mat-flat-button color="primary" (click)="newTrainingExercise()">
             {{ 'apps.workout-trainings.training.actions.addNewTrainingExercise' | translate }}
         </button>
     

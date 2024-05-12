@@ -1,54 +1,59 @@
 @use "css/main.scss" as shellStyles;
 
-workout-tracker-add-exercise-dialog {
+workout-tracker-add-exercise-template-dialog {
     .AddExerciseTemplateDialog_MainContainer {
         mat-dialog-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 0 !important;
-            .mat-step-header .mat-step-icon-selected,
-            .mat-step-header .mat-step-icon-state-edit {
-                background-color: shellStyles.$mainColor;
-            }
-            .mat-vertical-content {
-                padding: 24px;
 
-
-                form {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 10px;
-                    width: 100%;
+            mat-stepper {
+                width: 100% !important;
+                .mat-step-header .mat-step-icon-selected,
+                .mat-step-header .mat-step-icon-state-edit {
+                    background-color: shellStyles.$mainColor;
                 }
-        
-                .AddExerciseTemplateDialog_VideoContainer {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 100%;
-                    .AddExerciseTemplateDialog_Video,
-                    .AddExerciseTemplateDialog_Image {
+                .mat-vertical-content {
+                    padding: 24px;
+    
+    
+                    form {
                         display: flex;
                         flex-direction: column;
+                        align-items: center;
                         gap: 10px;
-                        margin-top: 10px;
                         width: 100%;
-                        video,
-                        img {
-                            width: 100%;
-                            // background-color: shellStyles.$grey5;
-                            border: 1px solid  shellStyles.$grey5;
-                        }
-
-                        button {
-                            background-color: shellStyles.$mainColor;
-                        }
                     }
+            
+                    .AddExerciseTemplateDialog_VideoContainer {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        width: 100%;
+                        .AddExerciseTemplateDialog_Video,
+                        .AddExerciseTemplateDialog_Image {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+                            margin-top: 10px;
+                            width: 100%;
+                            video,
+                            img {
+                                width: 100%;
+                                // background-color: shellStyles.$grey5;
+                                border: 1px solid  shellStyles.$grey5;
+                            }
     
+                            button {
+                                background-color: shellStyles.$mainColor;
+                            }
+                        }
+        
+                    }
                 }
             }
+  
 
         }
     }

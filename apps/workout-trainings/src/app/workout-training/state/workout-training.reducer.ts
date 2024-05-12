@@ -11,7 +11,6 @@ export interface WorkoutTrainingState {
 
 export const initialWorkoutTrainingState: WorkoutTrainingState = {
     training: undefined
-
 }
 
 export const workoutTrainingReducer = createReducer(

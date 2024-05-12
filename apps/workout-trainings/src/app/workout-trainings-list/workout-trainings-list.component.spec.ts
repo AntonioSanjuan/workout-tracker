@@ -15,6 +15,7 @@ import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsSta
 import { getUserTrainingsListRequest } from '@workout-tracker/shared-store';
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
 import { AddWorkoutTrainingDialogComponent } from './add-workout-training-dialog/add-workout-training-dialog.component';
+import { appRoutes } from '../app.routes';
 describe('WorkoutTrainingsComponent', () => {
   let component: WorkoutTrainingsListComponent;
   let fixture: ComponentFixture<WorkoutTrainingsListComponent>;
@@ -44,7 +45,7 @@ describe('WorkoutTrainingsComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes(appRoutes)
       ]
     }).compileComponents();
 

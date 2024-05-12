@@ -6,14 +6,20 @@ workout-tracker-exercise-template-card {
     width: 100%;
     .ExerciseTemplateCard_MainContainer {
         width: 100%;
-        mat-card {
-            box-shadow: shellStyles.$mainColor 0px 5px 15px;
 
+        .selectedCard {
+            background-color: shellStyles.$grey2;    
+        }
+
+        mat-card {
             mat-card-content {
                 .ExerciseTemplateCard_ContentContainer {
                     display: flex;
                     flex-direction: row;
                     gap:20px;
+                    width: 100%;
+                    overflow: hidden;
+
                     img {
                         border-radius: 10px;
                     }
@@ -38,15 +44,16 @@ workout-tracker-exercise-template-card {
     }
 }
 
-@media (max-width: 960px) {
-    workout-tracker-exercise-card  {
+@media (max-width: 480px) {
+    workout-tracker-exercise-template-card  {
     .ExerciseTemplateCard_MainContainer {
         mat-card {
-
             mat-card-content {
                 .ExerciseTemplateCard_ContentContainer {
+                    flex-direction: column;
                     img {
-                    
+                        width: 100%;
+                        height: 100%;
                     }
                     .ExerciseTemplateCard_InfoContainer {
                         .ExerciseTemplateCard_TypesContainer {

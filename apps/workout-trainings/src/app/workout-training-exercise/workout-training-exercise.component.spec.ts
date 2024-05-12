@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { WorkoutTrainingExerciseComponent } from './workout-training-exercise.component';
 import { ViewHeaderComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
+import { appRoutes } from '../app.routes';
 
 describe('WorkoutTrainingExerciseComponent', () => {
   let component: WorkoutTrainingExerciseComponent;
@@ -41,7 +42,7 @@ describe('WorkoutTrainingExerciseComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes(appRoutes)
       ]
     }).compileComponents();
 

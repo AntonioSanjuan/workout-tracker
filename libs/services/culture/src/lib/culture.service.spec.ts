@@ -38,76 +38,103 @@ describe('CultureService', () => {
   })
 
   describe('Integration tests', () => {
-    it('initialize should set setDefaultLang "ES-ES"', () => {
-      const langSut = "ES-ES"
-      const setDefaultLangSpy = jest.spyOn(translateService, "setDefaultLang")
+    describe('initialize', () => {
+      it('initialize should set setDefaultLang "ES-ES"', () => {
+        const langSut = "ES-ES"
+        const setDefaultLangSpy = jest.spyOn(translateService, "setDefaultLang")
+    
+        service.initialize()
+    
+        expect(setDefaultLangSpy).toHaveBeenCalledWith(langSut)
+      });
   
-      service.initialize()
-  
-      expect(setDefaultLangSpy).toHaveBeenCalledWith(langSut)
-    });
+      it('initialize should set addLangs', () => {
+        const addLangsSpy = jest.spyOn(translateService, "addLangs")
+    
+        service.initialize()
+    
+        expect(addLangsSpy).toHaveBeenCalled()
+      });
+    })
 
-    it('initialize should set addLangs', () => {
-      const addLangsSpy = jest.spyOn(translateService, "addLangs")
-  
-      service.initialize()
-  
-      expect(addLangsSpy).toHaveBeenCalled()
-    });
 
-    it('changeLanguage should use default language (ES-ES) if language its not supported', () => {
-      const langSut = 'unsupported lang';
-      const defaultLang = 'ES-ES';
+    describe('changeLanguage', () => {
+      it('changeLanguage should use default language (ES-ES) if language its not supported', () => {
+        const langSut = 'unsupported lang';
+        const defaultLang = 'ES-ES';
+    
+        const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+    
+        service.changeLanguage(langSut)
+    
+        expect(useSpy).not.toHaveBeenCalledWith(langSut)
+        expect(useSpy).toHaveBeenCalledWith(defaultLang)
+      });
   
-      const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+      it('changeLanguage should set language if its supported', () => {
+        const langSut = 'EN-GB';
+    
+        const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+    
+        service.changeLanguage(langSut)
+    
+        expect(useSpy).toHaveBeenCalledWith(langSut)
+      });
   
-      service.changeLanguage(langSut)
+      it('changeLanguage should dispatch loadedApp UI', () => {
+        const langSut = 'EN-GB';
   
-      expect(useSpy).not.toHaveBeenCalledWith(langSut)
-      expect(useSpy).toHaveBeenCalledWith(defaultLang)
-    });
+        const dispatchSpy = jest.spyOn(store, "dispatch")
+        jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+    
+        service.changeLanguage(langSut)
+    
+        // expect(dispatchSpy).toHaveBeenCalledWith(loadedApp({ initialized: AppInit.UI }))
+      });
+    })
 
-    it('changeLanguage should set language if its supported', () => {
-      const langSut = 'EN-GB';
+    describe('changeDarkMode', () => {
+      it('changeDarkMode should dispatch loadedApp UI', () => {
+        const darkModeSut = true;
   
-      const useSpy = jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
+        service.changeDarkMode(darkModeSut)
+    
+        // expect(dispatchSpy).toHaveBeenCalledWith(loadedApp({ initialized: AppInit.UI }))
+      });
+    })
+    describe('getBrowserIsDarkMode', () => {
+      it('getBrowserIsDarkMode should return false TODO', () => {
   
-      service.changeLanguage(langSut)
-  
-      expect(useSpy).toHaveBeenCalledWith(langSut)
-    });
+        const browserIsDarkMode = service.getBrowserIsDarkMode()
+    
+        expect(browserIsDarkMode).toBeFalsy()
+      });
+    })
 
-    it('changeLanguage should dispatch loadedApp UI', () => {
-      const langSut = 'EN-GB';
+    describe('getBrowserLanguage', () => {
+      it('getBrowserLanguage should return default language (ES-ES) if browser language its UNDEFINED', () => {
+        const undefinedLangSut = undefined;
+        const defaultLang = 'ES-ES';
+    
+        jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(undefinedLangSut)
+    
+        const browserLanguageSut = service.getBrowserLanguage();
+    
+        expect(browserLanguageSut).toEqual(defaultLang)
+      });
+  
+      it('getBrowserLanguage should return browser language if exists', () => {
+        const browserLang = 'ES-ES';
+    
+        jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(browserLang)
+    
+        const browserLanguageSut = service.getBrowserLanguage();
+    
+        expect(browserLanguageSut).toEqual(browserLang)
+      });
+    })
 
-      const dispatchSpy = jest.spyOn(store, "dispatch")
-      jest.spyOn(translateService, 'use').mockReturnValue(of(undefined))
-  
-      service.changeLanguage(langSut)
-  
-      // expect(dispatchSpy).toHaveBeenCalledWith(loadedApp({ initialized: AppInit.UI }))
-    });
-  
-    it('getBrowserLanguage should return default language (ES-ES) if browser language its UNDEFINED', () => {
-      const undefinedLangSut = undefined;
-      const defaultLang = 'ES-ES';
-  
-      jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(undefinedLangSut)
-  
-      const browserLanguageSut = service.getBrowserLanguage();
-  
-      expect(browserLanguageSut).toEqual(defaultLang)
-    });
 
-    it('getBrowserLanguage should return browser language if exists', () => {
-      const browserLang = 'ES-ES';
-  
-      jest.spyOn(translateService, "getBrowserCultureLang").mockReturnValue(browserLang)
-  
-      const browserLanguageSut = service.getBrowserLanguage();
-  
-      expect(browserLanguageSut).toEqual(browserLang)
-    });
   
 
   })

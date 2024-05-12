@@ -61,7 +61,7 @@ export class TrainingsService {
     }
     
     public getExerciseTemplateTrainingExercises(userId: string, exerciseTemplateId: string): Observable<Training[]> {
-        return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(userId, exerciseTemplateId, this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, exerciseTemplateId)).get().pipe(
+        return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, exerciseTemplateId)).get().pipe(
             switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
                 const trainingExerciseObservables: Observable<Training>[] = [];
     

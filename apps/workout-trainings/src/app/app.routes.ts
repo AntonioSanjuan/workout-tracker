@@ -24,7 +24,7 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: '',
-        resolve: { data: WorkoutTrainingsListResolver },
+        resolve: { list: WorkoutTrainingsListResolver },
         providers: [
           importProvidersFrom()
         ],    
@@ -36,9 +36,9 @@ export const appRoutes: Route[] = [
         resolve: { data: WorkoutTrainingResolver },
         providers: [
           importProvidersFrom(
+            EffectsModule.forFeature([ExerciseTemplatesListEffects, TrainingEffects]),
             StoreModule.forFeature(EXERCISE_TEMPLATES_LIST_FEATURE_KEY, exerciseTemplatesListReducer),
             StoreModule.forFeature(fromWorkoutTrainings.WORKOUT_TRAININGS_FEATURE_KEY, fromWorkoutTrainings.workoutTrainingsReducer),
-            EffectsModule.forFeature([ExerciseTemplatesListEffects, TrainingEffects])
           )
         ],
         loadComponent: () =>

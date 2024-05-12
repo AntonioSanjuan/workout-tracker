@@ -7,22 +7,44 @@ workout-tracker-add-training-exercise-dialog {
             flex-direction: column;
             align-items: center;
             padding: 0 !important;
-            .mat-step-header .mat-step-icon-selected,
-            .mat-step-header .mat-step-icon-state-edit {
-                background-color: shellStyles.$mainColor;
-            }
-            .mat-vertical-content {
-                padding: 24px;
 
+            mat-stepper {
+                width: 100% !important;
+                .mat-vertical-content-container {
+                    margin: 0;
+                }
+                
+                .mat-step-header .mat-step-icon-selected,
+                .mat-step-header .mat-step-icon-state-edit {
+                    background-color: shellStyles.$mainColor;
+                }
+                .mat-vertical-content {
+                    padding: 24px;
+    
+    
+                    form {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                        width: 100%;
 
-                form {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 10px;
-                    width: 100%;
+                        .AddTrainingExerciseDialog_ListContainer {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            height: 100%;
+
+                            .AddTrainingExerciseDialog_ListEl {
+                                display: flex;
+                                height: 100%;
+                                padding: 10px;
+                            }
+                        }
+                    }
                 }
             }
+
 
         }
     }

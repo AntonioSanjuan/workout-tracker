@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'exercises',
+  displayName: 'exercise-templates',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts', '../../../common-test-setup.ts'],
   coverageDirectory: '../../../coverage/libs/services/exercise-templates',

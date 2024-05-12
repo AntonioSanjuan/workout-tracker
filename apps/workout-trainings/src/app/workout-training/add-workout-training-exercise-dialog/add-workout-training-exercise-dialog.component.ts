@@ -33,7 +33,10 @@ export class AddWorkoutTrainingExerciseDialogComponent implements OnInit {
 
   ngOnInit(): void {
       this.form = getAddWorkoutTrainingExerciseForm()
-      this.store.dispatch(getUserExerciseTemplatesListRequest())
+
+      setTimeout(() => {
+        this.store.dispatch(getUserExerciseTemplatesListRequest())
+      });
   }
 
   public createTrainingExercise() {
@@ -57,6 +60,10 @@ export class AddWorkoutTrainingExerciseDialogComponent implements OnInit {
     this.form.setValue({
       exerciseTemplate:  this.form.controls.exerciseTemplate.value?.id === exerciseTemplate.id ? null :  exerciseTemplate
     })
+  }
+
+  public isSelected(exerciseTemplate: ExerciseTemplate) {
+    return this.form.value.exerciseTemplate?.id === exerciseTemplate.id
   }
 
 }

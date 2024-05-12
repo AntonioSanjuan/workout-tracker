@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { AppRoutes } from '@workout-tracker/models';
 import { WorkoutExerciseTemplateComponent } from './workout-exercise-template.component';
 import { ViewHeaderComponent } from '@workout-tracker/components';
+import { appRoutes } from '../app.routes';
 
 describe('WorkoutExerciseTemplateComponent', () => {
   let component: WorkoutExerciseTemplateComponent;
@@ -42,7 +43,7 @@ describe('WorkoutExerciseTemplateComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes(appRoutes)
       ]
     }).compileComponents();
 

@@ -14,6 +14,7 @@ import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
+import { appRoutes } from '../app.routes';
 
 describe('WorkoutExerciseTemplatesListComponent', () => {
   let component: WorkoutExerciseTemplatesListComponent;
@@ -44,7 +45,7 @@ describe('WorkoutExerciseTemplatesListComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes(appRoutes)
       ]
     }).compileComponents();
 

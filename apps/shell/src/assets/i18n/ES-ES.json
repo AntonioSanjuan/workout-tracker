@@ -214,8 +214,8 @@
         },
         "workout-exercises": {
             "errors": {
-                "exerciseNotFound": "Ejercicio {{exerciseId}} no encontrado",
-                "exerciseTrainingsNotFound": "Entrenamientos del ejercicio {{exerciseTemplateId}} no encontrado"
+                "exerciseTemplateNotFound": "Plantilla de ejercicio {{exerciseTemplateId}} no encontrado",
+                "exerciseTemplateTrainingsNotFound": "Entrenamientos de la plantilla de ejercicio {{exerciseTemplateId}} no encontrados"
             },
             "list": {
                 "title": "Lista de plantillas de ejercicios",
@@ -226,11 +226,11 @@
                     },
                     "banner": {
                         "title": "",
-                        "content": "Puedes buscar un ejercicio por su nombre, o filtrarlo por el tipo del mismo"
+                        "content": "Puedes buscar una plantilla de ejercicio por su nombre, o filtrarlo por los músculos involucrados del mismo"
                     },
-                    "byNameLabel": "Busca el ejercicio por nombre",
-                    "byNamePlaceholder": "Nombre del ejercicio...",
-                    "byMuscleLabel": "Busca el ejercicio por músculos",
+                    "byNameLabel": "Busca la plantilla de ejercicio por nombre",
+                    "byNamePlaceholder": "Nombre de la plantilla...",
+                    "byMuscleLabel": "Busca la plantilla de ejercicio por músculos",
                     "byMusclePlaceholder": "Músculos...",
                     "filteredByMuscles": "Filtrado por..."
                 },
@@ -275,7 +275,7 @@
                     }
                 },
                 "actions": {
-                    "addNewExercise": "Nuevo ejercicio"
+                    "addNewExerciseTemplate": "Nueva plantilla de ejercicio"
                 }
             },
             "details": {

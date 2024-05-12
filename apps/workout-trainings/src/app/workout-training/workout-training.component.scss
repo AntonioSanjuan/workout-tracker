@@ -10,6 +10,11 @@
     align-items: center;
 
     .WorkoutTraining_ContentContainer {
+
+        button {
+            background-color: shellStyles.$mainColor;
+        }
+        
         .WorkoutTraining_TrainingExercise {
             width: 100%;
         }

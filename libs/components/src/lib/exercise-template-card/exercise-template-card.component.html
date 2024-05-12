@@ -1,5 +1,5 @@
 <div class="ExerciseTemplateCard_MainContainer">
-    <mat-card>
+    <mat-card class="cardClass" [class.selectedCard]="selected">
         <mat-card-content>
             <div class="ExerciseTemplateCard_ContentContainer">
                 <img mat-card-md-image [src]="exerciseTemplate.image ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">

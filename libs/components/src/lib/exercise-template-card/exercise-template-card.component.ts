@@ -23,4 +23,5 @@ import { MusclePillComponent } from '../muscle-pill/muscle-pill.component';
 })
 export class ExerciseTemplateCardComponent {
   @Input() public exerciseTemplate!: ExerciseTemplate;
+  @Input() public selected = false;
 }

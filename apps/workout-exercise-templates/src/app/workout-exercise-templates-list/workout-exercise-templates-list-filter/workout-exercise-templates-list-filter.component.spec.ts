@@ -11,6 +11,7 @@ import { MusclesInvolved } from '@workout-tracker/models';
 import { clearExerciseTemplateListQueryFilter, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesGroupsSelectorComponent } from '@workout-tracker/components';
 import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
+import { appRoutes } from '../../app.routes';
 
 describe('WorkoutExercisesFilterListComponent', () => {
   let actions: Observable<Action>;
@@ -24,7 +25,7 @@ describe('WorkoutExercisesFilterListComponent', () => {
       imports: [
         WorkoutExerciseTemplatesFilterListComponent,
         MusclesGroupsSelectorComponent,
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes(appRoutes),
         BrowserAnimationsModule,
       ],
       providers:[

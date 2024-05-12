@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { AppRoutes, Training, TrainingExercise } from '@workout-tracker/models';
 import { selectWorkoutTraining } from './state/workout-training.selectors';
 import { TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
+import { getExerciseTemplatesList } from '@workout-tracker/shared-store';
 
 @Component({
   selector: 'workout-tracker-training',
@@ -31,11 +32,12 @@ export class WorkoutTrainingComponent {
   private store: Store = inject(Store)
   private router: Router = inject(Router)
   private dialogService = inject(DialogService)
-  private route = inject(ActivatedRoute)
 
   public training$ = this.store.select(selectWorkoutTraining)
-  
+  public exerciseTemplates$ =  this.store.select(getExerciseTemplatesList)
+
   public appRoutes = AppRoutes
+
 
   public editTraining() {
     // this.dialogService.showDialog(EditWorkoutExerciseDetailsDialogComponent, true)

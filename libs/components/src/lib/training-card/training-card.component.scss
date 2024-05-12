@@ -7,8 +7,6 @@ workout-tracker-training-card {
     .TrainingCard_MainContainer {
         width: 100%;
         mat-card {
-            box-shadow: shellStyles.$mainColor 0px 5px 15px;
-
             mat-card-content {
                 .TrainingCard_ContentContainer {
                     display: flex;

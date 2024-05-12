@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, UiModule } from '@workout-tracker/ui';
-import { BannerType, Training } from '@workout-tracker/models';
+import { Training } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
