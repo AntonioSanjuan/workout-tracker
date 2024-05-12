@@ -6,9 +6,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { AppRoutes, Training, TrainingExercise } from '@workout-tracker/models';
+import { AppRoutes, BannerType, Training, TrainingExercise } from '@workout-tracker/models';
 import { selectWorkoutTraining } from './state/workout-training.selectors';
-import { TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { BannerComponent, MusclePillComponent, TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 import { getExerciseTemplatesList } from '@workout-tracker/shared-store';
 
@@ -23,7 +23,9 @@ import { getExerciseTemplatesList } from '@workout-tracker/shared-store';
     RouterModule,
     ViewHeaderComponent,
     TrainingInfoComponent,
-    TrainingExerciseCardComponent
+    TrainingExerciseCardComponent,
+    MusclePillComponent,
+    BannerComponent,
   ],
   styleUrls: ['./workout-training.component.scss'],
   standalone: true
@@ -37,6 +39,7 @@ export class WorkoutTrainingComponent {
   public exerciseTemplates$ =  this.store.select(getExerciseTemplatesList)
 
   public appRoutes = AppRoutes
+  public bannerType = BannerType
 
 
   public editTraining() {
@@ -50,5 +53,9 @@ export class WorkoutTrainingComponent {
 
   public openTrainingExercise(training: Training, trainingExercise: TrainingExercise) {
     this.router.navigate([`/trainings/${training.id}/exercise/${trainingExercise.id}`])
+  }
+
+  public goToExerciseTemplates() {
+    this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])
   }
 }

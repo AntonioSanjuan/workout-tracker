@@ -1,16 +1,28 @@
-<div class="Banner_MainContainer">
-  <div class="Banner_TypeContainer">
-    <mat-icon *ngIf="type === BannerType.Info">info</mat-icon>
-    <mat-icon *ngIf="type === BannerType.Error">error</mat-icon>
-    <mat-icon *ngIf="type === BannerType.Success">done</mat-icon>
-    <mat-icon *ngIf="type === BannerType.Warning">warning</mat-icon>
+<div class="Banner_MainContainer"
+  [class.Banner_infoType]="type === BannerType.Info"
+  [class.Banner_errorType]="type === BannerType.Error"
+  [class.Banner_successType]="type === BannerType.Success"
+  [class.Banner_warningType]="type === BannerType.Warning"
+  >
+  <div class="Banner_SubContainer">  
+    <div class="Banner_TypeContainer">
+      <mat-icon *ngIf="type === BannerType.Info">info</mat-icon>
+      <mat-icon *ngIf="type === BannerType.Error">error</mat-icon>
+      <mat-icon *ngIf="type === BannerType.Success">done</mat-icon>
+      <mat-icon *ngIf="type === BannerType.Warning">warning</mat-icon>
+    </div>
+    <div class="Banner_ContentContainer">
+      <div *ngIf="title" class="Banner_TitleContainer">
+        <h2>{{ title }}</h2>
+      </div>
+      <div *ngIf="content "class="Banner_ContentContainer"> 
+        <p>{{ content }}</p>
+      </div>
+    </div>
   </div>
-  <div class="Banner_ContentContainer">
-    <div *ngIf="title" class="Banner_TitleContainer">
-      <h2>{{ title }}</h2>
-    </div>
-    <div *ngIf="content "class="Banner_ContentContainer"> 
-      <p>{{ content }}</p>
-    </div>
+  <div class="Banner_ActionContainer" *ngIf="action && actionText"> 
+    <button mat-flat-button (click)="action.emit()">
+      {{actionText || 'apps.workout-trainings.training.actions.addNewTrainingExercise' | translate }}
+    </button> 
   </div>
 </div>

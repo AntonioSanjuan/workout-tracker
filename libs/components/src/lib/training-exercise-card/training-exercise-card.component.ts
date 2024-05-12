@@ -6,6 +6,7 @@ import { TrainingExercise } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
 import { MusclePillComponent } from '../muscle-pill/muscle-pill.component';
 import { SeriesTableComponent } from '../series-table/series-table.component';
+import { TrainingExerciseInfoComponent } from '../training-exercise-info/training-exercise-info.component';
 
 @Component({
   selector: 'workout-tracker-training-exercise-card',
@@ -13,6 +14,7 @@ import { SeriesTableComponent } from '../series-table/series-table.component';
     MusclePillComponent,
     SeriesTableComponent,
     MuscleInvolvedGroupPipe,
+    TrainingExerciseInfoComponent,
     CommonModule,
     LetDirective,
     TranslateModule,

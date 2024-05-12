@@ -11,10 +11,38 @@
 
     .WorkoutTraining_ContentContainer {
 
+
+        .ExerciseTemplateFilter_ExerciseTemplateBanner {
+            border-radius: 5px;
+            width: 300px;
+            padding: 5px 10px;
+        }
+        h2 {
+            margin-bottom: 0;
+        }
+        
         button {
             background-color: shellStyles.$mainColor;
         }
         
+        .WorkoutTraining_InfoContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-around;
+
+            width: 100%;
+            .WorkoutTraining_MuscleGroupsContainer {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                p {
+                    margin: 0;
+                    font-weight: 600;
+                }
+            }
+        }
         .WorkoutTraining_TrainingExercise {
             width: 100%;
         }
@@ -24,7 +52,22 @@
 @media (max-width: 960px) {
     .WorkoutTraining_MainContainer {
         .WorkoutTraining_ContentContainer {
+            h2 {
+                text-align: center;
+            }
+            .WorkoutTraining_InfoContainer {
+                flex-direction: column;
+                gap: 30px;
 
+                .WorkoutTraining_MuscleGroupsContainer {
+                    flex-direction: column;
+                    width: 100%;
+
+                    p {
+                        text-align: center; 
+                    }
+                }
+            }
         }
     }
 }

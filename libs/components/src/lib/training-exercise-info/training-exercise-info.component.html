@@ -1,0 +1,24 @@
+<div class="TrainingExerciseInfo_MainContainer">
+  <div class="TrainingExerciseInfo_InfoLabels">
+      <div class="TrainingExerciseInfo_InfoLabel">
+          <p>{{ 'libs.components.training-exercise-info.labels.numberOfSeries' | translate }}:</p>   
+      </div>
+      <div class="TrainingExerciseInfo_InfoLabel">
+          <p>{{ 'libs.components.training-exercise-info.labels.maxSerieWeight' | translate }}:</p>
+      </div>
+      <div class="TrainingExerciseInfo_InfoLabel">
+          <p>{{ 'libs.components.training-exercise-info.labels.totalWeight' | translate }}:</p>
+      </div>
+  </div>
+  <div class="TrainingExerciseInfo_InfoValues">
+      <div class="TrainingExerciseInfo_InfoValue">
+        <p>{{ trainingExercise.series.length || 0 }}</p>
+      </div>
+      <div class="TrainingExerciseInfo_InfoValue">
+        <p>{{ maxSerieWeight || 0  }}kg/s</p>
+    </div>
+      <div class="TrainingExerciseInfo_InfoValue">
+          <p>{{ totalWeight || 0 }}kg/s</p>
+      </div>
+  </div>
+</div>

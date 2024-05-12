@@ -172,6 +172,9 @@
             },
             "training": {
                 "title": "Detalles de entrenamiento",
+                "training-info": {
+                    "muscularGroups": "Grupos músculares"
+                },
                 "training-exercises": {
                     "list": {
                         "title": "Lista de ejercicios del entrenamientos"
@@ -203,6 +206,12 @@
                 },
                 "actions": {
                     "addNewTrainingExercise": "Añadir un ejercicio de entrenamiento"
+                },
+                "errors": {
+                    "exerciseTemplatesNotFound": {
+                        "content": "No se han encontrado plantillas de ejercicios de entrenamientos",
+                        "action": "Gestionar plantillas"
+                    }
                 }
             },
             "trainingExercise": {
@@ -304,6 +313,17 @@
                     "status": "Estado",
                     "observations": "Observaciones",
                     "numberOfExercises": "Nº de ejercicios"
+                },
+                "state": {
+                    "finished": "Finalizado",
+                    "onGoing": "En curso"
+                }
+            },
+            "training-exercise-info": {
+                "labels": {
+                    "numberOfSeries": "Numero de series",
+                    "maxSerieWeight": "Paso máximo de la serie",
+                    "totalWeight": "Peso total"
                 },
                 "state": {
                     "finished": "Finalizado",

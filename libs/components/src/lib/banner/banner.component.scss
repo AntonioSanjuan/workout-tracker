@@ -1,37 +1,68 @@
 @use "css/main.scss" as shellStyles;
 
+.Banner_infoType {
+    background-color: shellStyles.$mainColor;
+
+}
+.Banner_errorType {
+    background-color: shellStyles.$errorColor;
+
+}
+.Banner_successType {
+    background-color: shellStyles.$successColor;
+
+}
+.Banner_warningType {
+    background-color: shellStyles.$warningColor;
+
+}
+
 workout-tracker-banner {
     display: flex;
     width: 100%;
     .Banner_MainContainer {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        background-color: shellStyles.$mainColor;
-        border-radius: 5px;
+        flex-direction: column;
         width: 100%;
-        gap: 15px;
         padding: 10px;
+        border-radius: 5px;
+
+        .Banner_SubContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
     
-        .Banner_TypeContainer {
-            color: #ffff;
-            mat-icon {
-                font-size: 50px;
-                height: 50px;
-                width: 50px;
+            width: 100%;
+            gap: 15px;
+
+            .Banner_TypeContainer {
+                color: #ffff;
+                mat-icon {
+                    font-size: 50px;
+                    height: 50px;
+                    width: 50px;
+                }
+    
             }
-
-        }
-        .Banner_ContentContainer {
-            .Banner_TitleContainer {}
             .Banner_ContentContainer {
-
-                p {
-                    margin: 0;
-                    color: #ffff
+                .Banner_TitleContainer {}
+                .Banner_ContentContainer {
+    
+                    p {
+                        margin: 0;
+                        color: #ffff
+                    }
                 }
             }
         }
+
+        .Banner_ActionContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            button {
+            }
+        }
+
     }
 }

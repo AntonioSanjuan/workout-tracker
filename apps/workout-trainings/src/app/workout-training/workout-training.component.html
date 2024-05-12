@@ -4,6 +4,16 @@
     <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
 
     <div class="WorkoutTraining_ContentContainer view-body">
+        <div 
+            class="ExerciseTemplateFilter_ExerciseTemplateBanner"
+            *ngIf="!vm.exerciseTemplates || !vm.exerciseTemplates.length">
+            <workout-tracker-banner
+                [type]="bannerType.Warning"
+                [content]="'apps.workout-trainings.training.errors.exerciseTemplatesNotFound.content' | translate"
+                [actionText]="'apps.workout-trainings.training.errors.exerciseTemplatesNotFound.action' | translate"
+                (action)="goToExerciseTemplates()">
+            </workout-tracker-banner>
+        </div>
         <button [disabled]="!vm.exerciseTemplates || !vm.exerciseTemplates.length" mat-flat-button color="primary" (click)="newTrainingExercise()">
             {{ 'apps.workout-trainings.training.actions.addNewTrainingExercise' | translate }}
         </button>
@@ -12,9 +22,19 @@
             {{ 'apps.workout-trainings.training.title' | translate }}
         </h2>
     
-        <workout-tracker-training-info 
-            [training]="vm.training!">
-        </workout-tracker-training-info>
+        <div class="WorkoutTraining_InfoContainer">
+            <workout-tracker-training-info 
+                [training]="vm.training!">
+            </workout-tracker-training-info>
+
+            <div class="WorkoutTraining_MuscleGroupsContainer">
+                <p>{{ 'apps.workout-trainings.training.training-info.muscularGroups' | translate }}:</p>
+                <workout-tracker-muscle-pill *ngFor="let mucleInvolved of vm.training?.muscleGroups"
+                    [muscleGroup]="mucleInvolved">
+                </workout-tracker-muscle-pill>
+            </div>
+        </div>
+
         <h2>
             {{ 'apps.workout-trainings.training.training-exercises.list.title' | translate }}
         </h2>

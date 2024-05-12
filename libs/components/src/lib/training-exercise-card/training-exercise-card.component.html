@@ -1,16 +1,23 @@
 <div class="TrainingExerciseCard_MainContainer">
     <mat-card class="cardClass">
         <mat-card-content>
-            <div class="TrainingExerciseCard_ExerciseTemplateContainer">
-                <img mat-card-md-image [src]="trainingExercise.exerciseTemplate.image  ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
-                <div class="TrainingExerciseCard_InfoContainer">
-                    <h3>{{trainingExercise.exerciseTemplate.name}}</h3>
-                    <div class="TrainingExerciseCard_TypesContainer">
-                        <workout-tracker-muscle-pill *ngFor="let mucleInvolved of trainingExercise.exerciseTemplate.musclesInvolved"
-                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
-                            [specificMuscle]="mucleInvolved"
-                    ></workout-tracker-muscle-pill>
+            <div class="TrainingExerciseCard_InfoContainer">
+                <div class="TrainingExerciseCard_ExerciseTemplateContainer">
+                    <img mat-card-md-image [src]="trainingExercise.exerciseTemplate.image  ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
+                    <div class="TrainingExerciseCard_ExerciseTemplateInfoContainer">
+                        <h3>{{trainingExercise.exerciseTemplate.name}}</h3>
+                        <div class="TrainingExerciseCard_TypesContainer">
+                            <workout-tracker-muscle-pill *ngFor="let mucleInvolved of trainingExercise.exerciseTemplate.musclesInvolved"
+                                [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                                [specificMuscle]="mucleInvolved"
+                            ></workout-tracker-muscle-pill>
+                        </div>
                     </div>
+                </div>
+                <div class="TrainingExerciseCard_Info">
+                    <workout-tracker-training-exercise-info
+                        [trainingExercise]="trainingExercise">
+                    </workout-tracker-training-exercise-info>
                 </div>
             </div>
             <div class="TrainingExerciseCard_SeriesContainer">
