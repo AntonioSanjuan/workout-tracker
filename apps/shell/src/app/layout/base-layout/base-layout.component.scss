@@ -6,7 +6,8 @@
 
     background: shellStyles.$backdropBackgroundColor url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
     align-items: center;
-    min-height: 100vh;
+    // min-height: 100vh;
+    min-height: -webkit-fill-available;
     height: auto;
 
 

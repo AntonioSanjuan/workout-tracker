@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { userStateMock } from '@workout-tracker/test'
+import { exerciseTemplatesListStateMock, userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DialogService, LibsServicesDialogModule } from '@workout-tracker/services/dialog';
@@ -14,10 +14,11 @@ import { TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/com
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 import { selectWorkoutTraining } from './state/workout-training.selectors';
-import { Training, TrainingExercise } from '@workout-tracker/models';
+import { ExerciseTemplateQuery, Training, TrainingExercise } from '@workout-tracker/models';
 import { appRoutes } from '../app.routes';
 import { DatePipe } from '@angular/common';
 import { LocalizedDatePipe } from '@workout-tracker/ui';
+import { ExerciseTemplatesListState, getExerciseTemplatesListState } from '@workout-tracker/shared-store';
 
 describe('WorkoutTrainingComponent', () => {
   let component: WorkoutTrainingComponent;
@@ -37,6 +38,7 @@ describe('WorkoutTrainingComponent', () => {
         provideMockStore({
           initialState: {
             ...workoutTrainingsAppStateMock, 
+            ...exerciseTemplatesListStateMock,
             ...userStateMock,
           },
         }),
