@@ -1,0 +1,49 @@
+<div class="AddTrainingExerciseSerieDialog_MainContainer">
+    <div>
+        <h2 mat-dialog-title>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.title' | translate }}</h2>
+        <mat-dialog-content class="mat-typography" >
+            <mat-stepper orientation="vertical" linear #stepper animationDuration="700">
+                <mat-step
+                    [stepControl]="form" 
+                    [label]="'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.title' | translate">
+                    <form [formGroup]="form">
+                        <mat-form-field>
+                            <mat-label>
+                                {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.weight' | translate }}
+                            </mat-label>
+                            <input matInput id="weight" name="weight" formControlName="weight" type="number"/>
+                            @if (form.controls.weight.hasError('required')) {
+                                <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.weightRequired' | translate }}</mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>
+                                {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.repetitions' | translate }}
+                            </mat-label>
+                            <input matInput id="repetitions" name="repetitions" formControlName="repetitions" type="number"/>
+                            @if (form.controls.repetitions.hasError('required')) {
+                                <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.repetitionsRequired' | translate }}</mat-error>
+                            }
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>
+                                {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.observations' | translate }}
+                            </mat-label>
+                            <input matInput id="observations" name="observations" formControlName="observations"/>
+                        </mat-form-field>
+                    </form>
+                </mat-step>
+            </mat-stepper>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>
+                {{ 'common.actions.cancel' | translate }}
+            </button>
+            <button *ngIf="stepper.selectedIndex === 0" mat-button [mat-dialog-close]="false" (click)="createTrainingExerciseSerie()" [disabled]="!form.valid">
+                {{ 'common.actions.create' | translate }}
+            </button>
+        </mat-dialog-actions>
+    </div>
+
+</div>

@@ -216,6 +216,33 @@
             },
             "trainingExercise": {
                 "title": "Detalles de ejercicio de entrenamiento",
+                "addTrainingExerciseSerie": {
+                    "title": "Añadir serie",
+                    "step": {
+                        "basicInfo": {
+                            "title": "Descripción",
+                            "form": {
+                                "fields": {
+                                    "weight": "Peso (kg/s)",
+                                    "repetitions": "Repeticiones",
+                                    "observations": "Observaciones"
+                                },
+                                "errors": {
+                                    "repetitionsRequired": "Debe de tener al menos una repetición",
+                                    "weightRequired": "Debe de tener un peso (0kg/s esta permitido)"
+                                }
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Adicional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observaciones"
+                                }
+                            }
+                        }
+                    }
+                },
                 "actions": {
                     "addNewTrainingExerciseSerie": "Añadir una serie"
                 }

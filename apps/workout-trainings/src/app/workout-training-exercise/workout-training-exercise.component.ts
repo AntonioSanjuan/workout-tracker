@@ -11,6 +11,7 @@ import { SeriesTableComponent, TrainingExerciseCardComponent, ViewHeaderComponen
 import { selectWorkoutTraining } from '../workout-training/state/workout-training.selectors';
 import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentId } from './state/workout-training-exercise.selectors';
 import { addUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
+import { AddWorkoutTrainingExerciseSerieDialogComponent } from './add-workout-training-exercise-serie-dialog/add-workout-training-exercise-serie-dialog.component';
 
 @Component({
   selector: 'workout-tracker-training-exercise',
@@ -42,13 +43,6 @@ export class WorkoutTrainingExerciseComponent {
   }
 
   public newTrainingExerciseSerie() {
-    // this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, true)
-    this.store.dispatch(addUserTrainingExerciseSerieRequest({
-      trainingExerciseSerie: {
-        weight: 10,
-        repetitions: 20,
-        observations: 'test'
-      } as TrainingExerciseSerie
-    }))
+    this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, true)
   }
 }
