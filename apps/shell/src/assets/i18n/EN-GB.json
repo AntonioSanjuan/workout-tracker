@@ -30,6 +30,7 @@
             "Posterior_deltoid": "Posterior deltoid"
         },
         "actions": {
+            "goBack": "Go Back",
             "cancel": "Cancel",
             "create": "Create",
             "next": "Next",
@@ -42,10 +43,10 @@
         "shell": {
             "layout": {
                 "menuTop": {
-                    "content": "Top menu works"
+                    "content": "The top menu works"
                 },
                 "menuBottom": {
-                    "content": "Bottom menu works"
+                    "content": "The bottom menu works"
                 },
                 "profileNav": {
                     "language": {
@@ -55,7 +56,7 @@
                 "menuNav": {
                     "home": "Home",
                     "trainings": "Trainings",
-                    "exercises": "Exercises templates",
+                    "exercises": "Exercise Template",
                     "news": "News"
                 }
             },
@@ -80,14 +81,14 @@
                         "passwordRequired": "Password field required"
                     },
                     "actions": {
-                        "submit": "Log in",
+                        "submit": "Log In",
                         "googleLogin": "Log in with Google",
-                        "signUp": "Don't have an account? Sign up now!"
+                        "signUp": "Don't have an account? Sign Up now!"
                     }
                 }
             },
             "signUp": {
-                "title": "Sign up",
+                "title": "Sign Up",
                 "form": {
                     "fields": {
                         "userEmail": "Email",
@@ -99,7 +100,7 @@
                         "passwordRequired": "Password field required"
                     },
                     "actions": {
-                        "submit": "Sign up",
+                        "submit": "Sign Up",
                         "googleLogin": "Sign up with Google",
                         "login": "Already have an account? Log in!"
                     }
@@ -117,25 +118,43 @@
         },
         "workout-trainings": {
             "errors": {
-                "trainingNotFound": "Training {{trainingId}} not found"
+                "trainingNotFound": "Training {{trainingId}} not found",
+                "trainingExerciseNotFound": "Training exercise {{trainingExerciseId}} not found",
+                "trainingExerciseCouldntBeCreated": "Training exercise couldn't be created",
+                "trainingExerciseSerieCouldntBeCreated": "Training exercise series couldn't be created"
             },
             "list": {
-                "title": "List of Trainings",
+                "title": "Training List",
                 "filter": {
+                    "actions": {
+                        "openFilter": "Open filters",
+                        "clearFilters": "Clear filters"
+                    },
                     "banner": {
                         "title": "",
-                        "content": "You can search for a training by exercise name"
+                        "content": "You can search for a training by creation date or by the exercised muscle group"
                     },
-                    "byNameLabel": "Search for training by name",
-                    "byNamePlaceholder": "Training name...",
-                    "byMuscleLabel": "Search for training by muscles",
-                    "byMusclePlaceholder": "Muscles...",
+                    "byDateLabel": "Search for training by date",
+                    "byDatePlaceholder": "Training date...",
+                    "byMuscleGroupLabel": "Search for training by muscle group",
+                    "byMuscleGroupPlaceholder": "Muscle group...",
                     "filteredByMuscles": "Filtered by..."
                 },
                 "addTraining": {
                     "title": "Add training",
                     "step": {
-                        "additionalInfo": {
+                        "basicInfo": {
+                            "title": "Description",
+                            "form": {
+                                "fields": {
+                                    "muscleGroup": "Muscle group"
+                                },
+                                "errors": {
+                                    "muscleGroupRequired": "You must select at least one muscle group"
+                                }
+                            }
+                        },
+                        "aditionalInfo": {
                             "title": "Additional",
                             "form": {
                                 "fields": {
@@ -150,24 +169,104 @@
                     "continueTraining": "Continue training"
                 }
             },
-            "details": {
-                "title": "Training Details"
+            "training": {
+                "title": "Training Details",
+                "training-info": {
+                    "muscularGroups": "Muscular groups"
+                },
+                "training-exercises": {
+                    "list": {
+                        "title": "Training exercises list"
+                    }
+                },
+                "addTrainingExercise": {
+                    "title": "Add training exercise",
+                    "step": {
+                        "basicInfo": {
+                            "title": "What exercise are you going to perform?",
+                            "form": {
+                                "fields": {
+                                    "exerciseTemplate": "Exercise template"
+                                },
+                                "errors": {
+                                    "exerciseTemplateRequired": "You must select at least one exercise template"
+                                }
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Additional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observations"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewTrainingExercise": "Add a training exercise"
+                },
+                "errors": {
+                    "exerciseTemplatesNotFound": {
+                        "content": "No exercise training templates found",
+                        "action": "Manage templates"
+                    }
+                }
+            },
+            "trainingExercise": {
+                "title": "Training Exercise Details",
+                "addTrainingExerciseSerie": {
+                    "title": "Add series",
+                    "step": {
+                        "basicInfo": {
+                            "title": "Description",
+                            "form": {
+                                "fields": {
+                                    "weight": "Weight (kg/lb)",
+                                    "repetitions": "Repetitions",
+                                    "observations": "Observations"
+                                },
+                                "errors": {
+                                    "repetitionsRequired": "Must have at least one repetition",
+                                    "weightRequired": "Must have a weight (0kg/lb is allowed)"
+                                }
+                            }
+                        },
+                        "aditionalInfo": {
+                            "title": "Additional",
+                            "form": {
+                                "fields": {
+                                    "observations": "Observations"
+                                }
+                            }
+                        }
+                    }
+                },
+                "actions": {
+                    "addNewTrainingExerciseSerie": "Add a series"
+                }
             }
         },
         "workout-exercises": {
             "errors": {
-                "exerciseNotFound": "Exercise {{exerciseId}} not found"
+                "exerciseTemplateNotFound": "Exercise template {{exerciseTemplateId}} not found",
+                "exerciseTemplateTrainingsNotFound": "Trainings of exercise template {{exerciseTemplateId}} not found"
             },
             "list": {
-                "title": "List of exercise templates",
+                "title": "Exercise Template List",
                 "filter": {
+                    "actions": {
+                        "openFilter": "Open filters",
+                        "clearFilters": "Clear filters"
+                    },
                     "banner": {
                         "title": "",
-                        "content": "You can search for an exercise by its name or filter it by its type"
+                        "content": "You can search for an exercise template by its name, or filter it by the involved muscles"
                     },
-                    "byNameLabel": "Search for exercise by name",
-                    "byNamePlaceholder": "Exercise name...",
-                    "byMuscleLabel": "Search for exercise by muscles",
+                    "byNameLabel": "Search for exercise template by name",
+                    "byNamePlaceholder": "Template name...",
+                    "byMuscleLabel": "Search for exercise template by muscles",
+                    "byMusclePlaceholder": "Muscles...",
                     "filteredByMuscles": "Filtered by..."
                 },
                 "addExercise": {
@@ -200,7 +299,7 @@
                                 "cameraError": "Your camera is not available"
                             }
                         },
-                        "additionalInfo": {
+                        "aditionalInfo": {
                             "title": "Additional",
                             "form": {
                                 "fields": {
@@ -211,32 +310,50 @@
                     }
                 },
                 "actions": {
-                    "addNewExercise": "New exercise"
+                    "addNewExerciseTemplate": "New exercise template"
                 }
             },
             "details": {
-                "title": "Exercise Details"
+                "title": "Exercise Template Details",
+                "info": {
+                    "name": "Template name"
+                },
+                "exerciseTrainings": {
+                    "title": "Last trainings where this template was used",
+                    "info": {
+                        "date": "Training date",
+                        "muscle": "Muscle groups of the training"
+                    }
+                }
             }
         }
     },
     "libs": {
         "components": {
             "training-card": {
-                "title": "Date: {{date}}",
-                "info": {
-                    "labels": {
-                        "date": "Date",
-                        "status": "Status",
-                        "observations": "observations",
-                        "numberOfExercises": "Nº of exercises"
-                    }
-                },
-                "muscleGroup": {
-                    "title": "Muscle group"
+                "title": "Day: {{date}}"
+            },
+            "training-info": {
+                "labels": {
+                    "date": "Date",
+                    "status": "Status",
+                    "observations": "Observations",
+                    "numberOfExercises": "Number of exercises"
                 },
                 "state": {
                     "finished": "Finished",
-                    "onGoing": "On going"
+                    "onGoing": "On Going"
+                }
+            },
+            "training-exercise-info": {
+                "labels": {
+                    "numberOfSeries": "Number of series",
+                    "maxSerieWeight": "Max series weight",
+                    "totalWeight": "Total weight"
+                },
+                "state": {
+                    "finished": "Finished",
+                    "onGoing": "On Going"
                 }
             }
         }
