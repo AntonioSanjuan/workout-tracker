@@ -361,6 +361,12 @@
                     "weight": "Weight (kg/lb)",
                     "repetitions": "Repetitions",
                     "observations": "Observations"
+                },
+                "menu": {
+                    "actions":{
+                        "delete": "Delete",
+                        "edit": "Edit"
+                    }
                 }
             }
         }

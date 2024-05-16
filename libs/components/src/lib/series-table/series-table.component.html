@@ -23,11 +23,11 @@
               <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="deleteSerie(element)">
                   <mat-icon>delete</mat-icon>
-                  <span>Redial</span>
+                  <span>{{'libs.components.workout-tracker-series-table.menu.actions.delete' | translate }}</span>
                 </button>
-                <button mat-menu-item (click)="editSerie(element)">
+                <button mat-menu-item (click)="editSerie(element)" disabled>
                   <mat-icon>edit</mat-icon>
-                  <span>Check voice mail</span>
+                  <span>{{'libs.components.workout-tracker-series-table.menu.actions.edit' | translate }}</span>
                 </button>
               </mat-menu>
           </td>

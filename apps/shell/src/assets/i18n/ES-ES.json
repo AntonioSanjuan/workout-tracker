@@ -363,6 +363,12 @@
                     "weight": "Peso (kg/s)",
                     "repetitions": "Repeticiones",
                     "observations": "Observaciones"
+                },
+                "menu": {
+                    "actions":{
+                        "delete": "Borrar",
+                        "edit": "Editar"
+                    }
                 }
             }
         }
