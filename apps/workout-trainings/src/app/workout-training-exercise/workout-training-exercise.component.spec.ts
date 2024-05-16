@@ -13,6 +13,8 @@ import { WorkoutTrainingExerciseComponent } from './workout-training-exercise.co
 import { ViewHeaderComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { appRoutes } from '../app.routes';
+import { TrainingExerciseSerie } from '@workout-tracker/models';
+import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
 
 describe('WorkoutTrainingExerciseComponent', () => {
   let component: WorkoutTrainingExerciseComponent;
@@ -60,7 +62,16 @@ describe('WorkoutTrainingExerciseComponent', () => {
     });
   })
 
-  // describe('Integration tests', () => {
+  describe('Integration tests', () => {
+    describe('deleteTrainingExerciseSerie', () => {
+      const trainingExerciseSerieSut = { id: 'trainingExerciseSerie test'} as TrainingExerciseSerie
+      it('should dispatch deleteTrainingExerciseSerie with event serie', () => {
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
 
-  // })
+        component.deleteTrainingExerciseSerie(trainingExerciseSerieSut)
+
+        expect(dispatchSpy).toHaveBeenCalledWith(deleteUserTrainingExerciseSerieRequest( { trainingExerciseSerie: trainingExerciseSerieSut}))
+      })
+    })
+  })
 });

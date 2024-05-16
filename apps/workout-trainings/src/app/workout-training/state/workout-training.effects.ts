@@ -7,7 +7,7 @@ import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-tem
 import { Store } from '@ngrx/store';
 import { getExerciseTemplateById, getTrainingById, getUser, showError } from '@workout-tracker/shared-store';
 import { AppRoutes, ExerciseTemplate, Training, TrainingExercise } from '@workout-tracker/models';
-import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestError, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
+import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
 import { TrainingsService } from '@workout-tracker/services/trainings';
 import { selectWorkoutTraining } from './workout-training.selectors';
 @Injectable()
@@ -100,7 +100,6 @@ export class TrainingEffects {
     addUserTrainingExerciseRequestError$ = createEffect(() => this.actions$.pipe(
         ofType(
             addAuthenticatedUserTrainingExerciseRequestError, 
-            addAnonymousUserTrainingExerciseRequestError
         ),
         map(() => {
             return showError({errorMessage: `${this.translateService.instant('apps.workout-trainings.errors.trainingExerciseCouldntBeCreated')}`})

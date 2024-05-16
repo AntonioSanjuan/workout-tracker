@@ -28,5 +28,3 @@ export const ADD_ANONYMOUS_USER_TRAINING_EXERCISE_REQUEST = 'ADD ANONYMOUS USER 
 export const addAnonymousUserTrainingExerciseRequest = createAction(ADD_ANONYMOUS_USER_TRAINING_EXERCISE_REQUEST, props<{ trainingExercise: TrainingExercise }>())
 export const ADD_ANONYMOUS_USER_TRAINING_EXERCISE_SUCCESS = 'ADD ANONYMOUS USER TRAINING EXERCISE Success'
 export const addAnonymousUserTrainingExerciseRequestSuccess = createAction(ADD_ANONYMOUS_USER_TRAINING_EXERCISE_SUCCESS, props<{ trainingExercise: TrainingExercise }>())
-export const ADD_ANONYMOUS_USER_TRAINING_EXERCISE_ERROR   = 'ADD ANONYMOUS USER TRAINING EXERCISE Error'
-export const addAnonymousUserTrainingExerciseRequestError = createAction(ADD_ANONYMOUS_USER_TRAINING_EXERCISE_ERROR)

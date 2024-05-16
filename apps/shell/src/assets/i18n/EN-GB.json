@@ -355,6 +355,13 @@
                     "finished": "Finished",
                     "onGoing": "On Going"
                 }
+            },
+            "workout-tracker-series-table": {
+                "labels": {
+                    "weight": "Weight (kg/lb)",
+                    "repetitions": "Repetitions",
+                    "observations": "Observations"
+                }
             }
         }
     }

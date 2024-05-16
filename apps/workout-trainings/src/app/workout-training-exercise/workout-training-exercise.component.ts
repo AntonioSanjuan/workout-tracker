@@ -7,11 +7,10 @@ import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, TrainingExerciseSerie } from '@workout-tracker/models';
-import { SeriesTableComponent, TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
-import { selectWorkoutTraining } from '../workout-training/state/workout-training.selectors';
+import { SeriesTableComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentId } from './state/workout-training-exercise.selectors';
-import { addUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
 import { AddWorkoutTrainingExerciseSerieDialogComponent } from './add-workout-training-exercise-serie-dialog/add-workout-training-exercise-serie-dialog.component';
+import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
 
 @Component({
   selector: 'workout-tracker-training-exercise',
@@ -45,4 +44,9 @@ export class WorkoutTrainingExerciseComponent {
   public newTrainingExerciseSerie() {
     this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, true)
   }
+
+  public deleteTrainingExerciseSerie(serie: TrainingExerciseSerie) {
+    this.store.dispatch(deleteUserTrainingExerciseSerieRequest({ trainingExerciseSerie: serie }))
+  }
+  public editTrainingExerciseSerie(serie: TrainingExerciseSerie) {}
 }

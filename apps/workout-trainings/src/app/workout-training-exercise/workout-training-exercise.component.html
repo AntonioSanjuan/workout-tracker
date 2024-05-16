@@ -11,7 +11,10 @@
         <h2>{{ 'apps.workout-trainings.trainingExercise.title' | translate }}</h2>
     
         <workout-tracker-series-table
-            [series]="vm.trainingExercise?.series">
+            [series]="vm.trainingExercise?.series"
+            [actions]="true"
+            (delete)="deleteTrainingExerciseSerie($event)"
+            (edit)="editTrainingExerciseSerie($event)">
         </workout-tracker-series-table>    
     </div>
 

@@ -123,6 +123,7 @@
                 "trainingExerciseNotFound": "Ejercicio de entrenamiento {{trainingExerciseId}} no encontrado",
                 "trainingExerciseCouldntBeCreated": "No se pudo crear el ejercicio de entrenamiento",
                 "trainingExerciseSerieCouldntBeCreated": "No se pudo crear la serie para el ejercicio de entrenamiento"
+                
             },
             "list": {
                 "title": "Lista de Entrenamientos",
@@ -355,6 +356,13 @@
                 "state": {
                     "finished": "Finalizado",
                     "onGoing": "En curso"
+                }
+            },
+            "workout-tracker-series-table": {
+                "labels": {
+                    "weight": "Peso (kg/s)",
+                    "repetitions": "Repeticiones",
+                    "observations": "Observaciones"
                 }
             }
         }

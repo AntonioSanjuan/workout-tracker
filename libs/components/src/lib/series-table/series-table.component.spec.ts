@@ -31,4 +31,26 @@ describe('SeriesTableComponent', () => {
       expect(component).toBeTruthy();
     });
   })
+
+  describe('Integration tests', () => {
+    describe('Delete TrainingExerciseSerie', () => {
+      const trainingExerciseSerieSut = { id: 'trainingExerciseSerie delete test'} as TrainingExerciseSerie
+      it('should emit delete output', () => {
+        const deleteEmitSpy = jest.spyOn(component.delete, 'emit')
+        component.deleteSerie(trainingExerciseSerieSut)
+
+        expect(deleteEmitSpy).toHaveBeenCalledWith(trainingExerciseSerieSut)
+      })
+    })
+
+    describe('Edit TrainingExerciseSerie', () => {
+      const trainingExerciseSerieSut = { id: 'trainingExerciseSerie edit test'} as TrainingExerciseSerie
+      it('should emit edit output', () => {
+        const editEmitSpy = jest.spyOn(component.edit, 'emit')
+        component.editSerie(trainingExerciseSerieSut)
+
+        expect(editEmitSpy).toHaveBeenCalledWith(trainingExerciseSerieSut)
+      })
+    })
+  })
 });

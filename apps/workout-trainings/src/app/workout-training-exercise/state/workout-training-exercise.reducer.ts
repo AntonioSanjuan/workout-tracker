@@ -40,4 +40,14 @@ export const workoutTrainingExerciseReducer = createReducer(
         series: [ ...state.trainingExercise?.series || [], trainingExerciseSerie ]
       }
     })),
+    on(
+      TrainingExerciseActions.deleteAuthenticatedUserTrainingExerciseSerieRequestSuccess,
+      TrainingExerciseActions.deleteAnonymousUserTrainingExerciseSerieRequestSuccess,
+      (state: WorkoutTrainingExerciseState, { trainingExerciseSerie }) => ({
+      ...state,
+      trainingExercise:{
+        ...state.trainingExercise as TrainingExercise,
+        series: [ ...state.trainingExercise?.series || []].filter((serie) => serie.id !== trainingExerciseSerie.id)
+      }
+    })),
 );
