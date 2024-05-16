@@ -8,6 +8,14 @@
             {{ 'apps.workout-trainings.trainingExercise.actions.addNewTrainingExerciseSerie' | translate }}
         </button>
     
+        <h2>{{ 'apps.workout-trainings.trainingExercise.template.title' | translate }}</h2>
+    
+        <div (click)="openExerciseTemplateDetails(vm.trainingExercise?.exerciseTemplate!)">
+            <workout-tracker-exercise-template-card
+                [exerciseTemplate]="vm.trainingExercise?.exerciseTemplate!">
+            </workout-tracker-exercise-template-card>  
+        </div>
+
         <h2>{{ 'apps.workout-trainings.trainingExercise.title' | translate }}</h2>
     
         <workout-tracker-series-table

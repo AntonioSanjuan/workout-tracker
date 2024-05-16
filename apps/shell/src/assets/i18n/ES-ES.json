@@ -217,6 +217,9 @@
             },
             "trainingExercise": {
                 "title": "Detalles de ejercicio de entrenamiento",
+                "template": {
+                    "title": "Plantilla del ejercicio"
+                },
                 "addTrainingExerciseSerie": {
                     "title": "Añadir serie",
                     "step": {

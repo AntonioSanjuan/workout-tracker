@@ -215,6 +215,9 @@
             },
             "trainingExercise": {
                 "title": "Training Exercise Details",
+                "template": {
+                    "title": "Exercise Template"
+                },
                 "addTrainingExerciseSerie": {
                     "title": "Add series",
                     "step": {

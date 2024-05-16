@@ -10,11 +10,13 @@ import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { WorkoutTrainingExerciseComponent } from './workout-training-exercise.component';
-import { ViewHeaderComponent } from '@workout-tracker/components';
+import { ExerciseTemplateCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { appRoutes } from '../app.routes';
-import { TrainingExerciseSerie } from '@workout-tracker/models';
+import { AppRoutes, ExerciseTemplate, TrainingExerciseSerie } from '@workout-tracker/models';
 import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
+import { selectWorkoutTrainingExerciseState } from './state/workout-training-exercise.selectors';
+import { WorkoutTrainingExerciseState } from './state/workout-training-exercise.reducer';
 
 describe('WorkoutTrainingExerciseComponent', () => {
   let component: WorkoutTrainingExerciseComponent;
@@ -24,6 +26,8 @@ describe('WorkoutTrainingExerciseComponent', () => {
   let actions: Observable<Action>;
   let router: Router;
 
+  const workoutTrainingExerciseState = { trainingId: 'trainingId test', trainingExercise: { id: 'trainingExercise id test' , exerciseTemplate: {} }} as WorkoutTrainingExerciseState
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
@@ -31,7 +35,7 @@ describe('WorkoutTrainingExerciseComponent', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...workoutTrainingsAppStateMock, 
+            ...workoutTrainingsAppStateMock,
             ...userStateMock,
           }
         }),
@@ -41,6 +45,7 @@ describe('WorkoutTrainingExerciseComponent', () => {
         ViewHeaderComponent,
         LibsServicesDialogModule,
         WorkoutTrainingExerciseComponent,
+        ExerciseTemplateCardComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
@@ -52,6 +57,10 @@ describe('WorkoutTrainingExerciseComponent', () => {
     store = TestBed.inject(MockStore)
     router = TestBed.inject(Router);
     dialogService = TestBed.inject(DialogService)
+
+    store.overrideSelector(selectWorkoutTrainingExerciseState, workoutTrainingExerciseState)
+    store.refreshState()
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -73,5 +82,17 @@ describe('WorkoutTrainingExerciseComponent', () => {
         expect(dispatchSpy).toHaveBeenCalledWith(deleteUserTrainingExerciseSerieRequest( { trainingExerciseSerie: trainingExerciseSerieSut}))
       })
     })
+
+    describe('openExerciseDetails', () => {
+      it('should navigate to exercise details ', () => {
+        const exerciseSut = { id: 'exerciseId', image: ''}  as ExerciseTemplate
+        const navigateSpy = jest.spyOn(router, 'navigate')
+  
+        component.openExerciseTemplateDetails(exerciseSut)
+
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutExerciseTemplatesList}/${exerciseSut.id}`])
+      });
+    })
+
   })
 });

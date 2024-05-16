@@ -6,8 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { AppRoutes, TrainingExerciseSerie } from '@workout-tracker/models';
-import { SeriesTableComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { AppRoutes, ExerciseTemplate, TrainingExerciseSerie } from '@workout-tracker/models';
+import { ExerciseTemplateCardComponent, SeriesTableComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentId } from './state/workout-training-exercise.selectors';
 import { AddWorkoutTrainingExerciseSerieDialogComponent } from './add-workout-training-exercise-serie-dialog/add-workout-training-exercise-serie-dialog.component';
 import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
@@ -22,7 +22,8 @@ import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training
     NgFor,
     RouterModule,
     ViewHeaderComponent,
-    SeriesTableComponent
+    SeriesTableComponent,
+    ExerciseTemplateCardComponent
   ],
   styleUrls: ['./workout-training-exercise.component.scss'],
   standalone: true
@@ -45,8 +46,15 @@ export class WorkoutTrainingExerciseComponent {
     this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, true)
   }
 
+  public openExerciseTemplateDetails(exerciseTemplate: ExerciseTemplate) {
+    this.router.navigate([`${AppRoutes.WorkoutExerciseTemplatesList}/${exerciseTemplate.id}`])
+  }
+  
   public deleteTrainingExerciseSerie(serie: TrainingExerciseSerie) {
     this.store.dispatch(deleteUserTrainingExerciseSerieRequest({ trainingExerciseSerie: serie }))
   }
-  public editTrainingExerciseSerie(serie: TrainingExerciseSerie) {}
+  
+  public editTrainingExerciseSerie(serie: TrainingExerciseSerie) {
+    console.log("editing", serie)
+  }
 }
