@@ -84,7 +84,7 @@ export class WorkoutExerciseTemplatesEffects {
     getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest),
         concatLatestFrom(() => this.store.select(getUser)),
-        mergeMap(([{ exerciseTemplateId }, user]) => this.trainingService.getExerciseTemplateTrainingExercises(user?.uid as string, exerciseTemplateId).pipe(
+        mergeMap(([{ exerciseTemplateId }, user]) => this.trainingService.getExerciseTemplateTrainings(user?.uid as string, exerciseTemplateId).pipe(
             map((trainings: Training[]) => getAuthenticatedUserExerciseTemplateTrainingsDetailsRequestSuccess({trainings: trainings})),
             catchError(_ => {
                 this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])

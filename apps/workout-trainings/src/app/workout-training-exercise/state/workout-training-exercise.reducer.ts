@@ -8,11 +8,13 @@ export const WORKOUT_TRAINING_EXERCISE_FEATURE_KEY = 'workout-training-exercise'
 export interface WorkoutTrainingExerciseState {
   trainingId?: string,
   trainingExercise?: TrainingExercise,
+  previousTrainingExercise: TrainingExercise[]
 }
 
 export const initialWorkoutTrainingExerciseState: WorkoutTrainingExerciseState = {
   trainingId: undefined,
-  trainingExercise: undefined
+  trainingExercise: undefined,
+  previousTrainingExercise: []
 }
 
 export const workoutTrainingExerciseReducer = createReducer(
@@ -49,5 +51,12 @@ export const workoutTrainingExerciseReducer = createReducer(
         ...state.trainingExercise as TrainingExercise,
         series: [ ...state.trainingExercise?.series || []].filter((serie) => serie.id !== trainingExerciseSerie.id)
       }
+    })),
+    on(
+      TrainingExerciseActions.getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess,
+      TrainingExerciseActions.getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess,
+      (state: WorkoutTrainingExerciseState, { trainingExercises }) => ({
+      ...state,
+      previousTrainingExercise: trainingExercises
     })),
 );

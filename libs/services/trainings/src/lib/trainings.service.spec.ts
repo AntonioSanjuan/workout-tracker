@@ -122,7 +122,7 @@ describe('TrainingsService', () => {
       });
     });
 
-    describe('getExerciseTemplateTrainingExercises', () => {
+    describe('getExerciseTemplateTrainings', () => {
       const exerciseTemplateIdSut = 'exerciseTemplateIdSut'
       const getExerciseTemplateRef = { id: 'documentReferenceId'} as DocumentReference
       const trainingSut = {...trainingData[0] } as Training
@@ -134,8 +134,8 @@ describe('TrainingsService', () => {
         jest.spyOn(trainingsRefService, 'getTrainingExercisesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExercisesData.map(data => ({id: data.id, data: () => TrainingExerciseAdapter.toDto(data, { get: () => { return of({ data: () => ExerciseTemplateAdapter.toDto(exerciseTemplateData), id: exerciseTemplateData.id })} } as any) }))}))} as any);
         jest.spyOn(trainingsRefService, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))} as any);
       })
-      it('getExerciseTemplateTrainingExercises should return an array of trainings with trainingExercises', (done) => {
-        service.getExerciseTemplateTrainingExercises(userIdSut, exerciseTemplateIdSut).subscribe((result) => {
+      it('getExerciseTemplateTrainings should return an array of trainings with trainingExercises', (done) => {
+        service.getExerciseTemplateTrainings(userIdSut, exerciseTemplateIdSut).subscribe((result) => {
           expect(result).toEqual([trainingSut]);
           done();
         });

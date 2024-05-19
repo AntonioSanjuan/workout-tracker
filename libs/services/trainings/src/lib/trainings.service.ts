@@ -60,20 +60,49 @@ export class TrainingsService {
         );
     }
     
-    public getExerciseTemplateTrainingExercises(userId: string, exerciseTemplateId: string): Observable<Training[]> {
+    public getExerciseTemplateTrainingExercises(userId: string, exerciseTemplate: ExerciseTemplate): Observable<TrainingExercise[]> {
+        return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, exerciseTemplate.id), 1).get().pipe(
+            switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
+                const observables: Observable<TrainingExercise>[] = [];
+                collectionGroupQS.docs.forEach((doc) => {
+                    const trainingId = doc.ref.parent.parent?.id
+
+                    if(trainingId) {
+                        const trainingExerciseSerieObservable = this.getTrainingExerciseSeries(userId, trainingId, exerciseTemplate.id).pipe(
+                            map((trainingExerciseSeries) => 
+                                TrainingExerciseAdapter.toState(
+                                    doc.data() as TrainingExerciseDto, 
+                                    doc.id, 
+                                    exerciseTemplate,
+                                    trainingExerciseSeries
+                                )
+                            )
+                        );
+                        observables.push(trainingExerciseSerieObservable);
+                    }
+
+                })
+                return forkJoin(observables).pipe(
+                    defaultIfEmpty([]),
+                )
+            }),
+        )
+    }
+
+    public getExerciseTemplateTrainings(userId: string, exerciseTemplateId: string): Observable<Training[]> {
         return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, exerciseTemplateId)).get().pipe(
             switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
-                const trainingExerciseObservables: Observable<Training>[] = [];
+                const trainingObservables: Observable<Training>[] = [];
     
                 [...new Set(collectionGroupQS.docs.map((doc) => doc.ref.parent.parent?.id))].map((trainingId) => {
                     if(trainingId) {
                         const trainingExerciseSeriesObservable = this.getTraining(userId, trainingId)
     
-                        trainingExerciseObservables.push(trainingExerciseSeriesObservable);
+                        trainingObservables.push(trainingExerciseSeriesObservable);
                     }
                 })
     
-                return forkJoin(trainingExerciseObservables).pipe(
+                return forkJoin(trainingObservables).pipe(
                     defaultIfEmpty([]),
                 )
             }),

@@ -65,11 +65,11 @@ export class TrainingsRefService {
         return this.firebaseDataBase.doc(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}/series/${trainingExerciseSerieId}`)
     }
 
-    public getExerciseTemplateTrainingExercisesDocRefs(exerciseTemplateRef: AngularFirestoreDocument): AngularFirestoreCollectionGroup {
+    public getExerciseTemplateTrainingExercisesDocRefs(exerciseTemplateRef: AngularFirestoreDocument, limit = 5): AngularFirestoreCollectionGroup {
         const exerciseTemplateTrainingExercisesQuery: QueryGroupFn<DocumentData> = ref => {
             let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref
             query = query.where('exerciseTemplateId', "==", exerciseTemplateRef.ref) 
-            query = query.limit(5)
+            query = query.limit(limit)
 
             return query;
         }

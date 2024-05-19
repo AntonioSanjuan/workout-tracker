@@ -6,15 +6,16 @@ import { Observable, firstValueFrom, of, throwError} from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import firebase from 'firebase/compat/app';
-import { Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
+import { ExerciseTemplate, Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { getUser, showError } from '@workout-tracker/shared-store';
+import { TrainingsListState, getTrainingById, getTrainingExercisesByExerciseTemplateId, getTrainingsList, getTrainingsListState, getUser, showError } from '@workout-tracker/shared-store';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { TrainingExerciseEffects } from './workout-training-exercise.effects';
-import { addAnonymousUserTrainingExerciseSerieRequest, addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequest, addAuthenticatedUserTrainingExerciseSerieRequestError, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, addUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequestSuccess, deleteAuthenticatedUserTrainingExerciseSerieRequest, deleteAuthenticatedUserTrainingExerciseSerieRequestError, deleteAuthenticatedUserTrainingExerciseSerieRequestSuccess, deleteUserTrainingExerciseSerieRequest, getAnonymousUserTrainingExerciseRequest, getAnonymousUserTrainingExerciseRequestError, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExerciseRequest, getAuthenticatedUserTrainingExerciseRequestError, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from './workout-training-exercise.actions';
+import { addAnonymousUserTrainingExerciseSerieRequest, addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequest, addAuthenticatedUserTrainingExerciseSerieRequestError, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, addUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequestSuccess, deleteAuthenticatedUserTrainingExerciseSerieRequest, deleteAuthenticatedUserTrainingExerciseSerieRequestError, deleteAuthenticatedUserTrainingExerciseSerieRequestSuccess, deleteUserTrainingExerciseSerieRequest, getAnonymousUserTrainingExercisePreviousTrainingRequest, getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess, getAnonymousUserTrainingExerciseRequest, getAnonymousUserTrainingExerciseRequestError, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExercisePreviousTrainingRequest, getAuthenticatedUserTrainingExercisePreviousTrainingRequestError, getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess, getAuthenticatedUserTrainingExerciseRequest, getAuthenticatedUserTrainingExerciseRequestError, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from './workout-training-exercise.actions';
 import { selectWorkoutTraining, selectWorkoutTrainingState } from '../../workout-training/state/workout-training.selectors';
 import { selectWorkoutTrainingExerciseParentId, selectWorkoutTrainingExerciseState } from './workout-training-exercise.selectors';
 import { WorkoutTrainingExerciseState } from './workout-training-exercise.reducer';
+import { trainingsListStateMock } from '@workout-tracker/test';
 
 describe('TrainingExerciseEffects', () => {
   let actions: Observable<Action>;
@@ -36,7 +37,8 @@ describe('TrainingExerciseEffects', () => {
         provideMockActions(() => actions),
         provideMockStore({
           initialState: {
-            ...workoutTrainingsAppStateMock
+            ...workoutTrainingsAppStateMock,
+            ...trainingsListStateMock
           }
         }),
       ],
@@ -474,6 +476,207 @@ describe('TrainingExerciseEffects', () => {
 
       it('should return showError', async () => {
         const result = await firstValueFrom(effects.addUserTrainingExerciseSerieRequestError$)
+        expect(result).toEqual(showError({ errorMessage: expect.anything()}))
+      })
+    })
+  })
+
+  describe('getTrainingExercisePreviousTrainingRequest$', () => {   
+    const trainingIdSut = 'training id test' 
+    const trainingExerciseSut = { 
+      id: 'trainingExercise id test', 
+      exerciseTemplate: { 
+        id: 'exerciseTemplate id test'
+      }
+    } as TrainingExercise
+
+    describe('when getAuthenticatedUserTrainingExerciseRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+      })
+
+      describe('if user', () => {
+        const user =  { uid: 'testUID'} as firebase.User
+
+        beforeEach(() => {
+          store.overrideSelector(getUser, user);
+          store.refreshState()
+
+          actions = of(getAuthenticatedUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut, trainingId: trainingIdSut}))
+        })
+        it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+        })
+      })
+
+      describe('if non user', () => {
+        beforeEach(() => {
+          store.overrideSelector(getUser, undefined);
+          store.refreshState()
+
+          actions = of(getAuthenticatedUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut, trainingId: trainingIdSut }))
+        })
+        it('should return getAnonymousUserTrainingExercisePreviousTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
+          expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+        })
+      })
+
+    })
+
+    describe('when getAnonymousUserTrainingExerciseRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+      })
+
+      describe('if user', () => {
+        const user =  { uid: 'testUID'} as firebase.User
+
+        beforeEach(() => {
+          store.overrideSelector(getUser, user);
+          store.refreshState()
+
+          actions = of(getAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut, trainingId: trainingIdSut}))
+        })
+        it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+        })
+      })
+
+      describe('if non user', () => {
+        beforeEach(() => {
+          store.overrideSelector(getUser, undefined);
+          store.refreshState()
+
+          actions = of(getAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut, trainingId: trainingIdSut}))
+        })
+        it('should return getAnonymousUserTrainingExercisePreviousTrainingRequest', async () => {
+          const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
+          expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+        })
+      })
+
+    })
+  });
+
+  describe('getAuthenticatedUserTrainingExercisePreviousTrainingRequest$', () => {
+    const exerciseTemplateSut = { id: 'exerciseTemplate id test'} as ExerciseTemplate
+
+    const user =  { uid: 'testUID'} as firebase.User
+    describe('when getAuthenticatedUserTrainingExercisePreviousTrainingRequest is dispatched', () => {
+      beforeEach(() => {
+        jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockClear()
+
+        store.resetSelectors()
+        
+        store.overrideSelector(getUser, user);
+        store.refreshState()
+      })
+      describe('when trainingService.getExerciseTemplateTrainingExercises throws error', () => {
+        const errorCodeMock = 'testing error code'
+        const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+        const errorResp = throwError(() => errorMock )
+
+        beforeEach(() => {
+          jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockReturnValue(errorResp)
+          actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest( { exerciseTemplate: exerciseTemplateSut }))
+        })
+
+        it('should request getExerciseTemplateTrainingExercises', async () => {
+          const getExerciseTemplateTrainingExercisesSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises')
+          await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
+          expect(getExerciseTemplateTrainingExercisesSpy).toHaveBeenCalledWith(user.uid, exerciseTemplateSut)
+        })
+        it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequestError', async () => {
+          const result = await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequestError({ exerciseTemplateId: exerciseTemplateSut.id}))
+        })
+      })
+
+      describe('when trainingService.getExerciseTemplateTrainingExercises success', () => {
+        const trainingExerciseSut = [] as TrainingExercise[]
+        beforeEach(() => {
+          jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockReturnValue(of(trainingExerciseSut))
+          actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({exerciseTemplate: exerciseTemplateSut}))
+        })
+        it('should request getExerciseTemplateTrainingExercises', async () => {
+          const getExerciseTemplateTrainingExercisesSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises')
+          await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
+          expect(getExerciseTemplateTrainingExercisesSpy).toHaveBeenCalledWith(user.uid,  exerciseTemplateSut)
+        })
+        it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess', async () => {
+          const result = await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExerciseSut }))
+        })
+      })
+
+    })
+  });
+  describe('getAnonymousUserTrainingExercisePreviousTrainingRequest$', () => {
+    describe('when getAnonymousUserTrainingExercisePreviousTrainingRequest is dispatched', () => {
+      const exerciseTemplateSut = { id: 'exerciseTemplate id test'} as ExerciseTemplate
+      const trainingExercise = [
+        {
+          id: 'trainingExercise id test',
+          exerciseTemplate: exerciseTemplateSut
+        } as TrainingExercise,
+      ] as TrainingExercise[]
+
+      const trainingListState = {
+        list: [
+          {
+            id: 'training 1 id test',
+            trainingExercises: [
+              trainingExercise[0],
+              {
+                id: 'trainingExercise 2 id test',
+                exerciseTemplate: { id: 'trainingExercise 2 exerciseTemplate'}
+              } as TrainingExercise
+            ]
+          } as Training,
+          {
+            id: 'training 2 id test',
+            trainingExercises: [] as TrainingExercise[]
+          } as Training,
+          {
+            id: 'training 3 id test',
+            trainingExercises: [
+              {
+                id: 'trainingExercise 1 id test',
+                exerciseTemplate: { id: 'trainingExercise 2 exerciseTemplate'}
+              }
+            ] as TrainingExercise[]
+          } as Training
+        ]
+      } as TrainingsListState
+
+        describe('should return getAnonymousUserTrainingExercisePreviousTrainingRequest', () => {
+          beforeEach(() => {
+            store.overrideSelector(getTrainingsListState, trainingListState)
+
+            store.refreshState()
+            actions = of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: exerciseTemplateSut }))
+          })
+  
+          it('should return getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess', async () => {
+            const result = await firstValueFrom(effects.getAnonymousUserTrainingExercisePreviousTrainingRequest$)
+            expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExercise }))
+          })
+        })
+    })
+  })
+
+  describe('addUserTrainingExerciseSerieRequestError$', () => {
+    describe('when addUserTrainingExerciseSerieRequestError is dispatched', () => {
+      const exerciseTemplateIdSut = 'exerciseTemplate id sut'
+      beforeEach(() => {
+        actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequestError({ exerciseTemplateId: exerciseTemplateIdSut}))
+      })
+
+      it('should return showError', async () => {
+        const result = await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequestError$)
         expect(result).toEqual(showError({ errorMessage: expect.anything()}))
       })
     })

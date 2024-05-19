@@ -4,12 +4,12 @@ import { map, catchError, of, mergeMap, iif, take, switchMap } from 'rxjs'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
-import { getTrainingById, getUser, showError } from '@workout-tracker/shared-store';
-import { AppRoutes, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
-import { addAnonymousUserTrainingExerciseSerieRequest, addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequest, addAuthenticatedUserTrainingExerciseSerieRequestError, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, addUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequestSuccess, deleteAuthenticatedUserTrainingExerciseSerieRequest, deleteAuthenticatedUserTrainingExerciseSerieRequestError, deleteAuthenticatedUserTrainingExerciseSerieRequestSuccess, deleteUserTrainingExerciseSerieRequest, getAnonymousUserTrainingExerciseRequest, getAnonymousUserTrainingExerciseRequestError, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExerciseRequest, getAuthenticatedUserTrainingExerciseRequestError, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from './workout-training-exercise.actions';
+import { getTrainingById, getTrainingExercisesByExerciseTemplateId, getTrainingsByExerciseTemplateId, getUser, showError } from '@workout-tracker/shared-store';
+import { AppRoutes, Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
+import { addAnonymousUserTrainingExerciseSerieRequest, addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequest, addAuthenticatedUserTrainingExerciseSerieRequestError, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, addUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequestSuccess, deleteAuthenticatedUserTrainingExerciseSerieRequest, deleteAuthenticatedUserTrainingExerciseSerieRequestError, deleteAuthenticatedUserTrainingExerciseSerieRequestSuccess, deleteUserTrainingExerciseSerieRequest, getAnonymousUserTrainingExercisePreviousTrainingRequest, getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess, getAnonymousUserTrainingExerciseRequest, getAnonymousUserTrainingExerciseRequestError, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExercisePreviousTrainingRequest, getAuthenticatedUserTrainingExercisePreviousTrainingRequestError, getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess, getAuthenticatedUserTrainingExerciseRequest, getAuthenticatedUserTrainingExerciseRequestError, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from './workout-training-exercise.actions';
 import { TrainingsService } from '@workout-tracker/services/trainings';
 import { getWorkoutTrainingExerciseById } from '../../workout-training/state/workout-training.selectors';
-import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentId, selectWorkoutTrainingExerciseState } from './workout-training-exercise.selectors';
+import { selectWorkoutTrainingExerciseState } from './workout-training-exercise.selectors';
 
 @Injectable()
 export class TrainingExerciseEffects {
@@ -68,6 +68,56 @@ export class TrainingExerciseEffects {
         })
     ))
 
+    //
+    getTrainingExercisePreviousTrainingRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(getAuthenticatedUserTrainingExerciseRequestSuccess, getAnonymousUserTrainingExerciseRequestSuccess),
+        concatLatestFrom(() => this.store.select(getUser)),
+        mergeMap(([{ trainingExercise }, user]) => 
+            iif(
+                () => !!user,
+                of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExercise.exerciseTemplate})),
+                of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExercise.exerciseTemplate}))
+            )
+        )
+    ))
+
+    getAuthenticatedUserTrainingExercisePreviousTrainingRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(getAuthenticatedUserTrainingExercisePreviousTrainingRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        mergeMap(([{ exerciseTemplate }, user]) => this.exercisesService.getExerciseTemplateTrainingExercises(user?.uid as string, exerciseTemplate).pipe(
+            map((trainingExercises: TrainingExercise[]) => getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess({trainingExercises: trainingExercises})),
+            catchError(_ => {
+                this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])
+                return of(getAuthenticatedUserTrainingExercisePreviousTrainingRequestError({ exerciseTemplateId: exerciseTemplate.id }))}
+            )
+        ))
+    ))
+    
+    getAnonymousUserTrainingExercisePreviousTrainingRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(getAnonymousUserTrainingExercisePreviousTrainingRequest),
+        mergeMap(({ exerciseTemplate }) => 
+            this.store.select(getTrainingExercisesByExerciseTemplateId(exerciseTemplate.id)).pipe(
+            take(1),
+            map((trainingExercises) => 
+                getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExercises })
+            )
+        )
+    )))
+
+    getAuthenticatedUserTrainingExercisePreviousTrainingRequestError$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            getAuthenticatedUserTrainingExercisePreviousTrainingRequestError
+        ),
+        map(({ exerciseTemplateId }) => {
+            return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.trainingExercisePreviousTrainingNotFound', 
+            {
+                exerciseTemplateId: exerciseTemplateId.toUpperCase(),
+            }
+            )}`})
+        })
+    ))
+
+    //
     deleteUserTrainingExerciseSerieRequest$ = createEffect(() => this.actions$.pipe(
         ofType(deleteUserTrainingExerciseSerieRequest),
         concatLatestFrom(() => this.store.select(getUser)),

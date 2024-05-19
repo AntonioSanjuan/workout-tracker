@@ -121,6 +121,7 @@
             "errors": {
                 "trainingNotFound": "Entrenamiento {{trainingId}} no encontrado",
                 "trainingExerciseNotFound": "Ejercicio de entrenamiento {{trainingExerciseId}} no encontrado",
+                "trainingExercisePreviousTrainingNotFound": "Entrenamientos previos no encontrados",
                 "trainingExerciseCouldntBeCreated": "No se pudo crear el ejercicio de entrenamiento",
                 "trainingExerciseSerieCouldntBeCreated": "No se pudo crear la serie para el ejercicio de entrenamiento"
                 

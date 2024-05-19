@@ -1,6 +1,6 @@
 import { Training, TrainingExercise, TrainingExerciseSerie } from "@workout-tracker/models";
 import { initialWorkoutTrainingExerciseState, workoutTrainingExerciseReducer } from "./workout-training-exercise.reducer";
-import { addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from "./workout-training-exercise.actions";
+import { addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from "./workout-training-exercise.actions";
 
 describe('workoutTrainingExerciseReducer', () => {
     describe('getUserTrainingExerciseRequest action', () => {
@@ -54,6 +54,24 @@ describe('workoutTrainingExerciseReducer', () => {
 
             expect(state.trainingId).toEqual(state.trainingId)
             expect(state.trainingExercise?.series).toEqual([trainingExerciseSerieSut])
+        })
+    })
+    describe('getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess action', () => {
+        const trainingExercisesSut = [{ id: 'idTest' }] as TrainingExercise[];
+        it('should handle getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess action', () => {
+            const action = getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExercisesSut })
+            const state = workoutTrainingExerciseReducer(initialWorkoutTrainingExerciseState, action)
+
+            expect(state.previousTrainingExercise).toEqual(trainingExercisesSut)
+        })
+    })
+    describe('getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess action', () => {
+        const trainingExercisesSut = [{ id: 'idTest' }] as TrainingExercise[];
+        it('should handle getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess action', () => {
+            const action = getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExercisesSut })
+            const state = workoutTrainingExerciseReducer(initialWorkoutTrainingExerciseState, action)
+
+            expect(state.previousTrainingExercise).toEqual(trainingExercisesSut)
         })
     })
 })

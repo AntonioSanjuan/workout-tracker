@@ -120,6 +120,7 @@
             "errors": {
                 "trainingNotFound": "Training {{trainingId}} not found",
                 "trainingExerciseNotFound": "Training exercise {{trainingExerciseId}} not found",
+                "trainingExercisePreviousTrainingNotFound": "Previous trainings not found",
                 "trainingExerciseCouldntBeCreated": "Training exercise couldn't be created",
                 "trainingExerciseSerieCouldntBeCreated": "Training exercise series couldn't be created"
             },

@@ -228,25 +228,25 @@ describe('WorkoutExerciseTemplatesEffects', () => {
 
     describe('when getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest is dispatched', () => {
       beforeEach(() => {
-        jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockClear()
+        jest.spyOn(trainingService, 'getExerciseTemplateTrainings').mockClear()
 
         store.resetSelectors()
         
         store.overrideSelector(getUser, user);
         store.refreshState()
       })
-      describe('when trainingService.getExerciseTemplateTrainingExercises throws error', () => {
+      describe('when trainingService.getExerciseTemplateTrainings throws error', () => {
         const errorCodeMock = 'testing error code'
         const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
         const errorResp = throwError(() => errorMock )
 
         beforeEach(() => {
-          jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockReturnValue(errorResp)
+          jest.spyOn(trainingService, 'getExerciseTemplateTrainings').mockReturnValue(errorResp)
           actions = of(getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest( { exerciseTemplateId: exerciseTemplateIdSut}))
         })
 
-        it('should request getExerciseTemplateTrainingExercises', async () => {
-          const getExerciseSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises')
+        it('should request getExerciseTemplateTrainings', async () => {
+          const getExerciseSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainings')
           await firstValueFrom(effects.getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest$)
           expect(getExerciseSpy).toHaveBeenCalledWith(user.uid, exerciseTemplateIdSut)
         })
@@ -256,13 +256,13 @@ describe('WorkoutExerciseTemplatesEffects', () => {
         })
       })
 
-      describe('when trainingService.getExerciseTemplateTrainingExercises success', () => {
+      describe('when trainingService.getExerciseTemplateTrainings success', () => {
         beforeEach(() => {
-          jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockReturnValue(of(trainingsSut))
+          jest.spyOn(trainingService, 'getExerciseTemplateTrainings').mockReturnValue(of(trainingsSut))
           actions = of(getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest({exerciseTemplateId: exerciseTemplateIdSut}))
         })
         it('should request getExerciseTemplates', async () => {
-          const getExercisesSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises')
+          const getExercisesSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainings')
           await firstValueFrom(effects.getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest$)
           expect(getExercisesSpy).toHaveBeenCalledWith(user.uid, exerciseTemplateIdSut)
         })
