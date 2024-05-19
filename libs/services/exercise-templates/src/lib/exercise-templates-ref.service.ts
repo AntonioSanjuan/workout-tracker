@@ -9,7 +9,7 @@ export class ExerciseTemplatesRefService {
         return this.firebaseDataBase.collection(`user/${userId}/exerciseTemplates`)
     }
 
-    public getExerciseTemplateDocRef(userId: string, exerciseId: string): AngularFirestoreDocument {
-        return this.firebaseDataBase.doc(`user/${userId}/exerciseTemplates/${exerciseId}`)
+    public getExerciseTemplateDocRef(userId: string, trainingExerciseId: string): AngularFirestoreDocument {
+        return this.firebaseDataBase.doc(`user/${userId}/exerciseTemplates/${trainingExerciseId}`)
     }
 }

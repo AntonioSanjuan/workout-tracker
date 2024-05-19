@@ -12,6 +12,8 @@ export interface TrainingDto {
 
 export interface TrainingExerciseDto {
     exerciseTemplateId: DocumentReference,
+
+    creationDate: Timestamp
 }
 
 export interface TrainingExerciseSerieDto {

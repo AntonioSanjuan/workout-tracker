@@ -75,8 +75,8 @@ export class TrainingExerciseEffects {
         mergeMap(([{ trainingExercise }, user]) => 
             iif(
                 () => !!user,
-                of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExercise.exerciseTemplate})),
-                of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExercise.exerciseTemplate}))
+                of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExercise})),
+                of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExercise}))
             )
         )
     ))
@@ -84,19 +84,19 @@ export class TrainingExerciseEffects {
     getAuthenticatedUserTrainingExercisePreviousTrainingRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAuthenticatedUserTrainingExercisePreviousTrainingRequest),
         concatLatestFrom(() => this.store.select(getUser)),
-        mergeMap(([{ exerciseTemplate }, user]) => this.exercisesService.getExerciseTemplateTrainingExercises(user?.uid as string, exerciseTemplate).pipe(
+        mergeMap(([{ trainingExercise }, user]) => this.exercisesService.getPrevTrainingExercisesByExerciseTemplate(user?.uid as string, trainingExercise).pipe(
             map((trainingExercises: TrainingExercise[]) => getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess({trainingExercises: trainingExercises})),
             catchError(_ => {
                 this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])
-                return of(getAuthenticatedUserTrainingExercisePreviousTrainingRequestError({ exerciseTemplateId: exerciseTemplate.id }))}
+                return of(getAuthenticatedUserTrainingExercisePreviousTrainingRequestError({ exerciseTemplateId: trainingExercise.exerciseTemplate.id }))}
             )
         ))
     ))
     
     getAnonymousUserTrainingExercisePreviousTrainingRequest$ = createEffect(() => this.actions$.pipe(
         ofType(getAnonymousUserTrainingExercisePreviousTrainingRequest),
-        mergeMap(({ exerciseTemplate }) => 
-            this.store.select(getTrainingExercisesByExerciseTemplateId(exerciseTemplate.id)).pipe(
+        mergeMap(({ trainingExercise }) => 
+            this.store.select(getTrainingExercisesByExerciseTemplateId(trainingExercise.exerciseTemplate.id)).pipe(
             take(1),
             map((trainingExercises) => 
                 getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExercises })

@@ -24,7 +24,7 @@ export class TrainingExerciseInfoComponent implements OnChanges {
   @Input() public trainingExercise!: TrainingExercise
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.maxSerieWeight = Math.max(...this.trainingExercise.series.map((serie) => serie.weight))
+      this.maxSerieWeight = this.trainingExercise.series.length > 0 ? Math.max(...this.trainingExercise.series.map((serie) => serie.weight)): 0
       this.totalWeight = this.trainingExercise.series.reduce((accumulator, currentValue) => {
         return accumulator + (currentValue.weight * currentValue.repetitions)
       },0);

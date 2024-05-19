@@ -31,12 +31,14 @@ export class TrainingExerciseAdapter {
             id: id,
             exerciseTemplate: exerciseTemplate,
             series: exerciseSeries,
+            creationDate: DateAdapter.toState(trainingExercise.creationDate),
         }
     }
 
     static toDto(trainingExercise: TrainingExercise, exerciseTemplateId: DocumentReference): TrainingExerciseDto {
         return {
             exerciseTemplateId: exerciseTemplateId,
+            creationDate:  DateAdapter.toDto(trainingExercise.creationDate),
         }
     }
 }

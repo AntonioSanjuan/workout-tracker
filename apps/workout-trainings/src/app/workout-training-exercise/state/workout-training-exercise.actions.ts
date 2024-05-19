@@ -17,13 +17,13 @@ export const GET_ANONYMOUS_USER_TRAINING_EXERCISE_ERROR   = 'GET ANONYMOUS USER 
 export const getAnonymousUserTrainingExerciseRequestError = createAction(GET_ANONYMOUS_USER_TRAINING_EXERCISE_ERROR, props<{ trainingExerciseId: string}>())
 
 export const GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_REQUEST = 'GET AUTHENTICATED USER TRAINING EXERCISE PREVIOUS TRAINING Request'
-export const getAuthenticatedUserTrainingExercisePreviousTrainingRequest = createAction(GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_REQUEST, props<{ exerciseTemplate: ExerciseTemplate}>())
+export const getAuthenticatedUserTrainingExercisePreviousTrainingRequest = createAction(GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_REQUEST, props<{ trainingExercise: TrainingExercise}>())
 export const GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_SUCCESS = 'GET AUTHENTICATED USER TRAINING EXERCISE PREVIOUS TRAINING Success'
 export const getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess = createAction(GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_SUCCESS, props<{ trainingExercises: TrainingExercise[]}>())
 export const GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_ERROR   = 'GET AUTHENTICATED USER TRAINING EXERCISE PREVIOUS TRAINING Error'
 export const getAuthenticatedUserTrainingExercisePreviousTrainingRequestError = createAction(GET_AUTHENTICATED_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_ERROR, props<{ exerciseTemplateId: string}>())
 export const GET_ANONYMOUS_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_REQUEST = 'GET ANONYMOUS USER TRAINING EXERCISE PREVIOUS TRAINING Request'
-export const getAnonymousUserTrainingExercisePreviousTrainingRequest = createAction(GET_ANONYMOUS_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_REQUEST, props<{ exerciseTemplate: ExerciseTemplate}>())
+export const getAnonymousUserTrainingExercisePreviousTrainingRequest = createAction(GET_ANONYMOUS_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_REQUEST, props<{ trainingExercise: TrainingExercise}>())
 export const GET_ANONYMOUS_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_SUCCESS = 'GET ANONYMOUS USER TRAINING EXERCISE PREVIOUS TRAINING Success'
 export const getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess = createAction(GET_ANONYMOUS_USER_TRAINING_EXERCISE_PREVIOUS_TRAINING_SUCCESS, props<{ trainingExercises: TrainingExercise[]}>())
 

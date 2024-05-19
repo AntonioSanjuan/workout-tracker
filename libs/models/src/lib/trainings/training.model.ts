@@ -15,6 +15,8 @@ export interface TrainingExercise {
 
     exerciseTemplate: ExerciseTemplate
     series: TrainingExerciseSerie[]
+
+    creationDate: Date
 }
 
 export interface TrainingExerciseSerie {

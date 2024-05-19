@@ -101,10 +101,15 @@ describe('TrainingAdapter', () => {
 
 describe('TrainingExerciseAdapter', () => {    
   describe('toState', () => {
+    const creationDateSut: Date = new Date()
+    const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
+
+
     it('should convert TrainingExercise model into TrainingExerciseDto model', () => {
       const inputTrainingExerciseIdSut = 'trainingExerciseIdTest';
       const inputTrainingExerciseSut: TrainingExerciseDto = {
-        exerciseTemplateId: {} as DocumentReference
+        exerciseTemplateId: {} as DocumentReference,
+        creationDate: inputTrainingCreationDateSut
       }
       const inputExerciseTemplateSut: ExerciseTemplate = {} as ExerciseTemplate
       const inputTrainingExerciseSeriesSut: TrainingExerciseSerie[] = []
@@ -114,21 +119,26 @@ describe('TrainingExerciseAdapter', () => {
       expect(trainingExerciseState.id).toEqual(inputTrainingExerciseIdSut)
       expect(trainingExerciseState.exerciseTemplate).toEqual(inputExerciseTemplateSut)
       expect(trainingExerciseState.series).toEqual(inputTrainingExerciseSeriesSut)  
+      expect(trainingExerciseState.creationDate).toEqual(creationDateSut)  
     });
   })
 
   describe('toDto', () => {
+    const creationDateSut: Date = new Date()
+    const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
     it('should convert TrainingExercise model into TrainingExerciseDto model', () => {
       const inputTrainingExerciseSut: TrainingExercise = {
         id: 'trainingExerciseIdTest',
         exerciseTemplate: {} as ExerciseTemplate,
-        series: []
+        series: [],
+        creationDate: creationDateSut
       }
       const inputTrainingExerciseTemplateSut = {} as DocumentReference
 
       const trainingExerciseDto = TrainingExerciseAdapter.toDto(inputTrainingExerciseSut, inputTrainingExerciseTemplateSut)
 
       expect(trainingExerciseDto.exerciseTemplateId).toEqual(inputTrainingExerciseTemplateSut)  
+      expect(trainingExerciseDto.creationDate).toEqual(inputTrainingCreationDateSut)  
     });
   })
 });

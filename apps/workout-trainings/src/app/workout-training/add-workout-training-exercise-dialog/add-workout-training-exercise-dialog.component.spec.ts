@@ -94,6 +94,7 @@ describe('AddWorkoutTrainingExerciseDialogComponent', () => {
 
           expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingExerciseRequest({trainingExercise: {
             exerciseTemplate: exerciseTemplateSut,
+            creationDate: today,
             series: [] as TrainingExerciseSerie[]
           } as any}))
         });

@@ -60,20 +60,24 @@ export class TrainingsService {
         );
     }
     
-    public getExerciseTemplateTrainingExercises(userId: string, exerciseTemplate: ExerciseTemplate): Observable<TrainingExercise[]> {
-        return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, exerciseTemplate.id), 1).get().pipe(
+    public getPrevTrainingExercisesByExerciseTemplate(userId: string, trainingExercise: TrainingExercise): Observable<TrainingExercise[]> {
+        return this.trainingsRefService.getExerciseTemplateTrainingExercisesDocRefs(
+            this.exerciseTemplateRefService.getExerciseTemplateDocRef(userId, trainingExercise.exerciseTemplate.id), 
+            1,
+            trainingExercise.creationDate
+        ).get().pipe(
             switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
                 const observables: Observable<TrainingExercise>[] = [];
                 collectionGroupQS.docs.forEach((doc) => {
                     const trainingId = doc.ref.parent.parent?.id
 
                     if(trainingId) {
-                        const trainingExerciseSerieObservable = this.getTrainingExerciseSeries(userId, trainingId, exerciseTemplate.id).pipe(
+                        const trainingExerciseSerieObservable = this.getTrainingExerciseSeries(userId, trainingId, trainingExercise.id).pipe(
                             map((trainingExerciseSeries) => 
                                 TrainingExerciseAdapter.toState(
                                     doc.data() as TrainingExerciseDto, 
                                     doc.id, 
-                                    exerciseTemplate,
+                                    trainingExercise.exerciseTemplate,
                                     trainingExerciseSeries
                                 )
                             )
@@ -86,6 +90,9 @@ export class TrainingsService {
                     defaultIfEmpty([]),
                 )
             }),
+            catchError((error) => {
+                console.log("error", error); throw error
+            })
         )
     }
 

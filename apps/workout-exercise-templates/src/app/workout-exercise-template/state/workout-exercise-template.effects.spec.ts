@@ -222,7 +222,7 @@ describe('WorkoutExerciseTemplatesEffects', () => {
 
   describe('getAuthenticatedUserExerciseTemplateTrainingsDetailsRequest$', () => {
     const exerciseTemplateIdSut = 'exerciseTemplateId test'
-    const trainingsSut = [ { trainingExercises: [ { id: '', exerciseTemplate: { id: exerciseTemplateIdSut } as ExerciseTemplate, series: []} ] as TrainingExercise[] } as Training]
+    const trainingsSut = [ { trainingExercises: [ { id: '', creationDate: new Date(), exerciseTemplate: { id: exerciseTemplateIdSut } as ExerciseTemplate, series: []} ] as TrainingExercise[] } as Training]
 
     const user =  { uid: 'testUID'} as firebase.User
 
@@ -285,7 +285,7 @@ describe('WorkoutExerciseTemplatesEffects', () => {
       })
 
       describe('if some trainings with defined trainingExercises has as exerciseTemplate the requested exerciseTemplate details', () => {
-        const trainingsSut =  [ { id: '', trainingExercises: [ { id: '', exerciseTemplate: { id: exerciseTemplateIdSut } as ExerciseTemplate, series: []} ] as TrainingExercise[] } as Training]
+        const trainingsSut =  [ { id: '', trainingExercises: [ { id: '', creationDate: new Date(), exerciseTemplate: { id: exerciseTemplateIdSut } as ExerciseTemplate, series: []} ] as TrainingExercise[] } as Training]
         
         beforeEach(() => { 
           store.overrideSelector(getTrainingsListState, {

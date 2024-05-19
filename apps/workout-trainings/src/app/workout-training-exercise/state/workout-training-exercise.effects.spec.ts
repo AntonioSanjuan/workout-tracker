@@ -506,7 +506,7 @@ describe('TrainingExerciseEffects', () => {
         })
         it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequest', async () => {
           const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
-          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExerciseSut }))
         })
       })
 
@@ -519,7 +519,7 @@ describe('TrainingExerciseEffects', () => {
         })
         it('should return getAnonymousUserTrainingExercisePreviousTrainingRequest', async () => {
           const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
-          expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+          expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExerciseSut }))
         })
       })
 
@@ -541,7 +541,7 @@ describe('TrainingExerciseEffects', () => {
         })
         it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequest', async () => {
           const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
-          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExerciseSut }))
         })
       })
 
@@ -554,7 +554,7 @@ describe('TrainingExerciseEffects', () => {
         })
         it('should return getAnonymousUserTrainingExercisePreviousTrainingRequest', async () => {
           const result = await firstValueFrom(effects.getTrainingExercisePreviousTrainingRequest$)
-          expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: trainingExerciseSut.exerciseTemplate }))
+          expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExerciseSut }))
         })
       })
 
@@ -563,31 +563,36 @@ describe('TrainingExerciseEffects', () => {
 
   describe('getAuthenticatedUserTrainingExercisePreviousTrainingRequest$', () => {
     const exerciseTemplateSut = { id: 'exerciseTemplate id test'} as ExerciseTemplate
+    const trainingExerciseSut = { 
+      id: 'trainingExercise id test', 
+      exerciseTemplate: exerciseTemplateSut
+    } as TrainingExercise
+
 
     const user =  { uid: 'testUID'} as firebase.User
     describe('when getAuthenticatedUserTrainingExercisePreviousTrainingRequest is dispatched', () => {
       beforeEach(() => {
-        jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockClear()
+        jest.spyOn(trainingService, 'getPrevTrainingExercisesByExerciseTemplate').mockClear()
 
         store.resetSelectors()
         
         store.overrideSelector(getUser, user);
         store.refreshState()
       })
-      describe('when trainingService.getExerciseTemplateTrainingExercises throws error', () => {
+      describe('when trainingService.getPrevTrainingExercisesByExerciseTemplate throws error', () => {
         const errorCodeMock = 'testing error code'
         const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
         const errorResp = throwError(() => errorMock )
 
         beforeEach(() => {
-          jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockReturnValue(errorResp)
-          actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest( { exerciseTemplate: exerciseTemplateSut }))
+          jest.spyOn(trainingService, 'getPrevTrainingExercisesByExerciseTemplate').mockReturnValue(errorResp)
+          actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest( { trainingExercise: trainingExerciseSut }))
         })
 
-        it('should request getExerciseTemplateTrainingExercises', async () => {
-          const getExerciseTemplateTrainingExercisesSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises')
+        it('should request getPrevTrainingExercisesByExerciseTemplate', async () => {
+          const getPrevTrainingExercisesByExerciseTemplateSpy = jest.spyOn(trainingService, 'getPrevTrainingExercisesByExerciseTemplate')
           await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
-          expect(getExerciseTemplateTrainingExercisesSpy).toHaveBeenCalledWith(user.uid, exerciseTemplateSut)
+          expect(getPrevTrainingExercisesByExerciseTemplateSpy).toHaveBeenCalledWith(user.uid, trainingExerciseSut)
         })
         it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequestError', async () => {
           const result = await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
@@ -595,20 +600,20 @@ describe('TrainingExerciseEffects', () => {
         })
       })
 
-      describe('when trainingService.getExerciseTemplateTrainingExercises success', () => {
-        const trainingExerciseSut = [] as TrainingExercise[]
+      describe('when trainingService.getPrevTrainingExercisesByExerciseTemplate success', () => {
+        const trainingExerciseResp = [] as TrainingExercise[]
         beforeEach(() => {
-          jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises').mockReturnValue(of(trainingExerciseSut))
-          actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({exerciseTemplate: exerciseTemplateSut}))
+          jest.spyOn(trainingService, 'getPrevTrainingExercisesByExerciseTemplate').mockReturnValue(of(trainingExerciseResp))
+          actions = of(getAuthenticatedUserTrainingExercisePreviousTrainingRequest({trainingExercise: trainingExerciseSut}))
         })
-        it('should request getExerciseTemplateTrainingExercises', async () => {
-          const getExerciseTemplateTrainingExercisesSpy = jest.spyOn(trainingService, 'getExerciseTemplateTrainingExercises')
+        it('should request getPrevTrainingExercisesByExerciseTemplate', async () => {
+          const getPrevTrainingExercisesByExerciseTemplateSpy = jest.spyOn(trainingService, 'getPrevTrainingExercisesByExerciseTemplate')
           await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
-          expect(getExerciseTemplateTrainingExercisesSpy).toHaveBeenCalledWith(user.uid,  exerciseTemplateSut)
+          expect(getPrevTrainingExercisesByExerciseTemplateSpy).toHaveBeenCalledWith(user.uid,  trainingExerciseSut)
         })
         it('should return getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess', async () => {
           const result = await firstValueFrom(effects.getAuthenticatedUserTrainingExercisePreviousTrainingRequest$)
-          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExerciseSut }))
+          expect(result).toEqual(getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExerciseResp }))
         })
       })
 
@@ -657,7 +662,7 @@ describe('TrainingExerciseEffects', () => {
             store.overrideSelector(getTrainingsListState, trainingListState)
 
             store.refreshState()
-            actions = of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ exerciseTemplate: exerciseTemplateSut }))
+            actions = of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExercise[0] }))
           })
   
           it('should return getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess', async () => {
