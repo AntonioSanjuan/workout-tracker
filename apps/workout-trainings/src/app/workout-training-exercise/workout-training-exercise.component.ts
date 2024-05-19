@@ -7,8 +7,8 @@ import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, ExerciseTemplate, TrainingExerciseSerie } from '@workout-tracker/models';
-import { ExerciseTemplateCardComponent, SeriesTableComponent, ViewHeaderComponent } from '@workout-tracker/components';
-import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentId } from './state/workout-training-exercise.selectors';
+import { BannerComponent, ExerciseTemplateCardComponent, SeriesTableComponent, TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentId, selectWorkoutTrainingExercisePreviousSimilarTraining } from './state/workout-training-exercise.selectors';
 import { AddWorkoutTrainingExerciseSerieDialogComponent } from './add-workout-training-exercise-serie-dialog/add-workout-training-exercise-serie-dialog.component';
 import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
 
@@ -23,7 +23,9 @@ import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training
     RouterModule,
     ViewHeaderComponent,
     SeriesTableComponent,
-    ExerciseTemplateCardComponent
+    ExerciseTemplateCardComponent,
+    TrainingExerciseCardComponent,
+    BannerComponent
   ],
   styleUrls: ['./workout-training-exercise.component.scss'],
   standalone: true
@@ -35,6 +37,7 @@ export class WorkoutTrainingExerciseComponent {
 
   public trainingExerciseParentId$ = this.store.select(selectWorkoutTrainingExerciseParentId)
   public trainingExercise$ = this.store.select(selectWorkoutTrainingExercise)
+  public trainingExercisePreviousSimilarTraining$ = this.store.select(selectWorkoutTrainingExercisePreviousSimilarTraining)
   
   public appRoutes = AppRoutes
 

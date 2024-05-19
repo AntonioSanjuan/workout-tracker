@@ -18,3 +18,8 @@ export const selectWorkoutTrainingExercise = createSelector(
   (state: WorkoutTrainingExerciseState) => state.trainingExercise
 );
 
+export const selectWorkoutTrainingExercisePreviousSimilarTraining = createSelector(
+  selectWorkoutTrainingExerciseState,
+  (state: WorkoutTrainingExerciseState) => state.previousTrainingExercise
+);
+

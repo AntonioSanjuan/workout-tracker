@@ -11,6 +11,10 @@
 
     .WorkoutTrainingExercise_ContentContainer {
 
+        .WorkoutTrainingExercise_PreviousSimiarTrainingsContainer,
+        .WorkoutTrainingExercise_ExerciseTemplateContainer {
+            width: 100%;
+        }
         workout-tracker-series-table {
             width: 100%;
         }

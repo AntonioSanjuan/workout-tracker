@@ -217,9 +217,16 @@
                 }
             },
             "trainingExercise": {
-                "title": "Detalles de ejercicio de entrenamiento",
+                "title": "Detalles del ejercicio",
                 "template": {
                     "title": "Plantilla del ejercicio"
+                },
+                "trainingExercisePrevious": {
+                    "title": "Entrenamiento previo de esta plantilla",
+                    "banner": {
+                        "title": "",
+                        "content": "No tienes ejercicios previos con esta plantilla"
+                    }
                 },
                 "addTrainingExerciseSerie": {
                     "title": "Añadir serie",

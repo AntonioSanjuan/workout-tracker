@@ -1,5 +1,8 @@
 <div
-    *ngrxLet="{ trainingExercise: trainingExercise$, trainingExerciseParentId: trainingExerciseParentId$ } as vm"
+    *ngrxLet="{ 
+        trainingExercise: trainingExercise$, 
+        trainingExerciseParentId: trainingExerciseParentId$, 
+        trainingExercisePreviousSimilarTraining: trainingExercisePreviousSimilarTraining$ } as vm"
     class="WorkoutTrainingExercise_MainContainer">
     <workout-tracker-view-header [title]="'common.actions.goBack' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList+'/'+vm.trainingExerciseParentId"></workout-tracker-view-header>
 
@@ -7,16 +10,33 @@
         <button mat-flat-button color="primary" (click)="newTrainingExerciseSerie()">
             {{ 'apps.workout-trainings.trainingExercise.actions.addNewTrainingExerciseSerie' | translate }}
         </button>
+
+        <h2>{{ 'apps.workout-trainings.trainingExercise.title' | translate }}</h2>
     
+        <h2>{{ 'apps.workout-trainings.trainingExercise.trainingExercisePrevious.title' | translate }}</h2>
+        
+        <div 
+            class="WorkoutTrainingExercise_PreviousSimiarTrainingsContainer">
+            <workout-tracker-training-exercise-card
+                *ngIf="vm.trainingExercisePreviousSimilarTraining && vm.trainingExercisePreviousSimilarTraining.length >= 1"
+                [trainingExercise]="vm.trainingExercisePreviousSimilarTraining[0]">
+            </workout-tracker-training-exercise-card>
+
+            <workout-tracker-banner 
+                *ngIf="!vm.trainingExercisePreviousSimilarTraining || vm.trainingExercisePreviousSimilarTraining.length === 0"
+                [content]="'apps.workout-trainings.trainingExercise.trainingExercisePrevious.banner.content' | translate">
+            </workout-tracker-banner>
+        </div>
+
         <h2>{{ 'apps.workout-trainings.trainingExercise.template.title' | translate }}</h2>
     
-        <div (click)="openExerciseTemplateDetails(vm.trainingExercise?.exerciseTemplate!)">
+        <div (click)="openExerciseTemplateDetails(vm.trainingExercise?.exerciseTemplate!)"
+            class="WorkoutTrainingExercise_ExerciseTemplateContainer">
             <workout-tracker-exercise-template-card
                 [exerciseTemplate]="vm.trainingExercise?.exerciseTemplate!">
             </workout-tracker-exercise-template-card>  
         </div>
 
-        <h2>{{ 'apps.workout-trainings.trainingExercise.title' | translate }}</h2>
     
         <workout-tracker-series-table
             [series]="vm.trainingExercise?.series"
