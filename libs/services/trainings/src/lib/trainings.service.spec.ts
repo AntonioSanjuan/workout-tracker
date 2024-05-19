@@ -122,6 +122,23 @@ describe('TrainingsService', () => {
       });
     });
 
+    describe('getExerciseTemplateTrainingExercises', () => {
+      const getExerciseTemplateRef = { id: 'documentReferenceId'} as DocumentReference
+      const trainingExerciseSut = {...trainingExercisesData[0] } as TrainingExercise
+
+      beforeEach(() => {
+        jest.spyOn(exerciseTemplatesRefService, 'getExerciseTemplateDocRef').mockReturnValue({ ref: getExerciseTemplateRef } as AngularFirestoreDocument<DocumentData>)
+        jest.spyOn(trainingsRefService, 'getExerciseTemplateTrainingExercisesDocRefs').mockReturnValue({ get: jest.fn(() => of({docs: [ {  id: trainingExerciseSut.id , data: () =>  trainingExerciseSut, ref: { parent: { parent: { id: trainingExerciseSut.id } }}} ] }))} as any)
+        jest.spyOn(trainingsRefService, 'getTrainingExerciseSeriesCollectionRef').mockReturnValue({ get: jest.fn(() => of({ docs: trainingExerciseSeriesData.map(data => ({ id: data.id, data: () => data }))}))} as any);
+      })
+      it('getExerciseTemplateTrainingExercises should return an array of trainings with trainingExercises', (done) => {
+        service.getExerciseTemplateTrainingExercises(userIdSut, exerciseTemplateData).subscribe((result) => {
+          expect(result).toEqual([trainingExerciseSut]);
+          done();
+        });
+      });
+    });
+
     describe('getExerciseTemplateTrainings', () => {
       const exerciseTemplateIdSut = 'exerciseTemplateIdSut'
       const getExerciseTemplateRef = { id: 'documentReferenceId'} as DocumentReference
