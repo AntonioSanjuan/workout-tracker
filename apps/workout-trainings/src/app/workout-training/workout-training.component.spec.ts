@@ -100,5 +100,12 @@ describe('WorkoutTrainingComponent', () => {
       component.newTrainingExercise()
       expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingExerciseDialogComponent, true)
     });
+
+    it('printTraining should request window.print', () => {
+      const printSpy = jest.spyOn(window, 'print')
+
+      component.printTraining()
+      expect(printSpy).toHaveBeenCalledWith()
+    });
   })
 });

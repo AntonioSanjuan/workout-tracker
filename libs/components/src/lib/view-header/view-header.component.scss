@@ -5,18 +5,41 @@ workout-tracker-view-header {
     width: 100%;
     .ViewHeader_MainContainer {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        
+        flex-direction: row;
+        align-items: center;
+
         border-radius: 5px;
         width: 100%;
-        gap: 15px;
         padding: 10px;
 
-        .ViewHeader_ContentContainer {
+        .ViewHeader_ActionsContainer {
             display: flex;
             flex-direction: row;
+            width: 100%;
 
+        }
+        .ViewHeader_TitleContainer {
+            width: 100%;
+
+            h2 {
+                margin: 0;
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    workout-tracker-view-header {
+        .ViewHeader_MainContainer {
+            flex-wrap: wrap;
+            
+            .ViewHeader_ActionsContainer {
+                width: 50%;
+            }
+            .ViewHeader_TitleContainer {
+                order: 3;
+            }
         }
     }
 }

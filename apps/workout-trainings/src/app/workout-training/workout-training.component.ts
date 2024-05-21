@@ -46,6 +46,10 @@ export class WorkoutTrainingComponent {
     // this.dialogService.showDialog(EditWorkoutExerciseDetailsDialogComponent, true)
   }
 
+  public printTraining() {
+    window.print()
+  }
+
   public newTrainingExercise() {
     this.dialogService.showDialog(AddWorkoutTrainingExerciseDialogComponent, true)
 

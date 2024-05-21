@@ -5,12 +5,14 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { getPrevRoute } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'workout-tracker-view-header',
   imports: [
     CommonModule,
     LetDirective,
+    TranslateModule,
     UiModule
   ],
   templateUrl: './view-header.component.html',
