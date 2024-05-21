@@ -6,4 +6,10 @@
     align-items: center;
 
     border-bottom: solid 2px shellStyles.$navBorderColor;
+
+    img {
+        height: 60px;
+        object-fit: contain;
+
+    }
 }
