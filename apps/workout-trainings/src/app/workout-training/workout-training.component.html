@@ -1,7 +1,17 @@
 <div
     *ngrxLet="{ training: training$, exerciseTemplates: exerciseTemplates$ } as vm"
     class="WorkoutTraining_MainContainer">
-    <workout-tracker-view-header [title]="'apps.workout-trainings.training.title' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList"></workout-tracker-view-header>
+    <workout-tracker-view-header [title]="'apps.workout-trainings.training.title' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList">
+        <div
+            class="WorkoutTraining_HeaderContainer">
+            <button [disabled]="!vm.exerciseTemplates || !vm.exerciseTemplates.length" mat-fab color="primary" (click)="newTrainingExercise()">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button  mat-fab color="primary" (click)="printTraining()">
+                <mat-icon>print</mat-icon>
+            </button>
+        </div>
+    </workout-tracker-view-header>
 
     <div class="WorkoutTraining_ContentContainer view-body">
         <div 
@@ -14,13 +24,6 @@
                 (action)="goToExerciseTemplates()">
             </workout-tracker-banner>
         </div>
-        <button class="non-printable" [disabled]="!vm.exerciseTemplates || !vm.exerciseTemplates.length" mat-flat-button color="primary" (click)="newTrainingExercise()">
-            {{ 'apps.workout-trainings.training.actions.addNewTrainingExercise' | translate }}
-        </button>
-
-        <button class="non-printable" mat-flat-button color="primary" (click)="printTraining()">
-            print
-        </button>
     
         <div class="WorkoutTraining_InfoContainer">
             <workout-tracker-training-info 

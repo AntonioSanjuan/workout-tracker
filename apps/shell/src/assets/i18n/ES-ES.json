@@ -207,7 +207,6 @@
                     }
                 },
                 "actions": {
-                    "addNewTrainingExercise": "Añadir un ejercicio de entrenamiento"
                 },
                 "errors": {
                     "exerciseTemplatesNotFound": {
@@ -256,7 +255,6 @@
                     }
                 },
                 "actions": {
-                    "addNewTrainingExerciseSerie": "Añadir una serie"
                 }
             }
         },

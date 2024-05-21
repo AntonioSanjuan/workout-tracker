@@ -8,6 +8,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    .WorkoutTrainingExercise_HeaderContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+
+        button {
+            width: 40px;
+            height: 40px;
+            background-color: shellStyles.$mainColor;
+        }
+    }
 
     .WorkoutTrainingExercise_ContentContainer {
 

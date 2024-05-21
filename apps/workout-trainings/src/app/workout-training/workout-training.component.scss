@@ -9,6 +9,21 @@
     flex-direction: column;
     align-items: center;
 
+    .WorkoutTraining_HeaderContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+
+        button {
+            width: 40px;
+            height: 40px;
+            background-color: shellStyles.$mainColor;
+        }
+    }
+
     .WorkoutTraining_ContentContainer {
 
 
@@ -19,10 +34,6 @@
         }
         h2 {
             margin-bottom: 0;
-        }
-        
-        button {
-            background-color: shellStyles.$mainColor;
         }
         
         .WorkoutTraining_InfoContainer {
