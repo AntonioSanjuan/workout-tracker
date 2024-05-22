@@ -7,7 +7,8 @@ const MuscleGroupColor: { [key in MuscleGroups]: string} = {
   [MuscleGroups.Chest] : '#000000',
   [MuscleGroups.Legs] : '#000000',
   [MuscleGroups.Shoulder] : '#000000',
-  [MuscleGroups.Core] : '#000000'
+  [MuscleGroups.Core] : '#000000',
+  [MuscleGroups.Cardio] : '#000000'
 }
 const MuscleGroupBackgroundColor: { [key in MuscleGroups]: string} = {
   [MuscleGroups.Arms] : '#007cae',
@@ -15,7 +16,8 @@ const MuscleGroupBackgroundColor: { [key in MuscleGroups]: string} = {
   [MuscleGroups.Chest] : '#33b44a',
   [MuscleGroups.Legs] : '#ff6921',
   [MuscleGroups.Shoulder] : '#ffc20e',
-  [MuscleGroups.Core] : '#21ffad'
+  [MuscleGroups.Core] : '#21ffad',
+  [MuscleGroups.Cardio] : 'red'
 }
 
 @Directive({

@@ -6,7 +6,8 @@
             "Shoulder": "Shoulder",
             "Back": "Back",
             "Chest": "Chest",
-            "Core": "Core"
+            "Core": "Core",
+            "Cardio": "Cardio"
         },
         "muscles": {
             "Abdominals": "Abdominals",
@@ -14,20 +15,26 @@
             "Adductors": "Adductors",
             "Biceps": "Biceps",
             "Calves": "Calves",
-            "Chest": "Chest",
+            "Pectoralis_major": "Pectoralis major",
+            "Pectoralis_minor": "Pectoralis minor",
+            "Serratus_anterior": "Serratus anterior",
             "Forearms": "Forearms",
             "Glutes": "Glutes",
             "Hamstrings": "Hamstrings",
             "Lats": "Lats",
             "Lower_back": "Lower back",
             "Middle_back": "Middle back",
+            "Upper_back": "Upper back",
             "Neck": "Neck",
             "Quadriceps": "Quadriceps",
             "Traps": "Traps",
             "Triceps": "Triceps",
             "Anterior_deltoid": "Anterior deltoid",
             "Medial_deltoid": "Medial deltoid",
-            "Posterior_deltoid": "Posterior deltoid"
+            "Posterior_deltoid": "Posterior deltoid",
+            "Bicycle": "Bicycle",
+            "Elliptical": "Elliptical",
+            "Treadmill": "Treadmill"
         },
         "actions": {
             "goBack": "Go Back",

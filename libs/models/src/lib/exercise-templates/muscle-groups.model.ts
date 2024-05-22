@@ -4,5 +4,6 @@ export enum MuscleGroups {
     Shoulder = "Shoulder",
     Back = "Back",
     Chest = "Chest",
-    Core = 'Core'
+    Core = 'Core',
+    Cardio = 'Cardio'
 }
