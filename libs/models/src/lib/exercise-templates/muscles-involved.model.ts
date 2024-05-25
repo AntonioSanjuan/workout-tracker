@@ -1,11 +1,13 @@
 export enum MusclesInvolved {
     Abdominals = "Abdominals",
+    Obliques = "Obliques",
     Abductors = "Abductors",
     Adductors = "Adductors",
     Biceps = "Biceps",
     Calves = "Calves",
-    Pectoralis_major = "Pectoralis_major",
-    Pectoralis_minor = "Pectoralis_minor",
+    Upper_chest = "Upper_chest",
+    Middle_chest = "Middle_chest",
+    Lower_chest = "Lower_chest",
     Serratus_anterior = "Serratus_anterior",
     Forearms = "Forearms",
     Glutes = "Glutes",
@@ -21,7 +23,6 @@ export enum MusclesInvolved {
     Anterior_deltoid = "Anterior_deltoid",
     Medial_deltoid = "Medial_deltoid",
     Posterior_deltoid = "Posterior_deltoid",
-    Bicycle = "Bicycle",
-    Elliptical = "Elliptical",
-    Treadmill = "Treadmill"
+    Lungs = "Lungs",
+    Heart = "Heart",
 }

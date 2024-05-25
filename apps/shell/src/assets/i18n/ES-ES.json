@@ -11,12 +11,14 @@
         },
         "muscles": {
             "Abdominals": "Abdominales",
+            "Obliques": "Oblicuos",
             "Abductors": "Abductores",
             "Adductors": "Aductores",
             "Biceps": "Bíceps",
             "Calves": "Pantorrillas",
-            "Pectoralis_major": "Pectoral mayor",
-            "Pectoralis_minor": "Pectoral menor",
+            "Upper_chest": "Pecho alto",
+            "Middle_chest": "Pecho medio",
+            "Lower_chest": "Pecho bajo",
             "Serratus_anterior": "Serrato anterior",
             "Forearms": "Antebrazos",
             "Glutes": "Glúteos",
@@ -32,9 +34,8 @@
             "Anterior_deltoid": "Deltoides anterior",
             "Medial_deltoid": "Deltoides medial",
             "Posterior_deltoid": "Deltoides posterior",
-            "Bicycle": "Bicicleta",
-            "Elliptical": "Elíptica",
-            "Treadmill": "Cinta"
+            "Lungs": "Pulmones",
+            "Heart": "Corazón"
         },
         "actions": {
             "goBack": "Volver",
