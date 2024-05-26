@@ -32,6 +32,9 @@ export const addAnonymousUserExerciseTemplateListRequestSuccess = createAction(A
 export const ADD_ANONYMOUS_USER_EXERCISE_TEMPLATE_LIST_ERROR = 'ADD ANONYMOUS USER EXERCISE TEMPLATE LIST Error'
 export const addAnonymousUserExerciseTemplateListRequestError = createAction(ADD_ANONYMOUS_USER_EXERCISE_TEMPLATE_LIST_ERROR, props<{ error: firebase.FirebaseError }>())
 
+export const ADD_DEFAULT_EXERCISE_TEMPLATES_LIST = 'ADD DEFAULT EXERCISE TEMPLATES LIST'
+export const addDefaultExerciseTemplateList = createAction(ADD_DEFAULT_EXERCISE_TEMPLATES_LIST)
+
 export const SET_EXERCISE_TEMPLATE_LIST_MUSCLE_INVOLVED_QUERY_FILTER = 'SET EXERCISE TEMPLATE LIST TYPE QUERY FILTER'
 export const setExerciseTemplateListMuscleInvolvedQueryFilter = createAction(SET_EXERCISE_TEMPLATE_LIST_MUSCLE_INVOLVED_QUERY_FILTER, props<{ muscleInvolved: MusclesInvolved}>())
 export const SET_EXERCISE_TEMPLATE_LIST_NAME_QUERY_FILTER = 'SET EXERCISE TEMPLATE LIST NAME QUERY FILTER'

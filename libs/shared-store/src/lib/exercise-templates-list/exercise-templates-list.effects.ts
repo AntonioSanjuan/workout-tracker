@@ -2,13 +2,14 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates'
-import { catchError, iif, map, of, switchMap, take } from "rxjs";
+import { catchError, concatMap, exhaustMap, forkJoin, from, iif, map, mergeMap, of, switchMap, take } from "rxjs";
 import { getUser } from "../user";
 import firebase from 'firebase/compat/app';
 import { getExerciseTemplatesList } from "./exercise-templates-list.selectors";
-import { ExerciseTemplate } from "@workout-tracker/models";
-import { addAnonymousUserExerciseTemplateListRequest, addAnonymousUserExerciseTemplateListRequestError, addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequest, addAuthenticatedUserExerciseTemplateListRequestError, addAuthenticatedUserExerciseTemplateListRequestSuccess, addUserExerciseTemplateListRequest, getAnonymousUserExerciseTemplatesListRequest, getAnonymousUserExerciseTemplatesListRequestError, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequest, getAuthenticatedUserExerciseTemplatesListRequestError, getAuthenticatedUserExerciseTemplatesListRequestSuccess, getUserExerciseTemplatesListRequest } from "./exercise-templates-list.actions";
+import { ExerciseTemplate, defaultExerciseTemplates } from "@workout-tracker/models";
+import { addAnonymousUserExerciseTemplateListRequest, addAnonymousUserExerciseTemplateListRequestError, addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequest, addAuthenticatedUserExerciseTemplateListRequestError, addAuthenticatedUserExerciseTemplateListRequestSuccess, addDefaultExerciseTemplateList, addUserExerciseTemplateListRequest, getAnonymousUserExerciseTemplatesListRequest, getAnonymousUserExerciseTemplatesListRequestError, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequest, getAuthenticatedUserExerciseTemplatesListRequestError, getAuthenticatedUserExerciseTemplatesListRequestSuccess, getUserExerciseTemplatesListRequest } from "./exercise-templates-list.actions";
 import { AppInit, loadedApp } from "../ui";
+import { showError } from "../error-messages";
 
 @Injectable()
 export class ExerciseTemplatesListEffects {
@@ -78,10 +79,10 @@ export class ExerciseTemplatesListEffects {
     addAuthenticatedUserExerciseTemplateListRequest$ = createEffect(() => this.actions$.pipe(
         ofType(addAuthenticatedUserExerciseTemplateListRequest),
         concatLatestFrom(() => this.store.select(getUser)),
-        switchMap(([{ exercise }, user]) =>
+        concatMap(([{ exercise }, user]) =>
                 this.exerciseTemplatesService.setExerciseTemplate(user?.uid as string, exercise).pipe(
                 map((exercise: ExerciseTemplate) => 
-                addAuthenticatedUserExerciseTemplateListRequestSuccess({ exercise: exercise})
+                    addAuthenticatedUserExerciseTemplateListRequestSuccess({ exercise: exercise})
                 ),
                 catchError((err: firebase.FirebaseError) => {
                     console.log("err", err)
@@ -106,4 +107,18 @@ export class ExerciseTemplatesListEffects {
         )
         )
     ))
+
+
+    addDefaultExerciseTemplateList$ = createEffect(() => this.actions$.pipe(
+        ofType(addDefaultExerciseTemplateList),
+        concatLatestFrom(() => this.store.select(getExerciseTemplatesList)),
+        concatMap(([_, exerciseTemplatesList]) => from(
+            defaultExerciseTemplates.filter((defaultExerciseTemplate) => !exerciseTemplatesList.find((exerciseTemplate) => exerciseTemplate.name === defaultExerciseTemplate.name))
+        ).pipe(
+            map(exercise => addUserExerciseTemplateListRequest({ exercise: {
+                ...exercise,
+                creationDate: new Date()
+            } }))
+        ))
+    ));
 }

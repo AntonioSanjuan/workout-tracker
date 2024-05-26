@@ -36,7 +36,7 @@ export const uiReducer = createReducer(
     })),
     on(endRequest, (state) => ({
         ...state,
-        actionOngoing: false,
+        actionOngoing: (state.requestCounter === 1) ? false : state.actionOngoing,
         blockByRequest: (state.requestCounter === 1) ? false : state.blockByRequest,
         requestCounter: state.requestCounter - 1
     }))

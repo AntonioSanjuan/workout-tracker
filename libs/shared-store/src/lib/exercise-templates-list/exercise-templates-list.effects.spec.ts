@@ -1,24 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { Action } from '@ngrx/store';
-import { Observable, firstValueFrom, of, throwError } from 'rxjs';
+import { Observable, finalize, firstValueFrom, from, of, take, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { userStateMock } from '@workout-tracker/test';
-import { ExerciseTemplate, MusclesInvolved } from '@workout-tracker/models';
+import { ExerciseTemplate, MusclesInvolved, defaultExerciseTemplates } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { ExerciseTemplatesService, exerciseTemplatesServiceMock } from '@workout-tracker/services/exercise-templates';
 import { ExerciseTemplatesListEffects } from './exercise-templates-list.effects'
 import { getExerciseTemplatesList } from './exercise-templates-list.selectors';
-import { addAnonymousUserExerciseTemplateListRequest, addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequest, addAuthenticatedUserExerciseTemplateListRequestError, addAuthenticatedUserExerciseTemplateListRequestSuccess, addUserExerciseTemplateListRequest, getAnonymousUserExerciseTemplatesListRequest, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequest, getAuthenticatedUserExerciseTemplatesListRequestError, getAuthenticatedUserExerciseTemplatesListRequestSuccess, getUserExerciseTemplatesListRequest } from './exercise-templates-list.actions';
+import { addAnonymousUserExerciseTemplateListRequest, addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequest, addAuthenticatedUserExerciseTemplateListRequestError, addAuthenticatedUserExerciseTemplateListRequestSuccess, addDefaultExerciseTemplateList, addUserExerciseTemplateListRequest, getAnonymousUserExerciseTemplatesListRequest, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequest, getAuthenticatedUserExerciseTemplatesListRequestError, getAuthenticatedUserExerciseTemplatesListRequestSuccess, getUserExerciseTemplatesListRequest } from './exercise-templates-list.actions';
 import { AppInit, loadedApp } from '../ui';
 
 const exerciseSut = {
   name: 'exercise test name',
   musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Adductors]
 } as ExerciseTemplate
-
 describe('ExerciseTemplatesEffects', () => {
   let actions: Observable<Action>;
   let effects: ExerciseTemplatesListEffects
@@ -293,6 +292,45 @@ describe('ExerciseTemplatesEffects', () => {
     it('should return addAnonymousUserExerciseTemplateListRequestSuccess', async () => {
       const result = await firstValueFrom(effects.addAnonymousUserExerciseTemplateListRequest$)
       expect(result).toEqual(addAnonymousUserExerciseTemplateListRequestSuccess({ exercise: {...exerciseSut, id: (exerciseListSut.length + 1).toString()}}))
+    })
+  })
+
+  describe('addDefaultExerciseTemplateList$', () => {
+    const today = new Date(2020, 3, 1)
+    const exerciseTemplates = [ defaultExerciseTemplates[0] ] as ExerciseTemplate[]
+    beforeEach(() => { 
+      jest.useFakeTimers();
+      jest.setSystemTime(today);
+
+      store.overrideSelector(getExerciseTemplatesList, exerciseTemplates as ExerciseTemplate[]);
+      actions = of(addDefaultExerciseTemplateList())
+    })
+
+    afterEach(() => {
+      jest.useRealTimers();
+    })
+
+    it('should return addUserExerciseTemplateListRequest', async () => {
+      const addedExerciseTemplates = [] as ExerciseTemplate[]
+      const expectedActions = defaultExerciseTemplates.filter((defaultExerciseTemplate) => !exerciseTemplates.find((exerciseTemplate) => exerciseTemplate.name === defaultExerciseTemplate.name))
+      .map((defaultExerciseTemplate) => addUserExerciseTemplateListRequest({ exercise: {
+        ...defaultExerciseTemplate,
+        creationDate: today
+      } }))
+
+      effects.addDefaultExerciseTemplateList$
+      .pipe(
+        take(expectedActions.length),
+        finalize(() => {
+          expect(
+            expectedActions.every((expectedAction) => !!addedExerciseTemplates.find((addedExerciseTemplate) => {
+              return addedExerciseTemplate.name === expectedAction.exercise.name
+            }))
+          ).toBeTruthy()
+        })
+      ).subscribe((actions) => {
+        addedExerciseTemplates.push(actions.exercise)
+      })
     })
   })
 });

@@ -9,8 +9,8 @@ describe('exercisesReducer', () => {
     const exerciseInitialStateListMock = [ 
         { name: 'testName',musclesInvolved: [MusclesInvolved.Biceps] } as ExerciseTemplate,
         { name: 'testName1', musclesInvolved: [MusclesInvolved.Abdominals] } as ExerciseTemplate,
-        { name: 'testName1', musclesInvolved: [MusclesInvolved.Chest] } as ExerciseTemplate,
-        { name: 'testName1', musclesInvolved: [MusclesInvolved.Chest] } as ExerciseTemplate,
+        { name: 'testName1', musclesInvolved: [MusclesInvolved.Medial_deltoid] } as ExerciseTemplate,
+        { name: 'testName1', musclesInvolved: [MusclesInvolved.Medial_deltoid] } as ExerciseTemplate,
     ]
 
     describe('setAnonymousUser action', () => {
@@ -93,7 +93,7 @@ describe('exercisesReducer', () => {
                 list: exerciseInitialStateListMock
             } as ExerciseTemplatesListState
 
-            const muscleInvolvedSut = MusclesInvolved.Chest
+            const muscleInvolvedSut = MusclesInvolved.Medial_deltoid
             
             const action = setExerciseTemplateListMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })
             const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
@@ -118,7 +118,7 @@ describe('exercisesReducer', () => {
                 }
             } as ExerciseTemplatesListState
 
-            const muscleInvolvedSut = MusclesInvolved.Chest
+            const muscleInvolvedSut = MusclesInvolved.Medial_deltoid
 
             
             const action = setExerciseTemplateListMuscleInvolvedQueryFilter({ muscleInvolved: muscleInvolvedSut })

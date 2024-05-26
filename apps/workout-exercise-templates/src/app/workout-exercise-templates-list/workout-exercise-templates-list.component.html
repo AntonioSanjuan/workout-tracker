@@ -1,5 +1,5 @@
 <div
-    *ngrxLet="{ filteredExerciseTemplates: filteredExerciseTemplates$ } as vm"
+    *ngrxLet="{ filteredExerciseTemplates: filteredExerciseTemplates$, hasDefaultExerciseTemplatesLoaded: hasDefaultExerciseTemplatesLoaded$ } as vm"
     class="WorkoutExerciseTemplatesList_MainContainer">
 
     <workout-tracker-exercise-templates-list-filter></workout-tracker-exercise-templates-list-filter>
@@ -7,6 +7,10 @@
     <div class="WorkoutExerciseTemplatesList_ContentContainer view-body view-padding-top">
         <button mat-flat-button color="primary" (click)="newExerciseTemplate()">
             {{ 'apps.workout-exercises.list.actions.addNewExerciseTemplate' | translate }}
+        </button>
+
+        <button [disabled]="vm.hasDefaultExerciseTemplatesLoaded" mat-flat-button color="primary" (click)="addDefaultExerciseTemplates()">
+            add default exercise templates
         </button>
         
         <h2>

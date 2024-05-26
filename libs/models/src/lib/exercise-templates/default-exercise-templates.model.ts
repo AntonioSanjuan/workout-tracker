@@ -257,4 +257,13 @@ export const defaultCoreExerciseTemplates = [
         name: 'Flutter Kicks',
         musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Quadriceps],
     },
-]
+] as ExerciseTemplate[]
+
+export const defaultExerciseTemplates = [
+    ...defaultBackExerciseTemplates,
+    ...defaultLegExerciseTemplates,
+    ...defaultChestExerciseTemplates,
+    ...defaultShoulderExerciseTemplates,
+    ...defaultCardioExerciseTemplates,
+    ...defaultCoreExerciseTemplates
+] as ExerciseTemplate[]

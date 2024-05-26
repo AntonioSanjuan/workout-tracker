@@ -93,7 +93,23 @@ describe('uiReducer', () => {
 
     describe('endRequest action', () => {
         describe('should handle endRequest action', () => {
+
             it('if prev actionOngoing', () => {
+                const initStateMock: UiState = {
+                    ...uiInitialState, 
+                    actionOngoing: true,
+                    blockByRequest: true,
+                    requestCounter: 1
+                }
+                const action = endRequest()
+                const state = uiReducer(initStateMock, action)
+    
+                expect(state.actionOngoing).toBeFalsy()
+                expect(state.blockByRequest).toBeFalsy()
+                expect(state.requestCounter).toEqual(initStateMock.requestCounter - 1)
+            })
+
+            it('if 3 prev actionOngoing', () => {
                 const initStateMock: UiState = {
                     ...uiInitialState, 
                     actionOngoing: true,
@@ -103,7 +119,7 @@ describe('uiReducer', () => {
                 const action = endRequest()
                 const state = uiReducer(initStateMock, action)
     
-                expect(state.actionOngoing).toBeFalsy()
+                expect(state.actionOngoing).toBeTruthy()
                 expect(state.blockByRequest).toEqual(initStateMock.blockByRequest)
                 expect(state.requestCounter).toEqual(initStateMock.requestCounter - 1)
             })

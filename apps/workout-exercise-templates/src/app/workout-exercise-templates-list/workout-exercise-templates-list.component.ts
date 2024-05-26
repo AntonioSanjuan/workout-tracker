@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { WorkoutExerciseTemplatesFilterListComponent } from './workout-exercise-templates-list-filter/workout-exercise-templates-list-filter.component';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercise-template-dialog/add-workout-exercise-template-dialog.component';
-import { getExerciseTemplatesListFiltered } from '@workout-tracker/shared-store';
+import { addDefaultExerciseTemplateList, getExerciseTemplatesListFiltered, hasDefaultExerciseTemplatesLoaded } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { ExerciseTemplateCardComponent } from '@workout-tracker/components';
@@ -33,8 +33,11 @@ export class WorkoutExerciseTemplatesListComponent {
   private dialogService = inject(DialogService)
 
   public filteredExerciseTemplates$ =  this.store.select(getExerciseTemplatesListFiltered)
+  public hasDefaultExerciseTemplatesLoaded$ = this.store.select(hasDefaultExerciseTemplatesLoaded)
 
-
+  public addDefaultExerciseTemplates() {
+    this.store.dispatch(addDefaultExerciseTemplateList())
+  }
   public newExerciseTemplate() {
     this.dialogService.showDialog(AddWorkoutExerciseTemplateDialogComponent, true)
   }
