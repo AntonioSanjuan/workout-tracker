@@ -7,7 +7,7 @@ import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, Training } from '@workout-tracker/models';
 import { getTrainingListOngoing, getUserTrainingsListRequest, getTrainingsListPagination, getTrainingsList } from '@workout-tracker/shared-store';
-import { TrainingCardComponent } from '@workout-tracker/components'
+import { TrainingCardComponent, ViewHeaderComponent } from '@workout-tracker/components'
 import { WorkoutTrainingsFilterListComponent } from './workout-trainings-list-filter/workout-trainings-list-filter.component';
 import { AddWorkoutTrainingDialogComponent } from './add-workout-training-dialog/add-workout-training-dialog.component';
 import { DialogService } from '@workout-tracker/services/dialog';
@@ -19,6 +19,7 @@ import { DialogService } from '@workout-tracker/services/dialog';
     LetDirective,
     IntersectionObserverDirective,
     WorkoutTrainingsFilterListComponent,
+    ViewHeaderComponent,
     TranslateModule,
     NgFor,
     RouterModule,

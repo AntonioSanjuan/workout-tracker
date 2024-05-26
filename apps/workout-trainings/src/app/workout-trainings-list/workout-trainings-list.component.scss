@@ -16,17 +16,21 @@
     }
 
     .WorkoutTrainingsList_ContentContainer {
-        h2 {
-            margin-top: 0;
-        }
-    
-        .WorkoutTrainingsList_ActionContainer {
+        .WorkoutTrainingsList_HeaderContainer {
             display: flex;
+            flex-direction: row;
             gap: 10px;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+    
             button {
+                width: 40px;
+                height: 40px;
                 background-color: shellStyles.$mainColor;
             }
         }
+    
         .WorkoutTrainingsList_ListContainer {
             display: flex;
             flex-direction: column;
@@ -40,8 +44,5 @@
 
 @media (max-width: 960px) {
     .WorkoutTrainingsList_MainContainer {
-        .WorkoutTrainingsList_ActionContainer {
-            flex-direction: column;
-        }
     }
 }

@@ -8,15 +8,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     workout-tracker-exercise-templates-list-filter {
         width: 100%;
     }
-    .WorkoutExerciseTemplatesList_ContentContainer {        
-        button {
-            background-color: shellStyles.$mainColor;
-        }
-        h2 {
-            margin-top: 0;
+
+    .WorkoutExerciseTemplatesList_ContentContainer {   
+        .WorkoutExerciseTemplatesList_HeaderContainer {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+    
+            button {
+                width: 40px;
+                height: 40px;
+                background-color: shellStyles.$mainColor;
+            }
         }
     
         .WorkoutExerciseTemplatesList_ListContainer {

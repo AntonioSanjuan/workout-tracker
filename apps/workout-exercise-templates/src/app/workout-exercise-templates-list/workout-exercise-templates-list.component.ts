@@ -9,7 +9,7 @@ import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercis
 import { addDefaultExerciseTemplateList, getExerciseTemplatesListFiltered, hasDefaultExerciseTemplatesLoaded } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { ExerciseTemplateCardComponent } from '@workout-tracker/components';
+import { ExerciseTemplateCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 
 @Component({
@@ -20,6 +20,7 @@ import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
     LetDirective,
     TranslateModule,
     ExerciseTemplateCardComponent,
+    ViewHeaderComponent,
     WorkoutExerciseTemplatesFilterListComponent,
     NgFor,
     RouterModule

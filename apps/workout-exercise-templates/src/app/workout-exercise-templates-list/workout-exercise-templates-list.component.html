@@ -3,19 +3,22 @@
     class="WorkoutExerciseTemplatesList_MainContainer">
 
     <workout-tracker-exercise-templates-list-filter></workout-tracker-exercise-templates-list-filter>
-    
-    <div class="WorkoutExerciseTemplatesList_ContentContainer view-body view-padding-top">
-        <button mat-flat-button color="primary" (click)="newExerciseTemplate()">
-            {{ 'apps.workout-exercises.list.actions.addNewExerciseTemplate' | translate }}
-        </button>
 
+
+
+    <div class="WorkoutExerciseTemplatesList_ContentContainer view-body">
+        <workout-tracker-view-header class="header-padding" [title]="'apps.workout-exercises.list.title' | translate">
+            <div
+                class="WorkoutExerciseTemplatesList_HeaderContainer">
+                <button mat-fab color="primary" (click)="newExerciseTemplate()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </workout-tracker-view-header>
+        
         <button [disabled]="vm.hasDefaultExerciseTemplatesLoaded" mat-flat-button color="primary" (click)="addDefaultExerciseTemplates()">
             add default exercise templates
         </button>
-        
-        <h2>
-            {{ 'apps.workout-exercises.list.title' | translate }}
-        </h2>
     
         <div class="WorkoutExerciseTemplatesList_ListContainer"
             *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"

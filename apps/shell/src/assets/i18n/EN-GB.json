@@ -133,7 +133,7 @@
                 "trainingExerciseSerieCouldntBeCreated": "Training exercise series couldn't be created"
             },
             "list": {
-                "title": "Training List",
+                "title": "Trainings",
                 "filter": {
                     "actions": {
                         "openFilter": "Open filters",
@@ -185,7 +185,7 @@
                 },
                 "training-exercises": {
                     "list": {
-                        "title": "Training exercises list"
+                        "title": "Training exercises"
                     }
                 },
                 "addTrainingExercise": {
@@ -272,7 +272,7 @@
                 "exerciseTemplateTrainingsNotFound": "Trainings of exercise template {{exerciseTemplateId}} not found"
             },
             "list": {
-                "title": "Exercise Template List",
+                "title": "Exercise Templates",
                 "filter": {
                     "actions": {
                         "openFilter": "Open filters",

@@ -135,7 +135,7 @@
                 
             },
             "list": {
-                "title": "Lista de Entrenamientos",
+                "title": "Entrenamientos",
                 "filter": {
                     "actions": {
                         "openFilter": "Abrir filtros",
@@ -187,7 +187,7 @@
                 },
                 "training-exercises": {
                     "list": {
-                        "title": "Lista de ejercicios del entrenamientos"
+                        "title": "Ejercicios del entrenamientos"
                     }
                 },
                 "addTrainingExercise": {
@@ -272,7 +272,7 @@
                 "exerciseTemplateTrainingsNotFound": "Entrenamientos de la plantilla de ejercicio {{exerciseTemplateId}} no encontrados"
             },
             "list": {
-                "title": "Lista de plantillas de ejercicios",
+                "title": "Plantillas de ejercicios",
                 "filter": {
                     "actions": {
                         "openFilter": "Abrir filtros",

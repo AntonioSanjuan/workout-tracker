@@ -8,21 +8,19 @@
 
     <workout-tracker-trainings-list-filter></workout-tracker-trainings-list-filter>
 
-    <div class="WorkoutTrainingsList_ContentContainer view-body view-padding-top">
-        <div class="WorkoutTrainingsList_ActionContainer">
-            <button mat-flat-button color="primary" (click)="newTraining()">
-                {{ 'apps.workout-trainings.list.actions.addNewTraining' | translate }}
-            </button>
-        
-            <button *ngIf="vm.trainingOngoing" mat-flat-button color="primary" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
-                {{ 'apps.workout-trainings.list.actions.continueTraining' | translate }}
-            </button>
-        </div>
-        
-        <h2>
-            {{ 'apps.workout-trainings.list.title' | translate }}
-        </h2>
-    
+    <div class="WorkoutTrainingsList_ContentContainer view-body">
+        <workout-tracker-view-header class="header-padding" [title]="'apps.workout-trainings.list.title' | translate">
+            <div
+                class="WorkoutTrainingsList_HeaderContainer">
+                <button mat-fab color="primary" (click)="newTraining()">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <button mat-fab color="primary" [disabled]="!vm.trainingOngoing" (click)="vm.trainingOngoing && openTrainingDetails(vm.trainingOngoing)">
+                    <mat-icon>fast_forward</mat-icon>
+                </button>
+            </div>
+        </workout-tracker-view-header>
+
         <div class="WorkoutTrainingsList_ListContainer"
             *ngFor="let filteredTraining of vm.trainingList"
             (click)="openTrainingDetails(filteredTraining)">

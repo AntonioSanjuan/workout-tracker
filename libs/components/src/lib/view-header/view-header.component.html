@@ -1,9 +1,11 @@
 <div class="ViewHeader_MainContainer">
   <div class="ViewHeader_ActionsContainer">
-    <button mat-icon-button *ngIf="goBackUrl" (click)="goBack()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <p>{{'common.actions.goBack' | translate}}</p>
+    <div *ngIf="goBackUrl">
+      <button mat-icon-button *ngIf="goBackUrl" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <p>{{'common.actions.goBack' | translate}}</p>
+    </div>
   </div>
   <div class="ViewHeader_TitleContainer">
     <h2>{{ title }}</h2>
