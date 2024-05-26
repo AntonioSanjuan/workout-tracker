@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
+import { AppRoutes } from '@workout-tracker/models';
 
 @Component({
   selector: 'workout-tracker-menu-top',
@@ -12,8 +13,10 @@ import { LetDirective } from '@ngrx/component';
   imports: [
     LetDirective,
     CommonModule,
+    RouterModule,
     RouterModule
   ]
 })
 export class MenuTopComponent {
+  public appRoutes = AppRoutes
 }

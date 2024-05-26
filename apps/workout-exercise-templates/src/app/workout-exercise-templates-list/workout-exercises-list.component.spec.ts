@@ -15,6 +15,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 import { appRoutes } from '../app.routes';
+import { addDefaultExerciseTemplateList } from '@workout-tracker/shared-store';
 
 describe('WorkoutExerciseTemplatesListComponent', () => {
   let component: WorkoutExerciseTemplatesListComponent;
@@ -69,6 +70,13 @@ describe('WorkoutExerciseTemplatesListComponent', () => {
 
       component.newExerciseTemplate()
       expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutExerciseTemplateDialogComponent, true)
+    });
+
+    it('addDefaultExerciseTemplates should dispatch addDefaultExerciseTemplateList ', () => {
+      const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+      component.addDefaultExerciseTemplates()
+      expect(dispatchSpy).toHaveBeenCalledWith(addDefaultExerciseTemplateList())
     });
 
     it('openExerciseDetails should navigate to exercise details ', () => {
