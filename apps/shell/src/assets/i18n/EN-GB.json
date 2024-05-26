@@ -174,8 +174,6 @@
                     }
                 },
                 "actions": {
-                    "addNewTraining": "New training",
-                    "continueTraining": "Continue training"
                 }
             },
             "training": {
@@ -328,8 +326,12 @@
                         }
                     }
                 },
+                "banner": {
+                    "title": "",
+                    "content": "You can add the default templates to your list of exercise templates."
+                },
                 "actions": {
-                    "addNewExerciseTemplate": "New exercise template"
+                    "addDefaultExerciseTemplates": "Add"
                 }
             },
             "details": {

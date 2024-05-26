@@ -16,14 +16,20 @@
             </div>
         </workout-tracker-view-header>
         
-        <button [disabled]="vm.hasDefaultExerciseTemplatesLoaded" mat-flat-button color="primary" (click)="addDefaultExerciseTemplates()">
-            add default exercise templates
-        </button>
+        <workout-tracker-banner *ngIf="!vm.hasDefaultExerciseTemplatesLoaded"
+            [type]="bannerType.Info"
+            [content]="'apps.workout-exercises.list.banner.content' | translate"
+            [actionText]="'apps.workout-exercises.list.actions.addDefaultExerciseTemplates' | translate"
+            (action)="addDefaultExerciseTemplates()">
+        </workout-tracker-banner>
     
-        <div class="WorkoutExerciseTemplatesList_ListContainer"
-            *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
-            (click)="openExerciseTemplateDetails(filteredExerciseTemplate)">
-            <workout-tracker-exercise-template-card [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
+        <div class="WorkoutExerciseTemplatesList_ListContainer">
+            <div class="WorkoutExerciseTemplatesList_ListElement"
+                *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
+                (click)="openExerciseTemplateDetails(filteredExerciseTemplate)">
+                    <workout-tracker-exercise-template-card [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
         </div>
+        </div>
+
     </div>
 </div>

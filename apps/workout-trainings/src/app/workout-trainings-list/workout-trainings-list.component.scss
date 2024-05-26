@@ -34,8 +34,13 @@
         .WorkoutTrainingsList_ListContainer {
             display: flex;
             flex-direction: column;
+
             width: 100%;
-    
+            gap: shellStyles.$NormalSeparation;
+
+            .WorkoutTrainingsList_ListElement {
+
+            }
         }
     }
 

@@ -21,10 +21,12 @@
             </div>
         </workout-tracker-view-header>
 
-        <div class="WorkoutTrainingsList_ListContainer"
-            *ngFor="let filteredTraining of vm.trainingList"
-            (click)="openTrainingDetails(filteredTraining)">
-            <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
+        <div class="WorkoutTrainingsList_ListContainer">
+            <div class="WorkoutTrainingsList_ListElement"
+                *ngFor="let filteredTraining of vm.trainingList"
+                (click)="openTrainingDetails(filteredTraining)">
+                <workout-tracker-training-card [training]="filteredTraining"></workout-tracker-training-card>
+            </div>
         </div>
     </div>
 

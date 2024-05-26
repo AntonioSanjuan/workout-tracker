@@ -176,8 +176,6 @@
                     }
                 },
                 "actions": {
-                    "addNewTraining": "Nuevo entrenamiento",
-                    "continueTraining": "Continuar entrenamiento"
                 }
             },
             "training": {
@@ -328,8 +326,12 @@
                         }
                     }
                 },
+                "banner": {
+                    "title": "",
+                    "content": "Puedes añadir las plantillas por defecto a tu lista de plantillas de ejercicios"
+                },
                 "actions": {
-                    "addNewExerciseTemplate": "Nueva plantilla de ejercicio"
+                    "addDefaultExerciseTemplates": "Añadir"
                 }
             },
             "details": {

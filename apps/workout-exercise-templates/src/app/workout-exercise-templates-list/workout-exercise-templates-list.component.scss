@@ -14,6 +14,10 @@
     }
 
     .WorkoutExerciseTemplatesList_ContentContainer {   
+        workout-tracker-banner {
+            padding-bottom: shellStyles.$NormalSeparation;;
+        }
+        
         .WorkoutExerciseTemplatesList_HeaderContainer {
             display: flex;
             flex-direction: row;
@@ -34,6 +38,11 @@
             flex-direction: column;
 
             width: 100%;
+            gap: shellStyles.$NormalSeparation;
+
+            .WorkoutExerciseTemplatesList_ListElement {
+
+            }
 
         }        
     }

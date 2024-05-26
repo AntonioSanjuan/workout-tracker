@@ -9,8 +9,8 @@ import { AddWorkoutExerciseTemplateDialogComponent } from './add-workout-exercis
 import { addDefaultExerciseTemplateList, getExerciseTemplatesListFiltered, hasDefaultExerciseTemplatesLoaded } from '@workout-tracker/shared-store';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { ExerciseTemplateCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
-import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
+import { BannerComponent, ExerciseTemplateCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { AppRoutes, BannerType, ExerciseTemplate } from '@workout-tracker/models';
 
 @Component({
   selector: 'workout-tracker-exercise-templates-list',
@@ -21,6 +21,7 @@ import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
     TranslateModule,
     ExerciseTemplateCardComponent,
     ViewHeaderComponent,
+    BannerComponent,
     WorkoutExerciseTemplatesFilterListComponent,
     NgFor,
     RouterModule
@@ -36,6 +37,8 @@ export class WorkoutExerciseTemplatesListComponent {
   public filteredExerciseTemplates$ =  this.store.select(getExerciseTemplatesListFiltered)
   public hasDefaultExerciseTemplatesLoaded$ = this.store.select(hasDefaultExerciseTemplatesLoaded)
 
+  public bannerType = BannerType;
+  
   public addDefaultExerciseTemplates() {
     this.store.dispatch(addDefaultExerciseTemplateList())
   }
