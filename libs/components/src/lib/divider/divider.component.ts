@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,6 +15,4 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   encapsulation: ViewEncapsulation.None
 })
-export class DividerComponent {
-  @Input() public content!: string;
-}
+export class DividerComponent {}
