@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, of, mergeMap, iif, take, switchMap } from 'rxjs'
+import { map, catchError, of, mergeMap, iif, take, switchMap, tap } from 'rxjs'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
@@ -96,6 +96,15 @@ export class TrainingEffects {
             of(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExercise}))
         )
     ))
+
+    
+    addUserTrainingExerciseRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(addAuthenticatedUserTrainingExerciseRequestSuccess, addAnonymousUserTrainingExerciseRequestSuccess),
+        concatLatestFrom(() => [this.store.select(selectWorkoutTraining)]),
+        tap(([{ trainingExercise }, training]) => 
+            this.router.navigate([`/trainings/${training?.id as string}/exercise/${trainingExercise.id}`])
+        )
+    ), { dispatch: false})
 
     addUserTrainingExerciseRequestError$ = createEffect(() => this.actions$.pipe(
         ofType(

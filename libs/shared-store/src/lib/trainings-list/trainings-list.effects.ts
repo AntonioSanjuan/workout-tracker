@@ -1,19 +1,21 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { EMPTY, catchError, filter, iif, map, of, switchMap, take } from "rxjs";
+import { EMPTY, catchError, filter, iif, map, of, switchMap, take, tap } from "rxjs";
 import { getUser } from "../user";
 import firebase from 'firebase/compat/app';
-import { Training } from "@workout-tracker/models";
+import { AppRoutes, Training } from "@workout-tracker/models";
 import { AppInit, loadedApp } from "../ui";
 import { TrainingsService } from "@workout-tracker/services/trainings"
 import { updateAnonymousUserTrainingListRequestError, updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequestError, updateAuthenticatedUserTrainingListRequestSuccess, getAnonymousUserTrainingsListRequest, getAnonymousUserTrainingsListRequestError, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequest, getAuthenticatedUserTrainingsListRequestError, getAuthenticatedUserTrainingsListRequestSuccess, getUserTrainingsListRequest, setTrainingListQueryFilter, addUserTrainingListRequest, addAuthenticatedUserTrainingListRequest, addAnonymousUserTrainingListRequest, addAuthenticatedUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequestError, addAnonymousUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestError, clearTrainingListQueryFilter } from "./trainings-list.actions";
 import { updateAnonymousUserTrainingListRequest, updateAuthenticatedUserTrainingListRequest, updateUserTrainingListRequest, getTrainingListOngoing, getTrainingsList, getTrainingsListPagination, getTrainingsListQuery } from ".";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class TrainingsListEffects {
     private trainingsService: TrainingsService = inject(TrainingsService)
     private store: Store = inject(Store)
+    private router: Router = inject(Router)
     private actions$ = inject(Actions);
 
     getUserTrainingsListRequest$ = createEffect(() => this.actions$.pipe(
@@ -114,6 +116,13 @@ export class TrainingsListEffects {
         )
         )
     ))
+
+    addUserTrainingListRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(addAuthenticatedUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestSuccess),
+        tap(({ training }) => 
+            this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
+        )
+    ), { dispatch: false})
 
 
     updateUserTrainingListRequest$ = createEffect(() => this.actions$.pipe(

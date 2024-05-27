@@ -14,12 +14,16 @@ import { TrainingsListState, getTrainingsListState, getUser, showError } from '@
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { selectWorkoutTraining } from './workout-training.selectors';
 import { WorkoutTrainingExerciseState } from '../../workout-training-exercise/state/workout-training-exercise.reducer';
+import { Router } from '@angular/router';
+import { appRoutes } from '../../app.routes';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TrainingDetailsEffects', () => {
   let actions: Observable<Action>;
   let effects: TrainingEffects;
   let trainingService: TrainingsService
   let store: MockStore;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,6 +32,7 @@ describe('TrainingDetailsEffects', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader}
         }),
+        RouterTestingModule.withRoutes(appRoutes)
       ],
       providers: [
         TrainingEffects,
@@ -44,6 +49,7 @@ describe('TrainingDetailsEffects', () => {
     effects = TestBed.inject(TrainingEffects);
     trainingService = TestBed.inject(TrainingsService)
     store = TestBed.inject(MockStore)
+    router = TestBed.inject(Router);
   });
 
   describe('getUserTrainingDetailsRequest$', () => {    
@@ -286,6 +292,44 @@ describe('TrainingDetailsEffects', () => {
         })
       })
     })
+  })
+
+  describe('addUserTrainingExerciseRequestSuccess$', () => {
+    const trainingIdSut = 'trainingId test'
+    const trainingSut = { id: trainingIdSut } as Training
+
+    const trainingExerciseSut = { id: 'trainingExerciseId test'} as TrainingExercise
+
+    describe('when addAuthenticatedUserTrainingExerciseRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.overrideSelector(selectWorkoutTraining, trainingSut);
+        store.refreshState()
+
+        actions = of(addAuthenticatedUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut }))
+      })
+      it('should navigate to new trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.addUserTrainingExerciseRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`/trainings/${trainingIdSut}/exercise/${trainingExerciseSut.id}`])
+      })
+    })
+
+    describe('when addAnonymousUserTrainingExerciseRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.overrideSelector(selectWorkoutTraining, trainingSut);
+        store.refreshState()
+
+        actions = of(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut }))
+      })
+      it('should navigate to new trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.addUserTrainingExerciseRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`/trainings/${trainingIdSut}/exercise/${trainingExerciseSut.id}`])
+      })
+    })
+
   })
 
   describe('addUserTrainingExerciseRequestError$', () => {

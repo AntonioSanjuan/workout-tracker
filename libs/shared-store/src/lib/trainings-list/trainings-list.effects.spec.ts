@@ -6,13 +6,15 @@ import { Actions } from '@ngrx/effects';
 import firebase from 'firebase/compat/app';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { trainingsListStateMock, userStateMock } from '@workout-tracker/test';
-import { ExerciseTemplate, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
+import { AppRoutes, ExerciseTemplate, Training, TrainingExercise, TrainingQueryFilters } from '@workout-tracker/models';
 import { getUser } from '../user';
 import { TrainingsListEffects } from './trainings-list.effects'
 import { getTrainingListOngoing, getTrainingsList } from './trainings-list.selectors';
 import { AppInit, loadedApp } from '../ui';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
 import { addAnonymousUserTrainingListRequest, addAnonymousUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequest, addAuthenticatedUserTrainingListRequestError, addAuthenticatedUserTrainingListRequestSuccess, addUserTrainingListRequest, getAnonymousUserTrainingsListRequest, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequest, getAuthenticatedUserTrainingsListRequestError, getAuthenticatedUserTrainingsListRequestSuccess, getUserTrainingsListRequest, setTrainingListQueryFilter, updateAnonymousUserTrainingListRequest, updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequest, updateAuthenticatedUserTrainingListRequestError, updateAuthenticatedUserTrainingListRequestSuccess, updateUserTrainingListRequest } from './trainings-list.actions';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 const trainingSut = {
   id: 'trainingIdTest',
@@ -29,10 +31,12 @@ describe('TrainingsListEffects', () => {
   let effects: TrainingsListEffects
   let trainingService: TrainingsService
   let store: MockStore
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule.withRoutes([])
       ],
       providers: [ 
         { provide: TrainingsService, useValue: trainingsServiceMock },
@@ -50,6 +54,7 @@ describe('TrainingsListEffects', () => {
     effects = TestBed.inject(TrainingsListEffects);
     actions = TestBed.inject(Actions)
     store = TestBed.inject(MockStore)
+    router = TestBed.inject(Router);
     trainingService = TestBed.inject(TrainingsService)
   });
 
@@ -379,6 +384,40 @@ describe('TrainingsListEffects', () => {
       const result = await firstValueFrom(effects.addAnonymousUserTrainingListRequest$)
       expect(result).toEqual(addAnonymousUserTrainingListRequestSuccess({ training: {...trainingSut, id: (exerciseListSut.length + 1).toString()}}))
     })
+  })
+
+  describe('addUserTrainingListRequestSuccess$', () => {
+    const trainingIdSut = 'trainingId test'
+    const trainingSut = { id: trainingIdSut } as Training
+
+    describe('when addAuthenticatedUserTrainingListRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.refreshState()
+
+        actions = of(addAuthenticatedUserTrainingListRequestSuccess({ training: trainingSut }))
+      })
+      it('should navigate to new trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.addUserTrainingListRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+      })
+    })
+
+    describe('when addAnonymousUserTrainingListRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.refreshState()
+
+        actions = of(addAnonymousUserTrainingListRequestSuccess({ training: trainingSut }))
+      })
+      it('should navigate to new trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.addUserTrainingListRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+      })
+    })
+
   })
 
   //
