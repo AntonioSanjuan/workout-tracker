@@ -86,7 +86,7 @@ describe('WorkoutTrainingsComponent', () => {
       const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
 
       component.newTraining()
-      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingDialogComponent, true)
+      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingDialogComponent, false)
     });
 
     it('openTrainingDetails should navigate to exercise details ', () => {

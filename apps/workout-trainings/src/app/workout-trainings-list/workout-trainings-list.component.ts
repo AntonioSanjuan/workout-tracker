@@ -38,7 +38,7 @@ export class WorkoutTrainingsListComponent {
   public trainingOngoing$ = this.store.select(getTrainingListOngoing)
 
   public newTraining() {
-    this.dialogService.showDialog(AddWorkoutTrainingDialogComponent, true)
+    this.dialogService.showDialog(AddWorkoutTrainingDialogComponent, false)
   }
 
   public openTrainingDetails(training: Training) {

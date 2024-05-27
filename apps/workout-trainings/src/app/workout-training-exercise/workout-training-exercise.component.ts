@@ -47,7 +47,7 @@ export class WorkoutTrainingExerciseComponent {
   }
 
   public newTrainingExerciseSerie() {
-    this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, true)
+    this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, false)
   }
 
   public openExerciseTemplateDetails(exerciseTemplate: ExerciseTemplate) {

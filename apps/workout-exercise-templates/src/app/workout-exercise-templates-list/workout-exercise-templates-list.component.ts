@@ -43,7 +43,7 @@ export class WorkoutExerciseTemplatesListComponent {
     this.store.dispatch(addDefaultExerciseTemplateList())
   }
   public newExerciseTemplate() {
-    this.dialogService.showDialog(AddWorkoutExerciseTemplateDialogComponent, true)
+    this.dialogService.showDialog(AddWorkoutExerciseTemplateDialogComponent, false)
   }
 
   public openExerciseTemplateDetails(exerciseTemplate: ExerciseTemplate) {

@@ -98,7 +98,7 @@ describe('WorkoutTrainingComponent', () => {
       const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
 
       component.newTrainingExercise()
-      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingExerciseDialogComponent, true)
+      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingExerciseDialogComponent, false)
     });
 
     it('printTraining should request window.print', () => {

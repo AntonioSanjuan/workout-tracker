@@ -69,7 +69,7 @@ describe('WorkoutExerciseTemplatesListComponent', () => {
       const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
 
       component.newExerciseTemplate()
-      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutExerciseTemplateDialogComponent, true)
+      expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutExerciseTemplateDialogComponent, false)
     });
 
     it('addDefaultExerciseTemplates should dispatch addDefaultExerciseTemplateList ', () => {

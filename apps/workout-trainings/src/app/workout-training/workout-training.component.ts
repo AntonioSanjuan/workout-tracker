@@ -52,7 +52,7 @@ export class WorkoutTrainingComponent {
   }
 
   public newTrainingExercise() {
-    this.dialogService.showDialog(AddWorkoutTrainingExerciseDialogComponent, true)
+    this.dialogService.showDialog(AddWorkoutTrainingExerciseDialogComponent, false)
 
   }
 
