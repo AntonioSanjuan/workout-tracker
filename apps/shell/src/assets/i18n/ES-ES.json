@@ -179,13 +179,13 @@
                 }
             },
             "training": {
-                "title": "Detalles de entrenamiento",
+                "title": "Detalles del entrenamiento",
                 "training-info": {
                     "muscularGroups": "Grupos músculares"
                 },
                 "training-exercises": {
                     "list": {
-                        "title": "Ejercicios del entrenamientos"
+                        "title": "Ejercicios del entrenamiento"
                     }
                 },
                 "addTrainingExercise": {

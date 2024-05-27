@@ -24,7 +24,10 @@
     }
 
     .WorkoutTrainingExercise_ContentContainer {
-
+        h2 {
+            margin: 0;
+        }
+        
         .WorkoutTrainingExercise_PreviousSimiarTrainingsContainer,
         .WorkoutTrainingExercise_ExerciseTemplateContainer {
             width: 100%;

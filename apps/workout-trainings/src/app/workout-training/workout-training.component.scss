@@ -25,15 +25,16 @@
     }
 
     .WorkoutTraining_ContentContainer {
-
-
         .ExerciseTemplateFilter_ExerciseTemplateBanner {
-            border-radius: 5px;
-            width: 300px;
-            padding: 5px 10px;
+            width: 100%;
+
+            workout-tracker-banner {
+                margin-top: shellStyles.$NormalSeparation;
+            }
         }
+
         h2 {
-            margin-bottom: 0;
+            margin: 0;
         }
         
         .WorkoutTraining_InfoContainer {
@@ -54,9 +55,18 @@
                 }
             }
         }
-        .WorkoutTraining_TrainingExercise {
+        .WorkoutTraining_TrainingExercisesContainer {
+            display: flex;
+            flex-direction: column;
+
             width: 100%;
+            gap: shellStyles.$NormalSeparation;
+
+            .WorkoutTraining_TrainingExercise {
+                width: 100%;
+            }
         }
+
     }
 }
 

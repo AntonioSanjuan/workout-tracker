@@ -8,7 +8,7 @@ import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes } from '@workout-tracker/models';
 import { getWorkoutExerciseTemplateTrainingsDetailsFilteredByTemplateById, selectWorkoutExerciseTemplateDetailsState } from './state/workout-exercise-template.selectors';
-import { MusclePillComponent, TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { DividerComponent, MusclePillComponent, TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-exercise-template',
@@ -17,6 +17,7 @@ import { MusclePillComponent, TrainingExerciseCardComponent, ViewHeaderComponent
     UiModule,
     LetDirective,
     TranslateModule,
+    DividerComponent,
     LocalizedDatePipe,
     NgFor,
     RouterModule,

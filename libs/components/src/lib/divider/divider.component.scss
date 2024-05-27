@@ -1,0 +1,29 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-divider {
+    display: flex;
+    width: 100%;
+    .Divider_MainContainer {
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        --text-divider-gap: 1rem; // set a customizable gap between label and lines
+        margin: 50px 0px 20px 0px;
+    }
+
+    .Divider_MainContainer::before,
+    .Divider_MainContainer::after {
+        content: '';
+        height: 2px;
+        background-color: shellStyles.$mainColor;
+        flex-grow: 1;
+    }
+    .Divider_MainContainer::before {
+        margin-right: var(--text-divider-gap);
+      }
+      
+    .Divider_MainContainer::after {
+        margin-left: var(--text-divider-gap);
+    }
+}

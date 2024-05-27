@@ -14,7 +14,9 @@
     </workout-tracker-view-header>
 
     <div class="WorkoutTrainingExercise_ContentContainer view-body">
-        <h2>{{ 'apps.workout-trainings.trainingExercise.trainingExercisePrevious.title' | translate }}</h2>
+        <workout-tracker-divider>
+            <h2>{{ 'apps.workout-trainings.trainingExercise.trainingExercisePrevious.title' | translate }}</h2>
+        </workout-tracker-divider>
         
         <div 
             class="WorkoutTrainingExercise_PreviousSimiarTrainingsContainer">
@@ -29,8 +31,10 @@
             </workout-tracker-banner>
         </div>
 
-        <h2>{{ 'apps.workout-trainings.trainingExercise.template.title' | translate }}</h2>
-    
+        <workout-tracker-divider>
+            <h2>{{ 'apps.workout-trainings.trainingExercise.template.title' | translate }}</h2>
+        </workout-tracker-divider>
+        
         <div (click)="openExerciseTemplateDetails(vm.trainingExercise?.exerciseTemplate!)"
             class="WorkoutTrainingExercise_ExerciseTemplateContainer">
             <workout-tracker-exercise-template-card

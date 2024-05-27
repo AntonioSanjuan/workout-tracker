@@ -13,18 +13,7 @@
         </div>
     </workout-tracker-view-header>
 
-    <div class="WorkoutTraining_ContentContainer view-body">
-        <div 
-            class="ExerciseTemplateFilter_ExerciseTemplateBanner non-printable"
-            *ngIf="!vm.exerciseTemplates || !vm.exerciseTemplates.length">
-            <workout-tracker-banner
-                [type]="bannerType.Warning"
-                [content]="'apps.workout-trainings.training.errors.exerciseTemplatesNotFound.content' | translate"
-                [actionText]="'apps.workout-trainings.training.errors.exerciseTemplatesNotFound.action' | translate"
-                (action)="goToExerciseTemplates()">
-            </workout-tracker-banner>
-        </div>
-    
+    <div class="WorkoutTraining_ContentContainer view-body">  
         <div class="WorkoutTraining_InfoContainer">
             <workout-tracker-training-info 
                 [training]="vm.training!">
@@ -38,17 +27,34 @@
             </div>
         </div>
 
-        <h2>
-            {{ 'apps.workout-trainings.training.training-exercises.list.title' | translate }}
-        </h2>
-        
-        <div class="WorkoutTraining_TrainingExercise" 
+        <div 
+            class="ExerciseTemplateFilter_ExerciseTemplateBanner non-printable"
+            *ngIf="!vm.exerciseTemplates || !vm.exerciseTemplates.length">
+            <workout-tracker-banner
+                [type]="bannerType.Warning"
+                [content]="'apps.workout-trainings.training.errors.exerciseTemplatesNotFound.content' | translate"
+                [actionText]="'apps.workout-trainings.training.errors.exerciseTemplatesNotFound.action' | translate"
+                (action)="goToExerciseTemplates()">
+            </workout-tracker-banner>
+        </div>
+
+        <workout-tracker-divider>
+            <h2>
+                {{ 'apps.workout-trainings.training.training-exercises.list.title' | translate }}
+            </h2>
+        </workout-tracker-divider>
+
+
+        <div class="WorkoutTraining_TrainingExercisesContainer">
+            <div class="WorkoutTraining_TrainingExercise" 
             *ngFor="let trainingExercise of vm.training?.trainingExercises"
             (click)="openTrainingExercise(vm.training!, trainingExercise)">
             <workout-tracker-training-exercise-card
                 [trainingExercise]="trainingExercise">
             </workout-tracker-training-exercise-card>
         </div>
+        </div>
+
     </div>
 </div>
 

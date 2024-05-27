@@ -10,6 +10,10 @@ workout-tracker-exercise-template {
     
         .WorkoutExerciseTemplate_ContentContainer {
 
+            h2 {
+                margin: 0;
+                text-align: center;
+            }
             .WorkoutExerciseTemplate_Info {
                 display: flex;
                 flex-direction: column;
