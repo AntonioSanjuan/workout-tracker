@@ -35,6 +35,32 @@ export class TrainingsRefService {
         }
         return trainingsPaginatedQuery;
     }
+
+    private getTrainingsExercisesQuery(): QueryFn {
+        const TrainingsExerciseQuery: QueryFn = ref => {
+            let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+
+            // Aplicar ordenamiento
+            query = query
+                .orderBy('creationDate', 'desc')
+            
+            return query
+        }
+        return TrainingsExerciseQuery;
+    }
+
+    private getTrainingsExerciseSeriesQuery(): QueryFn {
+        const TrainingsExerciseSerieQuery: QueryFn = ref => {
+            const query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+
+            // Aplicar ordenamiento
+            // query = query
+            //     .orderBy('creationDate', 'asc')
+            
+            return query
+        }
+        return TrainingsExerciseSerieQuery;
+    }
     
     public getTrainingsCollectionRef(userId: string): AngularFirestoreCollection {
         return this.firebaseDataBase.collection(`user/${userId}/trainings`)
@@ -46,11 +72,14 @@ export class TrainingsRefService {
     }
 
     public getTrainingExercisesCollectionRef(userId: string, trainingId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/trainings/${trainingId}/exercises`)
+        const firestoreQuery = this.getTrainingsExercisesQuery()
+        return this.firebaseDataBase.collection(`user/${userId}/trainings/${trainingId}/exercises`, firestoreQuery)
     }
 
     public getTrainingExerciseSeriesCollectionRef(userId: string, trainingId: string, trainingExerciseId: string): AngularFirestoreCollection {
-        return this.firebaseDataBase.collection(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}/series`)
+        const firestoreQuery = this.getTrainingsExerciseSeriesQuery()
+
+        return this.firebaseDataBase.collection(`user/${userId}/trainings/${trainingId}/exercises/${trainingExerciseId}/series`, firestoreQuery)
     }
 
     public getTrainingDocRef(userId: string, trainingId: string): AngularFirestoreDocument {

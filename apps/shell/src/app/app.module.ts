@@ -42,7 +42,7 @@ import { CanActivateUser } from './shared/guards/user.guard';
     CoreModule,
     BaseLayoutComponent,
     LoadingSpinnerComponent,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking', scrollPositionRestoration: 'enabled' }),
     StoreModule.forRoot(reducers, {
         initialState: rootInitialState,
         metaReducers: [],

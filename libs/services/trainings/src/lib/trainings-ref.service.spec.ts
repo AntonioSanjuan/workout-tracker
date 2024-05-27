@@ -74,7 +74,7 @@ describe('TrainingsRefService', () => {
 
       it('getTrainingExercisesCollectionRef should return firebaseDataBase collection ref',  () => {
         service.getTrainingExercisesCollectionRef(userIdSut, trainingIdSut)
-        expect(mock.collection).toHaveBeenCalledWith(`user/${userIdSut}/trainings/${trainingIdSut}/exercises`)
+        expect(mock.collection).toHaveBeenCalledWith(`user/${userIdSut}/trainings/${trainingIdSut}/exercises`, expect.anything())
       })
     });
 
@@ -85,7 +85,7 @@ describe('TrainingsRefService', () => {
 
       it('getTrainingExerciseSeriesCollectionRef should return firebaseDataBase collection ref',  () => {
         service.getTrainingExerciseSeriesCollectionRef(userIdSut, trainingIdSut, trainingExerciseIdSut)
-        expect(mock.collection).toHaveBeenCalledWith(`user/${userIdSut}/trainings/${trainingIdSut}/exercises/${trainingExerciseIdSut}/series`)
+        expect(mock.collection).toHaveBeenCalledWith(`user/${userIdSut}/trainings/${trainingIdSut}/exercises/${trainingExerciseIdSut}/series`, expect.anything())
       })
     });
 
