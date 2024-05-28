@@ -14,6 +14,34 @@
     </workout-tracker-view-header>
 
     <div class="WorkoutTrainingExercise_ContentContainer view-body">
+        <div 
+            class="WorkoutTrainingExercise_Info">
+            <workout-tracker-training-exercise-info
+                [trainingExercise]="vm.trainingExercise!">
+            </workout-tracker-training-exercise-info>
+        </div>
+
+        <workout-tracker-divider>
+            <h2>{{ 'apps.workout-trainings.trainingExercise.trainingExerciseSerie.title' | translate }}</h2>
+        </workout-tracker-divider>
+
+        <div
+            class="WorkoutTrainingExercise_TrainingsExerciseSeriesContainer">
+            <workout-tracker-banner *ngIf="!vm.trainingExercise?.series || !vm.trainingExercise?.series?.length"
+                [type]="bannerType.Warning"
+                [content]="'apps.workout-trainings.trainingExercise.trainingExerciseSerie.banner.content' | translate"
+                [actionText]="'apps.workout-trainings.trainingExercise.actions.addTrainingExerciseSerie' | translate"
+                (action)="newTrainingExerciseSerie()">
+            </workout-tracker-banner>
+
+            <workout-tracker-series-table
+                *ngIf="vm.trainingExercise?.series && vm.trainingExercise?.series?.length"
+                [series]="vm.trainingExercise?.series"
+                [actions]="true"
+                (delete)="deleteTrainingExerciseSerie($event)"
+                (edit)="editTrainingExerciseSerie($event)">
+            </workout-tracker-series-table> 
+        </div>
         <workout-tracker-divider>
             <h2>{{ 'apps.workout-trainings.trainingExercise.trainingExercisePrevious.title' | translate }}</h2>
         </workout-tracker-divider>
@@ -40,15 +68,7 @@
             <workout-tracker-exercise-template-card
                 [exerciseTemplate]="vm.trainingExercise?.exerciseTemplate!">
             </workout-tracker-exercise-template-card>  
-        </div>
-
-    
-        <workout-tracker-series-table
-            [series]="vm.trainingExercise?.series"
-            [actions]="true"
-            (delete)="deleteTrainingExerciseSerie($event)"
-            (edit)="editTrainingExerciseSerie($event)">
-        </workout-tracker-series-table>    
+        </div>   
     </div>
 
 </div>

@@ -225,6 +225,13 @@
                 "template": {
                     "title": "Exercise Template"
                 },
+                "trainingExerciseSerie": {
+                    "title": "Exercise Series",
+                    "banner": {
+                        "title": "",
+                        "content": "You have not done any sets for this exercise"
+                    }
+                },
                 "trainingExercisePrevious": {
                     "title": "Previous trainings with this template",
                     "banner": {

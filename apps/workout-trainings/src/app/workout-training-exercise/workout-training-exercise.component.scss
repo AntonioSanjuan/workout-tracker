@@ -29,10 +29,12 @@
         }
         
         .WorkoutTrainingExercise_PreviousSimiarTrainingsContainer,
+        .WorkoutTrainingExercise_TrainingsExerciseSeriesContainer,
         .WorkoutTrainingExercise_ExerciseTemplateContainer {
             width: 100%;
         }
-        workout-tracker-series-table {
+        workout-tracker-series-table,
+        workout-tracker-banner {
             width: 100%;
         }
     }

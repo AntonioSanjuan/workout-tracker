@@ -26,7 +26,7 @@ describe('WorkoutTrainingExerciseComponent', () => {
   let actions: Observable<Action>;
   let router: Router;
 
-  const workoutTrainingExerciseState = { trainingId: 'trainingId test', trainingExercise: { id: 'trainingExercise id test' , exerciseTemplate: {} }} as WorkoutTrainingExerciseState
+  const workoutTrainingExerciseState = { trainingId: 'trainingId test', trainingExercise: { id: 'trainingExercise id test' , exerciseTemplate: {}, series: [] as TrainingExerciseSerie[] }} as WorkoutTrainingExerciseState
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

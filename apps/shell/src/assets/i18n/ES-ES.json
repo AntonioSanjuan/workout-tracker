@@ -226,6 +226,13 @@
                 "template": {
                     "title": "Plantilla del ejercicio"
                 },
+                "trainingExerciseSerie": {
+                    "title": "Series del ejercicio",
+                    "banner": {
+                        "title": "",
+                        "content": "No has realizado ninguna serie para este ejercicio"
+                    }
+                },
                 "trainingExercisePrevious": {
                     "title": "Entrenamiento previo de esta plantilla",
                     "banner": {
@@ -261,6 +268,7 @@
                     }
                 },
                 "actions": {
+                    "addTrainingExerciseSerie": "Añadir serie"
                 }
             }
         },
