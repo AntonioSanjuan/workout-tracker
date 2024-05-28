@@ -68,7 +68,7 @@ describe('ExerciseTypePillDirective', () => {
         component.type = MuscleGroups.Arms;
         fixture.detectChanges();
 
-        expect(rgbToHex(directive.styles['backgroundColor'] as string)).toEqual('#007cae');
+        expect(rgbToHex(directive.styles['backgroundColor'] as string)).toEqual('#73b0b9');
         expect(rgbToHex(directive.styles['color'] as string)).toEqual('#ffffff');
     });
 
@@ -76,7 +76,7 @@ describe('ExerciseTypePillDirective', () => {
         component.type = MuscleGroups.Back;
         fixture.detectChanges();
 
-        expect(rgbToHex(directive.styles['backgroundColor'] as string)).toEqual("#00a6e1");
-        expect(rgbToHex(directive.styles['color'] as string)).toEqual('#000000');
+        expect(rgbToHex(directive.styles['backgroundColor'] as string)).toEqual("#e7a1c7");
+        expect(rgbToHex(directive.styles['color'] as string)).toEqual('#ffffff');
     });
 });

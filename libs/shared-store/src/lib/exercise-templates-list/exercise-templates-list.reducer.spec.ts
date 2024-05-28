@@ -42,20 +42,6 @@ describe('exercisesReducer', () => {
         })
     })
 
-    describe('getUserExerciseTemplatesListRequest action', () => {
-        //clear exercises if auth user is setted
-        const exerciseInitialStateMock = {
-            ...exerciseTemplatesListInitialState,
-            list: exerciseInitialStateListMock
-        } as ExerciseTemplatesListState
-        it('should handle getUserExerciseTemplatesListRequest action', () => {
-            const action = getUserExerciseTemplatesListRequest()
-            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
-
-            expect(state).toEqual(exerciseTemplatesListInitialState)
-        })
-    })
-
     describe('getAuthenticatedUserExerciseTemplatesRequestSuccess action', () => {
         it('should handle getAuthenticatedUserExerciseTemplatesRequestSuccess action', () => {
             const exerciseSut = [ { name: 'testName' } as ExerciseTemplate]
@@ -63,6 +49,7 @@ describe('exercisesReducer', () => {
             const state = exerciseTemplatesListReducer(exerciseTemplatesListInitialState, action)
 
             expect(state.list).toEqual(exerciseSut)
+            expect(state.query).toEqual(exerciseTemplatesListInitialState.query)
             expect(state.filtered).toEqual(exerciseSut)
         })
     })
@@ -74,6 +61,7 @@ describe('exercisesReducer', () => {
             const state = exerciseTemplatesListReducer(exerciseTemplatesListInitialState, action)
 
             expect(state.list).toEqual(exerciseSut)
+            expect(state.query).toEqual(exerciseTemplatesListInitialState.query)
             expect(state.filtered).toEqual(exerciseSut)
         })
     })

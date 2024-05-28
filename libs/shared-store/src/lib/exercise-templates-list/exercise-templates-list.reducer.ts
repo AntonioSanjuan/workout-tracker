@@ -12,7 +12,6 @@ export const exerciseTemplatesListReducer = createReducer(
     on(
         setAnonymousUser, 
         setAuthenticatedUser,
-        getUserExerciseTemplatesListRequest,
         (state: ExerciseTemplatesListState) => {
         //clear exercises if user is setted
         return {
@@ -24,6 +23,7 @@ export const exerciseTemplatesListReducer = createReducer(
         getAuthenticatedUserExerciseTemplatesListRequestSuccess, (state: ExerciseTemplatesListState, { exercises }) => {
         return {
             ...state, 
+            query: exerciseTemplatesListInitialState.query,
             list: exercises,
             filtered: exercises
         }

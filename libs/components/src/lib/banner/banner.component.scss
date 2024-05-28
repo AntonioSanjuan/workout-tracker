@@ -1,19 +1,19 @@
 @use "css/main.scss" as shellStyles;
 
 .Banner_infoType {
-    background-color: shellStyles.$mainColor;
+    background-color: shellStyles.$mainColor;   
 
 }
 .Banner_errorType {
-    background-color: shellStyles.$errorColor;
+    background-color: shellStyles.$mainColor;  // shellStyles.$errorColor;
 
 }
 .Banner_successType {
-    background-color: shellStyles.$successColor;
+    background-color: shellStyles.$mainColor;    //shellStyles.$successColor;
 
 }
 .Banner_warningType {
-    background-color: shellStyles.$warningColor;
+    background-color: shellStyles.$mainColor;    //shellStyles.$warningColor;
 
 }
 
@@ -45,13 +45,18 @@ workout-tracker-banner {
     
             }
             .Banner_ContentContainer {
-                .Banner_TitleContainer {}
-                .Banner_ContentContainer {
+                width: 100%;
+                .Banner_Title,
+                .Banner_Content {
     
-                    p {
+                    p, h2 {
                         margin: 0;
                         color: #ffff
                     }
+                }
+
+                .Banner_Content {
+                    width: 100%;
                 }
             }
         }
@@ -60,6 +65,7 @@ workout-tracker-banner {
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-top: shellStyles.$SmallListGap;
             button {
             }
         }

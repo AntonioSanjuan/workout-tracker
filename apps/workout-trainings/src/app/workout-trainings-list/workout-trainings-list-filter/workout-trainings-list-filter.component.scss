@@ -75,6 +75,10 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
+            
+            .TrainingsFilter_MuscleFilterHeader {
+                text-align: center;
+            }
 
             .TrainingsFilter_MuscleFilterContent {
                 display: flex;

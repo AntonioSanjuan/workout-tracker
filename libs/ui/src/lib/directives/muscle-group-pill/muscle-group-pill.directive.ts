@@ -2,22 +2,22 @@ import { Directive, ElementRef, Input, SimpleChanges } from '@angular/core';
 import { MuscleGroups } from '@workout-tracker/models';
 
 const MuscleGroupColor: { [key in MuscleGroups]: string} = {
-  [MuscleGroups.Arms] : '#ffffff',
-  [MuscleGroups.Back] : '#000000',
-  [MuscleGroups.Chest] : '#000000',
-  [MuscleGroups.Legs] : '#000000',
-  [MuscleGroups.Shoulder] : '#000000',
-  [MuscleGroups.Core] : '#000000',
-  [MuscleGroups.Cardio] : '#000000'
+  [MuscleGroups.Arms] : '#FFFFFF',
+  [MuscleGroups.Back] : '#FFFFFF',
+  [MuscleGroups.Chest] : '#FFFFFF',
+  [MuscleGroups.Legs] : '#FFFFFF',
+  [MuscleGroups.Shoulder] : '#FFFFFF',
+  [MuscleGroups.Core] : '#FFFFFF',
+  [MuscleGroups.Cardio] : '#FFFFFF'
 }
 const MuscleGroupBackgroundColor: { [key in MuscleGroups]: string} = {
-  [MuscleGroups.Arms] : '#007cae',
-  [MuscleGroups.Back] : '#00a6e1',
-  [MuscleGroups.Chest] : '#33b44a',
-  [MuscleGroups.Legs] : '#ff6921',
-  [MuscleGroups.Shoulder] : '#ffc20e',
-  [MuscleGroups.Core] : '#21ffad',
-  [MuscleGroups.Cardio] : 'red'
+  [MuscleGroups.Arms] : '#73b0b9',
+  [MuscleGroups.Back] : '#e7a1c7',
+  [MuscleGroups.Chest] : '#e35b5b',
+  [MuscleGroups.Legs] : '#80c184',
+  [MuscleGroups.Shoulder] : '#8492d3',  //#e35b5b
+  [MuscleGroups.Core] : '#f7a374',  //#e35b5b
+  [MuscleGroups.Cardio] : '#b76a6a'
 }
 
 @Directive({

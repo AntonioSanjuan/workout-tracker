@@ -28,6 +28,10 @@
                 width: 40px;
                 height: 40px;
                 background-color: shellStyles.$mainColor;
+
+                &:disabled {
+                    background-color: shellStyles.$grey1 !important;
+                }
             }
         }
     
