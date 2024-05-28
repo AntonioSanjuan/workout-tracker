@@ -43,24 +43,31 @@ workout-tracker-exercise-template {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
-    
-                gap: 15px;
-    
-                .WorkoutExerciseTemplate_TrainingInfo {
+                gap: shellStyles.$NormalSeparation;
+
+
+                .WorkoutExerciseTemplate_Training {
                     display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
                     flex-direction: column;
+                    gap: shellStyles.$SmallSeparation;
+                    width: 100%;
 
-                    p {
-                        margin: 0;
-                    }
-
-                    .WorkoutExerciseTemplate_TrainingMuscles {
+                    .WorkoutExerciseTemplate_TrainingInfo {
                         display: flex;
-                        align-items: center;
-                        gap: 15px;
-
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        flex-direction: column;
+    
+                        p {
+                            margin: 0;
+                        }
+    
+                        .WorkoutExerciseTemplate_TrainingMuscles {
+                            display: flex;
+                            align-items: center;
+                            gap: 15px;
+    
+                        }
                     }
                 }
             }
