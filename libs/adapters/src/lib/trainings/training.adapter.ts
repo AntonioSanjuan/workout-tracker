@@ -48,6 +48,7 @@ export class TrainingExerciseSerieAdapter {
         return {
             ...trainingExerciseSerie,
             id: id,
+            creationDate: DateAdapter.toState(trainingExerciseSerie.creationDate),
         }
     }
 
@@ -55,7 +56,8 @@ export class TrainingExerciseSerieAdapter {
         return {
             weight: trainingExerciseSerie.weight,
             repetitions: trainingExerciseSerie.repetitions,
-            observations: trainingExerciseSerie.observations
+            observations: trainingExerciseSerie.observations,
+            creationDate:  DateAdapter.toDto(trainingExerciseSerie.creationDate),
         }
     }
 }

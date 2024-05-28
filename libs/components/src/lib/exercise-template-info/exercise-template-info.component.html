@@ -1,0 +1,24 @@
+<div class="ExerciseTemplateInfo_MainContainer">
+  <div class="ExerciseTemplateInfo_InfoLabels">
+    <div class="ExerciseTemplateInfo_InfoLabel">
+        <p>{{ 'libs.components.exercise-template-info.labels.name' | translate }}:</p>   
+    </div>
+    <div class="ExerciseTemplateInfo_InfoLabel">
+        <p>{{ 'libs.components.exercise-template-info.labels.date' | translate }}:</p>   
+    </div>
+    <div class="ExerciseTemplateInfo_InfoLabel">
+        <p>{{ 'libs.components.exercise-template-info.labels.observations' | translate }}:</p>
+    </div>
+  </div>
+  <div class="ExerciseTemplateInfo_InfoValues">
+    <div class="ExerciseTemplateInfo_InfoValue">
+        <p>{{ exerciseTemplate.name }}</p>
+    </div>
+    <div class="ExerciseTemplateInfo_InfoValue">
+        <p>{{ exerciseTemplate.creationDate | localizedDate }}</p>
+    </div>
+    <div class="ExerciseTemplateInfo_InfoValue">
+        <p>{{ exerciseTemplate.observations || 'nA' }}</p>
+    </div>
+  </div>
+</div>

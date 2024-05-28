@@ -19,5 +19,7 @@ export interface TrainingExerciseDto {
 export interface TrainingExerciseSerieDto {
     weight: number,
     repetitions: number,
-    observations?: string
+    observations?: string,
+
+    creationDate: Timestamp
 }

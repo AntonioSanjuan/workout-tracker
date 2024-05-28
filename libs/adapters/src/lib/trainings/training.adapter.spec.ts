@@ -145,12 +145,15 @@ describe('TrainingExerciseAdapter', () => {
 
 describe('TrainingExerciseSerieAdapter', () => {    
   describe('toState', () => {
+    const creationDateSut: Date = new Date()
+    const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
     it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
       const inputTrainingExerciseSerieIdSut = 'trainingExerciseSerieIdTest';
       const inputTrainingExerciseSerieSut: TrainingExerciseSerieDto = {
         weight: 10,
         repetitions: 20,
-        observations: 'observations'
+        observations: 'observations',
+        creationDate: inputTrainingCreationDateSut
       }
 
       const trainingExerciseSerieState = TrainingExerciseSerieAdapter.toState(inputTrainingExerciseSerieSut, inputTrainingExerciseSerieIdSut)
@@ -159,16 +162,20 @@ describe('TrainingExerciseSerieAdapter', () => {
       expect(trainingExerciseSerieState.weight).toEqual(inputTrainingExerciseSerieSut.weight)
       expect(trainingExerciseSerieState.repetitions).toEqual(inputTrainingExerciseSerieSut.repetitions)
       expect(trainingExerciseSerieState.observations).toEqual(inputTrainingExerciseSerieSut.observations)
+      expect(trainingExerciseSerieState.creationDate).toEqual(creationDateSut)
     });
   })
 
   describe('toDto', () => {
+    const creationDateSut: Date = new Date()
+    const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
     it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
       const inputTrainingExerciseSerieSut: TrainingExerciseSerie = {
         id: 'trainingExerciseSerieIdTest',
         weight: 10,
         repetitions: 290,
-        observations: undefined
+        observations: undefined,
+        creationDate: creationDateSut
       }
 
       const trainingExerciseSerieDto = TrainingExerciseSerieAdapter.toDto(inputTrainingExerciseSerieSut)
@@ -176,6 +183,7 @@ describe('TrainingExerciseSerieAdapter', () => {
       expect(trainingExerciseSerieDto.weight).toEqual(inputTrainingExerciseSerieSut.weight)
       expect(trainingExerciseSerieDto.repetitions).toEqual(inputTrainingExerciseSerieSut.repetitions)
       expect(trainingExerciseSerieDto.observations).toEqual(inputTrainingExerciseSerieSut.observations)
+      expect(trainingExerciseSerieDto.creationDate).toEqual(inputTrainingCreationDateSut)
     });
   })
 });

@@ -8,12 +8,12 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import firebase from 'firebase/compat/app';
 import { ExerciseTemplate, Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { TrainingsListState, getTrainingById, getTrainingExercisesByExerciseTemplateId, getTrainingsList, getTrainingsListState, getUser, showError } from '@workout-tracker/shared-store';
+import { TrainingsListState, getTrainingById, getPrevTrainingExercisesByExerciseTemplate, getTrainingsList, getTrainingsListState, getUser, showError, updateAnonymousUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { TrainingExerciseEffects } from './workout-training-exercise.effects';
 import { addAnonymousUserTrainingExerciseSerieRequest, addAnonymousUserTrainingExerciseSerieRequestSuccess, addAuthenticatedUserTrainingExerciseSerieRequest, addAuthenticatedUserTrainingExerciseSerieRequestError, addAuthenticatedUserTrainingExerciseSerieRequestSuccess, addUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequest, deleteAnonymousUserTrainingExerciseSerieRequestSuccess, deleteAuthenticatedUserTrainingExerciseSerieRequest, deleteAuthenticatedUserTrainingExerciseSerieRequestError, deleteAuthenticatedUserTrainingExerciseSerieRequestSuccess, deleteUserTrainingExerciseSerieRequest, getAnonymousUserTrainingExercisePreviousTrainingRequest, getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess, getAnonymousUserTrainingExerciseRequest, getAnonymousUserTrainingExerciseRequestError, getAnonymousUserTrainingExerciseRequestSuccess, getAuthenticatedUserTrainingExercisePreviousTrainingRequest, getAuthenticatedUserTrainingExercisePreviousTrainingRequestError, getAuthenticatedUserTrainingExercisePreviousTrainingRequestSuccess, getAuthenticatedUserTrainingExerciseRequest, getAuthenticatedUserTrainingExerciseRequestError, getAuthenticatedUserTrainingExerciseRequestSuccess, getUserTrainingExerciseRequest } from './workout-training-exercise.actions';
 import { selectWorkoutTraining, selectWorkoutTrainingState } from '../../workout-training/state/workout-training.selectors';
-import { selectWorkoutTrainingExerciseParentId, selectWorkoutTrainingExerciseState } from './workout-training-exercise.selectors';
+import { selectWorkoutTrainingExerciseParentTrainingId, selectWorkoutTrainingExerciseState } from './workout-training-exercise.selectors';
 import { WorkoutTrainingExerciseState } from './workout-training-exercise.reducer';
 import { trainingsListStateMock } from '@workout-tracker/test';
 
@@ -468,6 +468,38 @@ describe('TrainingExerciseEffects', () => {
     })
   })
 
+  describe('addAnonymousUserTrainingExerciseSerieRequestSuccess$', () => {  
+    const trainingExerciseSerieSut = { id: 'trainingExerciseId test'} as TrainingExerciseSerie
+    const getTrainingsListMock = [
+      { id: '1'},
+      { id: '2'},
+      { id: '3'}
+    ] as Training[]
+    
+    const trainingSut =  getTrainingsListMock[0]
+    const selectWorkoutTrainingExerciseStateMock = {
+      trainingId: trainingSut.id,
+      trainingExercise: {id: '1', series: [{}, trainingExerciseSerieSut]} as TrainingExercise
+    } as WorkoutTrainingExerciseState;
+
+    describe('when addAnonymousUserTrainingExerciseSerieRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.overrideSelector(selectWorkoutTrainingExerciseState, selectWorkoutTrainingExerciseStateMock)
+        store.overrideSelector(getTrainingsList, getTrainingsListMock)
+        store.refreshState()
+
+        actions = of(addAnonymousUserTrainingExerciseSerieRequestSuccess({ trainingExerciseSerie: trainingExerciseSerieSut }))
+
+      })
+      it('should return updateAnonymousUserTrainingListRequest', async () => {
+        const result = await firstValueFrom(effects.addAnonymousUserTrainingExerciseSerieRequestSuccess$)
+        expect(result).toEqual(updateAnonymousUserTrainingListRequest({ training: trainingSut }))
+      })
+
+    })
+  });
+
   describe('addUserTrainingExerciseSerieRequestError$', () => {
     describe('when addUserTrainingExerciseSerieRequestError is dispatched', () => {
       beforeEach(() => {
@@ -620,21 +652,29 @@ describe('TrainingExerciseEffects', () => {
     })
   });
   describe('getAnonymousUserTrainingExercisePreviousTrainingRequest$', () => {
+    const trainingExerciseDate = new Date()
+    const prevTrainingExerciseDate = new Date()
+    prevTrainingExerciseDate.setMonth(trainingExerciseDate.getMonth() -1)
     describe('when getAnonymousUserTrainingExercisePreviousTrainingRequest is dispatched', () => {
       const exerciseTemplateSut = { id: 'exerciseTemplate id test'} as ExerciseTemplate
-      const trainingExercise = [
-        {
-          id: 'trainingExercise id test',
-          exerciseTemplate: exerciseTemplateSut
-        } as TrainingExercise,
-      ] as TrainingExercise[]
+      const trainingExercise = {
+        id: 'trainingExercise id test',
+        exerciseTemplate: exerciseTemplateSut,
+        creationDate: trainingExerciseDate
+      } as TrainingExercise
+
+      const prevTrainingExercise = {
+        id: 'prevTrainingExercise id test',
+        exerciseTemplate: exerciseTemplateSut,
+        creationDate: prevTrainingExerciseDate
+      } as TrainingExercise
 
       const trainingListState = {
         list: [
           {
             id: 'training 1 id test',
             trainingExercises: [
-              trainingExercise[0],
+              prevTrainingExercise,
               {
                 id: 'trainingExercise 2 id test',
                 exerciseTemplate: { id: 'trainingExercise 2 exerciseTemplate'}
@@ -662,12 +702,12 @@ describe('TrainingExerciseEffects', () => {
             store.overrideSelector(getTrainingsListState, trainingListState)
 
             store.refreshState()
-            actions = of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExercise[0] }))
+            actions = of(getAnonymousUserTrainingExercisePreviousTrainingRequest({ trainingExercise: trainingExercise }))
           })
   
           it('should return getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess', async () => {
             const result = await firstValueFrom(effects.getAnonymousUserTrainingExercisePreviousTrainingRequest$)
-            expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: trainingExercise }))
+            expect(result).toEqual(getAnonymousUserTrainingExercisePreviousTrainingRequestSuccess({ trainingExercises: [prevTrainingExercise] }))
           })
         })
     })

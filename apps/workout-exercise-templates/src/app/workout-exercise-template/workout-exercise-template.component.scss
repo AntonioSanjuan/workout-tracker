@@ -14,13 +14,28 @@ workout-tracker-exercise-template {
                 margin: 0;
                 text-align: center;
             }
-            .WorkoutExerciseTemplate_Info {
+            .WorkoutExerciseTemplate_InfoContainer {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                justify-content: space-around;
+    
                 width: 100%;
+                .WorkoutExerciseTemplate_MuscleGroupsContainer {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    p {
+                        margin: 0;
+                        font-weight: 600;
+                    }
 
-                p { 
-                    margin: 0 
+                    .WorkoutExerciseTemplate_MuscleGroups {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                    }
                 }
             }
 
@@ -60,11 +75,18 @@ workout-tracker-exercise-template {
         .WorkoutExerciseTemplate_MainContainer {
             .WorkoutExerciseTemplate_ContentContainer {
 
-                .WorkoutExerciseTemplate_Info {
-
-                }
-                .WorkoutExerciseTemplate_TrainingContainer {
-
+                .WorkoutExerciseTemplate_InfoContainer {
+                    flex-direction: column;
+                    gap: 30px;
+    
+                    .WorkoutExerciseTemplate_MuscleGroupsContainer {
+                        flex-direction: column;
+                        width: 100%;
+    
+                        p {
+                            text-align: center; 
+                        }
+                    }
                 }
             }
 

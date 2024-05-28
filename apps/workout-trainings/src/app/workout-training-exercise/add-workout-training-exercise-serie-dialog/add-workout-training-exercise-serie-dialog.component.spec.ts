@@ -57,8 +57,12 @@ describe('AddWorkoutTrainingExerciseSerieDialogComponent', () => {
           weight: 1009,
           repetitions: 20,
         } as TrainingExerciseSerie
+        const today = new Date(2020, 3, 1)
 
         beforeEach(() => {
+          jest.useFakeTimers();
+          jest.setSystemTime(today);
+
           component.form.setValue({
             weight: trainingExerciseSerieSut.weight,
             repetitions: trainingExerciseSerieSut.repetitions,
@@ -73,7 +77,8 @@ describe('AddWorkoutTrainingExerciseSerieDialogComponent', () => {
           expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingExerciseSerieRequest({trainingExerciseSerie: {
             weight: trainingExerciseSerieSut.weight,
             repetitions: trainingExerciseSerieSut.repetitions,
-            observations: null
+            observations: null,
+            creationDate: today
           } as any}))
         });
       })

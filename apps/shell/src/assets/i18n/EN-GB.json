@@ -336,14 +336,18 @@
             },
             "details": {
                 "title": "Exercise Template Details",
-                "info": {
-                    "name": "Template name"
+                "exercise-template-info": {
+                    "musclesInvolved": "Muscles involved"
                 },
                 "exerciseTrainings": {
                     "title": "Last trainings where this template was used",
                     "info": {
                         "date": "Training date",
                         "muscle": "Muscle groups of the training"
+                    },
+                    "banner": {
+                        "title": "",
+                        "content": "You dont have previous exercises with this template"
                     }
                 }
             }
@@ -364,6 +368,13 @@
                 "state": {
                     "finished": "Finished",
                     "onGoing": "On Going"
+                }
+            },
+            "exercise-template-info": {
+                "labels": {
+                    "name": "Name",
+                    "date": "Date",
+                    "observations": "Observations"
                 }
             },
             "training-exercise-info": {

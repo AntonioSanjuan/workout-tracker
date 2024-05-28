@@ -8,7 +8,7 @@ export const selectWorkoutTrainingExerciseState = createSelector(
   (state: WorkoutTrainingsState) => state[WORKOUT_TRAINING_EXERCISE_FEATURE_KEY]
 );
 
-export const selectWorkoutTrainingExerciseParentId = createSelector(
+export const selectWorkoutTrainingExerciseParentTrainingId = createSelector(
   selectWorkoutTrainingExerciseState,
   (state: WorkoutTrainingExerciseState) => state.trainingId
 );

@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
 import { TRAININGS_LIST_FEATURE_KEY } from './trainings-list.reducer'
 import { TrainingsListState } from './models/trainingsListState.model'
-import { TrainingExerciseAdapter } from '@workout-tracker/adapters'
 import { TrainingExercise } from '@workout-tracker/models'
 
 export const getTrainingsListState = createFeatureSelector<TrainingsListState>(TRAININGS_LIST_FEATURE_KEY)
@@ -22,12 +21,12 @@ export const getTrainingsByExerciseTemplateId = (exerciseTemplateId: string) => 
         training.trainingExercises.some((trainingExercise) => trainingExercise.exerciseTemplate.id === exerciseTemplateId)
     )
 );
-export const getTrainingExercisesByExerciseTemplateId = (exerciseTemplateId: string) => createSelector(
+export const getPrevTrainingExercisesByExerciseTemplate = (trainingExercise: TrainingExercise) => createSelector(
     getTrainingsListState, 
     (state: TrainingsListState) => 
     state.list.filter((training) => 
         training.trainingExercises?.length && 
-        training.trainingExercises.some((trainingExercise) => trainingExercise.exerciseTemplate.id === exerciseTemplateId)
-    ).map((training) => training.trainingExercises?.filter((TrainingExercise) => TrainingExercise.exerciseTemplate.id === exerciseTemplateId)[0] as TrainingExercise)
+        training.trainingExercises.some((trainingExerciseEl) => trainingExerciseEl.exerciseTemplate.id === trainingExercise.exerciseTemplate.id && trainingExerciseEl.creationDate < trainingExercise.creationDate)
+    ).map((training) => training.trainingExercises?.filter((TrainingExercise) => TrainingExercise.exerciseTemplate.id === trainingExercise.exerciseTemplate.id)[0] as TrainingExercise)
 
 );

@@ -7,17 +7,31 @@
     <workout-tracker-view-header [title]="'apps.workout-exercises.details.title' | translate" [goBackUrl]="appRoutes.WorkoutExerciseTemplatesList"></workout-tracker-view-header>
     
     <div class="WorkoutExerciseTemplate_ContentContainer view-body">
-        <div class="WorkoutExerciseTemplate_Info">
-            <p>{{'apps.workout-exercises.details.info.name' | translate}}: <b>{{vm.exerciseTemplateDetails.exercise?.name}}</b></p>
-            <p>...</p>
-            <p>...</p>
-            <p>...</p>
+
+        <div class="WorkoutExerciseTemplate_InfoContainer">
+            <workout-tracker-exercise-template-info 
+                [exerciseTemplate]="vm.exerciseTemplateDetails.exercise!">
+            </workout-tracker-exercise-template-info >
+
+            <div class="WorkoutExerciseTemplate_MuscleGroupsContainer">
+                <p>{{ 'apps.workout-exercises.details.exercise-template-info.musclesInvolved' | translate }}:</p>
+                <div class="WorkoutExerciseTemplate_MuscleGroups">
+                    <workout-tracker-muscle-pill *ngFor="let mucleInvolved of vm.exerciseTemplateDetails?.exercise?.musclesInvolved"
+                        [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
+                        [specificMuscle]="mucleInvolved">
+                    </workout-tracker-muscle-pill>
+                </div>
+            </div>
         </div>
         
         <workout-tracker-divider>
             <h2>{{'apps.workout-exercises.details.exerciseTrainings.title' | translate}}</h2>
         </workout-tracker-divider>
     
+        <workout-tracker-banner 
+            *ngIf="!vm.exerciseTemplateTrainingsDetails || vm.exerciseTemplateTrainingsDetails.length === 0"
+            [content]="'apps.workout-exercises.details.exerciseTrainings.banner.content' | translate">
+        </workout-tracker-banner>
         <div
             class="WorkoutExerciseTemplate_TrainingContainer"
             *ngFor="let exerciseTemplateTrainingsDetail of vm.exerciseTemplateTrainingsDetails">

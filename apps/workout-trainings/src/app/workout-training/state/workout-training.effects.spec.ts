@@ -7,10 +7,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TrainingEffects } from './workout-training.effects';
 import firebase from 'firebase/compat/app';
-import { Training, TrainingExercise } from '@workout-tracker/models';
+import { Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { TrainingsListState, getTrainingsListState, getUser, showError } from '@workout-tracker/shared-store';
+import { TrainingsListState, getTrainingsListState, getUser, showError, updateAnonymousUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { selectWorkoutTraining } from './workout-training.selectors';
 import { WorkoutTrainingExerciseState } from '../../workout-training-exercise/state/workout-training-exercise.reducer';
@@ -279,16 +279,19 @@ describe('TrainingDetailsEffects', () => {
 
   describe('addAnonymousUserTrainingExerciseRequest$', () => {
     describe('when addAnonymousUserTrainingExerciseRequest is dispatched', () => {
-      const trainingExerciseSut = { id: 'trainingExercise id test'} as TrainingExercise
+      const trainingSut = { id: 'trainingId test', trainingExercises: [{id: '1' }, {id: '2'} ]} as Training
+      const trainingExerciseSut = { series: [] as TrainingExerciseSerie[] } as TrainingExercise
 
       describe('should return addAnonymousUserTrainingExerciseRequestSuccess', () => {
         beforeEach(() => {
           actions = of(addAnonymousUserTrainingExerciseRequest({ trainingExercise: trainingExerciseSut }))
+          store.overrideSelector(selectWorkoutTraining, trainingSut)
+          store.refreshState()
         })
 
         it('should return addAnonymousUserTrainingExerciseRequestSuccess', async () => {
           const result = await firstValueFrom(effects.addAnonymousUserTrainingExerciseRequest$)
-          expect(result).toEqual(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut }))
+          expect(result).toEqual(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: {...trainingExerciseSut, id: ((trainingSut.trainingExercises?.length || 0) + 1).toString() } }))
         })
       })
     })
@@ -331,6 +334,28 @@ describe('TrainingDetailsEffects', () => {
     })
 
   })
+
+  describe('addAnonymousUserTrainingExerciseRequestSuccess$', () => {  
+    const trainingExerciseSut = { id: 'trainingExerciseId test'} as TrainingExercise
+
+    const workoutTrainingState = { id: 'training id test', trainingExercises: [trainingExerciseSut] } as Training
+
+    describe('when addAnonymousUserTrainingExerciseRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.overrideSelector(selectWorkoutTraining, workoutTrainingState)
+        store.refreshState()
+
+        actions = of(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut }))
+
+      })
+      it('should return updateAnonymousUserTrainingListRequest', async () => {
+        const result = await firstValueFrom(effects.addAnonymousUserTrainingExerciseRequestSuccess$)
+        expect(result).toEqual(updateAnonymousUserTrainingListRequest({ training: workoutTrainingState }))
+      })
+
+    })
+  });
 
   describe('addUserTrainingExerciseRequestError$', () => {
     describe('when addAuthenticatedUserTrainingExerciseRequestError is dispatched', () => {

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, of, mergeMap, iif, take } from 'rxjs'
+import { map, catchError, of, mergeMap, iif, take, finalize } from 'rxjs'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
@@ -36,7 +36,6 @@ export class WorkoutExerciseTemplatesEffects {
         mergeMap(([{ exerciseId }, user]) => this.exerciseTemplatesService.getExerciseTemplate(user?.uid as string, exerciseId).pipe(
             map((exercise: ExerciseTemplate) => getAuthenticatedUserExerciseTemplateDetailsRequestSuccess({exercise: exercise})),
             catchError(_ => {
-                this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])
                 return of(getAuthenticatedUserExerciseTemplateDetailsRequestError({ exerciseId: exerciseId }))}
             )
         ))
@@ -60,6 +59,7 @@ export class WorkoutExerciseTemplatesEffects {
             getAuthenticatedUserExerciseTemplateDetailsRequestError
         ),
         map(({ exerciseId }) => {
+            this.router.navigate([AppRoutes.WorkoutExerciseTemplatesList])
             return showError({errorMessage: `${this.translateService.instant('apps.workout-exercises.errors.exerciseTemplateNotFound', 
             {
                 exerciseTemplateId: exerciseId.toUpperCase(),

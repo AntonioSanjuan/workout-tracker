@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
 import { Store } from '@ngrx/store';
-import { getExerciseTemplateById, getTrainingById, getUser, showError } from '@workout-tracker/shared-store';
+import { getExerciseTemplateById, getTrainingById, getUser, showError, updateAnonymousUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { AppRoutes, ExerciseTemplate, Training, TrainingExercise } from '@workout-tracker/models';
 import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
 import { TrainingsService } from '@workout-tracker/services/trainings';
@@ -35,7 +35,6 @@ export class TrainingEffects {
         mergeMap(([{ trainingId }, user]) => this.exercisesService.getTraining(user?.uid as string, trainingId).pipe(
             map((training: Training) => getAuthenticatedUserTrainingRequestSuccess({training: training})),
             catchError(_ => {
-                this.router.navigate([AppRoutes.WorkoutTrainingsList])
                 return of(getAuthenticatedUserTrainingRequestError({ trainingId: trainingId }))}
             )
         ))
@@ -59,6 +58,7 @@ export class TrainingEffects {
             getAuthenticatedUserTrainingRequestError
         ),
         map(({ trainingId }) => {
+            this.router.navigate([AppRoutes.WorkoutTrainingsList])
             return showError({errorMessage: `${this.translateService.instant('apps.workout-trainings.errors.trainingNotFound', 
             {
                 trainingId: trainingId.toUpperCase(),
@@ -92,12 +92,18 @@ export class TrainingEffects {
 
     addAnonymousUserTrainingExerciseRequest$ = createEffect(() => this.actions$.pipe(
         ofType(addAnonymousUserTrainingExerciseRequest),
-        mergeMap(({ trainingExercise }) => 
-            of(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExercise}))
+        concatLatestFrom(() => this.store.select(selectWorkoutTraining)),
+        mergeMap(([{ trainingExercise }, training]) => 
+            of(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: {...trainingExercise, id: ((training?.trainingExercises?.length || 0) + 1).toString()}}))
         )
     ))
 
-    
+    addAnonymousUserTrainingExerciseRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(addAnonymousUserTrainingExerciseRequestSuccess),
+        concatLatestFrom(() => [this.store.select(selectWorkoutTraining)]),
+        mergeMap(([_, training]) => of(updateAnonymousUserTrainingListRequest({ training: training as Training })))
+    ))
+
     addUserTrainingExerciseRequestSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(addAuthenticatedUserTrainingExerciseRequestSuccess, addAnonymousUserTrainingExerciseRequestSuccess),
         concatLatestFrom(() => [this.store.select(selectWorkoutTraining)]),

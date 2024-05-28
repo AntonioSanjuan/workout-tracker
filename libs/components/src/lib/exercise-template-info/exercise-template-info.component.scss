@@ -1,0 +1,29 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-exercise-template-info {
+    display: flex;
+    flex-direction: column;
+    .ExerciseTemplateInfo_MainContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        .ExerciseTemplateInfo_InfoLabels {
+            .ExerciseTemplateInfo_InfoLabel {
+                p {
+                    margin: 0;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .ExerciseTemplateInfo_InfoValues {
+            .ExerciseTemplateInfo_InfoValue {
+                p{ 
+                    margin: 0;
+                    font-style: oblique;
+                }
+            }
+        }
+    }
+}

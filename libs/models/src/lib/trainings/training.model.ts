@@ -23,5 +23,7 @@ export interface TrainingExerciseSerie {
     id: string
     weight: number,
     repetitions: number,
-    observations?: string
+    observations?: string,
+
+    creationDate: Date
 }

@@ -21,9 +21,11 @@
 
             <div class="WorkoutTraining_MuscleGroupsContainer">
                 <p>{{ 'apps.workout-trainings.training.training-info.muscularGroups' | translate }}:</p>
-                <workout-tracker-muscle-pill *ngFor="let mucleInvolved of vm.training?.muscleGroups"
-                    [muscleGroup]="mucleInvolved">
-                </workout-tracker-muscle-pill>
+                <div class="WorkoutTraining_MuscleGroups">
+                    <workout-tracker-muscle-pill *ngFor="let mucleInvolved of vm.training?.muscleGroups"
+                        [muscleGroup]="mucleInvolved">
+                    </workout-tracker-muscle-pill>
+                </div>
             </div>
         </div>
 

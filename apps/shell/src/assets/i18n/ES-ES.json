@@ -336,14 +336,18 @@
             },
             "details": {
                 "title": "Detalles de plantilla de ejercicio",
-                "info": {
-                    "name": "Nombre de la plantilla"
+                "exercise-template-info": {
+                    "musclesInvolved": "Músculos involucrados"
                 },
                 "exerciseTrainings": {
                     "title": "Últimos entrenamientos en los que se empleo esta plantilla",
                     "info": {
                         "date": "Fecha del entrenamiento",
                         "muscle": "Grupos musculares del entrenamiento"
+                    },
+                    "banner": {
+                        "title": "",
+                        "content": "No tienes ejercicios previos con esta plantilla"
                     }
                 }
             }
@@ -364,6 +368,13 @@
                 "state": {
                     "finished": "Finalizado",
                     "onGoing": "En curso"
+                }
+            },
+            "exercise-template-info": {
+                "labels": {
+                    "name": "Nombre",
+                    "date": "Fecha",
+                    "observations": "Observaciones"
                 }
             },
             "training-exercise-info": {

@@ -10,12 +10,14 @@ import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { AppRoutes } from '@workout-tracker/models';
+import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 import { WorkoutExerciseTemplateComponent } from './workout-exercise-template.component';
 import { ViewHeaderComponent } from '@workout-tracker/components';
 import { appRoutes } from '../app.routes';
+import { selectWorkoutExerciseTemplateDetailsState } from './state/workout-exercise-template.selectors';
 
 describe('WorkoutExerciseTemplateComponent', () => {
+  const workoutExerciseTemplateDetailsMock = { exercise: {} as ExerciseTemplate } ;
   let component: WorkoutExerciseTemplateComponent;
   let fixture: ComponentFixture<WorkoutExerciseTemplateComponent>;
   let dialogService: DialogService
@@ -51,6 +53,10 @@ describe('WorkoutExerciseTemplateComponent', () => {
     store = TestBed.inject(MockStore)
     router = TestBed.inject(Router);
     dialogService = TestBed.inject(DialogService)
+
+    store.overrideSelector(selectWorkoutExerciseTemplateDetailsState, workoutExerciseTemplateDetailsMock)
+    store.refreshState()
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

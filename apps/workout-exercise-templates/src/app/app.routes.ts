@@ -7,7 +7,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { WorkoutExerciseTemplateResolver } from './shared/workout-exercise-template/workout-exercise-template.resolver';
 import { WorkoutExerciseTemplatesListResolver } from './shared/workout-exercise-templates-list/workout-exercise-templates-list.resolver';
 import { WorkoutExerciseTemplatesEffects } from './workout-exercise-template/state/workout-exercise-template.effects';
-import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, ExerciseTemplatesListEffects, exerciseTemplatesListReducer } from '@workout-tracker/shared-store';
+import { EXERCISE_TEMPLATES_LIST_FEATURE_KEY, ExerciseTemplatesListEffects, TRAININGS_LIST_FEATURE_KEY, TrainingsListEffects, exerciseTemplatesListReducer, trainingsListReducer } from '@workout-tracker/shared-store';
 
 export const appRoutes: Route[] = [
   {
@@ -34,6 +34,7 @@ export const appRoutes: Route[] = [
         resolve: { data: WorkoutExerciseTemplateResolver },
         providers: [
           importProvidersFrom(
+            StoreModule.forFeature(TRAININGS_LIST_FEATURE_KEY, trainingsListReducer),
             StoreModule.forFeature(fromWorkoutExercises.WORKOUT_EXERCISE_TEMPLATES_FEATURE_KEY, fromWorkoutExercises.workoutExerciseTemplatesReducer),
             EffectsModule.forFeature([WorkoutExerciseTemplatesEffects])
           )

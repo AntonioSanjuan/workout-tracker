@@ -53,6 +53,13 @@
                     margin: 0;
                     font-weight: 600;
                 }
+
+                
+                .WorkoutTraining_MuscleGroups {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                }
             }
         }
         .WorkoutTraining_TrainingExercisesContainer {

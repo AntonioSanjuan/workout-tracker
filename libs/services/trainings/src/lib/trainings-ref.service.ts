@@ -51,11 +51,11 @@ export class TrainingsRefService {
 
     private getTrainingsExerciseSeriesQuery(): QueryFn {
         const TrainingsExerciseSerieQuery: QueryFn = ref => {
-            const query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+            let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
 
             // Aplicar ordenamiento
-            // query = query
-            //     .orderBy('creationDate', 'asc')
+            query = query
+                .orderBy('creationDate', 'asc')
             
             return query
         }
