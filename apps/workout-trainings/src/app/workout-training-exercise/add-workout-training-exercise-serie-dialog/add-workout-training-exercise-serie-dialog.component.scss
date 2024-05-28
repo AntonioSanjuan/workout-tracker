@@ -29,17 +29,14 @@ workout-tracker-add-training-exercise-serie-dialog {
                         gap: 10px;
                         width: 100%;
 
-                        .AddTrainingExerciseSerieDialog_ListContainer {
+                        .AddTrainingExerciseSerieDialog_InputContainer {
                             display: flex;
-                            flex-direction: column;
+                            flex-direction: row;
+                            justify-content: center;
+                        
                             width: 100%;
-                            height: 100%;
 
-                            .AddTrainingExerciseSerieDialog_ListEl {
-                                display: flex;
-                                height: 100%;
-                                padding: 10px;
-                            }
+                            gap: 10px;
                         }
                     }
                 }

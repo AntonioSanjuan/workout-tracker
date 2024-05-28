@@ -27,7 +27,10 @@ export class AddWorkoutTrainingExerciseSerieDialogComponent implements OnInit {
   private dialogRef: MatDialogRef<AddWorkoutTrainingExerciseSerieDialogComponent> = inject(MatDialogRef<AddWorkoutTrainingExerciseSerieDialogComponent>)
   private store: Store = inject(Store)
 
-  public form!: FormGroup<AddWorkoutTrainingExerciseSerieForm>
+  public form!: FormGroup<AddWorkoutTrainingExerciseSerieForm>;
+
+  private weightChange = 1.25;
+  private repetitionChange = 1;
 
   ngOnInit(): void {
       this.form = getAddWorkoutTrainingExerciseSerieForm()
@@ -42,5 +45,41 @@ export class AddWorkoutTrainingExerciseSerieDialogComponent implements OnInit {
       this.store.dispatch(addUserTrainingExerciseSerieRequest({ trainingExerciseSerie: trainingExerciseSerie}))
       this.dialogRef.close()
     }
+  }
+
+  public substractWeight() {
+    const currentWeightValue = this.form.value.weight || 0
+    if(currentWeightValue - this.weightChange < 0) {
+      this.form.patchValue({
+        weight:  (currentWeightValue - this.weightChange < 0) ? 
+          currentWeightValue - this.weightChange:
+          0
+      })
+    }
+  }
+
+  public addWeight() {
+    const currentWeightValue = this.form.value.weight || 0
+    this.form.patchValue({
+      weight:  currentWeightValue + this.weightChange
+    })
+  }
+
+  public substractRepetition() {
+    const currentRepetitionValue = this.form.value.repetitions || 0
+    if(currentRepetitionValue - this.repetitionChange < 0) {
+      this.form.patchValue({
+        repetitions:  (currentRepetitionValue - this.repetitionChange < 0) ? 
+          currentRepetitionValue - this.repetitionChange:
+          0
+      })
+    }
+  }
+
+  public addRepetition() {
+    const currentRepetitionValue = this.form.value.repetitions || 0
+    this.form.patchValue({
+      repetitions:  currentRepetitionValue + this.repetitionChange
+    })
   }
 }

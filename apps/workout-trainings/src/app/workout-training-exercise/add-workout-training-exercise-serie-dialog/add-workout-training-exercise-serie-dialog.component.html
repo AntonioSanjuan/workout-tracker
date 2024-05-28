@@ -7,24 +7,42 @@
                     [stepControl]="form" 
                     [label]="'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.title' | translate">
                     <form [formGroup]="form">
-                        <mat-form-field>
-                            <mat-label>
-                                {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.weight' | translate }}
-                            </mat-label>
-                            <input matInput id="weight" name="weight" formControlName="weight" type="number"/>
-                            @if (form.controls.weight.hasError('required')) {
-                                <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.weightRequired' | translate }}</mat-error>
-                            }
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>
-                                {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.repetitions' | translate }}
-                            </mat-label>
-                            <input matInput id="repetitions" name="repetitions" formControlName="repetitions" type="number"/>
-                            @if (form.controls.repetitions.hasError('required')) {
-                                <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.repetitionsRequired' | translate }}</mat-error>
-                            }
-                        </mat-form-field>
+                        <div class="AddTrainingExerciseSerieDialog_InputContainer">
+                            <button mat-fab color="primary" (click)="substractWeight()">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <mat-form-field>
+                                <mat-label>
+                                    {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.weight' | translate }}
+                                </mat-label>
+                                <input matInput id="weight" name="weight" formControlName="weight" type="number"/>
+                                @if (form.controls.weight.hasError('required')) {
+                                    <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.weightRequired' | translate }}</mat-error>
+                                }
+                                
+                            </mat-form-field>
+                            <button mat-fab color="primary" (click)="addWeight()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="AddTrainingExerciseSerieDialog_InputContainer">
+                            <button mat-fab color="primary" (click)="substractRepetition()">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <mat-form-field>
+                                <mat-label>
+                                    {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.repetitions' | translate }}
+                                </mat-label>
+                                <input matInput id="repetitions" name="repetitions" formControlName="repetitions" type="number"/>
+                                @if (form.controls.repetitions.hasError('required')) {
+                                    <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.repetitionsRequired' | translate }}</mat-error>
+                                }
+                            </mat-form-field>
+                            <button mat-fab color="primary" (click)="addRepetition()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+
 
                         <mat-form-field>
                             <mat-label>
