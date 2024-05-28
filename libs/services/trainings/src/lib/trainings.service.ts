@@ -69,10 +69,11 @@ export class TrainingsService {
             switchMap((collectionGroupQS: firebase.firestore.QuerySnapshot) => {
                 const observables: Observable<TrainingExercise>[] = [];
                 collectionGroupQS.docs.forEach((doc) => {
+                    console.log("doc", doc)
                     const trainingId = doc.ref.parent.parent?.id
 
                     if(trainingId) {
-                        const trainingExerciseSerieObservable = this.getTrainingExerciseSeries(userId, trainingId, trainingExercise.id).pipe(
+                        const trainingExerciseSerieObservable = this.getTrainingExerciseSeries(userId, trainingId, doc.id).pipe(
                             map((trainingExerciseSeries) => 
                                 TrainingExerciseAdapter.toState(
                                     doc.data() as TrainingExerciseDto, 
