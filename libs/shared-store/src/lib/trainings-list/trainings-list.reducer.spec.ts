@@ -1,7 +1,7 @@
 import { Training, TrainingExercise, TrainingQueryFilters } from "@workout-tracker/models";
 import { trainingsListReducer } from "./trainings-list.reducer";
 import { trainingsListInitialState } from "./models/trainingsListState.initialState";
-import { setAnonymousUser } from "../user";
+import { setAnonymousUser, setAuthenticatedUser } from "../user";
 import { TrainingsListState } from "./models/trainingsListState.model";
 import { addAnonymousUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequestSuccess, clearTrainingListQueryFilter, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequestSuccess, setTrainingListQueryFilter, updateAuthenticatedUserTrainingListRequest } from "./trainings-list.actions";
 
@@ -33,8 +33,9 @@ describe('trainingsListReducer', () => {
             ...trainingsListInitialState,
             list: trainingInitialStateListMock
         } as TrainingsListState
+        const user = {} as firebase.default.User
         it('should handle setAuthenticatedUser action', () => {
-            const action = setAnonymousUser()
+            const action = setAuthenticatedUser({ user: user})
             const state = trainingsListReducer(trainingInitialStateMock, action)
 
             expect(state).toEqual(trainingsListInitialState)

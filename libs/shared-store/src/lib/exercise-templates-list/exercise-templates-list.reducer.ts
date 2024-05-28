@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
 import { exerciseTemplatesListInitialState } from "./models/exerciseTemplatesListState.initialState";
-import { addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequestSuccess, clearExerciseTemplateListQueryFilter, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequestSuccess, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from "./exercise-templates-list.actions";
+import { addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequestSuccess, clearExerciseTemplateListQueryFilter, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequestSuccess, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter, getUserExerciseTemplatesListRequest } from "./exercise-templates-list.actions";
 import { ExerciseTemplatesListState } from "./models/exerciseTemplatesListState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
 import { ExerciseTemplate, ExerciseTemplateQueryFilters, MusclesInvolved } from "@workout-tracker/models";
@@ -12,6 +12,7 @@ export const exerciseTemplatesListReducer = createReducer(
     on(
         setAnonymousUser, 
         setAuthenticatedUser,
+        getUserExerciseTemplatesListRequest,
         (state: ExerciseTemplatesListState) => {
         //clear exercises if user is setted
         return {

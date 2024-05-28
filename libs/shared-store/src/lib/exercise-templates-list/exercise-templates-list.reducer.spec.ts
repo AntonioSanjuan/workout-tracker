@@ -1,9 +1,9 @@
 import { ExerciseTemplate, MusclesInvolved } from "@workout-tracker/models";
-import { addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequestSuccess, clearExerciseTemplateListQueryFilter, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequestSuccess, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from "./exercise-templates-list.actions";
+import { addAnonymousUserExerciseTemplateListRequestSuccess, addAuthenticatedUserExerciseTemplateListRequestSuccess, clearExerciseTemplateListQueryFilter, getAnonymousUserExerciseTemplatesListRequestSuccess, getAuthenticatedUserExerciseTemplatesListRequestSuccess, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter, getUserExerciseTemplatesListRequest } from "./exercise-templates-list.actions";
 import { exerciseTemplatesListReducer } from "./exercise-templates-list.reducer";
 import { exerciseTemplatesListInitialState } from "./models/exerciseTemplatesListState.initialState";
 import { ExerciseTemplatesListState } from "./models/exerciseTemplatesListState.model";
-import { setAnonymousUser } from "../user";
+import { setAnonymousUser, setAuthenticatedUser } from "../user";
 
 describe('exercisesReducer', () => {
     const exerciseInitialStateListMock = [ 
@@ -28,13 +28,28 @@ describe('exercisesReducer', () => {
     })
 
     describe('setAuthenticatedUser action', () => {
+        const user = {} as firebase.default.User
         //clear exercises if auth user is setted
         const exerciseInitialStateMock = {
             ...exerciseTemplatesListInitialState,
             list: exerciseInitialStateListMock
         } as ExerciseTemplatesListState
         it('should handle setAuthenticatedUser action', () => {
-            const action = setAnonymousUser()
+            const action = setAuthenticatedUser({ user: user})
+            const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
+
+            expect(state).toEqual(exerciseTemplatesListInitialState)
+        })
+    })
+
+    describe('getUserExerciseTemplatesListRequest action', () => {
+        //clear exercises if auth user is setted
+        const exerciseInitialStateMock = {
+            ...exerciseTemplatesListInitialState,
+            list: exerciseInitialStateListMock
+        } as ExerciseTemplatesListState
+        it('should handle getUserExerciseTemplatesListRequest action', () => {
+            const action = getUserExerciseTemplatesListRequest()
             const state = exerciseTemplatesListReducer(exerciseInitialStateMock, action)
 
             expect(state).toEqual(exerciseTemplatesListInitialState)

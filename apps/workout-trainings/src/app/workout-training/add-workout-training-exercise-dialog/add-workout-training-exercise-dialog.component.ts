@@ -33,10 +33,6 @@ export class AddWorkoutTrainingExerciseDialogComponent implements OnInit {
 
   ngOnInit(): void {
       this.form = getAddWorkoutTrainingExerciseForm()
-
-      setTimeout(() => {
-        this.store.dispatch(getUserExerciseTemplatesListRequest())
-      });
   }
 
   public createTrainingExercise() {
