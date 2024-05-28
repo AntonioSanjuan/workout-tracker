@@ -37,15 +37,15 @@
             <div
                 class="WorkoutExerciseTemplate_Training"
                 *ngFor="let exerciseTemplateTrainingsDetail of vm.exerciseTemplateTrainingsDetails">
-            <div class="WorkoutExerciseTemplate_TrainingInfo">
-                <p>{{'apps.workout-exercises.details.exerciseTrainings.info.date' | translate}}: {{exerciseTemplateTrainingsDetail.creationDate | localizedDate:'short' }}</p>
-                <div class="WorkoutExerciseTemplate_TrainingMuscles">
-                    <p>{{'apps.workout-exercises.details.exerciseTrainings.info.muscle' | translate}}: </p>
-                    <workout-tracker-muscle-pill *ngFor="let exerciseTemplateTrainingsDetailMuscleGroup of exerciseTemplateTrainingsDetail.muscleGroups"
-                        [muscleGroup]="exerciseTemplateTrainingsDetailMuscleGroup">
-                    </workout-tracker-muscle-pill>
+                <div class="WorkoutExerciseTemplate_TrainingInfo">
+                    <p>{{'apps.workout-exercises.details.exerciseTrainings.info.date' | translate}}: {{exerciseTemplateTrainingsDetail.creationDate | localizedDate:'short' }}</p>
+                    <div class="WorkoutExerciseTemplate_TrainingMuscles">
+                        <p>{{'apps.workout-exercises.details.exerciseTrainings.info.muscle' | translate}}: </p>
+                        <workout-tracker-muscle-pill *ngFor="let exerciseTemplateTrainingsDetailMuscleGroup of exerciseTemplateTrainingsDetail.muscleGroups"
+                            [muscleGroup]="exerciseTemplateTrainingsDetailMuscleGroup">
+                        </workout-tracker-muscle-pill>
+                    </div>
                 </div>
-            </div>
                 <workout-tracker-training-exercise-card
                     *ngFor="let trainingExercise of exerciseTemplateTrainingsDetail.trainingExercises"
                     [trainingExercise]="trainingExercise">

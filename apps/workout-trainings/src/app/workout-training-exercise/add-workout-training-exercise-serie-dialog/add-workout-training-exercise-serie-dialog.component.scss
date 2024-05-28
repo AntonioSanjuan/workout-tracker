@@ -37,6 +37,10 @@ workout-tracker-add-training-exercise-serie-dialog {
                             width: 100%;
 
                             gap: 10px;
+
+                            button {
+                                background-color: shellStyles.$mainColor;
+                            }
                         }
                     }
                 }
