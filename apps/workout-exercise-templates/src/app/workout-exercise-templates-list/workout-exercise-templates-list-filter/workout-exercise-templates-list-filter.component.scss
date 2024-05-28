@@ -37,6 +37,7 @@
                 > button {
                     border-radius: 5px;
                     background-color: shellStyles.$mainColor;
+                    
                     &:disabled { 
                     background-color: shellStyles.$grey3;
                         mat-icon {
@@ -143,14 +144,6 @@
 
             .ExerciseTemplateFilter_NameFilterBanner {
                 display: none;
-            }
-        }
-
-        .ExerciseTemplateFilter_MuscleFilterContainer  {
-            .ExerciseTemplateFilter_MuscleFilter  {
-                .ExerciseTemplateFilter_MuscleFilterContent  {
-                    gap: 10px;
-                }
             }
         }
     }
