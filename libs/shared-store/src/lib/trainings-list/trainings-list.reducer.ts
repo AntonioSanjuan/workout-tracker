@@ -2,7 +2,7 @@ import { createReducer, on } from "@ngrx/store"
 import { trainingsListInitialState } from "./models/trainingsListState.initialState";
 import { TrainingsListState } from "./models/trainingsListState.model";
 import { setAnonymousUser, setAuthenticatedUser } from "../user";
-import { updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequestSuccess, clearTrainingListQueryFilter, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequestSuccess, setTrainingListQueryFilter, addAuthenticatedUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestSuccess } from "./trainings-list.actions";
+import { updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequestSuccess, clearTrainingListQueryFilter, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequestSuccess, setTrainingListQueryFilter, addAuthenticatedUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestSuccess, copyAuthenticatedUserTrainingListRequest, copyAuthenticatedUserTrainingListRequestSuccess, copyAnonymousUserTrainingListRequestError, copyAnonymousUserTrainingListRequestSuccess } from "./trainings-list.actions";
 
 export const TRAININGS_LIST_FEATURE_KEY = 'trainings-list'; 
 
@@ -66,7 +66,9 @@ export const trainingsListReducer = createReducer(
     }),
     on(
         addAuthenticatedUserTrainingListRequestSuccess,
-        addAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
+        addAnonymousUserTrainingListRequestSuccess,
+        copyAuthenticatedUserTrainingListRequestSuccess,
+        copyAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
         return {
             ...state, 
             list: [training, ...state.list ],

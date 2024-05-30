@@ -1,0 +1,19 @@
+<div 
+    *ngrxLet="{ training: training$ } as vm"
+    class="CopyTrainingDialog_MainContainer">
+    <div *ngIf="vm.training">
+        <h2 mat-dialog-title>{{ 'apps.workout-trainings.training.copyTraining.title' | translate }}</h2>
+        <mat-dialog-content class="mat-typography" >
+            
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>
+                {{ 'common.actions.cancel' | translate }}
+            </button>
+            <button mat-button [mat-dialog-close]="false" (click)="copyTraining(vm.training)">
+                {{ 'common.actions.copy' | translate }}
+            </button>
+        </mat-dialog-actions>
+    </div>
+
+</div>

@@ -32,6 +32,21 @@ export const addAnonymousUserTrainingListRequestSuccess = createAction(ADD_ANONY
 export const ADD_ANONYMOUS_USER_TRAINING_LIST_ERROR = 'ADD ANONYMOUS USER TRAINING LIST Error'
 export const addAnonymousUserTrainingListRequestError = createAction(ADD_ANONYMOUS_USER_TRAINING_LIST_ERROR, props<{ error: firebase.FirebaseError }>())
 
+export const COPY_USER_TRAINING_LIST_REQUEST = 'COPY USER TRAINING LIST'
+export const copyUserTrainingListRequest = createAction(COPY_USER_TRAINING_LIST_REQUEST, props<{ training: Training }>())
+export const COPY_AUTHENTICATED_USER_TRAINING_LIST_REQUEST = 'COPY AUTHENTICATED USER TRAINING LIST Request'
+export const copyAuthenticatedUserTrainingListRequest = createAction(COPY_AUTHENTICATED_USER_TRAINING_LIST_REQUEST, props<{ training: Training }>())
+export const COPY_AUTHENTICATED_USER_TRAINING_LIST_SUCCESS = 'COPY AUTHENTICATED USER TRAINING LIST Success'
+export const copyAuthenticatedUserTrainingListRequestSuccess = createAction(COPY_AUTHENTICATED_USER_TRAINING_LIST_SUCCESS, props<{ training: Training }>())
+export const COPY_AUTHENTICATED_USER_TRAINING_LIST_ERROR = 'COPY AUTHENTICATED USER TRAINING LIST Error'
+export const copyAuthenticatedUserTrainingListRequestError = createAction(COPY_AUTHENTICATED_USER_TRAINING_LIST_ERROR, props<{ error: firebase.FirebaseError }>())
+export const COPY_ANONYMOUS_USER_TRAINING_LIST_REQUEST = 'COPY ANONYMOUS USER TRAINING LIST Request'
+export const copyAnonymousUserTrainingListRequest = createAction(COPY_ANONYMOUS_USER_TRAINING_LIST_REQUEST, props<{ training: Training }>())
+export const COPY_ANONYMOUS_USER_TRAINING_LIST_SUCCESS = 'COPY ANONYMOUS USER TRAINING LIST Success'
+export const copyAnonymousUserTrainingListRequestSuccess = createAction(COPY_ANONYMOUS_USER_TRAINING_LIST_SUCCESS, props<{ training: Training }>())
+export const COPY_ANONYMOUS_USER_TRAINING_LIST_ERROR = 'COPY ANONYMOUS USER TRAINING LIST Error'
+export const copyAnonymousUserTrainingListRequestError = createAction(COPY_ANONYMOUS_USER_TRAINING_LIST_ERROR, props<{ error: firebase.FirebaseError }>())
+
 export const UPDATE_USER_TRAINING_LIST_REQUEST = 'UPDATE USER TRAINING LIST'
 export const updateUserTrainingListRequest = createAction(UPDATE_USER_TRAINING_LIST_REQUEST, props<{ training: Training }>())
 export const UPDATE_AUTHENTICATED_USER_TRAINING_LIST_REQUEST = 'UPDATE AUTHENTICATED USER TRAINING LIST Request'

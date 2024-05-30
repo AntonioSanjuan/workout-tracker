@@ -7,6 +7,9 @@
             <button [disabled]="!vm.exerciseTemplates || !vm.exerciseTemplates.length" mat-fab color="primary" (click)="newTrainingExercise()">
                 <mat-icon>add</mat-icon>
             </button>
+            <button mat-fab color="primary" (click)="copyTraining()">
+                <mat-icon>content_copy</mat-icon>
+            </button>
             <button  mat-fab color="primary" (click)="printTraining()">
                 <mat-icon>print</mat-icon>
             </button>

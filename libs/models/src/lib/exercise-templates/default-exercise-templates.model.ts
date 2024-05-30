@@ -35,10 +35,6 @@ export const defaultBackExerciseTemplates = [
         musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
     },
     {
-        name: 'Face Pull',
-        musclesInvolved: [MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Posterior_deltoid, MusclesInvolved.Traps],
-    },
-    {
         name: 'Superman',
         musclesInvolved: [MusclesInvolved.Lower_back, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings],
     },

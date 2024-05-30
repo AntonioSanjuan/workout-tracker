@@ -49,13 +49,11 @@ export class AddWorkoutTrainingExerciseSerieDialogComponent implements OnInit {
 
   public substractWeight() {
     const currentWeightValue = this.form.value.weight || 0
-    if(currentWeightValue - this.weightChange < 0) {
-      this.form.patchValue({
-        weight:  (currentWeightValue - this.weightChange < 0) ? 
-          currentWeightValue - this.weightChange:
-          0
+    this.form.patchValue({
+      weight:  ((currentWeightValue - this.weightChange) > 0) ? 
+        currentWeightValue - this.weightChange:
+        0
       })
-    }
   }
 
   public addWeight() {
@@ -67,13 +65,11 @@ export class AddWorkoutTrainingExerciseSerieDialogComponent implements OnInit {
 
   public substractRepetition() {
     const currentRepetitionValue = this.form.value.repetitions || 0
-    if(currentRepetitionValue - this.repetitionChange < 0) {
-      this.form.patchValue({
-        repetitions:  (currentRepetitionValue - this.repetitionChange < 0) ? 
-          currentRepetitionValue - this.repetitionChange:
-          0
-      })
-    }
+    this.form.patchValue({
+      repetitions:  ((currentRepetitionValue - this.repetitionChange) > 0) ? 
+        currentRepetitionValue - this.repetitionChange:
+        0
+    })
   }
 
   public addRepetition() {

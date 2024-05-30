@@ -9,6 +9,7 @@ export const trainingsServiceMock: Partial<TrainingsService> = {
   getExerciseTemplateTrainings: () => of([] as Training[]),
   getPrevTrainingExercisesByExerciseTemplate: () => of([] as TrainingExercise[]),
   setTraining: () => of({} as Training),
+  copyTraining: () => of({} as Training),
   setTrainingExercise: () => of({} as TrainingExercise),
   setTrainingExerciseSerie: () => of({} as TrainingExerciseSerie),
   updateTraining: () => of({} as Training),

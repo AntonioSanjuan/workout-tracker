@@ -232,6 +232,45 @@ export class TrainingsService {
         )
     }
 
+    public copyTraining(userId: string, training: Training): Observable<Training> {
+        const today = new Date()
+        const newTraining = {
+            ...training,
+            creationDate: today,
+            finishDate: undefined
+        }
+        const newTrainingInput = TrainingAdapter.toDto(
+            newTraining
+        );
+
+        return this.setTraining(userId, newTraining).pipe(
+            switchMap((training: Training) => {
+                return this.copyTrainingExercises(userId, training.id, newTraining.trainingExercises?.map((trainingExercise) => (
+                    {
+                        ...trainingExercise, 
+                        creationDate: today
+                    }))
+                ).pipe(
+                    map((copyTrainingExercises) => 
+                        TrainingAdapter.toState(
+                            newTrainingInput, 
+                            training.id, 
+                            copyTrainingExercises
+                        )
+                    )
+                )
+            })
+        )
+    }
+
+    private copyTrainingExercises(userId: string, trainingId: string, trainingExercises: TrainingExercise[] | undefined): Observable<TrainingExercise[]> {
+        const trainingExerciseObservables: Observable<TrainingExercise>[] = trainingExercises ? trainingExercises?.map((trainingExercise) => this.setTrainingExercise(userId, trainingId, trainingExercise)) : []
+
+        return forkJoin(trainingExerciseObservables).pipe(
+            defaultIfEmpty([]),
+        )
+    }
+
     public updateTraining(userId: string, training: Training): Observable<Training> {
         const exerciseInput = TrainingAdapter.toDto(training);
 

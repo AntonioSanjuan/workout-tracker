@@ -7,7 +7,7 @@ import firebase from 'firebase/compat/app';
 import { AppRoutes, Training } from "@workout-tracker/models";
 import { AppInit, loadedApp } from "../ui";
 import { TrainingsService } from "@workout-tracker/services/trainings"
-import { updateAnonymousUserTrainingListRequestError, updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequestError, updateAuthenticatedUserTrainingListRequestSuccess, getAnonymousUserTrainingsListRequest, getAnonymousUserTrainingsListRequestError, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequest, getAuthenticatedUserTrainingsListRequestError, getAuthenticatedUserTrainingsListRequestSuccess, getUserTrainingsListRequest, setTrainingListQueryFilter, addUserTrainingListRequest, addAuthenticatedUserTrainingListRequest, addAnonymousUserTrainingListRequest, addAuthenticatedUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequestError, addAnonymousUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestError, clearTrainingListQueryFilter } from "./trainings-list.actions";
+import { updateAnonymousUserTrainingListRequestError, updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequestError, updateAuthenticatedUserTrainingListRequestSuccess, getAnonymousUserTrainingsListRequest, getAnonymousUserTrainingsListRequestError, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequest, getAuthenticatedUserTrainingsListRequestError, getAuthenticatedUserTrainingsListRequestSuccess, getUserTrainingsListRequest, setTrainingListQueryFilter, addUserTrainingListRequest, addAuthenticatedUserTrainingListRequest, addAnonymousUserTrainingListRequest, addAuthenticatedUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequestError, addAnonymousUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestError, clearTrainingListQueryFilter, copyUserTrainingListRequest, copyAuthenticatedUserTrainingListRequest, copyAnonymousUserTrainingListRequest, copyAuthenticatedUserTrainingListRequestSuccess, copyAuthenticatedUserTrainingListRequestError, copyAnonymousUserTrainingListRequestSuccess, copyAnonymousUserTrainingListRequestError } from "./trainings-list.actions";
 import { updateAnonymousUserTrainingListRequest, updateAuthenticatedUserTrainingListRequest, updateUserTrainingListRequest, getTrainingListOngoing, getTrainingsList, getTrainingsListPagination, getTrainingsListQuery } from ".";
 import { Router } from "@angular/router";
 
@@ -66,7 +66,7 @@ export class TrainingsListEffects {
     ))
 
     finishUserTrainingListOnGoingRequest$ = createEffect(() => this.actions$.pipe(
-        ofType(addUserTrainingListRequest),
+        ofType(addUserTrainingListRequest, copyUserTrainingListRequest),
         concatLatestFrom(() => [this.store.select(getTrainingListOngoing)]),
         filter(([_, trainingOngoing]) => !!trainingOngoing),
         switchMap(([_, trainingOngoing]) =>
@@ -124,6 +124,56 @@ export class TrainingsListEffects {
         )
     ), { dispatch: false})
 
+    //
+    copyUserTrainingListRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(copyUserTrainingListRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        switchMap(([{ training }, user]) =>
+            iif(
+                () => !!user,
+                of(copyAuthenticatedUserTrainingListRequest({ training: training})),
+                of(copyAnonymousUserTrainingListRequest({ training: training}))
+            )
+        )
+    ))
+
+    copyAuthenticatedUserTrainingListRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(copyAuthenticatedUserTrainingListRequest),
+        concatLatestFrom(() => this.store.select(getUser)),
+        switchMap(([{ training }, user]) =>
+                this.trainingsService.copyTraining(user?.uid as string, training).pipe(
+                map((training: Training) => 
+                    copyAuthenticatedUserTrainingListRequestSuccess({ training: training})
+                ),
+                catchError((err: firebase.FirebaseError) => {
+                    console.log("err", err)
+                    return of(copyAuthenticatedUserTrainingListRequestError({ error: err}))
+                }))
+            )
+        )
+    )
+
+    copyAnonymousUserTrainingListRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(copyAnonymousUserTrainingListRequest),
+        concatLatestFrom(() => this.store.select(getTrainingsList)),
+        switchMap(([{ training }, trainingList]) =>
+            of(training).pipe(
+            take(1),
+            map((training: Training) => 
+                copyAnonymousUserTrainingListRequestSuccess({ training: {...training, id: (trainingList.length + 1).toString()}})
+            ),
+            catchError((err: firebase.FirebaseError) => of(copyAnonymousUserTrainingListRequestError({ error: err })))
+        )
+        )
+    ))
+
+    copyUserTrainingListRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(copyAuthenticatedUserTrainingListRequestSuccess, copyAnonymousUserTrainingListRequestSuccess),
+        tap(({ training }) => 
+            this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
+        )
+    ), { dispatch: false})
+    
 
     updateUserTrainingListRequest$ = createEffect(() => this.actions$.pipe(
         ofType(updateUserTrainingListRequest),

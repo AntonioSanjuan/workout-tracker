@@ -12,7 +12,7 @@ import { TrainingsListEffects } from './trainings-list.effects'
 import { getTrainingListOngoing, getTrainingsList } from './trainings-list.selectors';
 import { AppInit, loadedApp } from '../ui';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { addAnonymousUserTrainingListRequest, addAnonymousUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequest, addAuthenticatedUserTrainingListRequestError, addAuthenticatedUserTrainingListRequestSuccess, addUserTrainingListRequest, getAnonymousUserTrainingsListRequest, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequest, getAuthenticatedUserTrainingsListRequestError, getAuthenticatedUserTrainingsListRequestSuccess, getUserTrainingsListRequest, setTrainingListQueryFilter, updateAnonymousUserTrainingListRequest, updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequest, updateAuthenticatedUserTrainingListRequestError, updateAuthenticatedUserTrainingListRequestSuccess, updateUserTrainingListRequest } from './trainings-list.actions';
+import { addAnonymousUserTrainingListRequest, addAnonymousUserTrainingListRequestSuccess, addAuthenticatedUserTrainingListRequest, addAuthenticatedUserTrainingListRequestError, addAuthenticatedUserTrainingListRequestSuccess, addUserTrainingListRequest, copyAnonymousUserTrainingListRequest, copyAnonymousUserTrainingListRequestSuccess, copyAuthenticatedUserTrainingListRequest, copyAuthenticatedUserTrainingListRequestError, copyAuthenticatedUserTrainingListRequestSuccess, copyUserTrainingListRequest, getAnonymousUserTrainingsListRequest, getAnonymousUserTrainingsListRequestSuccess, getAuthenticatedUserTrainingsListRequest, getAuthenticatedUserTrainingsListRequestError, getAuthenticatedUserTrainingsListRequestSuccess, getUserTrainingsListRequest, setTrainingListQueryFilter, updateAnonymousUserTrainingListRequest, updateAnonymousUserTrainingListRequestSuccess, updateAuthenticatedUserTrainingListRequest, updateAuthenticatedUserTrainingListRequestError, updateAuthenticatedUserTrainingListRequestSuccess, updateUserTrainingListRequest } from './trainings-list.actions';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 
@@ -278,6 +278,48 @@ describe('TrainingsListEffects', () => {
         })
       })
     })
+
+    describe('when copyUserTrainingListRequest is dispatched', () => {
+      const trainingOnGoint =  { id: 'trainingOnGoingId', finishDate: undefined} as Training
+  
+      describe('if training on going (not finished)', () => {
+        const today = new Date()
+        beforeEach(() => { 
+          store.overrideSelector(getTrainingListOngoing, trainingOnGoint);
+          actions = of(copyUserTrainingListRequest({
+            training: trainingSut
+          }))
+          
+          jest.useFakeTimers();
+          jest.setSystemTime(today);
+        })        
+
+        afterEach(() => {
+          jest.useRealTimers();
+        })
+
+        it('should return updateAuthenticatedUserTrainingListRequest', async () => {
+          const result = await firstValueFrom(effects.finishUserTrainingListOnGoingRequest$)
+          expect(result).toEqual(updateAuthenticatedUserTrainingListRequest({ training: {...trainingOnGoint, finishDate: new Date()}}))
+        })
+
+
+      })
+  
+      describe('if its not training on going (not finished)', () => {
+        beforeEach(() => { 
+          store.overrideSelector(getTrainingListOngoing, undefined);
+          actions = of(copyUserTrainingListRequest({
+            training: trainingSut
+          }))
+        })
+        it('should return nothing', async () => {
+          effects.finishUserTrainingListOnGoingRequest$.subscribe(result => {
+            expect(result).toBeUndefined();
+          });
+        })
+      })
+    })
   })
 
   describe('addUserTrainingListRequest$', () => {
@@ -414,6 +456,168 @@ describe('TrainingsListEffects', () => {
       it('should navigate to new trainingExercise', async () => {
         const navigateSpy = jest.spyOn(router, 'navigate')
         await firstValueFrom(effects.addUserTrainingListRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+      })
+    })
+
+  })
+
+  //
+  describe('copyUserTrainingListRequest$', () => {
+    describe('when copyUserTrainingListRequest is dispatched', () => {
+      const user =  { uid: 'testUID'} as firebase.User
+  
+      describe('if user', () => {
+
+        beforeEach(() => { 
+          store.overrideSelector(getUser, user);
+          actions = of(copyUserTrainingListRequest({
+            training: trainingSut
+          }))
+          
+        })
+
+        it('should return copyAuthenticatedUserTrainingListRequest', async () => {
+          const result = await firstValueFrom(effects.copyUserTrainingListRequest$)
+          expect(result).toEqual(copyAuthenticatedUserTrainingListRequest({ training: trainingSut}))
+        })
+
+
+      })
+  
+      describe('if its not user stored', () => {
+        beforeEach(() => { 
+          store.overrideSelector(getUser, undefined);
+          actions = of(copyUserTrainingListRequest({
+            training: trainingSut
+          }))
+        })
+        it('should return copyAnonymousUserTrainingListRequest', async () => {
+          const result = await firstValueFrom(effects.copyUserTrainingListRequest$)
+          expect(result).toEqual(copyAnonymousUserTrainingListRequest({ training: trainingSut}))
+        })
+      })
+    })
+  })
+  describe('copyAuthenticatedUserTrainingListRequest$', () => {
+    const user =  { uid: 'testUID'} as firebase.User
+    const today = new Date(2020, 3, 1)
+    
+    let copiedTraining!: Training
+    beforeEach(() => { 
+      jest.useFakeTimers();
+      jest.setSystemTime(today);
+
+      copiedTraining = {
+        ...trainingSut,
+        creationDate: today
+      }
+      jest.spyOn(trainingService, 'copyTraining').mockReset()
+      store.overrideSelector(getUser, user);
+      jest.spyOn(trainingService, 'copyTraining').mockReturnValue(of(copiedTraining))
+      actions = of(copyAuthenticatedUserTrainingListRequest({
+        training: trainingSut
+      }))
+    })
+    afterEach(() => {
+      jest.useRealTimers();
+    })
+    describe('when trainingService.copyTraining success', () => {
+      beforeEach(() => {
+        jest.spyOn(trainingService, 'copyTraining').mockReturnValue(of(copiedTraining))
+      })
+      it('should request setExerciseTemplate', async () => {
+        const copyTrainingSpy = jest.spyOn(trainingService, 'copyTraining')
+        await firstValueFrom(effects.copyAuthenticatedUserTrainingListRequest$)
+        expect(copyTrainingSpy).toHaveBeenCalledWith(user.uid, trainingSut)
+      })
+      it('should return copyAuthenticatedUserTrainingListRequestSuccess', async () => {
+        const result = await firstValueFrom(effects.copyAuthenticatedUserTrainingListRequest$)
+        expect(result).toEqual(copyAuthenticatedUserTrainingListRequestSuccess({ training: copiedTraining}))
+      })
+    })
+
+    describe('when trainingService.copyTraining throws error', () => {
+      const errorCodeMock = 'testing error code'
+      const errorMock = { message: 'testing error message', code: errorCodeMock } as firebase.FirebaseError
+      const errorResp = throwError(() => errorMock )
+
+      beforeEach(() => {
+        jest.spyOn(trainingService, 'copyTraining').mockReturnValue(errorResp)
+      })
+
+      it('should request copyTraining', async () => {
+        const copyTrainingSpy = jest.spyOn(trainingService, 'copyTraining')
+        await firstValueFrom(effects.copyAuthenticatedUserTrainingListRequest$)
+        expect(copyTrainingSpy).toHaveBeenCalledWith(user.uid, trainingSut)
+      })
+      
+      it('should return copyAuthenticatedUserTrainingListRequestError', async () => {
+        const result = await firstValueFrom(effects.copyAuthenticatedUserTrainingListRequest$)
+        expect(result).toEqual(copyAuthenticatedUserTrainingListRequestError({ error: errorMock}))
+      })
+    })
+  })
+
+  describe('copyAnonymousUserTrainingListRequest$', () => {
+    const exerciseListSut = [{}, {}, {}]
+    let copiedTraining!: Training
+    const today = new Date(2020, 3, 1)
+
+    beforeEach(() => {       
+      jest.useFakeTimers();
+      jest.setSystemTime(today);
+
+      copiedTraining = {
+        ...trainingSut,
+        creationDate: today
+      }
+      jest.spyOn(trainingService, 'copyTraining').mockReset()
+      store.overrideSelector(getTrainingsList, exerciseListSut as Training[]);
+      jest.spyOn(trainingService, 'copyTraining').mockReturnValue(of(copiedTraining))
+      actions = of(copyAnonymousUserTrainingListRequest({
+        training: trainingSut
+      }))
+    })
+    it('should not request copyTraining', async () => {
+      const copyTrainingSpy = jest.spyOn(trainingService, 'copyTraining')
+      await firstValueFrom(effects.copyAnonymousUserTrainingListRequest$)
+      expect(copyTrainingSpy).not.toHaveBeenCalled()
+    })
+    it('should return copyAnonymousUserTrainingListRequestSuccess', async () => {
+      const result = await firstValueFrom(effects.copyAnonymousUserTrainingListRequest$)
+      expect(result).toEqual(copyAnonymousUserTrainingListRequestSuccess({ training: {...trainingSut, id: (exerciseListSut.length + 1).toString()}}))
+    })
+  })
+
+  describe('copyUserTrainingListRequestSuccess$', () => {
+    const trainingIdSut = 'trainingId test'
+    const trainingSut = { id: trainingIdSut } as Training
+
+    describe('when copyAuthenticatedUserTrainingListRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.refreshState()
+
+        actions = of(copyAuthenticatedUserTrainingListRequestSuccess({ training: trainingSut }))
+      })
+      it('should navigate to copied trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.copyUserTrainingListRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+      })
+    })
+
+    describe('when copyAnonymousUserTrainingListRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.refreshState()
+
+        actions = of(copyAnonymousUserTrainingListRequestSuccess({ training: trainingSut }))
+      })
+      it('should navigate to copied trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.copyUserTrainingListRequestSuccess$)
         expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
       })
     })

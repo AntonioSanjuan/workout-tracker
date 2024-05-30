@@ -100,6 +100,188 @@ describe('AddWorkoutTrainingExerciseSerieDialogComponent', () => {
           });
         })
       })
+
+
     })
+
+    describe('substractWeight', () => {
+      describe('current form weight value is null', () => {
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: null
+          })
+        })
+  
+        it('should set value to 0', () => {
+          component.substractWeight()
+
+          expect(component.form.value.weight).toEqual(0)
+        })
+      })
+
+      describe('current form weight value is 0', () => {
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: 0
+          })
+        })
+  
+        it('should set value to 0', () => {
+          component.substractWeight()
+
+          expect(component.form.value.weight).toEqual(0)
+        })
+      })
+
+      describe('current form weight value is lesser than 1.25', () => {
+        const currentWeightValue = 1
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: currentWeightValue
+          })
+        })
+  
+        it('should set value to substraction', () => {
+          component.substractWeight()
+
+          expect(component.form.value.weight).toEqual(0)
+        })
+      })
+
+      describe('current form weight value is bigguer than 1.25', () => {
+        const currentWeightValue = 2
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: currentWeightValue
+          })
+        })
+  
+        it('should set value to substraction', () => {
+          component.substractWeight()
+
+          expect(component.form.value.weight).toBeGreaterThan(0)
+        })
+      })
+    });
+
+    describe('addWeight', () => {
+      describe('current form weight value is null', () => {
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: null
+          })
+        })
+  
+        it('should set value to addiction', () => {
+          component.addWeight()
+
+          expect(component.form.value.weight).toBeGreaterThan(0)
+        })
+      })
+
+      describe('current form weight value is 0', () => {
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: 0
+          })
+        })
+  
+        it('should set value to 0', () => {
+          component.addWeight()
+
+          expect(component.form.value.weight).toBeGreaterThan(0)
+        })
+      })
+
+      describe('current form weight value is lesser than 1.25', () => {
+        const currentWeightValue = 1
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: currentWeightValue
+          })
+        })
+  
+        it('should set value to substraction', () => {
+          component.addWeight()
+
+          expect(component.form.value.weight).toBeGreaterThan(0)
+        })
+      })
+
+      describe('current form weight value is bigguer than 1.25', () => {
+        const currentWeightValue = 2
+        beforeEach(() => {
+          component.form.patchValue({
+            weight: currentWeightValue
+          })
+        })
+  
+        it('should set value to substraction', () => {
+          component.addWeight()
+
+          expect(component.form.value.weight).toBeGreaterThan(0)
+        })
+      })
+    });
+
+    describe('substractRepetition', () => {
+      describe('current form repetitions value is null', () => {
+        beforeEach(() => {
+          component.form.patchValue({
+            repetitions: null
+          })
+        })
+  
+        it('should set value to 0', () => {
+          component.substractRepetition()
+
+          expect(component.form.value.repetitions).toEqual(0)
+        })
+      })
+
+      describe('current form repetitions value is 0', () => {
+        beforeEach(() => {
+          component.form.patchValue({
+            repetitions: 0
+          })
+        })
+  
+        it('should set value to 0', () => {
+          component.substractRepetition()
+
+          expect(component.form.value.repetitions).toEqual(0)
+        })
+      })
+
+      describe('current form repetitions value is lesser than 1', () => {
+        const currentRepetitionValue = 0
+        beforeEach(() => {
+          component.form.patchValue({
+            repetitions: currentRepetitionValue
+          })
+        })
+  
+        it('should set value to substraction', () => {
+          component.substractRepetition()
+
+          expect(component.form.value.repetitions).toEqual(0)
+        })
+      })
+
+      describe('current form repetitions value is bigguer than 1', () => {
+        const currentWeightValue = 2
+        beforeEach(() => {
+          component.form.patchValue({
+            repetitions: currentWeightValue
+          })
+        })
+  
+        it('should set value to substraction', () => {
+          component.substractRepetition()
+
+          expect(component.form.value.repetitions).toBeGreaterThan(0)
+        })
+      })
+    });
   })
 });

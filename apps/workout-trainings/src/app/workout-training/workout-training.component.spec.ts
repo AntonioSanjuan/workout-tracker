@@ -19,6 +19,7 @@ import { appRoutes } from '../app.routes';
 import { DatePipe } from '@angular/common';
 import { LocalizedDatePipe } from '@workout-tracker/ui';
 import { ExerciseTemplatesListState, getExerciseTemplatesListState } from '@workout-tracker/shared-store';
+import { CopyWorkoutTrainingDialogComponent } from './copy-workout-training-dialog/copy-workout-training-dialog.component';
 
 describe('WorkoutTrainingComponent', () => {
   let component: WorkoutTrainingComponent;
@@ -99,6 +100,13 @@ describe('WorkoutTrainingComponent', () => {
 
       component.newTrainingExercise()
       expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingExerciseDialogComponent, false)
+    });
+
+    it('copyTraining should show dialog ', () => {
+      const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+
+      component.copyTraining()
+      expect(showDialogSpy).toHaveBeenCalledWith(CopyWorkoutTrainingDialogComponent, true)
     });
 
     it('printTraining should request window.print', () => {

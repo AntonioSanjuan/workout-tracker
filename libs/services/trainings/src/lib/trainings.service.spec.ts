@@ -240,6 +240,60 @@ describe('TrainingsService', () => {
       })
     });
 
+    //
+    describe('copyTraining', () => {
+      const today = new Date(2020, 3, 1)
+
+      const trainingExercisesSut = [
+        { id: 'trainingExerciseId test 1' },
+        { id: 'trainingExerciseId test 2' }
+      ] as TrainingExercise[]
+      const trainingSut = {...trainingData[0], trainingExercises: trainingExercisesSut } as Training
+      const copiedTraining = {
+        ...trainingSut,
+        creationDate: today
+      }
+
+
+      beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(today);
+      });
+
+      it('copyTraining should request setTraining',  (done) => {
+        const setTrainingSpy = jest.spyOn(service, 'setTraining').mockReturnValue(of(copiedTraining))
+        jest.spyOn(service, 'setTrainingExercise').mockReturnValue(of({} as TrainingExercise))
+
+        service.copyTraining(userIdSut, trainingSut).subscribe(() => {
+          expect(setTrainingSpy).toHaveBeenCalledWith(userIdSut, copiedTraining)
+          done()
+        })
+      })
+
+      it('copyTraining should request setTrainingExercise for each trainingExercises',  (done) => {
+        jest.spyOn(service, 'setTraining').mockReturnValue(of(copiedTraining))
+        const setTrainingExerciseSpy = jest.spyOn(service, 'setTrainingExercise').mockReturnValue(of({} as TrainingExercise))
+
+
+        service.copyTraining(userIdSut, trainingSut).subscribe(() => {
+          expect(setTrainingExerciseSpy).toHaveBeenCalledTimes(copiedTraining.trainingExercises?.length as number)
+          expect(setTrainingExerciseSpy).toHaveBeenNthCalledWith(1, userIdSut, copiedTraining.id, {...trainingExercisesSut[0], creationDate: today})
+          expect(setTrainingExerciseSpy).toHaveBeenNthCalledWith(2, userIdSut, copiedTraining.id, {...trainingExercisesSut[1], creationDate: today})
+          done()
+        })
+      })
+      it('copyTraining should return training',  (done) => {
+        jest.spyOn(service, 'setTraining').mockReturnValue(of(copiedTraining))
+        jest.spyOn(service, 'setTrainingExercise')
+          .mockReturnValueOnce(of(trainingExercisesSut[0]))
+          .mockReturnValueOnce(of(trainingExercisesSut[1]))
+        service.copyTraining(userIdSut, trainingSut).subscribe((result) => {
+          expect(result).toEqual(copiedTraining);
+          done()
+        })
+      })
+    });
+    //
     describe('updateTraining', () => {
       const trainingSut = {...trainingData[0] } as Training
       const updateSpy = jest.fn()
