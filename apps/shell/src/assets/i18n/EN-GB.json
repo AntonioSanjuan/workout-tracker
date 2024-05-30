@@ -41,6 +41,7 @@
             "goBack": "Go Back",
             "cancel": "Cancel",
             "create": "Create",
+            "copy": "Copy",
             "next": "Next",
             "previous": "Previous",
             "yes": "Yes",
@@ -209,6 +210,10 @@
                             }
                         }
                     }
+                },
+                "copyTraining": {
+                    "title": "Copy training",
+                    "content": "Are you sure to copy this training?"
                 },
                 "actions": {
                     "addNewTrainingExercise": "Add a training exercise"

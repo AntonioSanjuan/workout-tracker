@@ -41,6 +41,7 @@
             "goBack": "Volver",
             "cancel": "Cancelar",
             "create": "Crear",
+            "copy": "Copiar",
             "next": "Siguiente",
             "previous": "Anterior",
             "yes": "Si",
@@ -211,6 +212,10 @@
                             }
                         }
                     }
+                },
+                "copyTraining": {
+                    "title": "Copiar entrenamiento",
+                    "content": "¿Estas seguro de copiar este entrenamiento?"
                 },
                 "actions": {
                 },
