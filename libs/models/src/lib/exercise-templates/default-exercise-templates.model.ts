@@ -132,7 +132,11 @@ export const defaultShoulderExerciseTemplates = [
         musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Triceps, MusclesInvolved.Upper_back],
     },
     {
-        name: 'Lateral Raises',
+        name: 'Dumbbell Lateral Raises',
+        musclesInvolved: [MusclesInvolved.Medial_deltoid, MusclesInvolved.Traps],
+    },
+    {
+        name: 'Cable Lateral Raises',
         musclesInvolved: [MusclesInvolved.Medial_deltoid, MusclesInvolved.Traps],
     },
     {
