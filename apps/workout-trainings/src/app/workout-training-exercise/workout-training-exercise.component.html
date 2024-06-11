@@ -7,7 +7,7 @@
     <workout-tracker-view-header [title]="'apps.workout-trainings.trainingExercise.title' | translate" [goBackUrl]="appRoutes.WorkoutTrainingsList+'/'+vm.trainingExerciseParentId">
         <div
         class="WorkoutTrainingExercise_HeaderContainer">
-        <button mat-fab color="primary" (click)="newTrainingExerciseSerie()">
+        <button mat-fab color="primary" (click)="newTrainingExerciseSerie(vm.trainingExercise)">
             <mat-icon>add</mat-icon>
         </button>
     </div>
@@ -37,6 +37,7 @@
             <workout-tracker-series-table
                 *ngIf="vm.trainingExercise?.series && vm.trainingExercise?.series?.length"
                 [series]="vm.trainingExercise?.series"
+                [exerciseType]="vm.trainingExercise?.exerciseTemplate?.type"
                 [actions]="true"
                 (delete)="deleteTrainingExerciseSerie($event)"
                 (edit)="editTrainingExerciseSerie($event)">

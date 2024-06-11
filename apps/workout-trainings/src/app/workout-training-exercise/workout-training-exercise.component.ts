@@ -6,12 +6,11 @@ import { Router, RouterModule } from '@angular/router';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
-import { AppRoutes, BannerType, ExerciseTemplate, TrainingExerciseSerie } from '@workout-tracker/models';
-import { BannerComponent, DividerComponent, ExerciseTemplateCardComponent, SeriesTableComponent, TrainingExerciseCardComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { AppRoutes, BannerType, ExerciseTemplate, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
+import { BannerComponent, DividerComponent, ExerciseTemplateCardComponent, SeriesTableComponent, TrainingExerciseCardComponent, TrainingExerciseInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { selectWorkoutTrainingExercise, selectWorkoutTrainingExerciseParentTrainingId, selectWorkoutTrainingExercisePreviousSimilarTraining } from './state/workout-training-exercise.selectors';
 import { AddWorkoutTrainingExerciseSerieDialogComponent } from './add-workout-training-exercise-serie-dialog/add-workout-training-exercise-serie-dialog.component';
 import { deleteUserTrainingExerciseSerieRequest } from './state/workout-training-exercise.actions';
-import { TrainingExerciseInfoComponent } from 'libs/components/src/lib/training-exercise-info/training-exercise-info.component';
 
 @Component({
   selector: 'workout-tracker-training-exercise',
@@ -49,8 +48,8 @@ export class WorkoutTrainingExerciseComponent {
     // this.dialogService.showDialog(EditWorkoutExerciseDetailsDialogComponent, true)
   }
 
-  public newTrainingExerciseSerie() {
-    this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, false)
+  public newTrainingExerciseSerie(trainingExercise: TrainingExercise| undefined = undefined) {
+    this.dialogService.showDialog(AddWorkoutTrainingExerciseSerieDialogComponent, false, { data: trainingExercise })
   }
 
   public openExerciseTemplateDetails(exerciseTemplate: ExerciseTemplate) {

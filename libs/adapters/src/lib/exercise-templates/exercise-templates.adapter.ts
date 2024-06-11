@@ -16,6 +16,7 @@ export class ExerciseTemplateAdapter {
             name: exerciseTemplate.name,
             musclesInvolved: exerciseTemplate.musclesInvolved,
             image: exerciseTemplate.image,
+            type: exerciseTemplate.type,
             observations: exerciseTemplate.observations,
             creationDate: DateAdapter.toDto(exerciseTemplate.creationDate),
             lastModification: exerciseTemplate.lastModification ? DateAdapter.toDto(exerciseTemplate.lastModification) : undefined

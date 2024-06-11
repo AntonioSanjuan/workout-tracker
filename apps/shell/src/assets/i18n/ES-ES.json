@@ -1,5 +1,9 @@
 {
     "common": {
+        "units": {
+            "Weight": "Peso",
+            "Distance": "Distancia"
+        },
         "muscleGroups": {
             "Legs": "Piernas",
             "Arms": "Brazos",
@@ -300,14 +304,14 @@
                     "filteredByMuscles": "Filtrado por..."
                 },
                 "addExercise": {
-                    "title": "Añadir ejercicio",
+                    "title": "Añadir plantilla",
                     "step": {
                         "basicInfo": {
                             "title": "Descripción",
                             "form": {
                                 "fields": {
                                     "name": "Nombre",
-                                    "type": "Tipo",
+                                    "type": "Tipo de ejercicio",
                                     "musclesInvolved": "Músculos involucrados"
                                 },
                                 "errors": {
@@ -386,15 +390,18 @@
             "exercise-template-info": {
                 "labels": {
                     "name": "Nombre",
-                    "date": "Fecha",
+                    "date": "Fecha de creación",
                     "observations": "Observaciones"
                 }
             },
             "training-exercise-info": {
                 "labels": {
                     "numberOfSeries": "Numero de series",
-                    "maxSerieWeight": "Paso máximo de la serie",
-                    "totalWeight": "Peso total"
+                    "maxSerieWeight": "Peso máximo de la serie",
+                    "totalWeight": "Peso total",
+                    "maxSpeed": "Velocidad máxima",
+                    "distance": "Distancia recorrida",
+                    "totalTime": "Tiempo total"
                 },
                 "state": {
                     "finished": "Finalizado",
@@ -404,7 +411,9 @@
             "workout-tracker-series-table": {
                 "labels": {
                     "weight": "Peso (kg/s)",
+                    "distance": "Velocidad",
                     "repetitions": "Repeticiones",
+                    "duration": "Tiempo",
                     "observations": "Observaciones"
                 },
                 "menu": {

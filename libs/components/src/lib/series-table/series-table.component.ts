@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiModule } from '@workout-tracker/ui';
-import { TrainingExerciseSerie } from '@workout-tracker/models';
+import { ExerciseType, TrainingExerciseSerie } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -20,9 +20,12 @@ export class SeriesTableComponent implements OnInit {
   displayedColumns: string[] = ['weight', 'repetitions'];
 
   @Input() public series?: TrainingExerciseSerie[]
+  @Input() public exerciseType?: ExerciseType
   @Input() public actions = false
   @Output() public delete?: any  = new EventEmitter<void>();
   @Output() public edit?: any  = new EventEmitter<void>();
+
+  protected readonly types = ExerciseType;
 
   ngOnInit(): void {
       if(this.actions) {

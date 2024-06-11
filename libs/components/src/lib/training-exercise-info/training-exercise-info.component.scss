@@ -6,22 +6,26 @@ workout-tracker-training-exercise-info{
     .TrainingExerciseInfo_MainContainer {
         display: flex;
         flex-direction: row;
-        gap: 10px;
+        .TrainingExerciseInfo_ContentContainer {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
 
-        .TrainingExerciseInfo_InfoLabels {
-            .TrainingExerciseInfo_InfoLabel {
-                p {
-                    margin: 0;
-                    font-weight: 600;
+            .TrainingExerciseInfo_InfoLabels {
+                .TrainingExerciseInfo_InfoLabel {
+                    p {
+                        margin: 0;
+                        font-weight: 600;
+                    }
                 }
             }
-        }
-
-        .TrainingExerciseInfo_InfoValues {
-            .TrainingExerciseInfo_InfoValue {
-                p{ 
-                    margin: 0;
-                    font-style: oblique;
+    
+            .TrainingExerciseInfo_InfoValues {
+                .TrainingExerciseInfo_InfoValue {
+                    p{ 
+                        margin: 0;
+                        font-style: oblique;
+                    }
                 }
             }
         }

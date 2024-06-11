@@ -2,10 +2,10 @@ import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UiModule } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutTrainingExerciseSerieForm, getAddWorkoutTrainingExerciseSerieForm } from './add-workout-training-exercise-serie-dialog.form';
 import { FormGroup } from '@angular/forms';
-import { TrainingExerciseSerie } from '@workout-tracker/models';
+import { TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { ExerciseTemplateCardComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { addUserTrainingExerciseSerieRequest } from '../state/workout-training-exercise.actions';
 
@@ -25,6 +25,7 @@ import { addUserTrainingExerciseSerieRequest } from '../state/workout-training-e
 })
 export class AddWorkoutTrainingExerciseSerieDialogComponent implements OnInit {
   private dialogRef: MatDialogRef<AddWorkoutTrainingExerciseSerieDialogComponent> = inject(MatDialogRef<AddWorkoutTrainingExerciseSerieDialogComponent>)
+  private data: TrainingExercise | undefined = inject(MAT_DIALOG_DATA)
   private store: Store = inject(Store)
 
   public form!: FormGroup<AddWorkoutTrainingExerciseSerieForm>;
@@ -33,7 +34,10 @@ export class AddWorkoutTrainingExerciseSerieDialogComponent implements OnInit {
   private repetitionChange = 1;
 
   ngOnInit(): void {
-      this.form = getAddWorkoutTrainingExerciseSerieForm()
+    if(this.data) {
+      const lastSerie: TrainingExerciseSerie | undefined = this.data?.series[this.data?.series?.length - 1]
+      this.form = getAddWorkoutTrainingExerciseSerieForm(this.data.exerciseTemplate.type , lastSerie)
+    }
   }
 
   public createTrainingExerciseSerie() {

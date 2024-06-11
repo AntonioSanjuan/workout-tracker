@@ -1,24 +1,51 @@
-<div class="TrainingExerciseInfo_MainContainer">
-  <div class="TrainingExerciseInfo_InfoLabels">
-      <div class="TrainingExerciseInfo_InfoLabel">
-          <p>{{ 'libs.components.training-exercise-info.labels.numberOfSeries' | translate }}:</p>   
-      </div>
-      <div class="TrainingExerciseInfo_InfoLabel">
-          <p>{{ 'libs.components.training-exercise-info.labels.maxSerieWeight' | translate }}:</p>
-      </div>
-      <div class="TrainingExerciseInfo_InfoLabel">
-          <p>{{ 'libs.components.training-exercise-info.labels.totalWeight' | translate }}:</p>
-      </div>
-  </div>
-  <div class="TrainingExerciseInfo_InfoValues">
-      <div class="TrainingExerciseInfo_InfoValue">
-        <p>{{ trainingExercise.series.length || 0 }}</p>
-      </div>
-      <div class="TrainingExerciseInfo_InfoValue">
-        <p>{{ maxSerieWeight || 0  }} kg/s</p>
-    </div>
-      <div class="TrainingExerciseInfo_InfoValue">
-          <p>{{ totalWeight || 0 }} kg/s</p>
-      </div>
-  </div>
+<div class="TrainingExerciseInfo_MainContainer" [ngSwitch]="trainingExercise.exerciseTemplate.type">
+        <div class="TrainingExerciseInfo_ContentContainer" *ngSwitchCase="types.Strength">
+            <div class="TrainingExerciseInfo_InfoLabels">
+                <div class="TrainingExerciseInfo_InfoLabel">
+                    <p>{{ 'libs.components.training-exercise-info.labels.numberOfSeries' | translate }}:</p>   
+                </div>
+                <div class="TrainingExerciseInfo_InfoLabel">
+                    <p>{{ 'libs.components.training-exercise-info.labels.maxSerieWeight' | translate }}:</p>
+                </div>
+                <div class="TrainingExerciseInfo_InfoLabel">
+                    <p>{{ 'libs.components.training-exercise-info.labels.totalWeight' | translate }}:</p>
+                </div>
+            </div>
+            <div class="TrainingExerciseInfo_InfoValues">
+                <div class="TrainingExerciseInfo_InfoValue">
+                  <p>{{ trainingExercise.series.length || 0 }}</p>
+                </div>
+                <div class="TrainingExerciseInfo_InfoValue">
+                  <p>{{ maxSerieWeight || 0 }} kg/s</p>
+              </div>
+                <div class="TrainingExerciseInfo_InfoValue">
+                    <p>{{ totalWeight || 0 }} kg/s</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="TrainingExerciseInfo_ContentContainer" *ngSwitchCase="types.Cardiovascular">
+            <div class="TrainingExerciseInfo_InfoLabels">
+                <div class="TrainingExerciseInfo_InfoLabel">
+                    <p>{{ 'libs.components.training-exercise-info.labels.totalTime' | translate }}:</p>   
+                </div>
+                <div class="TrainingExerciseInfo_InfoLabel">
+                    <p>{{ 'libs.components.training-exercise-info.labels.maxSpeed' | translate }}:</p>
+                </div>
+                <div class="TrainingExerciseInfo_InfoLabel">
+                    <p>{{ 'libs.components.training-exercise-info.labels.distance' | translate }}:</p>
+                </div>
+            </div>
+            <div class="TrainingExerciseInfo_InfoValues">
+                <div class="TrainingExerciseInfo_InfoValue">
+                  <p>{{ totalTime }}</p>
+                </div>
+                <div class="TrainingExerciseInfo_InfoValue">
+                  <p>{{ maxSerieWeight }} km/h</p>
+              </div>
+                <div class="TrainingExerciseInfo_InfoValue">
+                    <p>{{ totalDistance || 0 }} km</p>
+                </div>
+            </div>
+        </div>
 </div>

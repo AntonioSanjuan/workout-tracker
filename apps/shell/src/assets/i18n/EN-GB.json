@@ -1,5 +1,9 @@
 {
     "common": {
+        "units": {
+            "Weight": "Weight",
+            "Distance": "Distance"
+        },
         "muscleGroups": {
             "Legs": "Legs",
             "Arms": "Arms",
@@ -299,14 +303,14 @@
                     "filteredByMuscles": "Filtered by..."
                 },
                 "addExercise": {
-                    "title": "Add exercise",
+                    "title": "Add template",
                     "step": {
                         "basicInfo": {
                             "title": "Description",
                             "form": {
                                 "fields": {
                                     "name": "Name",
-                                    "type": "Type",
+                                    "type": "Exercise type",
                                     "musclesInvolved": "Muscles involved"
                                 },
                                 "errors": {
@@ -385,7 +389,7 @@
             "exercise-template-info": {
                 "labels": {
                     "name": "Name",
-                    "date": "Date",
+                    "date": "Creation date",
                     "observations": "Observations"
                 }
             },
@@ -402,8 +406,10 @@
             },
             "workout-tracker-series-table": {
                 "labels": {
-                    "weight": "Weight (kg/lb)",
+                    "weight": "Weight (kg/s)",
+                    "distance": "Speed",
                     "repetitions": "Repetitions",
+                    "duration": "Time",
                     "observations": "Observations"
                 },
                 "menu": {

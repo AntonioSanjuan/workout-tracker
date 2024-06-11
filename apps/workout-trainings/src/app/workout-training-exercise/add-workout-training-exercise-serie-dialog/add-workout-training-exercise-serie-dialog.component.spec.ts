@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { exerciseTemplatesListStateMock, userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { TrainingExerciseSerie } from '@workout-tracker/models';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ExerciseTemplate, ExerciseType, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { AddWorkoutTrainingExerciseSerieDialogComponent } from './add-workout-training-exercise-serie-dialog.component';
@@ -15,10 +15,22 @@ describe('AddWorkoutTrainingExerciseSerieDialogComponent', () => {
   let component: AddWorkoutTrainingExerciseSerieDialogComponent;
   let fixture: ComponentFixture<AddWorkoutTrainingExerciseSerieDialogComponent>;
   let store: Store;
+  const trainingExerciseSut = {
+    id: 'trainingExercise id test',
+    creationDate: new Date(),
+    exerciseTemplate: {
+      type: ExerciseType.Strength
+    } as ExerciseTemplate,
+    series: []
+  } as TrainingExercise
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: trainingExerciseSut
+        },
         { provide: MatDialogRef, useValue: { close: jest.fn()}},
         provideMockStore({
           initialState: {

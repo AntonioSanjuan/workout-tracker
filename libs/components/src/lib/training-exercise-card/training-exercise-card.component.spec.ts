@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TrainingExerciseCardComponent } from './training-exercise-card.component';
-import { ExerciseTemplate, MusclesInvolved, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
+import { ExerciseTemplate, ExerciseType, MusclesInvolved, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('TrainingExerciseCardComponent', () => {
@@ -10,7 +10,8 @@ describe('TrainingExerciseCardComponent', () => {
       name: "exercise template name test", 
       musclesInvolved: [ MusclesInvolved.Calves],
       image: undefined, 
-      creationDate: new Date()
+      creationDate: new Date(),
+      type: ExerciseType.Strength
     } as ExerciseTemplate,
     series: [
       {

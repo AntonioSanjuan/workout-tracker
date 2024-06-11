@@ -1,9 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TrainingExerciseInfoComponent } from './training-exercise-info.component'
-import { TrainingExercise } from '@workout-tracker/models';
+import { ExerciseTemplate, ExerciseType, TrainingExercise } from '@workout-tracker/models';
 describe('TrainingExerciseInfoComponent', () => {
-  const trainingExerciseSut = { series: []} as Partial<TrainingExercise>
+  const trainingExerciseSut = { 
+    series: [], 
+    exerciseTemplate: { 
+      type: ExerciseType.Cardiovascular 
+    } as ExerciseTemplate
+  } as Partial<TrainingExercise>
 
   let component: TrainingExerciseInfoComponent;
   let fixture: ComponentFixture<TrainingExerciseInfoComponent>;

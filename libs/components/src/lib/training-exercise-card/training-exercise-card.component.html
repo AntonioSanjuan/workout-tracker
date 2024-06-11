@@ -22,7 +22,8 @@
             </div>
             <div class="TrainingExerciseCard_SeriesContainer">
                 <workout-tracker-series-table
-                    [series]="trainingExercise.series">
+                    [series]="trainingExercise.series"
+                    [exerciseType]="trainingExercise.exerciseTemplate.type">
                 </workout-tracker-series-table>
             </div>
         </mat-card-content>

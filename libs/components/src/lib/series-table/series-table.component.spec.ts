@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SeriesTableComponent } from './series-table.component'
-import { TrainingExerciseSerie } from '@workout-tracker/models';
+import { ExerciseType, TrainingExerciseSerie } from '@workout-tracker/models';
 describe('SeriesTableComponent', () => {
   let component: SeriesTableComponent;
   let fixture: ComponentFixture<SeriesTableComponent>;
@@ -11,6 +11,7 @@ describe('SeriesTableComponent', () => {
     { id: 'dummySerie1', weight: 200, repetitions: 2, observations: 'obs_2'},
     { id: 'dummySerie2', weight: 300, repetitions: 3, observations: 'obs_3'}
   ] as TrainingExerciseSerie[]
+  const exerciseTypeSut = ExerciseType.Cardiovascular
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,6 +24,7 @@ describe('SeriesTableComponent', () => {
     fixture = TestBed.createComponent(SeriesTableComponent);
     component = fixture.componentInstance;
     component.series = dummySeries
+    component.exerciseType = exerciseTypeSut
     fixture.detectChanges();
   });
 

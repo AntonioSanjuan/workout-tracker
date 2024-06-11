@@ -24,6 +24,16 @@ workout-tracker-add-exercise-template-dialog {
                         align-items: center;
                         gap: 10px;
                         width: 100%;
+
+                        .AddExerciseTemplateDialog_UnitContainer {
+                            mat-label {
+                                font-size: 12px;
+                            }
+                            
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                        }
                     }
             
                     .AddExerciseTemplateDialog_VideoContainer {

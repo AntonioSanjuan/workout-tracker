@@ -1,4 +1,5 @@
 export * from './exercise-template.model';
+export * from './exercise-template-types.model';
 export * from './muscle-groups.model';
 export * from './muscles-involved.model';
 export * from './muscles-involved-by-group.model';

@@ -5,7 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseTemplateForm, getAddWorkoutExerciseTemplateForm } from './add-workout-exercise-template-dialog.form';
 import { FormGroup } from '@angular/forms';
-import { ExerciseTemplate, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
+import { ExerciseTemplate, ExerciseType, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
 import { addUserExerciseTemplateListRequest, showError } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 
@@ -31,6 +31,7 @@ export class AddWorkoutExerciseTemplateDialogComponent implements OnInit, OnDest
   public form!: FormGroup<AddWorkoutExerciseTemplateForm>
   public muscles = Object.values(MusclesInvolved) as MusclesInvolved[]
   public musclesByGroup = muscleInvolvedByGroups;
+  public exerciseUnits = ExerciseType
 
   public cameraOpened: boolean = false
   public photo?: string

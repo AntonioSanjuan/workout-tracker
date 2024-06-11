@@ -22,6 +22,14 @@
                         [formGroup]="form"
                         [formControlName]="'musclesInvolved'">
                     </workout-tracker-muscles-selector>
+
+                    <div class="AddExerciseTemplateDialog_UnitContainer">
+                        <mat-label>{{'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.type' | translate}}</mat-label>
+                        <mat-button-toggle-group id="type" name="type" formControlName="type" [formGroup]="form">
+                            <mat-button-toggle *ngFor="let exerciseUnit of exerciseUnits | keyvalue" [value]="exerciseUnit.value">{{'common.types.'+exerciseUnit.value| translate}}</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+
                 </form>
             </mat-step>
             <mat-step [label]="'apps.workout-exercises.list.addExercise.step.image.title' | translate">

@@ -4,7 +4,10 @@
             <div class="ExerciseTemplateCard_ContentContainer">
                 <img mat-card-md-image [src]="exerciseTemplate.image ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
                 <div class="ExerciseTemplateCard_InfoContainer">
-                    <h3>{{exerciseTemplate.name}}</h3>
+                    <div class="ExerciseTemplateCard_UnitContainer">
+                        <h3>{{exerciseTemplate.name}}</h3>
+                        <h3>{{'common.types.'+ exerciseTemplate.type | translate }}</h3>
+                    </div>
                     <div class="ExerciseTemplateCard_TypesContainer">
                         <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exerciseTemplate.musclesInvolved"
                             [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"

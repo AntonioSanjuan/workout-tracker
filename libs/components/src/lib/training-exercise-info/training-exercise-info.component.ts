@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgSwitch } from '@angular/common';
 import { LocalizedDatePipe, UiModule } from '@workout-tracker/ui';
-import { TrainingExercise } from '@workout-tracker/models';
+import { ExerciseType, TrainingExercise } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
+import { TrainingExerciseMetrics } from '@workout-tracker/metrics';
 
 @Component({
   selector: 'workout-tracker-training-exercise-info',
@@ -21,12 +22,24 @@ export class TrainingExerciseInfoComponent implements OnChanges {
   public maxSerieWeight = 0;
   public totalWeight = 0;
 
+  public maxSerieSpeed = 0;
+  public totalTime = 0;
+  public totalDistance = 0;
+
+  protected readonly types = ExerciseType
+
   @Input() public trainingExercise!: TrainingExercise
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.maxSerieWeight = this.trainingExercise.series.length > 0 ? Math.max(...this.trainingExercise.series.map((serie) => serie.weight)): 0
-      this.totalWeight = this.trainingExercise.series.reduce((accumulator, currentValue) => {
-        return accumulator + (currentValue.weight * currentValue.repetitions)
-      },0);
+    this.maxSerieWeight = TrainingExerciseMetrics.getMaxSerieWeight(this.trainingExercise)
+
+
+    if(this.trainingExercise.exerciseTemplate.type === ExerciseType.Strength) {
+      this.totalWeight = TrainingExerciseMetrics.getTotalWeight(this.trainingExercise)
+    } else if(this.trainingExercise.exerciseTemplate.type === ExerciseType.Cardiovascular) {
+      this.totalTime = TrainingExerciseMetrics.getTotalTime(this.trainingExercise)
+      this.totalDistance = TrainingExerciseMetrics.getTotalDistance(this.trainingExercise)
+    }
+
   }
 }
