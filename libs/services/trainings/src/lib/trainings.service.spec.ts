@@ -55,8 +55,10 @@ describe('TrainingsService', () => {
     const userIdSut = 'user123';
     const trainingExerciseSeriesData = [{
       id: 'trainingExerciseSerieId',
-      weight: 100,
-      repetitions: 10,
+      data: {
+        weight: 100,
+        repetitions: 10,
+      },
       observations: 'observations',
       creationDate: new Date()
     } as TrainingExerciseSerie] as TrainingExerciseSerie[]

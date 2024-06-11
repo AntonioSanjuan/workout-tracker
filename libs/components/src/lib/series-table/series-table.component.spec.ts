@@ -7,11 +7,11 @@ describe('SeriesTableComponent', () => {
   let fixture: ComponentFixture<SeriesTableComponent>;
 
   const dummySeries = [
-    { id: 'dummySerie0', weight: 100, repetitions: 1, observations: 'obs_1'},
-    { id: 'dummySerie1', weight: 200, repetitions: 2, observations: 'obs_2'},
-    { id: 'dummySerie2', weight: 300, repetitions: 3, observations: 'obs_3'}
+    { id: 'dummySerie0', data: { weight: 100, repetitions: 1 }, observations: 'obs_1'},
+    { id: 'dummySerie1', data: { weight: 200, repetitions: 2 }, observations: 'obs_2'},
+    { id: 'dummySerie2', data: { weight: 300, repetitions: 3 }, observations: 'obs_3'}
   ] as TrainingExerciseSerie[]
-  const exerciseTypeSut = ExerciseType.Cardiovascular
+  const exerciseTypeSut = ExerciseType.Strength
 
   beforeEach(() => {
     TestBed.configureTestingModule({

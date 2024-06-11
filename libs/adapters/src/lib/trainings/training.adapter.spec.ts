@@ -1,4 +1,4 @@
-import { ExerciseTemplate, MuscleGroups, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
+import { CardiovascularTypeData, ExerciseTemplate, MuscleGroups, StrengthTypeData, Training, TrainingDto, TrainingExercise, TrainingExerciseDto, TrainingExerciseSerie, TrainingExerciseSerieDto } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 import { TrainingAdapter, TrainingExerciseAdapter, TrainingExerciseSerieAdapter } from "./training.adapter";
 import { DocumentReference } from "@angular/fire/compat/firestore";
@@ -147,43 +147,97 @@ describe('TrainingExerciseSerieAdapter', () => {
   describe('toState', () => {
     const creationDateSut: Date = new Date()
     const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
-    it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
-      const inputTrainingExerciseSerieIdSut = 'trainingExerciseSerieIdTest';
-      const inputTrainingExerciseSerieSut: TrainingExerciseSerieDto = {
-        weight: 10,
-        repetitions: 20,
-        observations: 'observations',
-        creationDate: inputTrainingCreationDateSut
-      }
 
-      const trainingExerciseSerieState = TrainingExerciseSerieAdapter.toState(inputTrainingExerciseSerieSut, inputTrainingExerciseSerieIdSut)
+    describe('with StrengthTypeData data', () => {
+      it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
+        const inputTrainingExerciseSerieIdSut = 'trainingExerciseSerieIdTest';
+        const inputTrainingExerciseSerieSut: TrainingExerciseSerieDto = {
+          data: {
+            weight: 10,
+            repetitions: 20,
+          },
+          observations: 'observations',
+          creationDate: inputTrainingCreationDateSut
+        }
+  
+        const trainingExerciseSerieState = TrainingExerciseSerieAdapter.toState(inputTrainingExerciseSerieSut, inputTrainingExerciseSerieIdSut)
+  
+        expect(trainingExerciseSerieState.id).toEqual(inputTrainingExerciseSerieIdSut)
+        expect((trainingExerciseSerieState.data as StrengthTypeData).weight).toEqual((inputTrainingExerciseSerieSut.data as StrengthTypeData).weight)
+        expect((trainingExerciseSerieState.data as StrengthTypeData).repetitions).toEqual((inputTrainingExerciseSerieSut.data as StrengthTypeData).repetitions)
+        expect(trainingExerciseSerieState.observations).toEqual(inputTrainingExerciseSerieSut.observations)
+        expect(trainingExerciseSerieState.creationDate).toEqual(creationDateSut)
+      });
+    })
+    describe('with CardiovascularTypeData data', () => {
+      
+      it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
+        const inputTrainingExerciseSerieIdSut = 'trainingExerciseSerieIdTest';
+        const inputTrainingExerciseSerieSut: TrainingExerciseSerieDto = {
+          data: {
+            speed: 13.5,
+            duration: 17,
+          },
+          observations: 'observations',
+          creationDate: inputTrainingCreationDateSut
+        }
+  
+        const trainingExerciseSerieState = TrainingExerciseSerieAdapter.toState(inputTrainingExerciseSerieSut, inputTrainingExerciseSerieIdSut)
+  
+        expect(trainingExerciseSerieState.id).toEqual(inputTrainingExerciseSerieIdSut)
+        expect((trainingExerciseSerieState.data as CardiovascularTypeData).speed).toEqual((inputTrainingExerciseSerieSut.data as CardiovascularTypeData).speed)
+        expect((trainingExerciseSerieState.data as CardiovascularTypeData).duration).toEqual((inputTrainingExerciseSerieSut.data as CardiovascularTypeData).duration)
+        expect(trainingExerciseSerieState.observations).toEqual(inputTrainingExerciseSerieSut.observations)
+        expect(trainingExerciseSerieState.creationDate).toEqual(creationDateSut)
+      });
+    })
 
-      expect(trainingExerciseSerieState.id).toEqual(inputTrainingExerciseSerieIdSut)
-      expect(trainingExerciseSerieState.weight).toEqual(inputTrainingExerciseSerieSut.weight)
-      expect(trainingExerciseSerieState.repetitions).toEqual(inputTrainingExerciseSerieSut.repetitions)
-      expect(trainingExerciseSerieState.observations).toEqual(inputTrainingExerciseSerieSut.observations)
-      expect(trainingExerciseSerieState.creationDate).toEqual(creationDateSut)
-    });
   })
 
   describe('toDto', () => {
     const creationDateSut: Date = new Date()
     const inputTrainingCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
-    it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
-      const inputTrainingExerciseSerieSut: TrainingExerciseSerie = {
-        id: 'trainingExerciseSerieIdTest',
-        weight: 10,
-        repetitions: 290,
-        observations: undefined,
-        creationDate: creationDateSut
-      }
 
-      const trainingExerciseSerieDto = TrainingExerciseSerieAdapter.toDto(inputTrainingExerciseSerieSut)
+    describe('with StrengthTypeData data', () => {
+      it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
+        const inputTrainingExerciseSerieSut: TrainingExerciseSerie = {
+          id: 'trainingExerciseSerieIdTest',
+          data: {
+            weight: 10,
+            repetitions: 20,
+          },
+          observations: undefined,
+          creationDate: creationDateSut
+        }
+  
+        const trainingExerciseSerieDto = TrainingExerciseSerieAdapter.toDto(inputTrainingExerciseSerieSut)
+  
+        expect((trainingExerciseSerieDto.data as StrengthTypeData).weight).toEqual((inputTrainingExerciseSerieSut.data as StrengthTypeData).weight)
+        expect((trainingExerciseSerieDto.data as StrengthTypeData).repetitions).toEqual((inputTrainingExerciseSerieSut.data as StrengthTypeData).repetitions)
+        expect(trainingExerciseSerieDto.observations).toEqual(inputTrainingExerciseSerieSut.observations)
+        expect(trainingExerciseSerieDto.creationDate).toEqual(inputTrainingCreationDateSut)
+      });
+    })
+    describe('with CardiovascularTypeData data', () => {
+      it('should convert TrainingExerciseSerie model into TrainingExerciseSerieDto model', () => {
+        const inputTrainingExerciseSerieSut: TrainingExerciseSerie = {
+          id: 'trainingExerciseSerieIdTest',
+          data: {
+            speed: 13.6,
+            duration: 12,
+          },
+          observations: undefined,
+          creationDate: creationDateSut
+        }
+  
+        const trainingExerciseSerieDto = TrainingExerciseSerieAdapter.toDto(inputTrainingExerciseSerieSut)
+  
+        expect((trainingExerciseSerieDto.data as CardiovascularTypeData).speed).toEqual((inputTrainingExerciseSerieSut.data as CardiovascularTypeData).speed)
+        expect((trainingExerciseSerieDto.data as CardiovascularTypeData).duration).toEqual((inputTrainingExerciseSerieSut.data as CardiovascularTypeData).duration)
+        expect(trainingExerciseSerieDto.observations).toEqual(inputTrainingExerciseSerieSut.observations)
+        expect(trainingExerciseSerieDto.creationDate).toEqual(inputTrainingCreationDateSut)
+      });
+    })
 
-      expect(trainingExerciseSerieDto.weight).toEqual(inputTrainingExerciseSerieSut.weight)
-      expect(trainingExerciseSerieDto.repetitions).toEqual(inputTrainingExerciseSerieSut.repetitions)
-      expect(trainingExerciseSerieDto.observations).toEqual(inputTrainingExerciseSerieSut.observations)
-      expect(trainingExerciseSerieDto.creationDate).toEqual(inputTrainingCreationDateSut)
-    });
   })
 });

@@ -54,8 +54,7 @@ export class TrainingExerciseSerieAdapter {
 
     static toDto(trainingExerciseSerie: TrainingExerciseSerie): TrainingExerciseSerieDto {
         return {
-            weight: trainingExerciseSerie.weight,
-            repetitions: trainingExerciseSerie.repetitions,
+            data: trainingExerciseSerie.data,
             observations: trainingExerciseSerie.observations,
             creationDate:  DateAdapter.toDto(trainingExerciseSerie.creationDate),
         }

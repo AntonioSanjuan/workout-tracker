@@ -1,8 +1,8 @@
 {
     "common": {
-        "units": {
-            "Weight": "Peso",
-            "Distance": "Distancia"
+        "types": {
+            "Strength": "Fuerza",
+            "Cardiovascular": "Cardiovascular"
         },
         "muscleGroups": {
             "Legs": "Piernas",
@@ -256,13 +256,17 @@
                             "title": "Descripción",
                             "form": {
                                 "fields": {
-                                    "weight": "Peso (kg/s)",
+                                    "weight": "Peso (kg)",
                                     "repetitions": "Repeticiones",
+                                    "speed": "Velocidad (km/h)",
+                                    "duration": "Duración (minutos)",
                                     "observations": "Observaciones"
                                 },
                                 "errors": {
                                     "repetitionsRequired": "Debe de tener al menos una repetición",
-                                    "weightRequired": "Debe de tener un peso (0kg/s esta permitido)"
+                                    "weightRequired": "Debe de tener un peso (0kg esta permitido)",
+                                    "speedRequired": "Debe de tener una velocidad mínima",
+                                    "durationRequired": "Debe de tener una duración mínima"
                                 }
                             }
                         },
@@ -410,8 +414,8 @@
             },
             "workout-tracker-series-table": {
                 "labels": {
-                    "weight": "Peso (kg/s)",
-                    "distance": "Velocidad",
+                    "weight": "Peso",
+                    "speed": "Velocidad",
                     "repetitions": "Repeticiones",
                     "duration": "Tiempo",
                     "observations": "Observaciones"

@@ -21,9 +21,21 @@ export interface TrainingExercise {
 
 export interface TrainingExerciseSerie {
     id: string
-    weight: number,
-    repetitions: number,
+ 
+    data: TrainingExerciseSerieData
     observations?: string,
 
     creationDate: Date
+}
+
+export type TrainingExerciseSerieData = StrengthTypeData | CardiovascularTypeData
+
+export interface StrengthTypeData {
+    weight: number,
+    repetitions: number,
+}
+
+export interface CardiovascularTypeData {
+    speed: number,
+    duration: number,
 }

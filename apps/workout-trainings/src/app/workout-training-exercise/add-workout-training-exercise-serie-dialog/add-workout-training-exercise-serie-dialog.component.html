@@ -7,16 +7,16 @@
                     [stepControl]="form" 
                     [label]="'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.title' | translate">
                     <form [formGroup]="form">
-                        <div class="AddTrainingExerciseSerieDialog_InputContainer">
+                        <div class="AddTrainingExerciseSerieDialog_InputContainer" *ngIf="getExerciseType() === types.Strength">
                             <button mat-fab color="primary" (click)="substractWeight()">
                                 <mat-icon>remove</mat-icon>
                             </button>
-                            <mat-form-field>
+                            <mat-form-field formGroupName="data">
                                 <mat-label>
                                     {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.weight' | translate }}
                                 </mat-label>
                                 <input matInput id="weight" name="weight" formControlName="weight" type="number"/>
-                                @if (form.controls.weight.hasError('required')) {
+                                @if (form.controls.data.controls.weight) {
                                     <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.weightRequired' | translate }}</mat-error>
                                 }
                                 
@@ -25,16 +25,16 @@
                                 <mat-icon>add</mat-icon>
                             </button>
                         </div>
-                        <div class="AddTrainingExerciseSerieDialog_InputContainer">
+                        <div class="AddTrainingExerciseSerieDialog_InputContainer" *ngIf="getExerciseType() === types.Strength">
                             <button mat-fab color="primary" (click)="substractRepetition()">
                                 <mat-icon>remove</mat-icon>
                             </button>
-                            <mat-form-field>
+                            <mat-form-field formGroupName="data">
                                 <mat-label>
                                     {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.repetitions' | translate }}
                                 </mat-label>
                                 <input matInput id="repetitions" name="repetitions" formControlName="repetitions" type="number"/>
-                                @if (form.controls.repetitions.hasError('required')) {
+                                @if (form.controls.data.controls.repetitions) {
                                     <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.repetitionsRequired' | translate }}</mat-error>
                                 }
                             </mat-form-field>
@@ -42,8 +42,41 @@
                                 <mat-icon>add</mat-icon>
                             </button>
                         </div>
-
-
+                        <div class="AddTrainingExerciseSerieDialog_InputContainer" *ngIf="getExerciseType() === types.Cardiovascular">
+                            <button mat-fab color="primary" (click)="substractSpeed()">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <mat-form-field formGroupName="data">
+                                <mat-label>
+                                    {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.speed' | translate }}
+                                </mat-label>
+                                <input matInput id="speed" name="speed" formControlName="speed" type="number"/>
+                                @if (form.controls.data.controls.speed) {
+                                    <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.speedRequired' | translate }}</mat-error>
+                                }
+                                
+                            </mat-form-field>
+                            <button mat-fab color="primary" (click)="addSpeed()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="AddTrainingExerciseSerieDialog_InputContainer" *ngIf="getExerciseType() === types.Cardiovascular">
+                            <button mat-fab color="primary" (click)="substractDuration()">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <mat-form-field formGroupName="data">
+                                <mat-label>
+                                    {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.duration' | translate }}
+                                </mat-label>
+                                <input matInput id="duration" name="duration" formControlName="duration" type="number"/>
+                                @if (form.controls.data.controls.duration) {
+                                    <mat-error>{{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.errors.durationRequired' | translate }}</mat-error>
+                                }
+                            </mat-form-field>
+                            <button mat-fab color="primary" (click)="addDuration()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
                         <mat-form-field>
                             <mat-label>
                                 {{ 'apps.workout-trainings.trainingExercise.addTrainingExerciseSerie.step.basicInfo.form.fields.observations' | translate }}

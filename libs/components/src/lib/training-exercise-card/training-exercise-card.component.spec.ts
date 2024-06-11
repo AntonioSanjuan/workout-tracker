@@ -16,14 +16,18 @@ describe('TrainingExerciseCardComponent', () => {
     series: [
       {
         id: 'series0',
-        weight: 10,
-        repetitions: 11,
+        data: {
+          weight: 10,
+          repetitions: 11,
+        },
         observations: 'series0_obs'
       },
       {
         id: 'series1',
-        weight: 20,
-        repetitions: 21,
+        data: {
+          weight: 20,
+          repetitions: 21,
+        },
         observations: 'series1_obs'
       }
     ] as TrainingExerciseSerie[]
