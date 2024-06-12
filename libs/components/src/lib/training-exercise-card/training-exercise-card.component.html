@@ -3,7 +3,7 @@
         <mat-card-content>
             <div class="TrainingExerciseCard_InfoContainer">
                 <div class="TrainingExerciseCard_ExerciseTemplateContainer">
-                    <img mat-card-md-image [src]="trainingExercise.exerciseTemplate.image  ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
+                    <img mat-card-md-image [src]="trainingExercise.exerciseTemplate.image | defaultExerciseTemplateImage:trainingExercise.exerciseTemplate.type"  alt="exercise image">
                     <div class="TrainingExerciseCard_ExerciseTemplateInfoContainer">
                         <h3>{{trainingExercise.exerciseTemplate.name}}</h3>
                         <div class="TrainingExerciseCard_TypesContainer">

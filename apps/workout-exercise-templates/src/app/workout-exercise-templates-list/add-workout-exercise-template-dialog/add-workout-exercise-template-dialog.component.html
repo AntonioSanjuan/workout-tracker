@@ -34,11 +34,18 @@
             </mat-step>
             <mat-step [label]="'apps.workout-exercises.list.addExercise.step.image.title' | translate">
                 <div class="AddExerciseTemplateDialog_VideoContainer">
+
+                    <p>{{'apps.workout-exercises.list.addExercise.step.image.form.description' | translate}}</p>
+
                     <mat-button-toggle-group (change)="switchCameraStatus($event.value)" [value]="cameraOpened">
                         <mat-button-toggle [value]="false">{{'common.actions.no' | translate}}</mat-button-toggle>
                         <mat-button-toggle [value]="true">{{'common.actions.yes' | translate}}</mat-button-toggle>
                     </mat-button-toggle-group>
         
+                    <div class="AddExerciseTemplateDialog_Image" *ngIf="!cameraOpened && !photo">
+                        <img [src]="photo | defaultExerciseTemplateImage:getFormType()"  alt="exercise image">
+                    </div>
+
                     <div class="AddExerciseTemplateDialog_Video" *ngIf="cameraOpened && !photo">
                         <video poster="https://material.angular.io/assets/img/examples/shiba2.jpg" #video>Video stream not available.</video>
                         <button mat-flat-button type="button" color="primary" (click)="takePhoto()">

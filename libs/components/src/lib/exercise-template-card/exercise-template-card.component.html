@@ -2,7 +2,7 @@
     <mat-card class="cardClass" [class.selectedCard]="selected">
         <mat-card-content>
             <div class="ExerciseTemplateCard_ContentContainer">
-                <img mat-card-md-image [src]="exerciseTemplate.image ?? 'https://material.angular.io/assets/img/examples/shiba2.jpg'"  alt="exercise image">
+                <img mat-card-md-image [src]="exerciseTemplate.image | defaultExerciseTemplateImage:exerciseTemplate.type" alt="exercise template image">
                 <div class="ExerciseTemplateCard_InfoContainer">
                     <div class="ExerciseTemplateCard_UnitContainer">
                         <h3>{{exerciseTemplate.name}}</h3>

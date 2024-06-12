@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { UiModule } from '@workout-tracker/ui';
+import { DefaultExerciseTemplateImagePipe, UiModule } from '@workout-tracker/ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutExerciseTemplateForm, getAddWorkoutExerciseTemplateForm } from './add-workout-exercise-template-dialog.form';
@@ -15,7 +15,8 @@ import { MusclesSelectorComponent } from '@workout-tracker/components';
   imports: [
     UiModule,
     TranslateModule,
-    MusclesSelectorComponent
+    MusclesSelectorComponent,
+    DefaultExerciseTemplateImagePipe
   ],
   styleUrls: ['./add-workout-exercise-template-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -33,7 +34,7 @@ export class AddWorkoutExerciseTemplateDialogComponent implements OnInit, OnDest
   public musclesByGroup = muscleInvolvedByGroups;
   public exerciseUnits = ExerciseType
 
-  public cameraOpened: boolean = false
+  public cameraOpened = false
   public photo?: string
 
   ngOnInit(): void {
@@ -44,6 +45,9 @@ export class AddWorkoutExerciseTemplateDialogComponent implements OnInit, OnDest
       this.switchCameraStatus(false)
   }
 
+  public getFormType() {
+    return this.form.controls['type'].value as ExerciseType
+  }
   public createExerciseTemplate() {
     if(this.form.valid) {
       const exercise = {

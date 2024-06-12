@@ -327,6 +327,7 @@
                         "image": {
                             "title": "Image",
                             "form": {
+                                "description": "Do you want to use a custom image?",
                                 "actions": {
                                     "capture": "Capture image",
                                     "clear": "Clear image"

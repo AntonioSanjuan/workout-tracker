@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LetDirective } from '@ngrx/component';
-import { MuscleInvolvedGroupPipe, UiModule } from '@workout-tracker/ui';
+import { DefaultExerciseTemplateImagePipe, MuscleInvolvedGroupPipe, UiModule } from '@workout-tracker/ui';
 import { ExerciseTemplate } from '@workout-tracker/models';
 import { TranslateModule } from '@ngx-translate/core';
 import { MusclePillComponent } from '../muscle-pill/muscle-pill.component';
@@ -11,6 +11,7 @@ import { MusclePillComponent } from '../muscle-pill/muscle-pill.component';
   imports: [
     MusclePillComponent,
     MuscleInvolvedGroupPipe,
+    DefaultExerciseTemplateImagePipe,
     CommonModule,
     LetDirective,
     TranslateModule,

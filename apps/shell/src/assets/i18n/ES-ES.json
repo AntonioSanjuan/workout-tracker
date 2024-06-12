@@ -328,6 +328,7 @@
                         "image": {
                             "title": "Imagen",
                             "form": {
+                                "description": "¿Quieres usar una imágen personalizada?",
                                 "actions": {
                                     "capture": "Capturar imagen",
                                     "clear": "Borrar imagen"
