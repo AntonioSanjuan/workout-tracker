@@ -55,12 +55,12 @@ export class AddWorkoutTrainingExerciseDialogComponent implements OnInit {
 
   public setExerciseTemplate(exerciseTemplate: ExerciseTemplate) {
     this.form.setValue({
-      exerciseTemplate:  this.form.controls.exerciseTemplate.value?.id === exerciseTemplate.id ? null :  exerciseTemplate
+      exerciseTemplate: this.form.value.exerciseTemplate === exerciseTemplate ? null :  exerciseTemplate
     })
   }
 
   public isSelected(exerciseTemplate: ExerciseTemplate) {
-    return this.form.value.exerciseTemplate?.id === exerciseTemplate.id
+    return this.form.value.exerciseTemplate === exerciseTemplate
   }
 
 }
