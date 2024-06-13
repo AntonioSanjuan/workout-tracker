@@ -256,9 +256,9 @@ describe('TrainingsListEffects', () => {
           jest.useRealTimers();
         })
 
-        it('should return updateAuthenticatedUserTrainingListRequest', async () => {
+        it('should return updateUserTrainingListRequest', async () => {
           const result = await firstValueFrom(effects.finishUserTrainingListOnGoingRequest$)
-          expect(result).toEqual(updateAuthenticatedUserTrainingListRequest({ training: {...trainingOnGoint, finishDate: new Date()}}))
+          expect(result).toEqual(updateUserTrainingListRequest({ training: {...trainingOnGoint, finishDate: new Date()}}))
         })
 
 
@@ -298,9 +298,9 @@ describe('TrainingsListEffects', () => {
           jest.useRealTimers();
         })
 
-        it('should return updateAuthenticatedUserTrainingListRequest', async () => {
+        it('should return updateUserTrainingListRequest', async () => {
           const result = await firstValueFrom(effects.finishUserTrainingListOnGoingRequest$)
-          expect(result).toEqual(updateAuthenticatedUserTrainingListRequest({ training: {...trainingOnGoint, finishDate: new Date()}}))
+          expect(result).toEqual(updateUserTrainingListRequest({ training: {...trainingOnGoint, finishDate: new Date()}}))
         })
 
 
@@ -428,7 +428,7 @@ describe('TrainingsListEffects', () => {
     })
   })
 
-  describe('addUserTrainingListRequestSuccess$', () => {
+  describe('addOrCopyUserTrainingListRequestSuccess$', () => {
     const trainingIdSut = 'trainingId test'
     const trainingSut = { id: trainingIdSut } as Training
 
@@ -441,7 +441,7 @@ describe('TrainingsListEffects', () => {
       })
       it('should navigate to new trainingExercise', async () => {
         const navigateSpy = jest.spyOn(router, 'navigate')
-        await firstValueFrom(effects.addUserTrainingListRequestSuccess$)
+        await firstValueFrom(effects.addOrCopyUserTrainingListRequestSuccess$)
         expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
       })
     })
@@ -455,7 +455,35 @@ describe('TrainingsListEffects', () => {
       })
       it('should navigate to new trainingExercise', async () => {
         const navigateSpy = jest.spyOn(router, 'navigate')
-        await firstValueFrom(effects.addUserTrainingListRequestSuccess$)
+        await firstValueFrom(effects.addOrCopyUserTrainingListRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+      })
+    })
+
+    describe('when copyAuthenticatedUserTrainingListRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.refreshState()
+
+        actions = of(copyAuthenticatedUserTrainingListRequestSuccess({ training: trainingSut }))
+      })
+      it('should navigate to new trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.addOrCopyUserTrainingListRequestSuccess$)
+        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
+      })
+    })
+
+    describe('when copyAnonymousUserTrainingListRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.refreshState()
+
+        actions = of(copyAnonymousUserTrainingListRequestSuccess({ training: trainingSut }))
+      })
+      it('should navigate to new trainingExercise', async () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+        await firstValueFrom(effects.addOrCopyUserTrainingListRequestSuccess$)
         expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
       })
     })
@@ -588,40 +616,6 @@ describe('TrainingsListEffects', () => {
       const result = await firstValueFrom(effects.copyAnonymousUserTrainingListRequest$)
       expect(result).toEqual(copyAnonymousUserTrainingListRequestSuccess({ training: {...trainingSut, id: (exerciseListSut.length + 1).toString()}}))
     })
-  })
-
-  describe('copyUserTrainingListRequestSuccess$', () => {
-    const trainingIdSut = 'trainingId test'
-    const trainingSut = { id: trainingIdSut } as Training
-
-    describe('when copyAuthenticatedUserTrainingListRequestSuccess is dispatched', () => {
-      beforeEach(() => {
-        store.resetSelectors()
-        store.refreshState()
-
-        actions = of(copyAuthenticatedUserTrainingListRequestSuccess({ training: trainingSut }))
-      })
-      it('should navigate to copied trainingExercise', async () => {
-        const navigateSpy = jest.spyOn(router, 'navigate')
-        await firstValueFrom(effects.copyUserTrainingListRequestSuccess$)
-        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
-      })
-    })
-
-    describe('when copyAnonymousUserTrainingListRequestSuccess is dispatched', () => {
-      beforeEach(() => {
-        store.resetSelectors()
-        store.refreshState()
-
-        actions = of(copyAnonymousUserTrainingListRequestSuccess({ training: trainingSut }))
-      })
-      it('should navigate to copied trainingExercise', async () => {
-        const navigateSpy = jest.spyOn(router, 'navigate')
-        await firstValueFrom(effects.copyUserTrainingListRequestSuccess$)
-        expect(navigateSpy).toHaveBeenCalledWith([`${AppRoutes.WorkoutTrainingsList}/${trainingSut.id}`])
-      })
-    })
-
   })
 
   //

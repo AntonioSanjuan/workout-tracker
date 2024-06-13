@@ -10,10 +10,9 @@ import firebase from 'firebase/compat/app';
 import { Training, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
 import { TrainingsService, trainingsServiceMock } from '@workout-tracker/services/trainings';
-import { TrainingsListState, getTrainingsListState, getUser, showError, updateAnonymousUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { TrainingsListState, getTrainingsListState, getUser, showError, updateUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { selectWorkoutTraining } from './workout-training.selectors';
-import { WorkoutTrainingExerciseState } from '../../workout-training-exercise/state/workout-training-exercise.reducer';
 import { Router } from '@angular/router';
 import { appRoutes } from '../../app.routes';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -340,6 +339,22 @@ describe('TrainingDetailsEffects', () => {
 
     const workoutTrainingState = { id: 'training id test', trainingExercises: [trainingExerciseSut] } as Training
 
+    describe('when addAuthenticatedUserTrainingExerciseRequestSuccess is dispatched', () => {
+      beforeEach(() => {
+        store.resetSelectors()
+        store.overrideSelector(selectWorkoutTraining, workoutTrainingState)
+        store.refreshState()
+
+        actions = of(addAuthenticatedUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut }))
+
+      })
+      it('should return updateUserTrainingListRequest', async () => {
+        const result = await firstValueFrom(effects.addAnonymousUserTrainingExerciseRequestSuccess$)
+        expect(result).toEqual(updateUserTrainingListRequest({ training: workoutTrainingState }))
+      })
+
+    })
+
     describe('when addAnonymousUserTrainingExerciseRequestSuccess is dispatched', () => {
       beforeEach(() => {
         store.resetSelectors()
@@ -349,9 +364,9 @@ describe('TrainingDetailsEffects', () => {
         actions = of(addAnonymousUserTrainingExerciseRequestSuccess({ trainingExercise: trainingExerciseSut }))
 
       })
-      it('should return updateAnonymousUserTrainingListRequest', async () => {
+      it('should return updateUserTrainingListRequest', async () => {
         const result = await firstValueFrom(effects.addAnonymousUserTrainingExerciseRequestSuccess$)
-        expect(result).toEqual(updateAnonymousUserTrainingListRequest({ training: workoutTrainingState }))
+        expect(result).toEqual(updateUserTrainingListRequest({ training: workoutTrainingState }))
       })
 
     })

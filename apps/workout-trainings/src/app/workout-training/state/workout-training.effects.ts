@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, of, mergeMap, iif, take, switchMap, tap } from 'rxjs'
+import { map, catchError, of, mergeMap, iif, take, switchMap, tap, merge } from 'rxjs'
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ExerciseTemplatesService } from '@workout-tracker/services/exercise-templates';
 import { Store } from '@ngrx/store';
-import { getExerciseTemplateById, getTrainingById, getUser, showError, updateAnonymousUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { getExerciseTemplateById, getTrainingById, getUser, showError, updateAnonymousUserTrainingListRequest, updateUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { AppRoutes, ExerciseTemplate, Training, TrainingExercise } from '@workout-tracker/models';
 import { addAnonymousUserTrainingExerciseRequest, addAnonymousUserTrainingExerciseRequestSuccess, addAuthenticatedUserTrainingExerciseRequest, addAuthenticatedUserTrainingExerciseRequestError, addAuthenticatedUserTrainingExerciseRequestSuccess, addUserTrainingExerciseRequest, getAnonymousUserTrainingRequest, getAnonymousUserTrainingRequestError, getAnonymousUserTrainingRequestSuccess, getAuthenticatedUserTrainingRequest, getAuthenticatedUserTrainingRequestError, getAuthenticatedUserTrainingRequestSuccess, getUserTrainingRequest } from './workout-training.actions';
 import { TrainingsService } from '@workout-tracker/services/trainings';
@@ -99,9 +99,9 @@ export class TrainingEffects {
     ))
 
     addAnonymousUserTrainingExerciseRequestSuccess$ = createEffect(() => this.actions$.pipe(
-        ofType(addAnonymousUserTrainingExerciseRequestSuccess),
+        ofType(addAuthenticatedUserTrainingExerciseRequestSuccess, addAnonymousUserTrainingExerciseRequestSuccess),
         concatLatestFrom(() => [this.store.select(selectWorkoutTraining)]),
-        mergeMap(([_, training]) => of(updateAnonymousUserTrainingListRequest({ training: training as Training })))
+        mergeMap(([_, training]) => of(updateUserTrainingListRequest({ training: training as Training })))
     ))
 
     addUserTrainingExerciseRequestSuccess$ = createEffect(() => this.actions$.pipe(

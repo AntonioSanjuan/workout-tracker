@@ -48,6 +48,29 @@ export const trainingsListReducer = createReducer(
         }
     }),
     on(
+        addAuthenticatedUserTrainingListRequestSuccess,
+        copyAuthenticatedUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
+        return {
+            ...state, 
+            list: [...[training], ...state.list ],
+            query: {
+                ...state.query,
+                pagination: {
+                    ...state.query.pagination,
+                    lastElement: state.query.pagination.lastElement ?? training
+                }
+            }
+        }
+    }),
+    on(
+        addAnonymousUserTrainingListRequestSuccess,
+        copyAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
+        return {
+            ...state, 
+            list: [...[training], ...state.list ],
+        }
+    }),
+    on(
         setTrainingListQueryFilter, (state: TrainingsListState, { filters }) => {
         return {
             ...state, 
@@ -64,17 +87,6 @@ export const trainingsListReducer = createReducer(
             }
         }
     }),
-    on(
-        addAuthenticatedUserTrainingListRequestSuccess,
-        addAnonymousUserTrainingListRequestSuccess,
-        copyAuthenticatedUserTrainingListRequestSuccess,
-        copyAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {
-        return {
-            ...state, 
-            list: [training, ...state.list ],
-        }
-    }),
-
     on(
         updateAuthenticatedUserTrainingListRequestSuccess,
         updateAnonymousUserTrainingListRequestSuccess, (state: TrainingsListState, { training }) => {

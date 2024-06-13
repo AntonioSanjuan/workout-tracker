@@ -70,7 +70,7 @@ export class TrainingsListEffects {
         concatLatestFrom(() => [this.store.select(getTrainingListOngoing)]),
         filter(([_, trainingOngoing]) => !!trainingOngoing),
         switchMap(([_, trainingOngoing]) =>
-                of(updateAuthenticatedUserTrainingListRequest({ training: { ...trainingOngoing as Training, finishDate: new Date()}})),
+                of(updateUserTrainingListRequest({ training: { ...trainingOngoing as Training, finishDate: new Date()}})),
             )
         )
     )
@@ -117,8 +117,12 @@ export class TrainingsListEffects {
         )
     ))
 
-    addUserTrainingListRequestSuccess$ = createEffect(() => this.actions$.pipe(
-        ofType(addAuthenticatedUserTrainingListRequestSuccess, addAnonymousUserTrainingListRequestSuccess),
+    addOrCopyUserTrainingListRequestSuccess$ = createEffect(() => this.actions$.pipe(
+        ofType(
+            addAuthenticatedUserTrainingListRequestSuccess, 
+            addAnonymousUserTrainingListRequestSuccess,
+            copyAuthenticatedUserTrainingListRequestSuccess, 
+            copyAnonymousUserTrainingListRequestSuccess),
         tap(({ training }) => 
             this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
         )
@@ -166,14 +170,6 @@ export class TrainingsListEffects {
         )
         )
     ))
-
-    copyUserTrainingListRequestSuccess$ = createEffect(() => this.actions$.pipe(
-        ofType(copyAuthenticatedUserTrainingListRequestSuccess, copyAnonymousUserTrainingListRequestSuccess),
-        tap(({ training }) => 
-            this.router.navigate([`${AppRoutes.WorkoutTrainingsList}/${training.id}`])
-        )
-    ), { dispatch: false})
-    
 
     updateUserTrainingListRequest$ = createEffect(() => this.actions$.pipe(
         ofType(updateUserTrainingListRequest),
