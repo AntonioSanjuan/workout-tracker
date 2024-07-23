@@ -31,7 +31,7 @@
                 [type]="bannerType.Warning"
                 [content]="'apps.workout-trainings.trainingExercise.trainingExerciseSerie.banner.content' | translate"
                 [actionText]="'apps.workout-trainings.trainingExercise.actions.addTrainingExerciseSerie' | translate"
-                (action)="newTrainingExerciseSerie()">
+                (action)="newTrainingExerciseSerie(vm.trainingExercise)">
             </workout-tracker-banner>
 
             <workout-tracker-series-table

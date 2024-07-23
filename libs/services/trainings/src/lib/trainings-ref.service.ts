@@ -28,7 +28,6 @@ export class TrainingsRefService {
 
             //pagination
             if (trainingQuery.pagination.lastElement) { 
-                console.log("lastElement", trainingQuery.pagination.lastElement)
                 query = query.startAfter(DateAdapter.toDto(trainingQuery.pagination.lastElement.creationDate)) 
             }
             
