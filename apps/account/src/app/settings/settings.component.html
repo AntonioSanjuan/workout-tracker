@@ -10,7 +10,7 @@
     <workout-tracker-banner *ngIf="!vm.user" [type]="bannerType.Warning"
         [content]="'apps.account.settings.userInfo.banner.content.anonymousUser' | translate"
         [actionText]="'apps.account.settings.userInfo.banner.actions.register' | translate"
-        (action)="goToLogin()">
+        (action)="goToSignUp()">
     </workout-tracker-banner>
 
     <form *ngIf="settingsForm" [formGroup]="settingsForm">

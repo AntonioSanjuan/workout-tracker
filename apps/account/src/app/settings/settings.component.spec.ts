@@ -5,12 +5,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { getUserSettings, updateUserSettingsRequest } from '@workout-tracker/shared-store';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SettingsComponent } from './settings.component';
-import { UserSettings } from '@workout-tracker/models';
+import { AppRoutes, UserSettings } from '@workout-tracker/models';
 import { userStateMock, settingsStateMock } from '@workout-tracker/test'
+import { appRoutes } from '../app.routes';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
   let store: MockStore;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,7 +22,7 @@ describe('SettingsComponent', () => {
         provideMockStore({
           initialState: {
             ...accountAppStateMock,
-            ...userStateMock, 
+            ...userStateMock,
             ...settingsStateMock
           }
         }),
@@ -29,11 +33,13 @@ describe('SettingsComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         }),
+        RouterTestingModule.withRoutes(appRoutes),
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsComponent);
     store = TestBed.inject(MockStore)
+    router = TestBed.inject(Router);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -45,7 +51,7 @@ describe('SettingsComponent', () => {
   })
 
   describe('Integration tests', () => {
-    describe('Initialization (ngOnInit)', ()=> {
+    describe('Initialization (ngOnInit)', () => {
       const userSettingsSut = {
         language: 'lang test',
         darkMode: false
@@ -80,10 +86,20 @@ describe('SettingsComponent', () => {
             language: languageSut,
             darkMode: darkModeSut
           }
-         })
+        })
         )
       })
     });
+
+    describe('goToSignUp', () => {
+      it('should navigate to signUp', () => {
+        const navigateSpy = jest.spyOn(router, 'navigate')
+
+        component.goToSignUp()
+
+        expect(navigateSpy).toHaveBeenCalledWith([AppRoutes.SignUp])
+      })
+    })
   })
 
 });

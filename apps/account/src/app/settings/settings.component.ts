@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  goToLogin(): void {
+  goToSignUp(): void {
     this.router.navigate([AppRoutes.SignUp])
   }
 
