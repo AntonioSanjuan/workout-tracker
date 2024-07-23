@@ -1,3 +1,5 @@
+@use "css/main.scss" as shellStyles;
+
 :host {
     height: 100%;
 }
@@ -8,6 +10,14 @@
     height: 100%;
     align-items: center;
     justify-content: center;
+    gap: shellStyles.$SmallSeparation;
+
+    mat-card {
+        width: 100%;
+        
+        mat-card-content {
+        }
+    }
 
     form {
         display: flex;

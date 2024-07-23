@@ -3,10 +3,12 @@ import { Store } from '@ngrx/store';
 import { SettingsForm, settingsForm } from './settings.form';
 import { FormGroup } from "@angular/forms";
 import { UiModule } from '@workout-tracker/ui';
-import { getUserSettings, updateUserSettingsRequest } from '@workout-tracker/shared-store'
+import { getUser, getUserSettings, updateUserSettingsRequest } from '@workout-tracker/shared-store'
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AppRoutes, UserSettings } from '@workout-tracker/models'
+import { AppRoutes, BannerType, UserSettings } from '@workout-tracker/models'
 import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
+import { BannerComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-settings',
@@ -14,25 +16,29 @@ import { Subject, takeUntil } from 'rxjs';
   imports: [
     UiModule,
     TranslateModule,
+    BannerComponent
   ],
   styleUrls: ['./settings.component.scss'],
   standalone: true
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   private store = inject(Store)
+  private router = inject(Router)
   public translateService: TranslateService = inject(TranslateService)
 
   public settingsForm!: FormGroup<SettingsForm>
-  
+
   public appRoutes = AppRoutes
+  public bannerType = BannerType;
 
   public userSettings$ = this.store.select(getUserSettings)
+  public user$ = this.store.select(getUser)
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
     this.userSettings$.pipe(
       takeUntil(this.destroy$)
-    ).subscribe((userSettings: UserSettings|undefined) => {
+    ).subscribe((userSettings: UserSettings | undefined) => {
       this.settingsForm = settingsForm(userSettings)
     })
   }
@@ -42,8 +48,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  goToLogin(): void {
+    this.router.navigate([AppRoutes.SignUp])
+  }
+
   updateSettings(): void {
-    const settingsData = {...this.settingsForm?.getRawValue() } as UserSettings
-    this.store.dispatch(updateUserSettingsRequest({ userSettings: settingsData}))
+    const settingsData = { ...this.settingsForm?.getRawValue() } as UserSettings
+    this.store.dispatch(updateUserSettingsRequest({ userSettings: settingsData }))
   }
 }

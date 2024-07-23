@@ -1,39 +1,33 @@
-<div
-    class="Settings_MainContainer">
+<div class="Settings_MainContainer" *ngrxLet="{user: user$} as vm">
     <h2>
         {{ 'apps.account.settings.title' | translate }}
     </h2>
+
+    <workout-tracker-banner *ngIf="vm.user" [type]="bannerType.Success"
+        [content]="'apps.account.settings.userInfo.banner.content.authenticatedUser' | translate : { email: vm.user.email}">
+    </workout-tracker-banner>
+
+    <workout-tracker-banner *ngIf="!vm.user" [type]="bannerType.Warning"
+        [content]="'apps.account.settings.userInfo.banner.content.anonymousUser' | translate"
+        [actionText]="'apps.account.settings.userInfo.banner.actions.register' | translate"
+        (action)="goToLogin()">
+    </workout-tracker-banner>
 
     <form *ngIf="settingsForm" [formGroup]="settingsForm">
         <mat-form-field>
             <mat-label>
                 {{ 'apps.account.settings.form.fields.language' | translate }}
             </mat-label>
-            <mat-select 
-            id="language"
-            name="language"
-            formControlName="language"
-            (selectionChange)="updateSettings()"
-            [value]="translateService.currentLang" 
-            class="lang" >
+            <mat-select id="language" name="language" formControlName="language" (selectionChange)="updateSettings()"
+                [value]="translateService.currentLang" class="lang">
                 <mat-select-trigger>
-                    <img 
-                    mat-card-image 
-                    [src]="'assets/images/flags/' + translateService.currentLang + '.png'" 
-                    height="40px"
-                    [ngStyle]="{backgroundColor: 'transparent'}"
-                    width="40px"
-                    alt="{{translateService.currentLang}} flag">
+                    <img mat-card-image [src]="'assets/images/flags/' + translateService.currentLang + '.png'"
+                        height="40px" [ngStyle]="{backgroundColor: 'transparent'}" width="40px"
+                        alt="{{translateService.currentLang}} flag">
                     {{translateService.currentLang}}
                 </mat-select-trigger>
-                <mat-option 
-                    *ngFor="let lang of translateService.getLangs()" 
-                    [value]="lang">
-                    <img 
-                        mat-card-image 
-                        [src]="'assets/images/flags/' + lang + '.png'" 
-                        height="32px"
-                        width="32px"
+                <mat-option *ngFor="let lang of translateService.getLangs()" [value]="lang">
+                    <img mat-card-image [src]="'assets/images/flags/' + lang + '.png'" height="32px" width="32px"
                         alt="{{lang}} flag">
                     {{lang}}
 
@@ -47,11 +41,7 @@
             </mat-label>
             <div class="Settings_DarkModeSlide">
                 <mat-icon>bedtime</mat-icon>
-                <mat-slide-toggle
-                    id="darkMode"
-                    name="darkMode"
-                    formControlName="darkMode"
-                    (change)="updateSettings()">
+                <mat-slide-toggle id="darkMode" name="darkMode" formControlName="darkMode" (change)="updateSettings()">
                 </mat-slide-toggle>
                 <mat-icon>
                     brightness_7

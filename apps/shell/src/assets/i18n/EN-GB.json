@@ -121,6 +121,17 @@
             },
             "settings": {
                 "title": "Configure your account",
+                "userInfo": {
+                    "banner": {
+                        "content": {
+                            "authenticatedUser": "Authenticated user: {{email}}",
+                            "anonymousUser": "Anopnymous user"
+                        },
+                        "actions": {
+                            "register": "Sign Up"
+                        }
+                    }
+                },
                 "form": {
                     "fields": {
                         "language": "Language",
@@ -178,8 +189,7 @@
                         }
                     }
                 },
-                "actions": {
-                }
+                "actions": {}
             },
             "training": {
                 "title": "Training Details",
@@ -418,7 +428,7 @@
                     "observations": "Observations"
                 },
                 "menu": {
-                    "actions":{
+                    "actions": {
                         "delete": "Delete",
                         "edit": "Edit"
                     }

@@ -122,6 +122,17 @@
             },
             "settings": {
                 "title": "Configura tu cuenta",
+                "userInfo": {
+                    "banner": {
+                        "content": {
+                            "authenticatedUser": "Usuario autenticado: {{email}}",
+                            "anonymousUser": "Usuario anónimo"
+                        },
+                        "actions": {
+                            "register": "Regístrate"
+                        }
+                    }
+                },
                 "form": {
                     "fields": {
                         "language": "Idioma",
