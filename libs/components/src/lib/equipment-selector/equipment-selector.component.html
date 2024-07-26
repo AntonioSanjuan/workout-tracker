@@ -1,0 +1,14 @@
+<div class="EquipmentSelector_MainContainer" [formGroup]="formGroup">
+    <mat-form-field>
+        <mat-label>
+            {{ label }}
+        </mat-label>
+        <mat-select [formControlName]="formControlName">
+            <mat-option *ngFor="let equipment of equipments | keyvalue" (click)="selectEquipment(equipment.value)"
+                [value]="equipment.value">
+                {{'common.equipment.' + equipment.value| translate}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="errorLabel">{{ errorLabel }}</mat-error>
+    </mat-form-field>
+</div>

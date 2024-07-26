@@ -23,21 +23,21 @@
                         [formControlName]="'musclesInvolved'">
                     </workout-tracker-muscles-selector>
 
+                    <workout-tracker-equipment-selector
+                        [label]="'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.equipment' | translate"
+                        [errorLabel]="(form.controls.equipment.hasError('required') || form.controls.equipment.hasError('minLength')) ?
+                            ('apps.workout-exercises.list.addExercise.step.basicInfo.form.errors.equipmentRequired' | translate) :
+                            null"
+                        [formGroup]="form"
+                        [formControlName]="'equipment'">
+                    </workout-tracker-equipment-selector>
+                
                     <div class="AddExerciseTemplateDialog_TypeContainer">
                         <mat-label>{{'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.type' | translate}}</mat-label>
                         <mat-button-toggle-group id="type" name="type" formControlName="type" [formGroup]="form">
                             <mat-button-toggle *ngFor="let exerciseType of exerciseTypes | keyvalue" [value]="exerciseType.value">{{'common.types.'+exerciseType.value| translate}}</mat-button-toggle>
                         </mat-button-toggle-group>
                     </div>
-
-                    
-                    <div class="AddExerciseTemplateDialog_EquipmentContainer">
-                        <mat-label>{{'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.equipment' | translate}}</mat-label>
-                        <mat-button-toggle-group id="equipment" name="equipment" formControlName="equipment" [formGroup]="form">
-                            <mat-button-toggle *ngFor="let exerciseEquipment of exerciseEquipments | keyvalue" [value]="exerciseEquipment.value">{{'common.equipment.'+exerciseEquipment.value| translate}}</mat-button-toggle>
-                        </mat-button-toggle-group>
-                    </div>
-
                 </form>
             </mat-step>
             <mat-step [label]="'apps.workout-exercises.list.addExercise.step.image.title' | translate">

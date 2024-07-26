@@ -339,7 +339,8 @@
                                 "errors": {
                                     "nameRequired": "Name field required",
                                     "typeRequired": "You must select at least one type",
-                                    "muscleRequired": "You must select at least one muscle"
+                                    "muscleRequired": "You must select at least one muscle",
+                                    "equipmentRequired": "You must select at least one equipment"
                                 }
                             }
                         },

@@ -25,15 +25,23 @@ workout-tracker-add-exercise-template-dialog {
                         gap: 10px;
                         width: 100%;
 
-                        .AddExerciseTemplateDialog_TypeContainer,
-                        .AddExerciseTemplateDialog_EquipmentContainer {
-                            mat-label {
-                                font-size: 12px;
-                            }
-                            
+                        .AddExerciseTemplateDialog_TypeContainer {
                             display: flex;
                             flex-direction: column;
                             align-items: center;
+
+                            mat-label {
+                                font-size: 12px;
+                            }
+                            mat-button-toggle-group {
+                                flex-wrap: wrap;
+                                border: none;
+                                border-radius: 0;
+                                mat-button-toggle {
+                                    border: 1px solid black
+                                }
+                            }
+     
                         }
                     }
             

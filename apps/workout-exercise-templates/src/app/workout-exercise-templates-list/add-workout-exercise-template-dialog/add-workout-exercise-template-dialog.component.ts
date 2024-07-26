@@ -7,7 +7,7 @@ import { AddWorkoutExerciseTemplateForm, getAddWorkoutExerciseTemplateForm } fro
 import { FormGroup } from '@angular/forms';
 import { ExerciseEquipment, ExerciseTemplate, ExerciseType, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
 import { addUserExerciseTemplateListRequest, showError } from '@workout-tracker/shared-store';
-import { MusclesSelectorComponent } from '@workout-tracker/components';
+import { EquipmentSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 
 @Component({
   selector: 'workout-tracker-add-exercise-template-dialog',
@@ -16,6 +16,7 @@ import { MusclesSelectorComponent } from '@workout-tracker/components';
     UiModule,
     TranslateModule,
     MusclesSelectorComponent,
+    EquipmentSelectorComponent,
     DefaultExerciseTemplateImagePipe
   ],
   styleUrls: ['./add-workout-exercise-template-dialog.component.scss'],

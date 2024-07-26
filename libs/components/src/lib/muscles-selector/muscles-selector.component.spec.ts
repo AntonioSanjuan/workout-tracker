@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MusclesSelectorComponent } from './muscles-selector.component';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { MusclesInvolved } from '@workout-tracker/models';
+import { MuscleGroups, MusclesInvolved } from '@workout-tracker/models';
 
 describe('MusclesSelectorComponent', () => {
   let component: MusclesSelectorComponent;
@@ -25,6 +25,13 @@ describe('MusclesSelectorComponent', () => {
   describe('Unit tests', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
+    });
+
+    it('musclesByGroup should be filtered by filterMuscleGroups', () => {
+      component.filterMuscleGroups = [MuscleGroups.Arms, MuscleGroups.Back]
+      component.ngOnChanges()
+
+      expect(Object.keys(component.musclesByGroup)).toHaveLength(component.filterMuscleGroups.length)
     });
   })
 
