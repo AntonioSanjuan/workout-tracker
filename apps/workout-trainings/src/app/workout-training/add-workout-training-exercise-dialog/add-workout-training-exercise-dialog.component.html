@@ -1,25 +1,27 @@
-<div 
-    *ngrxLet="{ filteredExerciseTemplates: filteredExerciseTemplates$ } as vm"
-    class="AddTrainingExerciseDialog_MainContainer">
+<div *ngrxLet="{ 
+        filteredExerciseTemplates: filteredExerciseTemplates$,
+        workoutTraining: workoutTraining$ 
+    } as vm" class="AddTrainingExerciseDialog_MainContainer">
     <div *ngIf="vm.filteredExerciseTemplates && vm.filteredExerciseTemplates.length > 0">
         <h2 mat-dialog-title>{{ 'apps.workout-trainings.training.addTrainingExercise.title' | translate }}</h2>
-        <mat-dialog-content class="mat-typography" >
+        <mat-dialog-content class="mat-typography">
             <mat-stepper orientation="vertical" linear #stepper animationDuration="700">
-                <mat-step
-                    [stepControl]="form" 
+                <mat-step [stepControl]="form"
                     [label]="'apps.workout-trainings.training.addTrainingExercise.step.basicInfo.title' | translate">
                     <form [formGroup]="form">
-                        <workout-tracker-muscles-selector 
+                        <workout-tracker-muscles-selector [filterMuscleGroups]="vm.workoutTraining?.muscleGroups"
                             [label]="'apps.workout-exercises.list.filter.byMusclePlaceholder' | translate"
                             (muscleSelection)="filterByMuscleInvolved($event)">
                         </workout-tracker-muscles-selector>
-    
+
                         <div class="AddTrainingExerciseDialog_ListContainer">
                             <div class="AddTrainingExerciseDialog_ListEl"
-                            *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
-                            (click)="setExerciseTemplate(filteredExerciseTemplate)">
-                                <workout-tracker-exercise-template-card [selected]="isSelected(filteredExerciseTemplate)" [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
-                        </div>
+                                *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"
+                                (click)="setExerciseTemplate(filteredExerciseTemplate)">
+                                <workout-tracker-exercise-template-card
+                                    [selected]="isSelected(filteredExerciseTemplate)"
+                                    [exerciseTemplate]="filteredExerciseTemplate"></workout-tracker-exercise-template-card>
+                            </div>
                         </div>
 
                     </form>
@@ -30,7 +32,8 @@
             <button mat-button mat-dialog-close>
                 {{ 'common.actions.cancel' | translate }}
             </button>
-            <button *ngIf="stepper.selectedIndex === 0" mat-button [mat-dialog-close]="false" (click)="createTrainingExercise()" [disabled]="!form.valid">
+            <button *ngIf="stepper.selectedIndex === 0" mat-button [mat-dialog-close]="false"
+                (click)="createTrainingExercise()" [disabled]="!form.valid">
                 {{ 'common.actions.create' | translate }}
             </button>
         </mat-dialog-actions>

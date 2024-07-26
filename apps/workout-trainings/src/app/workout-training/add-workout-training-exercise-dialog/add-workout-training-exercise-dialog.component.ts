@@ -8,7 +8,8 @@ import { FormGroup } from '@angular/forms';
 import { ExerciseTemplate, MusclesInvolved, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
 import { ExerciseTemplateCardComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { addUserTrainingExerciseRequest } from '../state/workout-training.actions';
-import { getExerciseTemplatesListFiltered, getUserExerciseTemplatesListRequest, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { getExerciseTemplatesListFiltered, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { selectWorkoutTraining } from '../state/workout-training.selectors';
 
 @Component({
   selector: 'workout-tracker-add-training-exercise-dialog',
@@ -29,33 +30,34 @@ export class AddWorkoutTrainingExerciseDialogComponent implements OnInit {
   private store: Store = inject(Store)
 
   public form!: FormGroup<AddWorkoutTrainingExerciseForm>
-  public filteredExerciseTemplates$ =  this.store.select(getExerciseTemplatesListFiltered)
+  public filteredExerciseTemplates$ = this.store.select(getExerciseTemplatesListFiltered)
+  public workoutTraining$ = this.store.select(selectWorkoutTraining);
 
   ngOnInit(): void {
-      this.form = getAddWorkoutTrainingExerciseForm()
+    this.form = getAddWorkoutTrainingExerciseForm()
   }
 
   public createTrainingExercise() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       const trainingExercise = {
         ...this.form.getRawValue(),
         creationDate: new Date(),
         series: [] as TrainingExerciseSerie[]
       } as TrainingExercise
-      this.store.dispatch(addUserTrainingExerciseRequest({ trainingExercise: trainingExercise}))
+      this.store.dispatch(addUserTrainingExerciseRequest({ trainingExercise: trainingExercise }))
       this.dialogRef.close()
     }
   }
 
   public filterByMuscleInvolved(muscleInvolved: MusclesInvolved): void {
-    this.store.dispatch(setExerciseTemplateListMuscleInvolvedQueryFilter({ 
+    this.store.dispatch(setExerciseTemplateListMuscleInvolvedQueryFilter({
       muscleInvolved: muscleInvolved
     }))
   }
 
   public setExerciseTemplate(exerciseTemplate: ExerciseTemplate) {
     this.form.setValue({
-      exerciseTemplate: this.form.value.exerciseTemplate === exerciseTemplate ? null :  exerciseTemplate
+      exerciseTemplate: this.form.value.exerciseTemplate === exerciseTemplate ? null : exerciseTemplate
     })
   }
 
