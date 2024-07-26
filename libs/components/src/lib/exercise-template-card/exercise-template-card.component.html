@@ -2,20 +2,25 @@
     <mat-card class="cardClass" [class.selectedCard]="selected">
         <mat-card-content>
             <div class="ExerciseTemplateCard_ContentContainer">
-                <img mat-card-md-image [src]="exerciseTemplate.image | defaultExerciseTemplateImage:exerciseTemplate.type" alt="exercise template image">
+                <img mat-card-md-image
+                    [src]="exerciseTemplate.image | defaultExerciseTemplateImage:exerciseTemplate.type"
+                    alt="exercise template image">
                 <div class="ExerciseTemplateCard_InfoContainer">
-                    <div class="ExerciseTemplateCard_UnitContainer">
+                    <div class="ExerciseTemplateCard_TypeContainer">
                         <h3>{{exerciseTemplate.name}}</h3>
                         <h3>{{'common.types.'+ exerciseTemplate.type | translate }}</h3>
                     </div>
+                    <div class="ExerciseTemplateCard_EquipmentContainer">
+                        <p>{{'libs.components.exercise-template-card.fields.equipment' | translate}} :
+                            {{'common.equipment.'+exerciseTemplate.equipment | translate}} </p>
+                    </div>
                     <div class="ExerciseTemplateCard_TypesContainer">
                         <workout-tracker-muscle-pill *ngFor="let mucleInvolved of exerciseTemplate.musclesInvolved"
-                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup"
-                            [specificMuscle]="mucleInvolved">
+                            [muscleGroup]="mucleInvolved | appMuscleInvolvedGroup" [specificMuscle]="mucleInvolved">
                         </workout-tracker-muscle-pill>
                     </div>
                 </div>
             </div>
         </mat-card-content>
-      </mat-card>
+    </mat-card>
 </div>

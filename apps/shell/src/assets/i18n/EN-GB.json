@@ -396,6 +396,11 @@
     },
     "libs": {
         "components": {
+            "exercise-template-card": {
+                "fields": {
+                    "equipment": "Equipamient"
+                }
+            },
             "training-card": {
                 "title": "Day: {{date}}"
             },

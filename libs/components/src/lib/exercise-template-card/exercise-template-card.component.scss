@@ -28,7 +28,7 @@ workout-tracker-exercise-template-card {
                         flex-direction: column;
                         width: 100%;
 
-                        .ExerciseTemplateCard_UnitContainer {
+                        .ExerciseTemplateCard_TypeContainer {
                             display: flex;
                             flex-direction: row;
                             justify-content: space-between;
@@ -38,6 +38,15 @@ workout-tracker-exercise-template-card {
                             }
                         }
                         
+                        .ExerciseTemplateCard_EquipmentContainer {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+
+                            p {
+                                margin-top: 0;
+                            }
+                        }
 
                         .ExerciseTemplateCard_TypesContainer {
                             display: flex;

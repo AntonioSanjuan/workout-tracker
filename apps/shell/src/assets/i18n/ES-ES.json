@@ -124,7 +124,6 @@
                         "submit": "Registrarse",
                         "googleLogin": "Registrate con Google",
                         "login": "¿Ya tienes cuenta? ¡Accede con ella!"
-
                     }
                 }
             },
@@ -156,7 +155,6 @@
                 "trainingExercisePreviousTrainingNotFound": "Entrenamientos previos no encontrados",
                 "trainingExerciseCouldntBeCreated": "No se pudo crear el ejercicio de entrenamiento",
                 "trainingExerciseSerieCouldntBeCreated": "No se pudo crear la serie para el ejercicio de entrenamiento"
-                
             },
             "list": {
                 "title": "Entrenamientos",
@@ -199,8 +197,7 @@
                         }
                     }
                 },
-                "actions": {
-                }
+                "actions": {}
             },
             "training": {
                 "title": "Detalles del entrenamiento",
@@ -240,8 +237,7 @@
                     "title": "Copiar entrenamiento",
                     "content": "¿Estas seguro de copiar este entrenamiento?"
                 },
-                "actions": {
-                },
+                "actions": {},
                 "errors": {
                     "exerciseTemplatesNotFound": {
                         "content": "No se han encontrado plantillas de ejercicios de entrenamientos",
@@ -398,6 +394,11 @@
     },
     "libs": {
         "components": {
+            "exercise-template-card": {
+                "fields": {
+                    "equipment": "Equipamiento"
+                }
+            },
             "training-card": {
                 "title": "Día: {{date}}"
             },
@@ -443,7 +444,7 @@
                     "observations": "Observaciones"
                 },
                 "menu": {
-                    "actions":{
+                    "actions": {
                         "delete": "Borrar",
                         "edit": "Editar"
                     }
