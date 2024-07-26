@@ -308,6 +308,7 @@
             "list": {
                 "title": "Plantillas de ejercicios",
                 "filter": {
+                    "title": "Busca la plantilla de ejercicio",
                     "actions": {
                         "openFilter": "Abrir filtros",
                         "clearFilters": "Borrar filtros"
@@ -318,7 +319,6 @@
                     },
                     "byNameLabel": "Busca la plantilla de ejercicio por nombre",
                     "byNamePlaceholder": "Nombre de la plantilla...",
-                    "byMuscleLabel": "Busca la plantilla de ejercicio por músculos",
                     "byMusclePlaceholder": "Músculos...",
                     "byEquipment": "Equipamiento...",
                     "filteredByMuscles": "Filtrado por..."

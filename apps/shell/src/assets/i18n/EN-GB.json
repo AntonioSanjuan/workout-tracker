@@ -310,6 +310,7 @@
             "list": {
                 "title": "Exercise Templates",
                 "filter": {
+                    "title":  "Search for exercise template",
                     "actions": {
                         "openFilter": "Open filters",
                         "clearFilters": "Clear filters"
@@ -320,7 +321,6 @@
                     },
                     "byNameLabel": "Search for exercise template by name",
                     "byNamePlaceholder": "Template name...",
-                    "byMuscleLabel": "Search for exercise template by muscles",
                     "byMusclePlaceholder": "Muscles...",
                     "byEquipment": "Equipment...",
                     "filteredByMuscles": "Filtered by..."
