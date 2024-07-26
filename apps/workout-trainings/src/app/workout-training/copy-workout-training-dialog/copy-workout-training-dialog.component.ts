@@ -14,8 +14,6 @@ import { Training } from '@workout-tracker/models';
   imports: [
     UiModule,
     TranslateModule,
-    MusclesGroupsSelectorComponent,
-    ExerciseTemplateCardComponent,
     MusclesSelectorComponent
   ],
   styleUrls: ['./copy-workout-training-dialog.component.scss'],
