@@ -5,8 +5,8 @@ import { exerciseTemplatesListStateMock, userStateMock } from '@workout-tracker/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ExerciseTemplate, MuscleGroups, MusclesInvolved, TrainingExercise, TrainingExerciseSerie, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { addUserTrainingListRequest, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { ExerciseEquipment, ExerciseTemplate, MuscleGroups, MusclesInvolved, TrainingExercise, TrainingExerciseSerie, muscleInvolvedByGroups } from '@workout-tracker/models';
+import { addUserTrainingListRequest, setExerciseTemplateListEquipmentQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog.component';
@@ -125,6 +125,17 @@ describe('AddWorkoutTrainingExerciseDialogComponent', () => {
         component.filterByMuscleInvolved(mulscleInvolvedSut)
 
         expect(dispatchSpy).toHaveBeenCalledWith(setExerciseTemplateListMuscleInvolvedQueryFilter({ muscleInvolved: mulscleInvolvedSut }))
+      })
+    })
+
+    describe('filterByEquipment', () => {
+      it('should dispatch setExerciseTemplateListEquipmentQueryFilter action', () => {
+        const equipmentSut = ExerciseEquipment.Barbel
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+        component.filterByEquipment(equipmentSut)
+
+        expect(dispatchSpy).toHaveBeenCalledWith(setExerciseTemplateListEquipmentQueryFilter({ equipment: equipmentSut }))
       })
     })
   })

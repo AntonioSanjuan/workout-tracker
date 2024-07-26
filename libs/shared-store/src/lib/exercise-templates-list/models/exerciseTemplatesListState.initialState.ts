@@ -6,7 +6,8 @@ export const exerciseTemplatesListInitialState: ExerciseTemplatesListState =  {
     query: {
         filters: {
             byName: '',
-            byMuscles: []
+            byMuscles: [],
+            byEquipment: []
         }
     }
 }

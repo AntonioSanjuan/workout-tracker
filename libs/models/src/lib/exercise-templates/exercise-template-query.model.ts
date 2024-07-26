@@ -1,3 +1,4 @@
+import { ExerciseEquipment } from "./exercise-template-equipments.model"
 import { MusclesInvolved } from "./muscles-involved.model"
 
 export interface ExerciseTemplateQuery {
@@ -6,5 +7,6 @@ export interface ExerciseTemplateQuery {
 
 export interface ExerciseTemplateQueryFilters {
     byName: string
-    byMuscles: MusclesInvolved[]
+    byMuscles: MusclesInvolved[],
+    byEquipment: ExerciseEquipment[]
 }

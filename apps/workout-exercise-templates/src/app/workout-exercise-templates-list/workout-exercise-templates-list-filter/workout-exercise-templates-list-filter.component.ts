@@ -5,9 +5,9 @@ import { LetDirective } from '@ngrx/component';
 import { MuscleGroupPillDirective, MuscleInvolvedGroupPipe, accordionAnimation, rotateAnimation } from '@workout-tracker/ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { UiModule } from '@workout-tracker/ui';
-import { MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
-import { clearExerciseTemplateListQueryFilter, getExerciseTemplatesListFilters, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
-import { BannerComponent, MusclePillComponent, MusclesSelectorComponent } from '@workout-tracker/components';
+import { ExerciseEquipment, MusclesInvolved, muscleInvolvedByGroups } from '@workout-tracker/models';
+import { clearExerciseTemplateListQueryFilter, getExerciseTemplatesListFilters, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter, setExerciseTemplateListEquipmentQueryFilter } from '@workout-tracker/shared-store';
+import { BannerComponent, EquipmentSelectorComponent, MusclePillComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { ExerciseTemplatesListFilterForm, exerciseTemplatesListFilterForm } from './workout-exercise-templates-list-filter.service.form';
 import { FormGroup } from '@angular/forms';
 
@@ -20,6 +20,7 @@ import { FormGroup } from '@angular/forms';
     BannerComponent,
     MusclePillComponent,
     MusclesSelectorComponent,
+    EquipmentSelectorComponent,
     MuscleInvolvedGroupPipe,
   ],
   templateUrl: './workout-exercise-templates-list-filter.component.html',
@@ -49,6 +50,12 @@ export class WorkoutExerciseTemplatesFilterListComponent implements OnInit {
   public filterByMuscleInvolved(muscleInvolved: MusclesInvolved): void {
     this.store.dispatch(setExerciseTemplateListMuscleInvolvedQueryFilter({ 
       muscleInvolved: muscleInvolved
+    }))
+  }
+
+  public filterByEquipment(equipment: ExerciseEquipment): void {
+    this.store.dispatch(setExerciseTemplateListEquipmentQueryFilter({ 
+      equipment: equipment
     }))
   }
   

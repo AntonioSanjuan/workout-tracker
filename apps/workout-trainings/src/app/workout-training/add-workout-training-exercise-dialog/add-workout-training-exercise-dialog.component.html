@@ -14,6 +14,12 @@
                             (muscleSelection)="filterByMuscleInvolved($event)">
                         </workout-tracker-muscles-selector>
 
+                        <workout-tracker-equipment-selector
+                            [multipleSelection]="true"
+                            [label]="'apps.workout-exercises.list.addExercise.step.basicInfo.form.fields.equipment' | translate"
+                            (equipmentSelection)="filterByEquipment($event)">
+                        </workout-tracker-equipment-selector>
+
                         <div class="AddTrainingExerciseDialog_ListContainer">
                             <div class="AddTrainingExerciseDialog_ListEl"
                                 *ngFor="let filteredExerciseTemplate of vm.filteredExerciseTemplates"

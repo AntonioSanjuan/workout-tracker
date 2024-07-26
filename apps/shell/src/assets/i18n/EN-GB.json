@@ -322,6 +322,7 @@
                     "byNamePlaceholder": "Template name...",
                     "byMuscleLabel": "Search for exercise template by muscles",
                     "byMusclePlaceholder": "Muscles...",
+                    "byEquipment": "Equipment...",
                     "filteredByMuscles": "Filtered by..."
                 },
                 "addExercise": {

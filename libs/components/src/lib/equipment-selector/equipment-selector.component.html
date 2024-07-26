@@ -3,7 +3,7 @@
         <mat-label>
             {{ label }}
         </mat-label>
-        <mat-select [formControlName]="formControlName">
+        <mat-select [formControlName]="formControlName" [multiple]="multipleSelection">
             <mat-option *ngFor="let equipment of equipments | keyvalue" (click)="selectEquipment(equipment.value)"
                 [value]="equipment.value">
                 {{'common.equipment.' + equipment.value| translate}}

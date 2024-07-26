@@ -30,6 +30,7 @@ export class EquipmentSelectorComponent implements ControlValueAccessor {
   public equipments = ExerciseEquipment;
 
   @Input() public label!: string
+  @Input() public multipleSelection = false
   @Input() public errorLabel!: string
   @Input() public formControlName: string | number | null = 'formControlName';
   @Input() public formGroup: FormGroup<any> = this.fb.group({

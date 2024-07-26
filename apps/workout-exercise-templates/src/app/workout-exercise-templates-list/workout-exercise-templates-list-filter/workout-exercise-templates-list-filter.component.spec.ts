@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutExerciseTemplatesFilterListComponent } from './workout-exercise-templates-list-filter.component';
-import { MusclesInvolved } from '@workout-tracker/models';
-import { clearExerciseTemplateListQueryFilter, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { ExerciseEquipment, MusclesInvolved } from '@workout-tracker/models';
+import { clearExerciseTemplateListQueryFilter, setExerciseTemplateListNameQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter, setExerciseTemplateListEquipmentQueryFilter } from '@workout-tracker/shared-store';
 import { MusclesGroupsSelectorComponent } from '@workout-tracker/components';
 import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
 import { appRoutes } from '../../app.routes';
@@ -72,6 +72,17 @@ describe('WorkoutExercisesFilterListComponent', () => {
       }))
     });
 
+    it('filterByEquipment should dispatch setExerciseTemplateListEquipmentQueryFilter', () => {
+      const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+      const equipmentSut = ExerciseEquipment.Barbel
+      component.filterByEquipment(equipmentSut)
+
+      expect(dispatchSpy).toHaveBeenCalledWith(setExerciseTemplateListEquipmentQueryFilter({ 
+        equipment: equipmentSut
+      }))
+    });
+
     
     it('clearMuscleInvolvedFilter should dispatch clearExerciseTemplateListQueryFilter', () => {
       const dispatchSpy = jest.spyOn(store, 'dispatch')
@@ -87,7 +98,8 @@ describe('WorkoutExercisesFilterListComponent', () => {
       const searchSut = 'testing search'
       component.exerciseTemplatesListFilterForm?.setValue({
         byName: searchSut,
-        byMuscles: []
+        byMuscles: [],
+        byEquipment: []
       })
       component.searchByName()
 

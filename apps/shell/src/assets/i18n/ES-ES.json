@@ -320,6 +320,7 @@
                     "byNamePlaceholder": "Nombre de la plantilla...",
                     "byMuscleLabel": "Busca la plantilla de ejercicio por músculos",
                     "byMusclePlaceholder": "Músculos...",
+                    "byEquipment": "Equipamiento...",
                     "filteredByMuscles": "Filtrado por..."
                 },
                 "addExercise": {

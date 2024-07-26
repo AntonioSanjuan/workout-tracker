@@ -5,10 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddWorkoutTrainingExerciseForm, getAddWorkoutTrainingExerciseForm } from './add-workout-training-exercise-dialog.form';
 import { FormGroup } from '@angular/forms';
-import { ExerciseTemplate, MusclesInvolved, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
-import { ExerciseTemplateCardComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
+import { ExerciseEquipment, ExerciseTemplate, MusclesInvolved, TrainingExercise, TrainingExerciseSerie } from '@workout-tracker/models';
+import { EquipmentSelectorComponent, ExerciseTemplateCardComponent, MusclesGroupsSelectorComponent, MusclesSelectorComponent } from '@workout-tracker/components';
 import { addUserTrainingExerciseRequest } from '../state/workout-training.actions';
-import { getExerciseTemplatesListFiltered, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
+import { getExerciseTemplatesListFiltered, setExerciseTemplateListEquipmentQueryFilter, setExerciseTemplateListMuscleInvolvedQueryFilter } from '@workout-tracker/shared-store';
 import { selectWorkoutTraining } from '../state/workout-training.selectors';
 
 @Component({
@@ -18,6 +18,7 @@ import { selectWorkoutTraining } from '../state/workout-training.selectors';
     UiModule,
     TranslateModule,
     MusclesGroupsSelectorComponent,
+    EquipmentSelectorComponent,
     ExerciseTemplateCardComponent,
     MusclesSelectorComponent
   ],
@@ -54,6 +55,13 @@ export class AddWorkoutTrainingExerciseDialogComponent implements OnInit {
       muscleInvolved: muscleInvolved
     }))
   }
+
+  public filterByEquipment(equipment: ExerciseEquipment): void {
+    this.store.dispatch(setExerciseTemplateListEquipmentQueryFilter({
+      equipment: equipment
+    }))
+  }
+
 
   public setExerciseTemplate(exerciseTemplate: ExerciseTemplate) {
     this.form.setValue({

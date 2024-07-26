@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store"
-import { ExerciseTemplate, MusclesInvolved } from "@workout-tracker/models"
+import { ExerciseEquipment, ExerciseTemplate, MusclesInvolved } from "@workout-tracker/models"
 import firebase from 'firebase/compat/app';
 
 export const GET_USER_EXERCISE_TEMPLATES_LIST_REQUEST = 'GET USER EXERCISE TEMPLATES LIST'
@@ -35,8 +35,10 @@ export const addAnonymousUserExerciseTemplateListRequestError = createAction(ADD
 export const ADD_DEFAULT_EXERCISE_TEMPLATES_LIST = 'ADD DEFAULT EXERCISE TEMPLATES LIST'
 export const addDefaultExerciseTemplateList = createAction(ADD_DEFAULT_EXERCISE_TEMPLATES_LIST)
 
-export const SET_EXERCISE_TEMPLATE_LIST_MUSCLE_INVOLVED_QUERY_FILTER = 'SET EXERCISE TEMPLATE LIST TYPE QUERY FILTER'
+export const SET_EXERCISE_TEMPLATE_LIST_MUSCLE_INVOLVED_QUERY_FILTER = 'SET EXERCISE TEMPLATE LIST MUSCLE INVOLVED QUERY FILTER'
 export const setExerciseTemplateListMuscleInvolvedQueryFilter = createAction(SET_EXERCISE_TEMPLATE_LIST_MUSCLE_INVOLVED_QUERY_FILTER, props<{ muscleInvolved: MusclesInvolved}>())
+export const SET_EXERCISE_TEMPLATE_LIST_EQUIPMENT_QUERY_FILTER = 'SET EXERCISE TEMPLATE LIST EQUIPMENT QUERY FILTER'
+export const setExerciseTemplateListEquipmentQueryFilter = createAction(SET_EXERCISE_TEMPLATE_LIST_EQUIPMENT_QUERY_FILTER, props<{ equipment: ExerciseEquipment}>())
 export const SET_EXERCISE_TEMPLATE_LIST_NAME_QUERY_FILTER = 'SET EXERCISE TEMPLATE LIST NAME QUERY FILTER'
 export const setExerciseTemplateListNameQueryFilter = createAction(SET_EXERCISE_TEMPLATE_LIST_NAME_QUERY_FILTER, props<{ exerciseName: string}>())
 export const CLEAR_EXERCISE_TEMPLATE_LIST_QUERY_FILTER = 'CLEAR EXERCISE TEMPLATE LIST QUERY FILTER'
