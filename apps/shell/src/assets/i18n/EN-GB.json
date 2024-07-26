@@ -4,6 +4,11 @@
             "Strength": "Strength",
             "Cardiovascular": "Cardiovascular"
         },
+        "equipment": {
+            "None": "None",
+            "Dumbell": "Dumbell",
+            "Barbel": "Barbel"
+        },
         "muscleGroups": {
             "Legs": "Legs",
             "Arms": "Arms",
@@ -325,6 +330,7 @@
                                 "fields": {
                                     "name": "Name",
                                     "type": "Exercise type",
+                                    "equipment": "Equipment",
                                     "musclesInvolved": "Muscles involved"
                                 },
                                 "errors": {

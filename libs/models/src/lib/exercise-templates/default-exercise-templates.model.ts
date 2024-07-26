@@ -1,3 +1,4 @@
+import { ExerciseEquipment } from "./exercise-template-equipments.model";
 import { ExerciseType } from "./exercise-template-types.model";
 import { ExerciseTemplate } from "./exercise-template.model";
 import { MusclesInvolved } from "./muscles-involved.model";
@@ -5,319 +6,301 @@ import { MusclesInvolved } from "./muscles-involved.model";
 export const defaultBackExerciseTemplates = [
     {
         name: 'Pull-ups',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Lats],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.None
+    },
+    {
+        name: 'Machine Pull-ups',
+        musclesInvolved: [MusclesInvolved.Lats],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Barbell Rows',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Lower_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
     },
     {
         name: 'Dumbbell Rows',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
+    },
+    {
+        name: 'Machine Rows',
+        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
+    },
+    {
+        name: 'Machine Lower Back',
+        musclesInvolved: [MusclesInvolved.Lower_back],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Dumbbell Pullover',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Serratus_anterior, MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Lats],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Seated Cable Rows',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Lats],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Cable
     },
     {
         name: 'Deadlift',
-        musclesInvolved: [MusclesInvolved.Lower_back, MusclesInvolved.Hamstrings, MusclesInvolved.Glutes, MusclesInvolved.Traps, MusclesInvolved.Forearms, MusclesInvolved.Lats],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Inverted Rows',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Biceps],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Lower_back],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
     },
     {
         name: 'Lat Pulldown',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Superman',
-        musclesInvolved: [MusclesInvolved.Lower_back, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings],
+        musclesInvolved: [MusclesInvolved.Lats],
         type: ExerciseType.Strength
     },
 ] as ExerciseTemplate[]
 
 export const defaultLegExerciseTemplates = [
     {
-        name: 'Squats',
-        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings, MusclesInvolved.Lower_back, MusclesInvolved.Abdominals, MusclesInvolved.Calves],
-        type: ExerciseType.Strength
+        name: 'Barbell Squats',
+        musclesInvolved: [MusclesInvolved.Quadriceps],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
+
     },
     {
         name: 'Leg Press',
-        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings, MusclesInvolved.Calves],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Quadriceps],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Lunges',
-        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Abdominals],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Quadriceps],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.None
     },
     {
-        name: 'Romanian Deadlift',
-        musclesInvolved: [MusclesInvolved.Hamstrings, MusclesInvolved.Glutes, MusclesInvolved.Lower_back, MusclesInvolved.Calves, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
+        name: 'Dumbell Lunges',
+        musclesInvolved: [MusclesInvolved.Quadriceps],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
+    },
+    {
+        name: 'Deadlift',
+        musclesInvolved: [MusclesInvolved.Hamstrings, MusclesInvolved.Glutes],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
     },
     {
         name: 'Leg Extensions',
         musclesInvolved: [MusclesInvolved.Quadriceps],
-        type: ExerciseType.Strength
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Leg Curls',
         musclesInvolved: [MusclesInvolved.Hamstrings],
-        type: ExerciseType.Strength
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Bulgarian Split Squats',
-        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings, MusclesInvolved.Abdominals],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.None
     },
     {
-        name: 'Calf Raises',
+        name: 'Dumbell Bulgarian Split Squats',
+        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
+    },
+    {
+        name: 'Machine Calf Raises',
         musclesInvolved: [MusclesInvolved.Calves],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Step-ups',
-        musclesInvolved: [MusclesInvolved.Quadriceps, MusclesInvolved.Glutes, MusclesInvolved.Hamstrings, MusclesInvolved.Calves],
-        type: ExerciseType.Strength
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Machine Hip Adduction',
         musclesInvolved: [MusclesInvolved.Adductors],
-        type: ExerciseType.Strength
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
+    },
+    {
+        name: 'Machine Hip Abductors',
+        musclesInvolved: [MusclesInvolved.Abductors],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
 ] as ExerciseTemplate[]
 
 export const defaultChestExerciseTemplates = [
     {
-        name: 'Bench Press',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        name: 'Barbel Bench Press',
+        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
     },
     {
-        name: 'Incline Bench Press',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        name: 'Barbel Incline Bench Press',
+        musclesInvolved: [MusclesInvolved.Upper_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
     },
     {
-        name: 'Decline Bench Press',
-        musclesInvolved: [MusclesInvolved.Lower_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        name: 'Barbel Decline Bench Press',
+        musclesInvolved: [MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel
+    },
+    {
+        name: 'Dumbell Bench Press',
+        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
+    },
+    {
+        name: 'Dumbell Incline Bench Press',
+        musclesInvolved: [MusclesInvolved.Upper_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
+    },
+    {
+        name: 'Dumbell Decline Bench Press',
+        musclesInvolved: [MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Dumbbell Flyes',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Dips',
-        musclesInvolved: [MusclesInvolved.Lower_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Dumbbell Pullover',
-        musclesInvolved: [MusclesInvolved.Lats, MusclesInvolved.Serratus_anterior, MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Dumbbell Bench Press',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Push-ups',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid, MusclesInvolved.Abdominals],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.None
     },
     {
         name: 'Machine Chest Press',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest, MusclesInvolved.Triceps, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Cable Crossovers',
-        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lower_chest],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Cable
     },
 ] as ExerciseTemplate[]
 
 export const defaultShoulderExerciseTemplates = [
     {
-        name: 'Military Press',
-        musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Triceps, MusclesInvolved.Upper_back],
-        type: ExerciseType.Strength
+        name: 'Machine Shoulder Press',
+        musclesInvolved: [MusclesInvolved.Medial_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
     {
         name: 'Dumbbell Lateral Raises',
-        musclesInvolved: [MusclesInvolved.Medial_deltoid, MusclesInvolved.Traps],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Medial_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Cable Lateral Raises',
-        musclesInvolved: [MusclesInvolved.Medial_deltoid, MusclesInvolved.Traps],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Medial_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Cable
     },
     {
-        name: 'Front Raises',
-        musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Upper_chest],
-        type: ExerciseType.Strength
+        name: 'Dumbbell Front Raises',
+        musclesInvolved: [MusclesInvolved.Anterior_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
-        name: 'Rear Delt Flyes',
-        musclesInvolved: [MusclesInvolved.Posterior_deltoid, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Shrugs',
-        musclesInvolved: [MusclesInvolved.Traps, MusclesInvolved.Forearms],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Arnold Press',
-        musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Triceps, MusclesInvolved.Upper_back],
-        type: ExerciseType.Strength
+        name: 'Cable Face Pull',
+        musclesInvolved: [MusclesInvolved.Posterior_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Cable
     },
     {
         name: 'Dumbbell Shoulder Press',
-        musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Triceps, MusclesInvolved.Upper_back],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Face Pull',
-        musclesInvolved: [MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Posterior_deltoid, MusclesInvolved.Traps],
-        type: ExerciseType.Strength
+        musclesInvolved: [MusclesInvolved.Medial_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Dumbell
     },
     {
         name: 'Machine Shoulder Press',
-        musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Triceps],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Barbell Shoulder Press',
-        musclesInvolved: [MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid, MusclesInvolved.Triceps, MusclesInvolved.Upper_back],
-        type: ExerciseType.Strength
-    },
+        musclesInvolved: [MusclesInvolved.Medial_deltoid],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
+    }
 ] as ExerciseTemplate[]
 
 export const defaultCardioExerciseTemplates = [
     {
         name: 'Running',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Cycling',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Swimming',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest, MusclesInvolved.Lats, MusclesInvolved.Triceps, MusclesInvolved.Biceps],
-        type: ExerciseType.Cardiovascular
+        musclesInvolved: [MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes],
+        type: ExerciseType.Cardiovascular,
+        equipment: ExerciseEquipment.None
     },
     {
         name: 'Rowing',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Lats, MusclesInvolved.Upper_back, MusclesInvolved.Middle_back, MusclesInvolved.Lower_back, MusclesInvolved.Biceps, MusclesInvolved.Forearms],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Jump Rope',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Calves, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Glutes, MusclesInvolved.Forearms],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Elliptical',
         musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Stair Climbing',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Sprinting',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes],
-        type: ExerciseType.Cardiovascular
-    },
-    {
-        name: 'Burpees',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Quadriceps, MusclesInvolved.Hamstrings, MusclesInvolved.Calves, MusclesInvolved.Glutes, MusclesInvolved.Abdominals, MusclesInvolved.Upper_chest, MusclesInvolved.Middle_chest],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Battle Ropes',
-        musclesInvolved: [MusclesInvolved.Lungs, MusclesInvolved.Heart, MusclesInvolved.Anterior_deltoid, MusclesInvolved.Triceps, MusclesInvolved.Abdominals],
-        type: ExerciseType.Cardiovascular
-    },
+        type: ExerciseType.Cardiovascular,
+        equipment: ExerciseEquipment.Machine
+    }
 ] as ExerciseTemplate[]
 
 export const defaultCoreExerciseTemplates = [
     {
+        name: 'Ab Wheel Rollout',
+        musclesInvolved: [MusclesInvolved.Abdominals],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.AbWWheel
+    },
+    {
+        name: 'Ab Scissors',
+        musclesInvolved: [MusclesInvolved.Abdominals],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.None
+    },
+    {
         name: 'Plank',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Lower_back, MusclesInvolved.Glutes],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Russian Twists',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Obliques],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Hanging Leg Raises',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Quadriceps],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Bicycle Crunches',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Obliques],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Mountain Climbers',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Quadriceps, MusclesInvolved.Anterior_deltoid, MusclesInvolved.Medial_deltoid],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'V-Ups',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Quadriceps],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Side Plank',
-        musclesInvolved: [MusclesInvolved.Obliques, MusclesInvolved.Abdominals],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Ab Wheel Rollouts',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Lower_back, MusclesInvolved.Anterior_deltoid],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Dead Bug',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Quadriceps],
-        type: ExerciseType.Strength
-    },
-    {
-        name: 'Flutter Kicks',
-        musclesInvolved: [MusclesInvolved.Abdominals, MusclesInvolved.Quadriceps],
-        type: ExerciseType.Strength
-    },
+        musclesInvolved: [MusclesInvolved.Abdominals],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.None
+    }
 ] as ExerciseTemplate[]
 
 export const defaultExerciseTemplates = [

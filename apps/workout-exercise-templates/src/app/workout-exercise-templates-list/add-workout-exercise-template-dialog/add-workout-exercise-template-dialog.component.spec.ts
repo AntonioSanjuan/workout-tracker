@@ -6,7 +6,7 @@ import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ExerciseType, MusclesInvolved } from '@workout-tracker/models';
+import { ExerciseEquipment, ExerciseType, MusclesInvolved } from '@workout-tracker/models';
 import { addUserExerciseTemplateListRequest } from '@workout-tracker/shared-store';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutExerciseTemplatesAppStateMock } from '../../+state/test/workoutExercisesStateMock/workoutExerciseTemplatesStateMock.mock';
@@ -52,7 +52,8 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
   describe('Integration tests', () => {
     describe('createExercise', () => {
       const inputNameSut = 'name test'
-      const inputUnitSut = ExerciseType.Cardiovascular
+      const inputTypeSut = ExerciseType.Cardiovascular
+      const inputEquipmentSut = ExerciseEquipment.Barbel
       const inputMusclesInvolved = [MusclesInvolved.Medial_deltoid, MusclesInvolved.Traps]
       const inputObservations = null
       describe('if form its valid', () => {
@@ -60,7 +61,8 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
         beforeEach(() => {
           component.form.setValue({
             name: inputNameSut,
-            type: inputUnitSut,
+            type: inputTypeSut,
+            equipment: inputEquipmentSut,
             musclesInvolved: inputMusclesInvolved,
             observations: inputObservations
           })
@@ -79,7 +81,8 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
 
           expect(dispatchSpy).toHaveBeenCalledWith(addUserExerciseTemplateListRequest({exercise: {
             name:inputNameSut,
-            type: inputUnitSut,
+            type: inputTypeSut,
+            equipment: inputEquipmentSut,
             musclesInvolved: inputMusclesInvolved,
             observations: inputObservations,
             creationDate: today
@@ -92,6 +95,7 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
             component.form.setValue({
               name: null,
               type: null,
+              equipment: null,
               musclesInvolved: null,
               observations: null
             })
@@ -109,6 +113,7 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
             component.form.setValue({
               name: null,
               type: ExerciseType.Cardiovascular,
+              equipment: ExerciseEquipment.Dumbell,
               musclesInvolved: [MusclesInvolved.Adductors],
               observations: ''
             })
@@ -127,6 +132,26 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
             component.form.setValue({
               name: '',
               type: null,
+              equipment: ExerciseEquipment.Dumbell,
+              musclesInvolved: [MusclesInvolved.Adductors],
+              observations: ''
+            })
+          })
+  
+          it('should not dispatch addUserExercisesRequest', () => {
+            const dispatchSpy = jest.spyOn(store, 'dispatch')
+            component.createExerciseTemplate()
+  
+            expect(dispatchSpy).not.toHaveBeenCalled()
+          });
+        })
+
+        describe('equipment its null', () => {
+          beforeEach(() => {
+            component.form.setValue({
+              name: '',
+              type: ExerciseType.Cardiovascular,
+              equipment: null,
               musclesInvolved: [MusclesInvolved.Adductors],
               observations: ''
             })
@@ -145,6 +170,7 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
             component.form.setValue({
               name: 'testName',
               type: ExerciseType.Cardiovascular,
+              equipment: ExerciseEquipment.Dumbell,
               musclesInvolved: null,
               observations:''
             })
@@ -163,6 +189,7 @@ describe('AddWorkoutExerciseTemplateDialogComponent', () => {
             component.form.setValue({
               name: 'testName',
               type: ExerciseType.Strength,
+              equipment: ExerciseEquipment.Dumbell,
               musclesInvolved: [],
               observations: null
             })

@@ -1,4 +1,4 @@
-import { ExerciseType, MusclesInvolved } from "../../exercise-templates";
+import { ExerciseEquipment, ExerciseType, MusclesInvolved } from "../../exercise-templates";
 import { Timestamp } from 'firebase/firestore';
 
 export interface ExerciseTemplateDto {
@@ -7,6 +7,7 @@ export interface ExerciseTemplateDto {
     image?: string,
     observations?: string
     type: ExerciseType
+    equipment: ExerciseEquipment
 
     creationDate: Timestamp
     lastModification?: Timestamp

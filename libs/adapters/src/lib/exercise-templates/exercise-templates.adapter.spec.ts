@@ -1,8 +1,8 @@
-import { ExerciseTemplate, ExerciseTemplateDto, ExerciseType, MusclesInvolved } from "@workout-tracker/models";
+import { ExerciseEquipment, ExerciseTemplate, ExerciseTemplateDto, ExerciseType, MusclesInvolved } from "@workout-tracker/models";
 import { Timestamp } from 'firebase/firestore';
 import { ExerciseTemplateAdapter } from "./exercise-templates.adapter";
 
-describe('ExerciseTemplateAdapter', () => {    
+describe('ExerciseTemplateAdapter', () => {
   describe('toDto', () => {
     const creationDateSut: Date = new Date()
     const inputExerciseTemplateCreationDateSut: Timestamp = Timestamp.fromDate(creationDateSut)
@@ -11,9 +11,10 @@ describe('ExerciseTemplateAdapter', () => {
       const inputExerciseTemplateIdSut: string = 'exerciseTemplateIdTest'
       const inputExerciseTemplateSut: ExerciseTemplateDto = {
         name: 'exerciseTemplateNameTest',
-        musclesInvolved: [ MusclesInvolved.Abductors, MusclesInvolved.Biceps ],
+        musclesInvolved: [MusclesInvolved.Abductors, MusclesInvolved.Biceps],
         image: undefined,
         type: ExerciseType.Cardiovascular,
+        equipment: ExerciseEquipment.Barbel,
         creationDate: inputExerciseTemplateCreationDateSut,
         observations: 'observations',
         lastModification: undefined
@@ -26,9 +27,10 @@ describe('ExerciseTemplateAdapter', () => {
       expect(exerciseTemplateDto.musclesInvolved).toEqual(inputExerciseTemplateSut.musclesInvolved)
       expect(exerciseTemplateDto.image).toEqual(inputExerciseTemplateSut.image)
       expect(exerciseTemplateDto.type).toEqual(inputExerciseTemplateSut.type)
+      expect(exerciseTemplateDto.equipment).toEqual(inputExerciseTemplateSut.equipment)
       expect(exerciseTemplateDto.observations).toEqual(inputExerciseTemplateSut.observations)
-      expect(exerciseTemplateDto.creationDate).toEqual(creationDateSut)     
-      expect(exerciseTemplateDto.lastModification).toEqual(inputExerciseTemplateSut.lastModification)     
+      expect(exerciseTemplateDto.creationDate).toEqual(creationDateSut)
+      expect(exerciseTemplateDto.lastModification).toEqual(inputExerciseTemplateSut.lastModification)
     });
 
     it('should convert modified ExerciseTemplate model into ExerciseTemplateDto model', () => {
@@ -38,9 +40,10 @@ describe('ExerciseTemplateAdapter', () => {
       const inputExerciseTemplateIdSut: string = 'exerciseTemplateIdTest'
       const inputExerciseTemplateSut: ExerciseTemplateDto = {
         name: 'exerciseTemplateNameTest',
-        musclesInvolved: [ MusclesInvolved.Abductors, MusclesInvolved.Biceps ],
+        musclesInvolved: [MusclesInvolved.Abductors, MusclesInvolved.Biceps],
         image: undefined,
         type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel,
         creationDate: inputExerciseTemplateCreationDateSut,
         lastModification: inputExerciseTemplateLastModificationSut
       }
@@ -52,8 +55,9 @@ describe('ExerciseTemplateAdapter', () => {
       expect(exerciseTemplateDto.musclesInvolved).toEqual(inputExerciseTemplateSut.musclesInvolved)
       expect(exerciseTemplateDto.image).toEqual(inputExerciseTemplateSut.image)
       expect(exerciseTemplateDto.type).toEqual(inputExerciseTemplateSut.type)
-      expect(exerciseTemplateDto.creationDate).toEqual(creationDateSut)     
-      expect(exerciseTemplateDto.lastModification).toEqual(lastModificationDateSut)     
+      expect(exerciseTemplateDto.equipment).toEqual(inputExerciseTemplateSut.equipment)
+      expect(exerciseTemplateDto.creationDate).toEqual(creationDateSut)
+      expect(exerciseTemplateDto.lastModification).toEqual(lastModificationDateSut)
     });
   })
 
@@ -66,6 +70,7 @@ describe('ExerciseTemplateAdapter', () => {
         name: 'exerciseTemplateNameTest',
         musclesInvolved: [MusclesInvolved.Abdominals],
         type: ExerciseType.Cardiovascular,
+        equipment: ExerciseEquipment.Barbel,
         image: undefined,
         creationDate: creationDateSut,
         observations: 'observations2',
@@ -78,20 +83,22 @@ describe('ExerciseTemplateAdapter', () => {
       expect(exerciseTemplateState.musclesInvolved).toEqual(inputExerciseTemplateSut.musclesInvolved)
       expect(exerciseTemplateState.image).toEqual(inputExerciseTemplateSut.image)
       expect(exerciseTemplateState.type).toEqual(inputExerciseTemplateSut.type)
+      expect(exerciseTemplateState.equipment).toEqual(inputExerciseTemplateSut.equipment)
       expect(exerciseTemplateState.observations).toEqual(inputExerciseTemplateSut.observations)
-      expect(exerciseTemplateState.creationDate).toEqual(inputExerciseTemplateCreationDateSut)  
-      expect(exerciseTemplateState.lastModification).toEqual(inputExerciseTemplateSut.lastModification)    
+      expect(exerciseTemplateState.creationDate).toEqual(inputExerciseTemplateCreationDateSut)
+      expect(exerciseTemplateState.lastModification).toEqual(inputExerciseTemplateSut.lastModification)
     });
 
     it('should convert modified ExerciseTemplateDto model into ExerciseTemplate model', () => {
       const modifiedDateSut: Date = new Date()
       const inputExerciseTemplateModifiedDateSut: Timestamp = Timestamp.fromDate(modifiedDateSut)
-      
+
       const inputExerciseTemplateSut: ExerciseTemplate = {
         id: 'exerciseTemplateIdTest',
         name: 'exerciseTemplateNameTest',
         musclesInvolved: [MusclesInvolved.Abdominals],
         type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Barbel,
         image: undefined,
         creationDate: creationDateSut,
         lastModification: modifiedDateSut
@@ -103,8 +110,10 @@ describe('ExerciseTemplateAdapter', () => {
       expect(exerciseTemplateState.musclesInvolved).toEqual(inputExerciseTemplateSut.musclesInvolved)
       expect(exerciseTemplateState.image).toEqual(inputExerciseTemplateSut.image)
       expect(exerciseTemplateState.type).toEqual(inputExerciseTemplateSut.type)
-      expect(exerciseTemplateState.creationDate).toEqual(inputExerciseTemplateCreationDateSut)  
-      expect(exerciseTemplateState.lastModification).toEqual(inputExerciseTemplateModifiedDateSut)    
+      expect(exerciseTemplateState.equipment).toEqual(inputExerciseTemplateSut.equipment)
+
+      expect(exerciseTemplateState.creationDate).toEqual(inputExerciseTemplateCreationDateSut)
+      expect(exerciseTemplateState.lastModification).toEqual(inputExerciseTemplateModifiedDateSut)
     });
   })
 });

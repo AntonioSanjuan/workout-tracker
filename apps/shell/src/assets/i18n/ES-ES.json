@@ -4,6 +4,11 @@
             "Strength": "Fuerza",
             "Cardiovascular": "Cardiovascular"
         },
+        "equipment": {
+            "None": "Ninguno",
+            "Dumbell": "Mancuerna",
+            "Barbel": "Barra"
+        },
         "muscleGroups": {
             "Legs": "Piernas",
             "Arms": "Brazos",
@@ -327,6 +332,7 @@
                                 "fields": {
                                     "name": "Nombre",
                                     "type": "Tipo de ejercicio",
+                                    "equipment": "Equipamiento",
                                     "musclesInvolved": "Músculos involucrados"
                                 },
                                 "errors": {
