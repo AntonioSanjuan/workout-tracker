@@ -7,7 +7,10 @@
         "equipment": {
             "None": "Ninguno",
             "Dumbell": "Mancuerna",
-            "Barbel": "Barra"
+            "Barbel": "Barra",
+            "Cable": "Cable",
+            "Machine": "Máquina",
+            "AbWWheel": "Rueda abdominal"
         },
         "muscleGroups": {
             "Legs": "Piernas",
