@@ -1,0 +1,15 @@
+<div class="ConfirmationDialog_MainContainer">
+    <h2 mat-dialog-title>{{ data.title }}</h2>
+    <mat-dialog-content class="mat-typography" *ngIf="data.content">
+        <p>{{ data.content }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close (click)="cancel()">
+            {{ 'common.actions.cancel' | translate }}
+        </button>
+        <button mat-button [mat-dialog-close]="false" (click)="confirm()">
+            {{ 'common.actions.copy' | translate }}
+        </button>
+    </mat-dialog-actions>
+
+</div>

@@ -1,0 +1,22 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-confirmation-dialog {
+    .ConfirmationDialog_MainContainer {
+        mat-dialog-content {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+}
+
+@media (max-width: 960px) {
+    workout-tracker-confirmation-dialog {
+        .mat-vertical-content {
+            .ConfirmationDialog_MainContainer {
+                mat-dialog-content {
+                }
+            }
+        }
+    }
+}
