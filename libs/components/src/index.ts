@@ -1,4 +1,5 @@
 export * from './lib/muscle-pill/muscle-pill.component';
+export * from './lib/confirmation-dialog/confirmation-dialog.component';
 export * from './lib/muscles-selector/muscles-selector.component';
 export * from './lib/equipment-selector/equipment-selector.component';
 export * from './lib/muscle-groups-selector/muscle-groups-selector.component';

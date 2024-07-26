@@ -1,17 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UiModule } from '@workout-tracker/ui';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DialogService } from '@workout-tracker/services/dialog';
 import { LetDirective } from '@ngrx/component';
 import { NgFor } from '@angular/common';
 import { AppRoutes, BannerType, Training, TrainingExercise } from '@workout-tracker/models';
 import { selectWorkoutTraining } from './state/workout-training.selectors';
-import { BannerComponent, DividerComponent, MusclePillComponent, TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { BannerComponent, ConfirmationDialogComponent, DividerComponent, MusclePillComponent, TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
-import { getExerciseTemplatesList } from '@workout-tracker/shared-store';
-import { CopyWorkoutTrainingDialogComponent } from './copy-workout-training-dialog/copy-workout-training-dialog.component';
+import { copyUserTrainingListRequest, getExerciseTemplatesList } from '@workout-tracker/shared-store';
 
 @Component({
   selector: 'workout-tracker-training',
@@ -36,9 +35,10 @@ export class WorkoutTrainingComponent {
   private store: Store = inject(Store)
   private router: Router = inject(Router)
   private dialogService = inject(DialogService)
+  private translateService = inject(TranslateService)
 
   public training$ = this.store.select(selectWorkoutTraining)
-  public exerciseTemplates$ =  this.store.select(getExerciseTemplatesList)
+  public exerciseTemplates$ = this.store.select(getExerciseTemplatesList)
 
   public appRoutes = AppRoutes
   public bannerType = BannerType
@@ -52,8 +52,19 @@ export class WorkoutTrainingComponent {
     window.print()
   }
 
-  public copyTraining() {
-    this.dialogService.showDialog(CopyWorkoutTrainingDialogComponent, true)
+  public copyTraining(training: Training | undefined) {
+    if (training) {
+      this.dialogService.showDialog(ConfirmationDialogComponent, true, {
+        data: {
+          title: this.translateService.instant('apps.workout-trainings.training.copyTraining.title'),
+          content: this.translateService.instant('apps.workout-trainings.training.copyTraining.content')
+        }
+      }).subscribe((confirm) => {
+        if (confirm) {
+          this.store.dispatch(copyUserTrainingListRequest({ training: training }))
+        }
+      })
+    }
   }
 
   public newTrainingExercise() {

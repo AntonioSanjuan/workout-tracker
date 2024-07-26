@@ -5,21 +5,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DialogService, LibsServicesDialogModule } from '@workout-tracker/services/dialog';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { WorkoutTrainingComponent } from './workout-training.component';
-import { TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
+import { ConfirmationDialogComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 import { selectWorkoutTraining } from './state/workout-training.selectors';
-import { ExerciseTemplateQuery, Training, TrainingExercise } from '@workout-tracker/models';
+import { Training, TrainingExercise } from '@workout-tracker/models';
 import { appRoutes } from '../app.routes';
 import { DatePipe } from '@angular/common';
 import { LocalizedDatePipe } from '@workout-tracker/ui';
-import { ExerciseTemplatesListState, getExerciseTemplatesListState } from '@workout-tracker/shared-store';
-import { CopyWorkoutTrainingDialogComponent } from './copy-workout-training-dialog/copy-workout-training-dialog.component';
+import { copyUserTrainingListRequest } from '@workout-tracker/shared-store';
 
 describe('WorkoutTrainingComponent', () => {
   let component: WorkoutTrainingComponent;
@@ -102,13 +101,40 @@ describe('WorkoutTrainingComponent', () => {
       expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutTrainingExerciseDialogComponent, false)
     });
 
-    it('copyTraining should show dialog ', () => {
-      const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+  
 
-      component.copyTraining()
-      expect(showDialogSpy).toHaveBeenCalledWith(CopyWorkoutTrainingDialogComponent, true)
-    });
+    describe('copyTraining', () => {
+      it('copyTraining should show confirmation dialog ', () => {
+        const trainingSut = {id: 'trainingId test'} as Training
+        const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+  
+        component.copyTraining(trainingSut)
+        expect(showDialogSpy).toHaveBeenCalledWith(ConfirmationDialogComponent, true, expect.anything())
+      });
 
+      it('if copy training is confirmed', () => {
+        const trainingSut = {id: 'trainingId test'} as Training
+
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+        jest.spyOn(dialogService, 'showDialog').mockReturnValue(of(true))
+  
+        component.copyTraining(trainingSut)
+        
+        expect(dispatchSpy).toHaveBeenCalledWith(copyUserTrainingListRequest({ training: trainingSut}))
+      });
+
+      
+      it('if copy training is canceled', () => {
+        const trainingSut = {id: 'trainingId test'} as Training
+
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+        jest.spyOn(dialogService, 'showDialog').mockReturnValue(of(false))
+  
+        component.copyTraining(trainingSut)
+        
+        expect(dispatchSpy).not.toHaveBeenCalledWith(copyUserTrainingListRequest({ training: trainingSut}))
+      });
+    })
     it('printTraining should request window.print', () => {
       const printSpy = jest.spyOn(window, 'print')
 
