@@ -61,7 +61,8 @@ export const defaultBackExerciseTemplates = [
     {
         name: 'Lat Pulldown',
         musclesInvolved: [MusclesInvolved.Lats],
-        type: ExerciseType.Strength
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
     },
 ] as ExerciseTemplate[]
 
