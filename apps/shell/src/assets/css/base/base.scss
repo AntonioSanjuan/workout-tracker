@@ -11,6 +11,7 @@ body {
 
 .dialogClass {
     min-width: 350px !important;
+    max-width: 400px !important;
     width: 50% !important;
 }
 
@@ -22,6 +23,7 @@ body {
 @media (max-width: 960px) {
     .dialogClass {
         min-width: inherit;
+        max-width: none;
         width: 90%;
     }
 }
