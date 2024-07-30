@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { AppRoutes, ExerciseTemplate } from '@workout-tracker/models';
 import { appRoutes } from '../app.routes';
 import { addDefaultExerciseTemplateList } from '@workout-tracker/shared-store';
+import { ConfirmationDialogComponent } from '@workout-tracker/components';
 
 describe('WorkoutExerciseTemplatesListComponent', () => {
   let component: WorkoutExerciseTemplatesListComponent;
@@ -72,12 +73,33 @@ describe('WorkoutExerciseTemplatesListComponent', () => {
       expect(showDialogSpy).toHaveBeenCalledWith(AddWorkoutExerciseTemplateDialogComponent, false)
     });
 
-    it('addDefaultExerciseTemplates should dispatch addDefaultExerciseTemplateList ', () => {
-      const dispatchSpy = jest.spyOn(store, 'dispatch')
+    describe('addDefaultExerciseTemplates', () => {
+      it('addDefaultExerciseTemplates should show confirmation dialog ', () => {
+        const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+  
+        component.addDefaultExerciseTemplates()
+        expect(showDialogSpy).toHaveBeenCalledWith(ConfirmationDialogComponent, true, expect.anything())
+      });
 
-      component.addDefaultExerciseTemplates()
-      expect(dispatchSpy).toHaveBeenCalledWith(addDefaultExerciseTemplateList())
-    });
+      it('if addDefaultExerciseTemplates is confirmed', () => {
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+        jest.spyOn(dialogService, 'showDialog').mockReturnValue(of(true))
+  
+        component.addDefaultExerciseTemplates()
+        
+        expect(dispatchSpy).toHaveBeenCalledWith(addDefaultExerciseTemplateList())
+      });
+
+      
+      it('if addDefaultExerciseTemplates is canceled', () => {
+        const dispatchSpy = jest.spyOn(store, 'dispatch')
+        jest.spyOn(dialogService, 'showDialog').mockReturnValue(of(false))
+  
+        component.addDefaultExerciseTemplates()
+        
+        expect(dispatchSpy).not.toHaveBeenCalledWith(addDefaultExerciseTemplateList())
+      });
+    })
 
     it('openExerciseDetails should navigate to exercise details ', () => {
       const exerciseSut = { id: 'exerciseId'}  as ExerciseTemplate

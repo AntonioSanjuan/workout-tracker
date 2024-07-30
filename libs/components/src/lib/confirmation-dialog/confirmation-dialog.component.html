@@ -8,7 +8,7 @@
             {{ 'common.actions.cancel' | translate }}
         </button>
         <button mat-button [mat-dialog-close]="false" (click)="confirm()">
-            {{ 'common.actions.copy' | translate }}
+            {{ data.confirmButtonText ?? 'common.actions.accept' | translate }}
         </button>
     </mat-dialog-actions>
 

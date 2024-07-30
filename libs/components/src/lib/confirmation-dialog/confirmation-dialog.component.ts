@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export interface ConfirmationDialogData {
   title: string
   content?: string
+  confirmButtonText?: string
 }
 @Component({
   selector: 'workout-tracker-confirmation-dialog',

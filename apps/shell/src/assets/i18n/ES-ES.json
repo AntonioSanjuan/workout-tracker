@@ -52,6 +52,7 @@
         "actions": {
             "goBack": "Volver",
             "cancel": "Cancelar",
+            "accept": "Aceptar",
             "create": "Crear",
             "copy": "Copiar",
             "next": "Siguiente",
@@ -371,7 +372,11 @@
                     "content": "Puedes añadir las plantillas por defecto a tu lista de plantillas de ejercicios"
                 },
                 "actions": {
-                    "addDefaultExerciseTemplates": "Añadir"
+                    "addDefaultExerciseTemplates": "Añadir",
+                    "confirmation": {
+                        "title": "¿Estas seguro?",
+                        "content": "Se cargaran plantillas por defecto"
+                    }
                 }
             },
             "details": {

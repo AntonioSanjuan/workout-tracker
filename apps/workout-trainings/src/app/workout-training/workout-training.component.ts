@@ -25,6 +25,7 @@ import { copyUserTrainingListRequest, getExerciseTemplatesList } from '@workout-
     DividerComponent,
     TrainingInfoComponent,
     TrainingExerciseCardComponent,
+    ConfirmationDialogComponent,
     MusclePillComponent,
     BannerComponent,
   ],
@@ -57,7 +58,8 @@ export class WorkoutTrainingComponent {
       this.dialogService.showDialog(ConfirmationDialogComponent, true, {
         data: {
           title: this.translateService.instant('apps.workout-trainings.training.copyTraining.title'),
-          content: this.translateService.instant('apps.workout-trainings.training.copyTraining.content')
+          content: this.translateService.instant('apps.workout-trainings.training.copyTraining.content'),
+          confirmButtonText: this.translateService.instant('common.actions.copy'),
         }
       }).subscribe((confirm) => {
         if (confirm) {

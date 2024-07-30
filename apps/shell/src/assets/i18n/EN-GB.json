@@ -52,6 +52,7 @@
         "actions": {
             "goBack": "Go Back",
             "cancel": "Cancel",
+            "accept": "Accept",
             "create": "Create",
             "copy": "Copy",
             "next": "Next",
@@ -373,7 +374,11 @@
                     "content": "You can add the default templates to your list of exercise templates."
                 },
                 "actions": {
-                    "addDefaultExerciseTemplates": "Add"
+                    "addDefaultExerciseTemplates": "Add",
+                    "confirmation": {
+                        "title": "Are you sure?",
+                        "content": "Default templates will be loaded"
+                    }
                 }
             },
             "details": {
