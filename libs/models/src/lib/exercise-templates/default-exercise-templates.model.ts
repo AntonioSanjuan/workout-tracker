@@ -140,6 +140,12 @@ export const defaultLegExerciseTemplates = [
         type: ExerciseType.Strength,
         equipment: ExerciseEquipment.Machine
     },
+    {
+        name: 'Machine Hip thrust',
+        musclesInvolved: [MusclesInvolved.Glutes],
+        type: ExerciseType.Strength,
+        equipment: ExerciseEquipment.Machine
+    },
 ] as ExerciseTemplate[]
 
 export const defaultChestExerciseTemplates = [
