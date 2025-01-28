@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AddWorkoutTrainingDialogComponent } from './add-workout-training-dialog.component';
-import { provideMockStore } from '@ngrx/store/testing';
+import { EditWorkoutTrainingDialogComponent } from './edit-workout-training-dialog.component';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Training } from '@workout-tracker/models';
+import { MuscleGroups, Training } from '@workout-tracker/models';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
-import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { updateUserTrainingListRequest } from '@workout-tracker/shared-store';
 import { WorkoutTrainingFormComponent } from '../shared/workout-training-form/workout-training-form.component';
-
-describe('AddWorkoutTrainingDialogComponent', () => {
-  let component: AddWorkoutTrainingDialogComponent;
-  let fixture: ComponentFixture<AddWorkoutTrainingDialogComponent>;
-  let store: Store;
+import { selectWorkoutTraining } from '../../workout-training/state/workout-training.selectors';
+describe('EditWorkoutTrainingDialogComponent', () => {
+  let component: EditWorkoutTrainingDialogComponent;
+  let fixture: ComponentFixture<EditWorkoutTrainingDialogComponent>;
+  let store: MockStore;
 
   const closeMock = jest.fn()
   beforeEach(async () => {
@@ -31,7 +31,7 @@ describe('AddWorkoutTrainingDialogComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
-        AddWorkoutTrainingDialogComponent,
+        EditWorkoutTrainingDialogComponent,
         MusclesSelectorComponent,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
@@ -39,8 +39,8 @@ describe('AddWorkoutTrainingDialogComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddWorkoutTrainingDialogComponent);
-    store = TestBed.inject(Store)
+    fixture = TestBed.createComponent(EditWorkoutTrainingDialogComponent);
+    store = TestBed.inject(MockStore)
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -94,13 +94,19 @@ describe('AddWorkoutTrainingDialogComponent', () => {
   })
 
   describe('Integration tests', () => {
-    describe('createTraining', () => {
+    describe('editTraining', () => {
       const today = new Date()
+      const selectedWorkoutTraining = {
+        muscleGroups: [MuscleGroups.Back],
+        creationDate: new Date()
+      } as Training
 
       beforeEach(() => {
         jest.useFakeTimers();
         jest.setSystemTime(today);
         closeMock.mockRestore();
+
+        store.overrideSelector(selectWorkoutTraining, selectedWorkoutTraining)
       })
 
       afterEach(() => {
@@ -108,7 +114,9 @@ describe('AddWorkoutTrainingDialogComponent', () => {
       })
 
       describe('if workoutTrainingFormComponent form its valid', () => {
-        const trainingFormValue = {} as Training
+        const trainingFormValue = {
+          muscleGroups: [...selectedWorkoutTraining.muscleGroups, MuscleGroups.Arms]
+        } as Training
 
         beforeEach(() => {
           jest.spyOn(component.workoutTrainingFormComponent as WorkoutTrainingFormComponent, 'isFormValid')
@@ -117,21 +125,21 @@ describe('AddWorkoutTrainingDialogComponent', () => {
             .mockReturnValue(trainingFormValue)
         })
 
-        it('should dispatch addUserTrainingListRequest with updated creationDate prop', () => {
+        it('should dispatch updateUserTrainingListRequest with updated training prop', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
 
-          component.createTraining()
+          component.editTraining(selectedWorkoutTraining)
 
-          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingListRequest({
+          expect(dispatchSpy).toHaveBeenCalledWith(updateUserTrainingListRequest({
             training: {
-              ...trainingFormValue,
-              creationDate: today
+              ...selectedWorkoutTraining,
+              ...trainingFormValue
             }
           }))
         })
 
         it('should request to close the dialog', () => {
-          component.createTraining()
+          component.editTraining(selectedWorkoutTraining)
 
           expect(closeMock).toHaveBeenCalled()
         })
@@ -143,16 +151,16 @@ describe('AddWorkoutTrainingDialogComponent', () => {
             .mockReturnValue(false)
         })
 
-        it('should not dispatch addUserTrainingListRequest with updated creationDate prop', () => {
+        it('should not dispatch updateUserTrainingListRequest with updated creationDate prop', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
 
-          component.createTraining()
+          component.editTraining(selectedWorkoutTraining)
 
           expect(dispatchSpy).not.toHaveBeenCalled()
         })
 
         it('should not request to close the dialog', () => {
-          component.createTraining()
+          component.editTraining(selectedWorkoutTraining)
 
           expect(closeMock).not.toHaveBeenCalled()
         })

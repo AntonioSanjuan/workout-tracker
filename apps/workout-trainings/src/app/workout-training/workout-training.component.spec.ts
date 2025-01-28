@@ -19,6 +19,7 @@ import { appRoutes } from '../app.routes';
 import { DatePipe } from '@angular/common';
 import { LocalizedDatePipe } from '@workout-tracker/ui';
 import { copyUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { EditWorkoutTrainingDialogComponent } from '../workout-trainings-list/edit-workout-training-dialog/edit-workout-training-dialog.component';
 
 describe('WorkoutTrainingComponent', () => {
   let component: WorkoutTrainingComponent;
@@ -92,6 +93,13 @@ describe('WorkoutTrainingComponent', () => {
 
       component.openTrainingExercise(trainingSut, trainingExerciseSut)
       expect(navigateSpy).toHaveBeenCalledWith([`/trainings/${trainingSut.id}/exercise/${trainingExerciseSut.id}`])
+    });
+
+    it('editTraining should show dialog ', () => {
+      const showDialogSpy = jest.spyOn(dialogService, 'showDialog')
+
+      component.editTraining()
+      expect(showDialogSpy).toHaveBeenCalledWith(EditWorkoutTrainingDialogComponent, true)
     });
 
     it('newTrainingExercise should show dialog ', () => {

@@ -1,0 +1,7 @@
+@use "css/main.scss" as shellStyles;
+
+workout-tracker-edit-training-dialog {}
+
+@media (max-width: 960px) {
+    workout-tracker-edit-training-dialog {}
+}

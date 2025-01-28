@@ -11,6 +11,7 @@ import { selectWorkoutTraining } from './state/workout-training.selectors';
 import { BannerComponent, ConfirmationDialogComponent, DividerComponent, MusclePillComponent, TrainingExerciseCardComponent, TrainingInfoComponent, ViewHeaderComponent } from '@workout-tracker/components';
 import { AddWorkoutTrainingExerciseDialogComponent } from './add-workout-training-exercise-dialog/add-workout-training-exercise-dialog.component';
 import { copyUserTrainingListRequest, getExerciseTemplatesList } from '@workout-tracker/shared-store';
+import { EditWorkoutTrainingDialogComponent } from '../workout-trainings-list/edit-workout-training-dialog/edit-workout-training-dialog.component';
 
 @Component({
   selector: 'workout-tracker-training',
@@ -46,7 +47,7 @@ export class WorkoutTrainingComponent {
 
 
   public editTraining() {
-    // this.dialogService.showDialog(EditWorkoutExerciseDetailsDialogComponent, true)
+    this.dialogService.showDialog(EditWorkoutTrainingDialogComponent, true)
   }
 
   public printTraining() {
