@@ -6,20 +6,22 @@ import { userStateMock } from '@workout-tracker/test'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MuscleGroups } from '@workout-tracker/models';
-import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { Training } from '@workout-tracker/models';
 import { MusclesSelectorComponent } from '@workout-tracker/components';
 import { workoutTrainingsAppStateMock } from '../../+state/test/workoutTrainingsStateMock/workoutTrainingsStateMock.mock';
+import { addUserTrainingListRequest } from '@workout-tracker/shared-store';
+import { WorkoutTrainingFormComponent } from '../shared/workout-training-form/workout-training-form.component';
 
 describe('AddWorkoutTrainingDialogComponent', () => {
   let component: AddWorkoutTrainingDialogComponent;
   let fixture: ComponentFixture<AddWorkoutTrainingDialogComponent>;
   let store: Store;
 
+  const closeMock = jest.fn()
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        { provide: MatDialogRef, useValue: { close: jest.fn()}},
+        { provide: MatDialogRef, useValue: { close: closeMock } },
         provideMockStore({
           initialState: {
             ...workoutTrainingsAppStateMock,
@@ -47,86 +49,112 @@ describe('AddWorkoutTrainingDialogComponent', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
     });
+
+    describe('getStepperIndex', () => {
+      describe('if workoutTrainingFormComponent exists', () => {
+        const stepperIndex = 10;
+        beforeEach(() => {
+          jest.spyOn(component.workoutTrainingFormComponent as WorkoutTrainingFormComponent, 'getStepperIndex')
+            .mockReturnValue(stepperIndex)
+        })
+        it('should return getStepperIndex', () => {
+          expect(component.getStepperIndex()).toEqual(stepperIndex)
+        })
+      })
+
+
+      describe('if workoutTrainingFormComponent doesnt exists', () => {
+        it('should return 0', () => {
+          expect(component.getStepperIndex()).toEqual(0)
+        })
+      })
+    })
+
+    describe('nextStep', () => {
+      let nextStepSpy: any;
+      beforeEach(() => {
+        nextStepSpy = jest.spyOn(component.workoutTrainingFormComponent as WorkoutTrainingFormComponent, 'nextStep')
+          .mockReturnValue()
+      })
+      describe('if workoutTrainingFormComponent exists', () => {
+        it('should request getStepperIndex', () => {
+          component.nextStep()
+
+          expect(nextStepSpy).toHaveBeenCalled()
+        })
+      })
+
+
+      describe('if workoutTrainingFormComponent doesnt exists', () => {
+        it('should return 0', () => {
+          expect(component.getStepperIndex()).toEqual(0)
+        })
+      })
+    })
   })
 
   describe('Integration tests', () => {
     describe('createTraining', () => {
-      const inputMusclesGroups = [MuscleGroups.Chest, MuscleGroups.Back]
-      const inputObservations = null
-      describe('if form its valid', () => {
-        const today = new Date(2020, 3, 1)
+      const today = new Date()
+
+      beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(today);
+        closeMock.mockRestore();
+      })
+
+      afterEach(() => {
+        jest.useRealTimers();
+      })
+
+      describe('if workoutTrainingFormComponent form its valid', () => {
+        const trainingFormValue = {} as Training
+
         beforeEach(() => {
-          component.form.setValue({
-            muscleGroups: inputMusclesGroups,
-            observations: inputObservations
-          })
-
-          jest.useFakeTimers();
-          jest.setSystemTime(today);
-        })        
-
-        afterEach(() => {
-          jest.useRealTimers();
+          jest.spyOn(component.workoutTrainingFormComponent as WorkoutTrainingFormComponent, 'isFormValid')
+            .mockReturnValue(true)
+          jest.spyOn(component.workoutTrainingFormComponent as WorkoutTrainingFormComponent, 'getTraining')
+            .mockReturnValue(trainingFormValue)
         })
 
-        it('should dispatch addUserTrainingListRequest', () => {
+        it('should dispatch addUserTrainingListRequest with updated creationDate prop', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
+
           component.createTraining()
 
-          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingListRequest({training: {
-            muscleGroups: inputMusclesGroups,
-            observations: inputObservations,
-            creationDate: today
-          } as any}))
-        });
+          expect(dispatchSpy).toHaveBeenCalledWith(addUserTrainingListRequest({
+            training: {
+              ...trainingFormValue,
+              creationDate: today
+            }
+          }))
+        })
+
+        it('should request to close the dialog', () => {
+          component.createTraining()
+
+          expect(closeMock).toHaveBeenCalled()
+        })
+
       })
-      describe('if form its not valid', () => {
-        describe('all fields null', () => {
-          beforeEach(() => {
-            component.form.setValue({
-              muscleGroups: null,
-              observations: null
-            })
-          })
-  
-          it('should not dispatch addUserTrainingListRequest', () => {
-            const dispatchSpy = jest.spyOn(store, 'dispatch')
-            component.createTraining()
-  
-            expect(dispatchSpy).not.toHaveBeenCalled()
-          });
+      describe('if workoutTrainingFormComponent form its not valid', () => {
+        beforeEach(() => {
+          jest.spyOn(component.workoutTrainingFormComponent as WorkoutTrainingFormComponent, 'isFormValid')
+            .mockReturnValue(false)
         })
 
-        describe('muscleGroups are null', () => {
-          beforeEach(() => {
-            component.form.setValue({
-              muscleGroups: null,
-              observations:''
-            })
-          })
-  
-          it('should not dispatch addUserTrainingListRequest', () => {
-            const dispatchSpy = jest.spyOn(store, 'dispatch')
-            component.createTraining()
-  
-            expect(dispatchSpy).not.toHaveBeenCalled()
-          });
+        it('should not dispatch addUserTrainingListRequest with updated creationDate prop', () => {
+          const dispatchSpy = jest.spyOn(store, 'dispatch')
+
+          component.createTraining()
+
+          expect(dispatchSpy).not.toHaveBeenCalled()
         })
 
-        describe('muscleGroups length zero', () => {
-          beforeEach(() => {
-            component.form.setValue({
-              muscleGroups: [],
-              observations: null
-            })
-          })
-  
-          it('should not dispatch addUserTrainingListRequest', () => {
-            const dispatchSpy = jest.spyOn(store, 'dispatch')
-            component.createTraining()
-  
-            expect(dispatchSpy).not.toHaveBeenCalled()  
-          });
+        it('should not request to close the dialog', () => {
+          component.createTraining()
+
+          expect(closeMock).not.toHaveBeenCalled()
         })
       })
     })
