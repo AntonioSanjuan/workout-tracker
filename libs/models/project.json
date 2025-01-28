@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/models/src",
   "prefix": "workout-tracker",
-  "tags": [],
+  "tags": ["type:feature"],
   "projectType": "library",
   "targets": {
     "test": {

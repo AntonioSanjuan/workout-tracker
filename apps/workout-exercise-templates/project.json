@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "workout-tracker",
   "sourceRoot": "apps/workout-exercise-templates/src",
-  "tags": [],
+  "tags": ["type:feature"],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
