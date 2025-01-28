@@ -54,6 +54,7 @@
             "cancel": "Cancelar",
             "accept": "Aceptar",
             "create": "Crear",
+            "edit": "Actualizar",
             "copy": "Copiar",
             "next": "Siguiente",
             "previous": "Anterior",
@@ -175,7 +176,12 @@
                     "filteredByMuscles": "Filtrado por..."
                 },
                 "addTraining": {
-                    "title": "Añadir entrenamiento",
+                    "title": "Añadir entrenamiento"
+                },
+                "editTraining": {
+                    "title": "Editar entrenamiento"
+                },
+                "trainingForm": {
                     "step": {
                         "basicInfo": {
                             "title": "Descripción",

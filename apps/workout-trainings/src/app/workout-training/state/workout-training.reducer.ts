@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as TrainingDetailsActions from "./workout-training.actions";
+import * as TrainingListActions from "@workout-tracker/shared-store";
 import { Training } from '@workout-tracker/models';
 
 export const WORKOUT_TRAINING_FEATURE_KEY = 'workout-training';
@@ -23,6 +24,8 @@ export const workoutTrainingReducer = createReducer(
     on(
       TrainingDetailsActions.getAuthenticatedUserTrainingRequestSuccess,
       TrainingDetailsActions.getAnonymousUserTrainingRequestSuccess,
+      TrainingListActions.updateAuthenticatedUserTrainingListRequestSuccess,
+      TrainingListActions.updateAnonymousUserTrainingListRequestSuccess,
       (state: WorkoutTrainingState, { training }) => ({
       ...state,
       training: training
