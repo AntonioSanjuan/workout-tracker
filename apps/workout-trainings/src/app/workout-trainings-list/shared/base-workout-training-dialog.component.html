@@ -1,0 +1,20 @@
+<div class="TrainingDialogContainer" *ngrxLet="{training: training$} as vm">
+    <h2 mat-dialog-title>{{ titleKey | translate }}</h2>
+    <mat-dialog-content class="mat-typography">
+        <workout-tracker-training-form #workoutTrainingFormComponent [training]="vm.training">
+        </workout-tracker-training-form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>
+            {{ 'common.actions.cancel' | translate }}
+        </button>
+        <button *ngIf="getStepperIndex() !== 1" mat-button (click)="nextStep()"
+            [disabled]="!workoutTrainingFormComponent.isFormValid()">
+            {{ 'common.actions.next' | translate }}
+        </button>
+        <button *ngIf="getStepperIndex() === 1" mat-button [mat-dialog-close]="false"
+            (click)="submitTraining(vm.training)" [disabled]="!workoutTrainingFormComponent.isFormValid()">
+            {{ actionButtonKey | translate }}
+        </button>
+    </mat-dialog-actions>
+</div>

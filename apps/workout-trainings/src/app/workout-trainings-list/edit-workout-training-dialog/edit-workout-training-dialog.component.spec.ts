@@ -94,7 +94,7 @@ describe('EditWorkoutTrainingDialogComponent', () => {
   })
 
   describe('Integration tests', () => {
-    describe('editTraining', () => {
+    describe('submitTraining', () => {
       const today = new Date()
       const selectedWorkoutTraining = {
         muscleGroups: [MuscleGroups.Back],
@@ -128,7 +128,7 @@ describe('EditWorkoutTrainingDialogComponent', () => {
         it('should dispatch updateUserTrainingListRequest with updated training prop', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
 
-          component.editTraining(selectedWorkoutTraining)
+          component.submitTraining(selectedWorkoutTraining)
 
           expect(dispatchSpy).toHaveBeenCalledWith(updateUserTrainingListRequest({
             training: {
@@ -139,7 +139,7 @@ describe('EditWorkoutTrainingDialogComponent', () => {
         })
 
         it('should request to close the dialog', () => {
-          component.editTraining(selectedWorkoutTraining)
+          component.submitTraining(selectedWorkoutTraining)
 
           expect(closeMock).toHaveBeenCalled()
         })
@@ -154,13 +154,13 @@ describe('EditWorkoutTrainingDialogComponent', () => {
         it('should not dispatch updateUserTrainingListRequest with updated creationDate prop', () => {
           const dispatchSpy = jest.spyOn(store, 'dispatch')
 
-          component.editTraining(selectedWorkoutTraining)
+          component.submitTraining(selectedWorkoutTraining)
 
           expect(dispatchSpy).not.toHaveBeenCalled()
         })
 
         it('should not request to close the dialog', () => {
-          component.editTraining(selectedWorkoutTraining)
+          component.submitTraining(selectedWorkoutTraining)
 
           expect(closeMock).not.toHaveBeenCalled()
         })
