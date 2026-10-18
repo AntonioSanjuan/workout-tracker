@@ -4,10 +4,17 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Training } from '@workout-tracker/models';
 import { WorkoutTrainingFormComponent } from './workout-training-form/workout-training-form.component';
 import { Observable } from 'rxjs';
+import { UiModule } from '@workout-tracker/ui';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'workout-tracker-base-training-dialog',
   templateUrl: './base-workout-training-dialog.component.html',
+  imports: [
+    UiModule,
+    TranslateModule,
+    WorkoutTrainingFormComponent
+  ],
   styleUrls: ['./base-workout-training-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true
